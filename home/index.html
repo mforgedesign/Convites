@@ -38,21 +38,28 @@
 
     <style>
         body {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+            background-color: #0a0a0a;
+            background-image:
+                /* Envelope flap pattern */
+                linear-gradient(135deg, rgba(212, 175, 55, 0.03) 25%, transparent 25%),
+                linear-gradient(225deg, rgba(212, 175, 55, 0.03) 25%, transparent 25%),
+                linear-gradient(45deg, rgba(212, 175, 55, 0.02) 25%, transparent 25%),
+                linear-gradient(315deg, rgba(212, 175, 55, 0.02) 25%, transparent 25%),
+                /* Subtle diagonal lines */
+                repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 40px,
+                    rgba(212, 175, 55, 0.015) 40px,
+                    rgba(212, 175, 55, 0.015) 41px),
+                repeating-linear-gradient(-45deg,
+                    transparent,
+                    transparent 40px,
+                    rgba(212, 175, 55, 0.015) 40px,
+                    rgba(212, 175, 55, 0.015) 41px);
+            background-size: 60px 60px, 60px 60px, 60px 60px, 60px 60px, 100% 100%, 100% 100%;
             color: #ffffff;
             overflow-x: hidden;
             min-height: 100vh;
-        }
-
-        .canvas-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            z-index: -1;
-            opacity: 0.7;
-            pointer-events: none;
         }
 
         .glass-panel {
@@ -277,7 +284,7 @@
         !function (f, b, e, v, n, t, s) {
             if (f.fbq) return; n = f.fbq = function () {
                 n.callMethod ?
-                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
             };
             if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
             n.queue = []; t = b.createElement(e); t.async = !0;
@@ -295,8 +302,6 @@
 
 <body class="antialiased selection:bg-accent selection:text-black">
 
-    <!-- 3D Background -->
-    <div id="canvas-container" class="canvas-container"></div>
 
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 p-4 md:p-6">
@@ -502,83 +507,9 @@
     </div>
 
     <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <script>
-        // --- THREE.JS BACKGROUND ---
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.getElementById('canvas-container').appendChild(renderer.domElement);
-
-        // Golden particles for premium feel
-        const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 800;
-        const posArray = new Float32Array(particlesCount * 3);
-
-        for (let i = 0; i < particlesCount * 3; i++) {
-            posArray[i] = (Math.random() - 0.5) * 60;
-        }
-
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.08,
-            color: 0xd4af37,
-            transparent: true,
-            opacity: 0.6
-        });
-        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particlesMesh);
-
-        // Add subtle geometric shape
-        const geometry = new THREE.IcosahedronGeometry(8, 1);
-        const material = new THREE.MeshBasicMaterial({
-            color: 0xd4af37,
-            wireframe: true,
-            transparent: true,
-            opacity: 0.08
-        });
-        const icosahedron = new THREE.Mesh(geometry, material);
-        scene.add(icosahedron);
-
-        camera.position.z = 20;
-
-        // Mouse interaction
-        let mouseX = 0;
-        let mouseY = 0;
-
-        document.addEventListener('mousemove', (event) => {
-            mouseX = event.clientX / window.innerWidth - 0.5;
-            mouseY = event.clientY / window.innerHeight - 0.5;
-        });
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            icosahedron.rotation.y += 0.002;
-            icosahedron.rotation.x += 0.001;
-
-            particlesMesh.rotation.y += 0.0005;
-            particlesMesh.rotation.x = mouseY * 0.3;
-
-            camera.position.x += (mouseX * 3 - camera.position.x) * 0.03;
-            camera.position.y += (-mouseY * 3 - camera.position.y) * 0.03;
-            camera.lookAt(scene.position);
-
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // Responsive
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
         // --- GSAP ANIMATIONS ---
         // Elements are now hidden by default via CSS, so no gsap.set() needed
 
