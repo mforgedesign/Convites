@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orçamento | Convites Premium</title>
+    <meta name="description"
+        content="Monte seu orçamento de convite digital personalizado. Escolha as funções que deseja e veja o valor total.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: '#0a0a0a',
+                        darker: '#050505',
+                        primary: '#ffffff',
+                        accent: '#d4af37',
+                        'accent-light': '#f0d78c',
+                        glass: 'rgba(255, 255, 255, 0.05)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #d4af37, #f0d78c, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .option-card:hover {
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .option-card.selected {
+            border-color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .option-card.selected .checkbox-indicator {
+            background: #d4af37;
+            border-color: #d4af37;
+        }
+
+        .option-card.selected .checkbox-indicator svg {
+            display: block;
+        }
+
+        .checkbox-indicator {
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-indicator svg {
+            display: none;
+            width: 14px;
+            height: 14px;
+            color: #0a0a0a;
+        }
+
+        .video-preview {
+            width: 120px;
+            aspect-ratio: 9/16;
+            object-fit: cover;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        @media (min-width: 768px) {
+            .video-preview {
+                width: 150px;
+            }
+        }
+
+        .video-preview:hover {
+            transform: scale(1.02);
+        }
+
+        .video-loading {
+            background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .form-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.875rem 1rem;
+            border-radius: 12px;
+            width: 100%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(212, 175, 55, 0.5);
+            outline: none;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Fix dropdown/select styling for dark theme */
+        select.form-input {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1rem;
+            padding-right: 2.5rem;
+        }
+
+        select.form-input option {
+            background: #1a1a2e;
+            color: white;
+            padding: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #d4af37, #b8962e);
+            color: #0a0a0a;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .price-tag {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1));
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            color: #f0d78c;
+        }
+
+        .total-bar {
+            position: sticky;
+            bottom: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 1rem 1.5rem;
+            z-index: 50;
+        }
+
+        .selected-model-card {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        .selected-model-img {
+            width: 80px;
+            height: 107px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 100px;
+            right: 24px;
+            z-index: 40;
+        }
+
+        .whatsapp-btn {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .payment-modal {
+            background: rgba(20, 20, 30, 0.98);
+        }
+
+        .toggle-switch {
+            width: 52px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 2px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: #d4af37;
+        }
+
+        .toggle-switch .toggle-knob {
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-switch.active .toggle-knob {
+            transform: translateX(24px);
+        }
+    </style>
+
+    <!-- Meta Pixel Code -->
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1628532911861052');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=1628532911861052&ev=PageView&noscript=1" /></noscript>
+    <!-- End Meta Pixel Code -->
+</head>
+
+<body class="antialiased pb-24">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 glass-panel">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold tracking-tight">
+                <span class="gradient-text">Convites</span><span
+                    class="text-white/70 text-sm align-top ml-1">Premium</span>
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="modelos.html" class="text-sm font-medium hover:text-accent transition-colors">Modelos</a>
+                <a href="https://wa.me/5511939047235" target="_blank"
+                    class="text-sm font-medium hover:text-accent transition-colors">Contato</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-3xl md:text-4xl font-bold mb-3">
+                Monte seu <span class="gradient-text">Orçamento</span>
+            </h1>
+            <p class="text-gray-400">Escolha as funções que você quer no seu convite</p>
+        </header>
+
+        <!-- Selected Model Section -->
+        <section class="mb-12">
+            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2">
+                <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Modelo Escolhido
+            </h2>
+
+            <div id="selectedModelContainer">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Options Section -->
+        <section class="mb-12">
+            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2">
+                <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+                Escolha quais funções você quer no seu convite
+            </h2>
+
+            <p class="text-sm text-gray-500 mb-6">
+                *Importante: Mesmo que você escolha um MODELO completo, nós iremos levar em consideração APENAS o que
+                você indicar abaixo:
+            </p>
+
+            <div class="space-y-4" id="optionsContainer">
+                <!-- Option 1: Abertura Envelope -->
+                <div class="option-card selected" data-option="abertura" data-price="60">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0">
+                            <p class="text-[10px] text-gray-500 text-center mb-1 italic">Isto é apenas um exemplo</p>
+                            <div class="video-loading aspect-[9/16] w-[120px] md:w-[150px] rounded-xl flex items-center justify-center"
+                                id="video1Container">
+                                <span class="text-xs text-gray-500">Carregando...</span>
+                            </div>
+                            <video id="video1" class="video-preview hidden" muted loop playsinline autoplay>
+                                <source
+                                    src="Links e capas/Imagens e videos para tela de orçamento/Vídeo da opção Abertura Envelope e Folha com botões - R$60/abertura_apenas_envelope.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-semibold text-base md:text-xl">Abertura Envelope e Folha com Botões</h3>
+                                <div class="checkbox-indicator">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <span class="price-tag text-sm md:text-base">R$ 60,00</span>
+                            <p class="text-sm md:text-base text-gray-400 mt-3">Envelope 3D que abre com animação
+                                elegante, folha com todas as informações do evento.</p>
+                            <p class="text-xs md:text-sm text-green-400 mt-2 font-medium">✅ Incluso: Música, Botões Interativos, Local no Mapa, Confirmação via WhatsApp, Manual do Convidado e Sugestão de Presentes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Option 2: Save The Date -->
+                <div class="option-card" data-option="savethedate" data-price="25">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0">
+                            <p class="text-[10px] text-gray-500 text-center mb-1 italic">Isto é apenas um exemplo</p>
+                            <div class="video-loading aspect-[9/16] w-[120px] md:w-[150px] rounded-xl flex items-center justify-center"
+                                id="img1Container">
+                                <span class="text-xs text-gray-500">Carregando...</span>
+                            </div>
+                            <img id="img1" class="video-preview hidden" src="assets/demo/savethedate.jpg"
+                                alt="Save The Date exemplo"
+                                onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 400%22%3E%3Crect fill=%22%231a1a2e%22 width=%22300%22 height=%22400%22/%3E%3Ctext fill=%22%23d4af37%22 x=%22150%22 y=%22200%22 text-anchor=%22middle%22 font-size=%2216%22%3ESave The Date%3C/text%3E%3C/svg%3E'; this.parentElement.classList.remove('video-loading'); this.classList.remove('hidden');">
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-semibold text-base md:text-xl">Save The Date (Apenas Imagem)</h3>
+                                <div class="checkbox-indicator">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <span class="price-tag text-sm md:text-base">R$ 25,00</span>
+                            <p class="text-sm md:text-base text-gray-400 mt-3">Imagem estática elegante para antecipar o
+                                convite
+                                oficial. Perfeita para enviar nas redes sociais e WhatsApp.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Option 3: Abertura Longa -->
+                <div class="option-card" data-option="aberturalonga" data-price="15">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0">
+                            <p class="text-[10px] text-gray-500 text-center mb-1 italic">Isto é apenas um exemplo</p>
+                            <div class="video-loading aspect-[9/16] w-[120px] md:w-[150px] rounded-xl"
+                                id="video2Container">
+                                <span class="text-xs text-gray-500">Carregando...</span>
+                            </div>
+                            <video id="video2" class="video-preview hidden" loop muted playsinline preload="metadata">
+                                <source
+                                    src="Links e capas/Imagens e videos para tela de orçamento/Vídeo da opção Abertura longa com frases e uma foto + R$20/abertura_longa.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-semibold text-base md:text-xl">Abertura Longa com Frases e Foto</h3>
+                                <div class="checkbox-indicator">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <span class="price-tag text-sm md:text-base">+ R$ 15,00</span>
+                            <p class="text-sm md:text-base text-gray-400 mt-3">Sequência de frases emocionantes com foto
+                                do
+                                aniversariante/casal antes da abertura principal.</p>
+                            <p class="text-xs md:text-sm text-accent-light mt-2 italic">💡 Caso queira incluir fotos,
+                                mas não
+                                esteja com elas preparadas agora, você pode concluir seu convite hoje e enviar as fotos
+                                outro dia!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Option NEW: Sugestão de Presentes (FREE) -->
+                <div class="option-card" data-option="sugestaopresentes" data-price="0">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0">
+                            <p class="text-[10px] text-gray-500 text-center mb-1 italic">Isto é apenas um exemplo</p>
+                            <img src="assets/Exemplo_Sugestoes_de_Presentes.jpg" alt="Exemplo Sugestão de Presentes"
+                                class="w-[120px] md:w-[150px] rounded-xl object-cover aspect-[9/16]"
+                                onerror="this.parentElement.innerHTML='<div class=\'w-[120px] md:w-[150px] h-[213px] md:h-[267px] rounded-xl bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center\'><svg class=\'w-12 h-12 text-accent/50\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7\'/></svg></div>'">
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-semibold text-base md:text-xl">Sugestão de Presentes</h3>
+                                <div class="checkbox-indicator">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <span
+                                class="price-tag text-sm md:text-base bg-green-500/20 border-green-500/30 text-green-400">GRÁTIS</span>
+                            <p class="text-sm md:text-base text-gray-400 mt-3">Informações simples de presentes
+                                sugeridos para os convidados. Exemplo:</p>
+                            <p class="text-xs md:text-sm text-accent-light mt-2 italic">"Calçados 39, Joias pratas e
+                                dourado, Perfume Lili, Maquiagem, Pix: 11939047235"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Option 4: Lista de Presentes -->
+                <div class="option-card" data-option="listapresentes" data-price="10">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0">
+                            <p class="text-[10px] text-gray-500 text-center mb-1 italic">Isto é apenas um exemplo</p>
+                            <div class="video-loading aspect-[9/16] w-[120px] md:w-[150px] rounded-xl"
+                                id="video3Container">
+                                <span class="text-xs text-gray-500">Carregando...</span>
+                            </div>
+                            <video id="video3" class="video-preview hidden" loop muted playsinline preload="metadata">
+                                <source
+                                    src="Links e capas/Imagens e videos para tela de orçamento/Vídeo da opção de Lista de Presentes personalizada + R$20/Video_lista_presentes_demo.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-semibold text-base md:text-xl">Lista de Presentes Inteligente</h3>
+                                <div class="checkbox-indicator">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <span class="price-tag text-sm md:text-base">+ R$ 10,00</span>
+                            <p class="text-sm md:text-base text-gray-400 mt-3">Site exclusivo com itens, valores e chave
+                                Pix para
+                                pagamento direto. Você também pode fazer de forma gratuita:</p>
+                            <div class="flex flex-wrap gap-2 mt-3">
+                                <a href="https://listas.extra.com.br/" target="_blank" onclick="event.stopPropagation()"
+                                    class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-medium rounded-full transition-all">
+                                    🛒 Extra
+                                </a>
+                                <a href="https://www.querodecasamento.com.br/criar-lista/criar" target="_blank"
+                                    onclick="event.stopPropagation()"
+                                    class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-full transition-all">
+                                    📍 Magalu
+                                </a>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2">Ou posso criar uma <a
+                                    href="https://www.canva.com/design/DAG7ln8xZW8/F8dANttjxtFMqf_Jc1vM6w/view"
+                                    target="_blank" onclick="event.stopPropagation()"
+                                    class="text-accent hover:underline">Sugestão de Presentes
+                                    gratuita</a>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Option 5: Galeria de Fotos -->
+                <div class="option-card" data-option="galeria" data-price="10">
+                    <div class="flex gap-4 items-center">
+                        <div
+                            class="flex-shrink-0 w-[120px] md:w-[150px] aspect-[9/16] bg-gradient-to-br from-accent/20 to-accent/5 rounded-xl flex items-center justify-center">
+                            <svg class="w-12 h-12 text-accent/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-semibold text-base md:text-xl">Galeria de Fotos</h3>
+                                <div class="checkbox-indicator">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <span class="price-tag text-sm md:text-base">+ R$ 10,00</span>
+                            <p class="text-sm md:text-base text-gray-400 mt-3">Galeria com até 15 fotos que seus
+                                convidados podem
+                                navegar dentro do convite. Perfeita para mostrar a história do casal ou fotos do
+                                aniversariante.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Option NEW: Confirmação direto pelo WhatsApp (FREE) -->
+                <div class="option-card" data-option="confirmacaowhatsapp" data-price="0">
+                    <div class="flex gap-4 items-center">
+                        <div
+                            class="flex-shrink-0 w-[120px] md:w-[150px] aspect-[9/16] bg-gradient-to-br from-green-500/20 to-green-500/5 rounded-xl flex items-center justify-center">
+                            <svg class="w-12 h-12 text-green-500/70" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-semibold text-base md:text-xl">Confirmação pelo WhatsApp</h3>
+                                <div class="checkbox-indicator">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <span
+                                class="price-tag text-sm md:text-base bg-green-500/20 border-green-500/30 text-green-400">GRÁTIS</span>
+                            <p class="text-sm md:text-base text-gray-400 mt-3">Os convidados clicam no botão para
+                                confirmar e são redirecionados automaticamente para o WhatsApp que você informar abaixo,
+                                com uma mensagem pronta confirmando a presença.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Option 6: Confirmação de Presença -->
+                <div class="option-card" data-option="confirmacao" data-price="5">
+                    <div class="flex gap-4 items-center">
+                        <div
+                            class="flex-shrink-0 w-[120px] md:w-[150px] aspect-[9/16] bg-gradient-to-br from-green-500/20 to-green-500/5 rounded-xl flex items-center justify-center">
+                            <svg class="w-12 h-12 text-green-500/50" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-semibold text-base md:text-xl">Formulário de Confirmação de Presença
+                                </h3>
+                                <div class="checkbox-indicator">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <span class="price-tag text-sm md:text-base">R$ 5,00</span>
+                            <p class="text-sm md:text-base text-gray-400 mt-3">Planilha que organiza em tempo real todas
+                                as
+                                confirmações de forma automática, para facilitar seu controle e organização da festa.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Form Section -->
+        <section id="dadosEvento" class="mb-12">
+            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2">
+                <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+                Dados do Evento
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Nome(s) do(s) Homenageado(s) *</label>
+                    <input type="text" id="nomes" class="form-input" placeholder="Ex: Maria e João">
+                </div>
+
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Tipo de Evento *</label>
+                    <select id="tipoEvento" class="form-input">
+                        <option value="">Selecione...</option>
+                        <option value="aniversario">Aniversário</option>
+                        <option value="casamento">Casamento</option>
+                        <option value="15anos">15 Anos / Debutante</option>
+                        <option value="bodas">Bodas</option>
+                        <option value="chadebebe">Chá de Bebê</option>
+                        <option value="chadefralda">Chá de Fralda</option>
+                        <option value="chabar">Chá Bar</option>
+                        <option value="noivado">Noivado</option>
+                        <option value="formatura">Formatura</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                </div>
+
+                <div id="idadeContainer" class="hidden">
+                    <label class="block text-sm text-gray-400 mb-2">Idade</label>
+                    <input type="number" id="idade" class="form-input" placeholder="Ex: 15">
+                </div>
+
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Data do Evento *</label>
+                    <input type="date" id="dataEvento" class="form-input">
+                </div>
+
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Hora de Início *</label>
+                    <input type="time" id="horaInicio" class="form-input">
+                </div>
+
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Hora do Término (opcional)</label>
+                    <input type="time" id="horaTermino" class="form-input">
+                </div>
+
+                <div class="md:col-span-2">
+                    <label class="block text-sm text-gray-400 mb-2">Endereço do Evento *</label>
+                    <input type="text" id="endereco" class="form-input"
+                        placeholder="Ex: Salão de Festas Alegria - Rua das Flores, 123 - Centro, São Paulo">
+                    <p class="text-xs text-gray-500 mt-1">Endereço completo que aparecerá no convite</p>
+                </div>
+
+                <div id="whatsappConfirmacaoContainer" class="md:col-span-2">
+                    <label class="block text-sm text-gray-400 mb-2">WhatsApp para Confirmações de Presença</label>
+                    <input type="tel" id="whatsappConfirmacao" class="form-input"
+                        placeholder="Ex: 11999998888 (apenas números, com DDD)">
+                    <p class="text-xs text-gray-500 mt-1">Número que receberá as confirmações dos convidados</p>
+                </div>
+
+                <div class="md:col-span-2">
+                    <label class="block text-sm text-gray-400 mb-2">Nome ou Link da Música</label>
+                    <input type="text" id="musica" class="form-input"
+                        placeholder="Ex: Perfect - Ed Sheeran ou https://youtube.com/...">
+                    <p class="text-xs text-gray-500 mt-1">Se for link, obrigatório ser do YouTube</p>
+                </div>
+
+                <div id="sugestoesContainer" class="md:col-span-2 hidden">
+                    <label class="block text-sm text-gray-400 mb-2">Sugestões de Presentes</label>
+                    <textarea id="sugestoes" class="form-input min-h-[100px]"
+                        placeholder="Ex: Calçados 39, Joias pratas e dourado, Perfume Lili, Red, Egeo, Maquiagem, Pix: 11939047235"></textarea>
+                    <p class="text-xs text-gray-500 mt-1">Liste os presentes sugeridos separados por vírgula</p>
+                </div>
+
+                <div class="md:col-span-2">
+                    <label class="block text-sm text-gray-400 mb-3">Mostrar cronômetro de contagem regressiva?</label>
+                    <div class="flex items-center gap-3">
+                        <div id="cronometroToggle" class="toggle-switch" onclick="toggleCronometro()">
+                            <div class="toggle-knob"></div>
+                        </div>
+                        <span id="cronometroLabel" class="text-sm text-gray-400">Não</span>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2">
+                    <label class="block text-sm text-gray-400 mb-2">Manual do Convidado (instruções para os
+                        convidados)</label>
+                    <textarea id="manual" class="form-input min-h-[120px]"
+                        placeholder="Ex: Dress code: Traje esporte fino. Não usar branco. Não levar crianças..."></textarea>
+                </div>
+            </div>
+
+            <div class="glass-panel p-4 rounded-xl mt-6">
+                <p class="text-sm text-accent-light">
+                    💡 <strong>Lembrete:</strong> Caso queira incluir fotos no seu convite, mas não esteja com elas
+                    preparadas agora, você pode continuar com a compra do seu convite, e poderá enviar as fotos outro
+                    dia!
+                </p>
+            </div>
+        </section>
+
+        <!-- Action Buttons -->
+        <section class="space-y-4">
+            <button onclick="sendToWhatsApp()"
+                class="btn-primary btn-whatsapp w-full flex items-center justify-center gap-3 text-lg">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                </svg>
+                Confirmar Orçamento no WhatsApp
+            </button>
+
+            <button onclick="openPaymentModal()" class="btn-primary w-full text-lg">
+                💳 Pagamento do Sinal (R$ 20,00)
+            </button>
+
+            <a href="https://wa.me/5511939047235?text=Olá! Tenho uma dúvida sobre os convites..." target="_blank"
+                class="btn-secondary w-full flex items-center justify-center gap-2 text-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Tirar Dúvida com Atendente
+            </a>
+
+            <button onclick="clearAllData()"
+                class="w-full text-sm text-gray-500 hover:text-red-400 py-2 mt-4 transition-colors">
+                🗑️ Excluir Dados e Recomeçar
+            </button>
+        </section>
+    </main>
+
+    <!-- Total Bar -->
+    <div class="total-bar">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <div>
+                <span class="text-sm text-gray-400">Total do Orçamento</span>
+                <div class="text-2xl font-bold gradient-text" id="totalPrice">R$ 60,00</div>
+            </div>
+            <button onclick="sendToWhatsApp()" class="btn-primary btn-whatsapp px-6 py-3 flex items-center gap-2">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                </svg>
+                Enviar
+            </button>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeVideoModal()">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </div>
+            <video id="modalVideo" class="max-h-[80vh] rounded-xl" controls autoplay loop>
+            </video>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal-overlay payment-modal" onclick="closeModal(event)">
+        <div class="modal-content glass-panel rounded-2xl p-6 md:p-8 max-w-md w-full" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold">Pagamento do Sinal</h3>
+                <button onclick="closePaymentModal()" class="text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <p class="text-gray-400 mb-6">Você pode pagar apenas R$ 20 agora, e o restante quando receber seu convite
+                finalizado e aprovado.</p>
+
+            <div class="space-y-4 mb-6">
+                <a href="#" class="block glass-panel p-4 rounded-xl hover:border-accent/50 transition-all text-center"
+                    onclick="copyPix()">
+                    <div class="text-2xl mb-2">📱</div>
+                    <div class="font-semibold">Pix</div>
+                    <div class="text-sm text-gray-400">Clique para copiar a chave</div>
+                </a>
+
+                <a href="https://link.mercadopago.com.br/jlgrafica" target="_blank"
+                    class="block glass-panel p-4 rounded-xl hover:border-accent/50 transition-all text-center"
+                    onclick="paymentInitiated = true; fbq('track', 'InitiateCheckout', {content_name: 'Mercado Pago Link', content_category: 'Payment', currency: 'BRL'})">
+                    <div class="text-2xl mb-2">💳</div>
+                    <div class="font-semibold">Cartão de Crédito/Débito</div>
+                    <div class="text-sm text-gray-400">Via Mercado Pago</div>
+                </a>
+            </div>
+
+            <div class="glass-panel p-4 rounded-xl">
+                <p class="text-sm text-accent-light text-center">
+                    📤 Após o pagamento, encaminhe o comprovante para o nosso WhatsApp!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Alert Modal -->
+    <div id="customAlertModal" class="modal-overlay" onclick="closeCustomAlert(event)" style="display: none;">
+        <div class="modal-content glass-panel rounded-2xl p-6 md:p-8 max-w-md w-full mx-4"
+            onclick="event.stopPropagation()">
+            <div class="flex items-center gap-3 mb-4">
+                <div id="alertIcon" class="w-12 h-12 rounded-full flex items-center justify-center bg-accent/20">
+                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                    </svg>
+                </div>
+                <h3 id="alertTitle" class="text-lg font-bold text-white">Aviso</h3>
+            </div>
+            <p id="alertMessage" class="text-gray-300 mb-6 whitespace-pre-line"></p>
+            <button onclick="closeCustomAlert()" class="w-full btn-primary py-3 rounded-xl font-semibold">
+                Entendi
+            </button>
+        </div>
+    </div>
+
+    <!-- Payment Confirmation Modal -->
+    <div id="paymentConfirmModal" class="modal-overlay" onclick="closePaymentConfirmModal(event)"
+        style="display: none;">
+        <div class="modal-content glass-panel rounded-2xl p-6 md:p-8 max-w-md w-full mx-4"
+            onclick="event.stopPropagation()">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 rounded-full flex items-center justify-center bg-accent/20">
+                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <h3 class="text-lg font-bold text-white">Pagamento Pendente</h3>
+            </div>
+            <p class="text-gray-300 mb-6">Voce ainda nao realizou o pagamento do sinal. Para garantir seu pedido,
+                recomendamos fazer o pagamento antes de enviar o orcamento.</p>
+            <div class="space-y-3">
+                <button onclick="closePaymentConfirmModal(); openPaymentModal();"
+                    class="w-full btn-primary py-3 rounded-xl font-semibold">
+                    Concluir Pagamento
+                </button>
+                <button onclick="closePaymentConfirmModal(); proceedToWhatsApp();"
+                    class="w-full btn-secondary py-3 rounded-xl font-semibold border border-gray-600">
+                    Enviar Orcamento Mesmo Assim
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Float (for page) -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/5511939047235" target="_blank" class="whatsapp-btn"
+            onclick="fbq('track', 'Contact', {content_name: 'WhatsApp Float Button', content_category: 'Quote Page'})">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+                <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+            </svg>
+        </a>
+    </div>
+
+    <script>
+        // Option prices
+        const optionPrices = {
+            abertura: { name: 'Abertura Envelope e Folha com Botões', price: 60 },
+            savethedate: { name: 'Save The Date (Apenas Imagem)', price: 25 },
+            aberturalonga: { name: 'Abertura Longa com Frases e Foto', price: 15 },
+            sugestaopresentes: { name: 'Sugestão de Presentes', price: 0 },
+            listapresentes: { name: 'Lista de Presentes Inteligente', price: 10 },
+            galeria: { name: 'Galeria de Fotos (até 15 fotos)', price: 10 },
+            confirmacaowhatsapp: { name: 'Confirmação pelo WhatsApp', price: 0 },
+            confirmacao: { name: 'Formulário de Confirmação de Presença', price: 5 }
+        };
+
+        let cronometroEnabled = false;
+
+        // Custom Alert Modal Functions
+        function showCustomAlert(message, title = 'Aviso', type = 'warning') {
+            const modal = document.getElementById('customAlertModal');
+            const alertTitle = document.getElementById('alertTitle');
+            const alertMessage = document.getElementById('alertMessage');
+            const alertIcon = document.getElementById('alertIcon');
+
+            alertTitle.textContent = title;
+            alertMessage.textContent = message;
+
+            // Set icon based on type
+            if (type === 'success') {
+                alertIcon.className = 'w-12 h-12 rounded-full flex items-center justify-center bg-green-500/20';
+                alertIcon.innerHTML = '<svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>';
+            } else if (type === 'error') {
+                alertIcon.className = 'w-12 h-12 rounded-full flex items-center justify-center bg-red-500/20';
+                alertIcon.innerHTML = '<svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>';
+            } else {
+                alertIcon.className = 'w-12 h-12 rounded-full flex items-center justify-center bg-accent/20';
+                alertIcon.innerHTML = '<svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>';
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        function closeCustomAlert(e) {
+            if (e && e.target !== e.currentTarget) return;
+            document.getElementById('customAlertModal').style.display = 'none';
+        }
+
+        // Payment tracking
+        let paymentInitiated = false;
+
+        // Remove red border when user fills required fields
+        document.getElementById('nomes').addEventListener('input', function () {
+            if (this.value.trim()) {
+                this.classList.remove('border-red-500', 'border-2');
+            }
+        });
+        document.getElementById('dataEvento').addEventListener('change', function () {
+            if (this.value) {
+                this.classList.remove('border-red-500', 'border-2');
+            }
+        });
+        document.getElementById('horaInicio').addEventListener('change', function () {
+            if (this.value) {
+                this.classList.remove('border-red-500', 'border-2');
+            }
+        });
+
+        // Toggle cronometro
+        function toggleCronometro() {
+            cronometroEnabled = !cronometroEnabled;
+            const toggle = document.getElementById('cronometroToggle');
+            const label = document.getElementById('cronometroLabel');
+
+            toggle.classList.toggle('active', cronometroEnabled);
+            label.textContent = cronometroEnabled ? 'Sim' : 'Não';
+        }
+
+        // Options that require "Abertura Envelope" to be selected
+        const dependentOptions = ['aberturalonga', 'listapresentes', 'sugestaopresentes', 'galeria', 'confirmacaowhatsapp', 'confirmacao'];
+
+        // Mutually exclusive options
+        const mutuallyExclusive = {
+            'sugestaopresentes': 'listapresentes',
+            'listapresentes': 'sugestaopresentes',
+            'confirmacaowhatsapp': 'confirmacao',
+            'confirmacao': 'confirmacaowhatsapp'
+        };
+
+        // Initialize option cards with dependency logic
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A') return; // Don't toggle on link clicks
+
+                const option = card.dataset.option;
+                const aberturaCard = document.querySelector('.option-card[data-option="abertura"]');
+
+                // Check for mutual exclusivity
+                if (mutuallyExclusive[option]) {
+                    const oppositeOption = mutuallyExclusive[option];
+                    const oppositeCard = document.querySelector(`.option-card[data-option="${oppositeOption}"]`);
+
+                    // If we're selecting this option and the opposite is selected
+                    if (!card.classList.contains('selected') && oppositeCard.classList.contains('selected')) {
+                        oppositeCard.classList.remove('selected');
+                        const oppositeName = optionPrices[oppositeOption].name;
+                        showCustomAlert(`"${oppositeName}" foi desmarcada automaticamente.\n\nVoce nao pode selecionar "Sugestao de Presentes" e "Lista de Presentes Inteligente" ao mesmo tempo. Escolha apenas uma opcao.`, 'Opcao Desmarcada', 'warning');
+                    }
+                }
+
+                // If clicking on a dependent option
+                if (dependentOptions.includes(option)) {
+                    // Toggle this option
+                    card.classList.toggle('selected');
+
+                    // If we just selected this option, ensure abertura is also selected
+                    if (card.classList.contains('selected')) {
+                        aberturaCard.classList.add('selected');
+                    }
+                }
+                // If clicking on "Abertura Envelope"
+                else if (option === 'abertura') {
+                    // Check if any dependent option is selected
+                    const hasDependentSelected = dependentOptions.some(opt =>
+                        document.querySelector(`.option-card[data-option="${opt}"]`).classList.contains('selected')
+                    );
+
+                    // If trying to deselect abertura but dependent options are selected, prevent it
+                    if (card.classList.contains('selected') && hasDependentSelected) {
+                        showCustomAlert('Você não pode desmarcar "Abertura Envelope" enquanto tiver opções adicionais selecionadas (Abertura Longa, Lista de Presentes, Galeria ou Confirmação).', 'Atenção', 'warning');
+                        return;
+                    }
+
+                    card.classList.toggle('selected');
+                }
+                // Save The Date can be selected independently
+                else {
+                    card.classList.toggle('selected');
+                }
+
+                updateTotal();
+            });
+        });
+
+        // Calculate and update total
+        function updateTotal() {
+            let total = 0;
+            document.querySelectorAll('.option-card.selected').forEach(card => {
+                total += parseInt(card.dataset.price);
+            });
+            document.getElementById('totalPrice').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+
+            // Toggle WhatsApp confirmacao field visibility based on confirmacao option
+            const confirmacaoSelected = document.querySelector('.option-card[data-option="confirmacao"].selected');
+            const whatsappContainer = document.getElementById('whatsappConfirmacaoContainer');
+            if (confirmacaoSelected) {
+                whatsappContainer.classList.add('hidden');
+            } else {
+                whatsappContainer.classList.remove('hidden');
+            }
+
+            // Toggle Sugestoes field visibility based on sugestaopresentes option
+            const sugestaoSelected = document.querySelector('.option-card[data-option="sugestaopresentes"].selected');
+            const sugestoesContainer = document.getElementById('sugestoesContainer');
+            if (sugestaoSelected) {
+                sugestoesContainer.classList.remove('hidden');
+            } else {
+                sugestoesContainer.classList.add('hidden');
+                document.getElementById('sugestoes').value = ''; // Clear when hiding
+            }
+        }
+
+        // Show/hide age field based on event type
+        document.getElementById('tipoEvento').addEventListener('change', (e) => {
+            const idadeContainer = document.getElementById('idadeContainer');
+            if (e.target.value === 'aniversario') {
+                idadeContainer.classList.remove('hidden');
+            } else {
+                idadeContainer.classList.add('hidden');
+                document.getElementById('idade').value = ''; // Clear age when hiding
+            }
+        });
+
+        // Load selected model
+        function loadSelectedModel() {
+            const modelData = localStorage.getItem('selectedModelData');
+            const container = document.getElementById('selectedModelContainer');
+
+            if (modelData) {
+                const model = JSON.parse(modelData);
+                container.innerHTML = `
+                    <div class="selected-model-card flex items-center gap-4">
+                        <img src="${model.cover}" alt="${model.name}" class="selected-model-img" loading="lazy"
+                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 80 107%22%3E%3Crect fill=%22%231a1a2e%22 width=%2280%22 height=%22107%22/%3E%3C/svg%3E'">
+                        <div class="flex-1">
+                            <h3 class="font-semibold">${model.name}</h3>
+                            <p class="text-sm text-accent-light">${model.theme}</p>
+                            <a href="${model.link}" target="_blank" class="text-xs text-gray-400 hover:text-accent mt-1 inline-block">Ver prévia →</a>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <a href="modelos.html" class="btn-secondary px-4 py-2 text-sm text-center rounded-lg">Escolher Outro</a>
+                            <button onclick="removeModel()" class="text-sm text-red-400 hover:text-red-300">Remover</button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="glass-panel p-6 rounded-xl text-center">
+                        <p class="text-gray-400 mb-4">Nenhum modelo selecionado</p>
+                        <a href="modelos.html" class="btn-primary px-6 py-2 inline-block rounded-lg">Escolher Modelo</a>
+                    </div>
+                `;
+            }
+        }
+
+        function removeModel() {
+            localStorage.removeItem('selectedModel');
+            localStorage.removeItem('selectedModelData');
+            loadSelectedModel();
+        }
+
+        // Video lazy loading and modal
+        function initVideos() {
+            // Video 1
+            const video1 = document.getElementById('video1');
+            const video1Container = document.getElementById('video1Container');
+            video1.addEventListener('loadeddata', () => {
+                video1Container.classList.add('hidden');
+                video1.classList.remove('hidden');
+                video1.play().catch(() => { });
+            });
+            video1.addEventListener('click', () => openVideoModal(video1.querySelector('source').src));
+
+            // Video 2
+            const video2 = document.getElementById('video2');
+            const video2Container = document.getElementById('video2Container');
+            video2.addEventListener('loadeddata', () => {
+                video2Container.classList.add('hidden');
+                video2.classList.remove('hidden');
+                video2.play().catch(() => { });
+            });
+            video2.addEventListener('click', () => openVideoModal(video2.querySelector('source').src));
+
+            // Video 3
+            const video3 = document.getElementById('video3');
+            const video3Container = document.getElementById('video3Container');
+            video3.addEventListener('loadeddata', () => {
+                video3Container.classList.add('hidden');
+                video3.classList.remove('hidden');
+                video3.play().catch(() => { });
+            });
+            video3.addEventListener('click', () => openVideoModal(video3.querySelector('source').src));
+
+            // Image 1 (Save The Date)
+            const img1 = document.getElementById('img1');
+            const img1Container = document.getElementById('img1Container');
+            img1.addEventListener('load', () => {
+                img1Container.classList.add('hidden');
+                img1.classList.remove('hidden');
+            });
+            img1.addEventListener('error', () => {
+                img1Container.classList.add('hidden');
+                img1.classList.remove('hidden');
+            });
+            // Force check if already loaded
+            if (img1.complete) {
+                img1Container.classList.add('hidden');
+                img1.classList.remove('hidden');
+            }
+            img1.addEventListener('click', () => {
+                // For images, just open in new tab
+                window.open(img1.src, '_blank');
+            });
+        }
+
+        function openVideoModal(src) {
+            const modal = document.getElementById('videoModal');
+            const modalVideo = document.getElementById('modalVideo');
+            modalVideo.src = src;
+            modal.classList.add('active');
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const modalVideo = document.getElementById('modalVideo');
+            modal.classList.remove('active');
+            modalVideo.pause();
+            modalVideo.src = '';
+        }
+
+        function openPaymentModal() {
+            document.getElementById('paymentModal').classList.add('active');
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+        }
+
+        function closeModal(e) {
+            if (e.target.classList.contains('modal-overlay')) {
+                closeVideoModal();
+                closePaymentModal();
+            }
+        }
+
+        // Payment confirmation modal functions
+        function showPaymentConfirmModal() {
+            document.getElementById('paymentConfirmModal').style.display = 'flex';
+        }
+
+        function closePaymentConfirmModal(e) {
+            if (e && e.target !== e.currentTarget) return;
+            document.getElementById('paymentConfirmModal').style.display = 'none';
+        }
+
+        function copyPix() {
+            const pixKey = 'mforgedesign@gmail.com';
+            navigator.clipboard.writeText(pixKey).then(() => {
+                paymentInitiated = true;
+                fbq('track', 'InitiateCheckout', { content_name: 'Pix Key Copy', content_category: 'Payment', currency: 'BRL' });
+                showCustomAlert('Chave Pix copiada!\n\nCole no seu aplicativo de banco.', 'Sucesso', 'success');
+            }).catch(() => {
+                paymentInitiated = true;
+                fbq('track', 'InitiateCheckout', { content_name: 'Pix Key Copy', content_category: 'Payment', currency: 'BRL' });
+                showCustomAlert('Chave Pix: ' + pixKey, 'Copie a Chave', 'warning');
+            });
+        }
+
+        // Send to WhatsApp
+        function sendToWhatsApp() {
+            const nomesInput = document.getElementById('nomes');
+            const dataEventoInput = document.getElementById('dataEvento');
+            const horaInicioInput = document.getElementById('horaInicio');
+
+            const nomes = nomesInput.value.trim();
+            const dataEvento = dataEventoInput.value;
+            const horaInicio = horaInicioInput.value;
+
+            // Clear previous error styling
+            nomesInput.classList.remove('border-red-500', 'border-2');
+            dataEventoInput.classList.remove('border-red-500', 'border-2');
+            horaInicioInput.classList.remove('border-red-500', 'border-2');
+
+            // Validate required fields
+            const missingRequired = [];
+            if (!nomes) {
+                nomesInput.classList.add('border-red-500', 'border-2');
+                missingRequired.push('Nome(s)');
+            }
+            if (!dataEvento) {
+                dataEventoInput.classList.add('border-red-500', 'border-2');
+                missingRequired.push('Data do Evento');
+            }
+            if (!horaInicio) {
+                horaInicioInput.classList.add('border-red-500', 'border-2');
+                missingRequired.push('Hora de Inicio');
+            }
+
+            if (missingRequired.length > 0) {
+                showCustomAlert('Por favor, preencha os campos obrigatorios:\\n\\n- ' + missingRequired.join('\\n- '), 'Campos Obrigatorios', 'error');
+                document.getElementById('dadosEvento').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+
+            const tipoEvento = document.getElementById('tipoEvento');
+            const tipoEventoValue = tipoEvento.value;
+            const tipoEventoText = tipoEventoValue ? tipoEvento.options[tipoEvento.selectedIndex]?.text : '';
+            const idade = document.getElementById('idade').value.trim();
+            const horaTermino = document.getElementById('horaTermino').value;
+            const endereco = document.getElementById('endereco').value.trim();
+            const musica = document.getElementById('musica').value.trim();
+            const manual = document.getElementById('manual').value.trim();
+            const sugestoes = document.getElementById('sugestoes').value.trim();
+
+            // Check if confirmacao option is selected
+            const confirmacaoSelected = document.querySelector('.option-card[data-option="confirmacao"].selected');
+            const whatsappConfirmacao = confirmacaoSelected ? '' : document.getElementById('whatsappConfirmacao').value.trim();
+
+            // Check if sugestaopresentes option is selected
+            const sugestaoSelected = document.querySelector('.option-card[data-option="sugestaopresentes"].selected');
+
+            // Get selected options
+            const selectedOptions = [];
+            let total = 0;
+            document.querySelectorAll('.option-card.selected').forEach(card => {
+                const option = card.dataset.option;
+                const price = parseInt(card.dataset.price);
+                selectedOptions.push('- ' + optionPrices[option].name + ' - R$ ' + price.toFixed(2).replace('.', ','));
+                total += price;
+            });
+
+            // Get selected model
+            const modelData = localStorage.getItem('selectedModelData');
+            let modelInfo = '';
+            if (modelData) {
+                const model = JSON.parse(modelData);
+                modelInfo = `
+
+*MODELO ESCOLHIDO:*
+${model.name}
+${model.link}`;
+            }
+
+            // Format date
+            let dataFormatada = '';
+            if (dataEvento) {
+                const [year, month, day] = dataEvento.split('-');
+                dataFormatada = `${day}/${month}/${year}`;
+            }
+
+            // Build message without emojis
+            let message = `*ORCAMENTO DE CONVITE*
+
+*FUNCOES SELECIONADAS:*
+${selectedOptions.join('\n')}
+
+*VALOR TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*${modelInfo}
+
+*DADOS DO EVENTO:*
+- Nome(s): ${nomes}
+`;
+            if (tipoEventoText) message += `- Tipo: ${tipoEventoText}\n`;
+            if (idade) message += `- Idade: ${idade} anos\n`;
+            message += `- Data: ${dataFormatada}\n`;
+            message += `- Hora: ${horaInicio}${horaTermino ? ' as ' + horaTermino : ''}\n`;
+            if (endereco) message += `- Endereco: ${endereco}\n`;
+            if (whatsappConfirmacao) message += `- WhatsApp p/ confirmacoes: ${whatsappConfirmacao}\n`;
+            if (musica) message += `- Musica: ${musica}\n`;
+            if (cronometroEnabled) message += `- Cronometro regressivo: Sim\n`;
+            if (manual) message += `- Manual do Convidado: ${manual}\n`;
+            if (sugestoes) message += `- Sugestoes de Presentes: ${sugestoes}\n`;
+
+            // Check for pending optional data (excluding horaTermino, cronometro, whatsappConfirmacao if confirmacao selected, sugestoes if not selected)
+            const pendingData = [];
+            if (!tipoEventoText) pendingData.push('Tipo de Evento');
+            if (!idade && document.getElementById('idadeContainer').classList.contains('hidden') === false) pendingData.push('Idade');
+            if (!endereco) pendingData.push('Endereco do Evento');
+            if (!confirmacaoSelected && !whatsappConfirmacao) pendingData.push('WhatsApp para confirmacoes');
+            if (!musica) pendingData.push('Musica');
+            if (!manual) pendingData.push('Manual do Convidado');
+            if (sugestaoSelected && !sugestoes) pendingData.push('Sugestoes de Presentes');
+
+            if (pendingData.length > 0) {
+                message += `
+*DADOS PENDENTES:*
+- ${pendingData.join('\n- ')}
+`;
+            }
+
+            message += `
+_Orcamento feito pelo site_`;
+
+            // Store message for later use
+            window.pendingQuoteMessage = message;
+            window.pendingQuoteTotal = total;
+
+            // Check if payment was initiated
+            if (!paymentInitiated) {
+                showPaymentConfirmModal();
+                return;
+            }
+
+            // If payment was initiated, proceed to WhatsApp
+            proceedToWhatsApp();
+        }
+
+        // Function to actually send to WhatsApp (called after payment confirmation)
+        function proceedToWhatsApp() {
+            const message = window.pendingQuoteMessage;
+            const total = window.pendingQuoteTotal || 0;
+
+            // Track Lead event in Meta Pixel
+            fbq('track', 'Lead', {
+                content_name: 'Quote Request',
+                content_category: 'WhatsApp Quote',
+                currency: 'BRL',
+                value: total
+            });
+
+            // Encode and redirect
+            const encodedMessage = encodeURIComponent(message);
+            window.open('https://wa.me/5511939047235?text=' + encodedMessage, '_blank');
+        }
+
+        // ===== DATA PERSISTENCE =====
+
+        // Save form data to localStorage
+        function saveFormData() {
+            const formData = {
+                nomes: document.getElementById('nomes').value,
+                tipoEvento: document.getElementById('tipoEvento').value,
+                idade: document.getElementById('idade').value,
+                dataEvento: document.getElementById('dataEvento').value,
+                horaInicio: document.getElementById('horaInicio').value,
+                horaTermino: document.getElementById('horaTermino').value,
+                endereco: document.getElementById('endereco').value,
+                whatsappConfirmacao: document.getElementById('whatsappConfirmacao').value,
+                musica: document.getElementById('musica').value,
+                manual: document.getElementById('manual').value,
+                cronometroEnabled: cronometroEnabled,
+                selectedOptions: Array.from(document.querySelectorAll('.option-card.selected')).map(c => c.dataset.option)
+            };
+            localStorage.setItem('orcamentoFormData', JSON.stringify(formData));
+        }
+
+        // Load form data from localStorage
+        function loadFormData() {
+            const saved = localStorage.getItem('orcamentoFormData');
+            if (!saved) return;
+
+            try {
+                const formData = JSON.parse(saved);
+
+                // Load text fields
+                if (formData.nomes) document.getElementById('nomes').value = formData.nomes;
+                if (formData.tipoEvento) {
+                    document.getElementById('tipoEvento').value = formData.tipoEvento;
+                    // Trigger change to show age field if needed
+                    const event = new Event('change');
+                    document.getElementById('tipoEvento').dispatchEvent(event);
+                }
+                if (formData.idade) document.getElementById('idade').value = formData.idade;
+                if (formData.dataEvento) document.getElementById('dataEvento').value = formData.dataEvento;
+                if (formData.horaInicio) document.getElementById('horaInicio').value = formData.horaInicio;
+                if (formData.horaTermino) document.getElementById('horaTermino').value = formData.horaTermino;
+                if (formData.endereco) document.getElementById('endereco').value = formData.endereco;
+                if (formData.whatsappConfirmacao) document.getElementById('whatsappConfirmacao').value = formData.whatsappConfirmacao;
+                if (formData.musica) document.getElementById('musica').value = formData.musica;
+                if (formData.manual) document.getElementById('manual').value = formData.manual;
+
+                // Load cronometro toggle
+                if (formData.cronometroEnabled) {
+                    cronometroEnabled = true;
+                    document.getElementById('cronometroToggle').classList.add('active');
+                    document.getElementById('cronometroLabel').textContent = 'Sim';
+                }
+
+                // Load selected options
+                if (formData.selectedOptions && formData.selectedOptions.length > 0) {
+                    // First deselect all
+                    document.querySelectorAll('.option-card').forEach(card => {
+                        card.classList.remove('selected');
+                    });
+                    // Then select saved ones
+                    formData.selectedOptions.forEach(optionId => {
+                        const card = document.querySelector(`.option-card[data-option="${optionId}"]`);
+                        if (card) card.classList.add('selected');
+                    });
+                    updateTotal();
+                }
+            } catch (e) {
+                console.error('Error loading saved form data:', e);
+            }
+        }
+
+        // Clear all data
+        function clearAllData() {
+            if (!confirm('Tem certeza que deseja excluir todos os dados? Isso irá zerar todas as seleções e campos.')) {
+                return;
+            }
+
+            // Clear localStorage
+            localStorage.removeItem('orcamentoFormData');
+            localStorage.removeItem('selectedModel');
+            localStorage.removeItem('selectedModelData');
+
+            // Reset form fields
+            document.getElementById('nomes').value = '';
+            document.getElementById('tipoEvento').value = '';
+            document.getElementById('idade').value = '';
+            document.getElementById('idadeContainer').classList.add('hidden');
+            document.getElementById('dataEvento').value = '';
+            document.getElementById('horaInicio').value = '';
+            document.getElementById('horaTermino').value = '';
+            document.getElementById('musica').value = '';
+            document.getElementById('manual').value = '';
+
+            // Reset cronometro
+            cronometroEnabled = false;
+            document.getElementById('cronometroToggle').classList.remove('active');
+            document.getElementById('cronometroLabel').textContent = 'Não';
+
+            // Reset options (only keep default selected)
+            document.querySelectorAll('.option-card').forEach(card => {
+                if (card.dataset.option === 'abertura') {
+                    card.classList.add('selected');
+                } else {
+                    card.classList.remove('selected');
+                }
+            });
+
+            // Reload model display
+            loadSelectedModel();
+            updateTotal();
+
+            alert('Dados excluídos! Você pode começar um novo orçamento.');
+        }
+
+        // Add listeners for auto-save
+        function setupAutoSave() {
+            // Form inputs
+            ['nomes', 'tipoEvento', 'idade', 'dataEvento', 'horaInicio', 'horaTermino', 'musica', 'manual'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('input', saveFormData);
+                    el.addEventListener('change', saveFormData);
+                }
+            });
+
+            // Options cards
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    setTimeout(saveFormData, 100);
+                });
+            });
+        }
+
+        // Override toggle function to save
+        const originalToggleCronometro = toggleCronometro;
+        toggleCronometro = function () {
+            cronometroEnabled = !cronometroEnabled;
+            const toggle = document.getElementById('cronometroToggle');
+            const label = document.getElementById('cronometroLabel');
+            toggle.classList.toggle('active', cronometroEnabled);
+            label.textContent = cronometroEnabled ? 'Sim' : 'Não';
+            saveFormData();
+        };
+
+        // Initialize
+        loadSelectedModel();
+        initVideos();
+        loadFormData(); // Load saved data first
+        updateTotal();
+        setupAutoSave();
+    </script>
+</body>
+
+</html>
