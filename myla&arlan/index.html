@@ -79,7 +79,7 @@
 
             <style>
                 :root {
-                    --button-color: #1a1a1a;
+                    --button-color: #ffa53d;
                 }
                 .custom-button-bg {
                     background-color: var(--button-color) !important;
@@ -95,15 +95,15 @@
         class="relative w-full max-w-[480px] h-full bg-black shadow-2xl overflow-hidden transition-all duration-300">
 
         <video id="videoLoop" class="camada z-10 invisivel" playsinline loop muted>
-            <source src="loop/loop_1766335198.mp4" type="video/mp4">
+            <source src="loop/loop_1766335301.mp4" type="video/mp4">
         </video>
 
         <video id="videoAbertura" class="camada z-20" playsinline muted>
-            <source src="abertura/abertura_1766335198.mp4" type="video/mp4">
+            <source src="abertura/abertura_1766335301.mp4" type="video/mp4">
         </video>
 
         <audio id="musicaFundo" loop preload="auto">
-            <source src="musica/musica_1766335198.mp3" type="audio/mp3">
+            <source src="musica/musica_1766335301.mp3" type="audio/mp3">
         </audio>
 
         <button id="btnMute"
@@ -131,7 +131,7 @@
 
         <div id="capaInicial"
             class="absolute inset-0 z-50 bg-cover bg-center flex flex-col items-center justify-center cursor-pointer transition-opacity duration-700"
-            style="background-image: url('capa/capa_1766335198.jpg');">
+            style="background-image: url('capa/capa_1766335301.jpg');">
             <div class="absolute inset-0 bg-black/20"></div>
 
             <div id="dicaInteractionContainer" class="relative z-10 flex flex-col items-center gap-4 animate-pulse">
@@ -151,7 +151,7 @@
             class="relative w-full max-w-[400px] h-[80%] rounded-xl shadow-2xl overflow-hidden flex flex-col border border-white/20">
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="loop/folha_vazia_1766335198.jpg" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="loop/folha_vazia_1766335301.jpg" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/60"></div>
             </div>
 
@@ -198,7 +198,7 @@
 
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="loop/folha_vazia_1766335198.jpg" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="loop/folha_vazia_1766335301.jpg" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/70"></div>
             </div>
 
@@ -262,9 +262,36 @@
         // ==================================================================
         // 1. CONFIGURAÇÃO DOS BOTÕES (Edite Aqui!)
         // ==================================================================
-        const menuConfig = [];
+        const menuConfig = [
+    {
+        "titulo": "Manual do Convidado",
+        "icone": "fa-solid fa-book",
+        "link": "#",
+        "manualText": "\n<div>\n    <h3><i class=\"fa-solid fa-greeting-heart\"></i> Bem-vindos</h3>\n    <p>É com muita alegria que damos as boas-vindas a você. Estamos vivendo um momento especial e ficamos felizes em poder compartilhá-lo com pessoas queridas.</p>\n    <p><i class=\"fa-solid fa-clock\"></i> Pedimos, com carinho, que chegue com alguns minutos de antecedência.</p>\n    <p><i class=\"fa-solid fa-tshirt\"></i> Sugerimos traje esporte fino / social, prezando pelo conforto e elegância.</p>\n    <p><i class=\"fa-solid fa-child\"></i> Amamos as crianças, mas neste dia optamos por uma celebração exclusivamente para adultos. Agradecemos a compreensão.</p>\n    <p><i class=\"fa-solid fa-gift\"></i> O maior presente para nós é a sua presença. Caso deseje nos presentear, reunimos algumas sugestões em nosso site.</p>\n    <p><i class=\"fa-solid fa-calendar-check\"></i> Pedimos gentilmente sua confirmação até <strong>15/01/2026</strong>.</p>\n</div>\n<div>\n    <h3><i class=\"fa-solid fa-heart\"></i> Agradecimento</h3>\n    <p>Ter você conosco tornará esse momento ainda mais especial.</p>\n    <p>Com carinho, Myla & Arlan</p>\n</div>\n"
+    },
+    {
+        "titulo": "Como Chegar",
+        "icone": "fa-solid fa-location-dot",
+        "link": "https://maps.app.goo.gl/9rEmsV98GmuYiXYC6"
+    },
+    {
+        "titulo": "Lista de Presentes",
+        "icone": "fa-solid fa-gift",
+        "link": "https://noivos.casar.com/myla-e-arlan?intro=0#/presentes"
+    },
+    {
+        "titulo": "Confirmar Presença",
+        "icone": "fa-regular fa-circle-check",
+        "link": "https://noivos.casar.com/myla-e-arlan?intro=0#/rsvp"
+    },
+    {
+        "titulo": "Site dos Noivos",
+        "icone": "fa-solid fa-user-friends",
+        "link": "https://noivos.casar.com/myla-e-arlan"
+    }
+];
         // Injected by AutoBuilder
-        const buttonSize = parseFloat('1.0') || 1.0;
+        const buttonSize = parseFloat('1') || 1.0;
 
         // ==================================================================
         // 2. REFERÊNCIAS DO DOM
