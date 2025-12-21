@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelos de Convites | Convites Premium</title>
+    <meta name="description"
+        content="Galeria de modelos de convites digitais premium. Escolha seu modelo favorito para aniversários, casamentos, 15 anos e muito mais.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: '#0a0a0a',
+                        darker: '#050505',
+                        primary: '#ffffff',
+                        accent: '#d4af37',
+                        'accent-light': '#f0d78c',
+                        glass: 'rgba(255, 255, 255, 0.05)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #d4af37, #f0d78c, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .model-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .model-card:hover {
+            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .model-card.selected {
+            border-color: #d4af37;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .model-card.selected::before {
+            content: '✓ SELECIONADO';
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: linear-gradient(135deg, #d4af37, #b8962e);
+            color: #0a0a0a;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 20px;
+            z-index: 10;
+        }
+
+        .model-cover {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .model-card:hover .model-cover {
+            transform: scale(1.05);
+        }
+
+        .lazy-loading {
+            background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #d4af37, #b8962e);
+            color: #0a0a0a;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .notice-bar {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .search-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(212, 175, 55, 0.5);
+            outline: none;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1000;
+        }
+
+        .whatsapp-btn {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .matched-highlight {
+            order: -1;
+        }
+
+        .suggestion-btn {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: #f0d78c;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .suggestion-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+
+        .suggestion-btn.active {
+            background: #d4af37;
+            color: #0a0a0a;
+            border-color: #d4af37;
+        }
+
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 1rem;
+            z-index: 100;
+        }
+
+        .btn-orcamento {
+            background: linear-gradient(135deg, #d4af37, #b8962e);
+            color: #0a0a0a;
+            font-weight: 600;
+            padding: 0.875rem 2rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-orcamento:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5);
+        }
+    </style>
+
+    <!-- Meta Pixel Code -->
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1628532911861052');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=1628532911861052&ev=PageView&noscript=1" /></noscript>
+    <!-- End Meta Pixel Code -->
+</head>
+
+<body class="antialiased">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 glass-panel">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold tracking-tight">
+                <span class="gradient-text">Convites</span><span
+                    class="text-white/70 text-sm align-top ml-1">Premium</span>
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="orcamento.html" class="text-sm font-medium hover:text-accent transition-colors">Orçamento</a>
+                <a href="https://wa.me/5511939047235" target="_blank"
+                    class="text-sm font-medium hover:text-accent transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                    </svg>
+                    Contato
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Notice Bar -->
+    <div class="notice-bar py-4 px-6 text-center">
+        <p class="text-sm md:text-base text-accent-light max-w-4xl mx-auto">
+            <span class="font-semibold">💡 Dica:</span> Podemos mudar a cor ou tema do modelo escolhido, combinar temas,
+            e também criar um modelo completamente do zero caso nenhum dos nossos tenha agradado. Além disso, também
+            aceitamos modelos da internet como inspiração!
+        </p>
+    </div>
+
+    <!-- Header -->
+    <header class="py-8 px-6 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+            Nossos <span class="gradient-text">Modelos</span>
+        </h1>
+        <p class="text-gray-400 max-w-2xl mx-auto mb-6">
+            Escolha um modelo e personalize do seu jeito. Todos incluem abertura animada, música e botões interativos.
+        </p>
+
+        <!-- Search -->
+        <div class="max-w-xl mx-auto relative mb-4">
+            <input type="text" id="searchInput" placeholder="Buscar por tema... (ex: casamento, 15 anos, rosa, disney)"
+                class="search-input w-full px-5 py-4 pl-12 rounded-full text-white placeholder-gray-500">
+            <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+        </div>
+
+        <!-- Suggestion Buttons -->
+        <div class="flex flex-wrap gap-2 justify-center mb-4">
+            <button class="suggestion-btn" onclick="setSuggestion('15 anos')">15 Anos</button>
+            <button class="suggestion-btn" onclick="setSuggestion('casamento')">Casamento</button>
+            <button class="suggestion-btn" onclick="setSuggestion('aniversário')">Aniversário</button>
+            <button class="suggestion-btn" onclick="setSuggestion('debutante')">Debutante</button>
+        </div>
+
+        <p class="text-xs text-gray-500">Os modelos correspondentes aparecerão primeiro</p>
+    </header>
+
+    <!-- Models Grid -->
+    <main class="max-w-7xl mx-auto px-6 pb-28">
+        <div id="modelsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
+            <!-- Models will be generated by JavaScript -->
+        </div>
+    </main>
+
+    <!-- Fixed Bottom Bar -->
+    <div class="bottom-bar">
+        <div class="max-w-7xl mx-auto flex justify-center">
+            <a href="orcamento.html" class="btn-orcamento">
+                Ir para Orçamento
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- WhatsApp Float -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/5511939047235" target="_blank" class="whatsapp-btn">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+                <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+            </svg>
+        </a>
+    </div>
+
+    <script>
+        // Model data with all 24 invitations - SIMPLIFIED NAMES (theme/color only)
+        const models = [
+            {
+                id: 'casamento-marsala-debora',
+                name: 'Casamento Marsala',
+                theme: 'Marsala',
+                keywords: ['casamento', 'marsala', 'vinho', 'bordô', 'elegante'],
+                cover: 'Links e capas/Casamento Débora e Caio Marsala/capa/capa.jpg',
+                link: 'https://modelo-casamento-marsala-deboraecaio.netlify.app/'
+            },
+            {
+                id: 'casamento-azul-junior',
+                name: 'Casamento Azul Claro',
+                theme: 'Azul Claro',
+                keywords: ['casamento', 'azul', 'claro', 'suave', 'delicado'],
+                cover: 'Links e capas/Casamento Junior e Ana/capa/capa.jpg',
+                link: 'https://modelo-casamento-azulclaro-junioreana.netlify.app/'
+            },
+            {
+                id: 'casamento-marrom-gislene',
+                name: 'Casamento Marrom',
+                theme: 'Marrom Rústico',
+                keywords: ['casamento', 'marrom', 'terra', 'rústico', 'elegante'],
+                cover: 'Links e capas/Casamento Marrom Gislene e Carlos Leonardo/capa/capa.jpg',
+                link: 'https://modelo-casamento-marrom-gislenecarlos.netlify.app/'
+            },
+            {
+                id: 'bodas-zinco-antonio',
+                name: 'Bodas Marsala e Branco',
+                theme: 'Marsala e Branco',
+                keywords: ['casamento', 'bodas', 'zinco', 'marsala', 'branco'],
+                cover: 'Links e capas/Convite Antonio e Sara Bodas de Zinco/capa/capa.jpg',
+                link: 'https://model-casam-marsalabranco-antonioesar.netlify.app/'
+            },
+            {
+                id: 'bela-fera-lizandra',
+                name: 'A Bela e a Fera',
+                theme: 'Disney',
+                keywords: ['15 anos', 'debutante', 'bela e a fera', 'disney', 'princesa', 'rosa', 'dourado'],
+                cover: 'Links e capas/Convite Bela e a Fera Lizandra 15 Anos/capa/capa.jpg',
+                link: 'https://model-niver-belaeafera-lizandra.netlify.app/'
+            },
+            {
+                id: 'casamento-fabiana',
+                name: 'Casamento Verde Oliva',
+                theme: 'Verde Oliva e Salmão',
+                keywords: ['casamento', 'verde', 'oliva', 'salmão', 'elegante', 'sofisticado'],
+                cover: 'Links e capas/Convite Casamento Fabiana e Douglas/capa/capa.jpg',
+                link: 'https://model-casam-verdeolivasalmao-fabdougl.netlify.app/'
+            },
+            {
+                id: 'casamento-sabatha',
+                name: 'Casamento Azul e Prata',
+                theme: 'Azul, Prata e Branco',
+                keywords: ['casamento', 'azul', 'prata', 'branco', 'elegante', 'inverno'],
+                cover: 'Links e capas/Convite Casamento Sabatha/capa/capa.jpg',
+                link: 'https://model-casam-azulpratabran-sabatha.netlify.app/'
+            },
+            {
+                id: 'enrolados-nycolle',
+                name: 'Enrolados / Rapunzel',
+                theme: 'Lilás e Dourado',
+                keywords: ['15 anos', 'debutante', 'enrolados', 'rapunzel', 'disney', 'lilás', 'dourado', 'balada'],
+                cover: 'Links e capas/Convite Enrolados Lilás Dourado Nycolle 15 Anos/capa/capa.jpg',
+                link: 'https://model-niver-rapunzelbalada-nycolle.netlify.app/'
+            },
+            {
+                id: 'casamento-ester-janio',
+                name: 'Casamento Verde Oliva',
+                theme: 'Verde Oliva',
+                keywords: ['casamento', 'verde', 'oliva', 'natureza', 'elegante'],
+                cover: 'Links e capas/Convite Ester e Jânio/capa/capa.jpg',
+                link: 'https://model-casam-verdeoliva-esterjanio.netlify.app/'
+            },
+            {
+                id: 'gemeas-gabriela-luiza',
+                name: 'Infantil Rosa Claro',
+                theme: 'Rosa Claro',
+                keywords: ['aniversário', 'infantil', 'gêmeas', 'rosa', 'claro', 'delicado'],
+                cover: 'Links e capas/Convite Gêmeas Gabriela e Luiza/capa/capa.jpg',
+                link: 'https://model-niver-rosaclaro-gemeas.netlify.app/'
+            },
+            {
+                id: 'helo-15-anos',
+                name: 'Dourado e Branco',
+                theme: 'Dourado e Branco',
+                keywords: ['15 anos', 'debutante', 'dourado', 'branco', 'elegante', 'clássico'],
+                cover: 'Links e capas/Convite Helo 15 Anos/capa/capa.jpg',
+                link: 'https://model-niver-douradobranco-helo.netlify.app/'
+            },
+            {
+                id: 'laura-pool-party',
+                name: 'Pool Party',
+                theme: 'Tropical / Piscina',
+                keywords: ['15 anos', 'debutante', 'pool party', 'piscina', 'verão', 'tropical', 'divertido'],
+                cover: 'Links e capas/Convite Laura Pool Party XV 15/capa/capa.jpg',
+                link: 'https://model-niver-poolparty-laura15.netlify.app/'
+            },
+            {
+                id: 'casamento-maiquele',
+                name: 'Casamento Branco e Marsala',
+                theme: 'Branco e Marsala',
+                keywords: ['casamento', 'branco', 'marsala', 'vinho', 'elegante'],
+                cover: 'Links e capas/Convite Maiquele e Anderson/capa/capa.jpg',
+                link: 'https://model-casam-brancomarsala-maiquele.netlify.app/'
+            },
+            {
+                id: 'maria-clara-moranguinho',
+                name: 'Moranguinho',
+                theme: 'Infantil / Vermelho',
+                keywords: ['aniversário', 'infantil', 'moranguinho', 'vermelho', 'criança'],
+                cover: 'Links e capas/Convite Maria Clara 2 Anos Moranguinho/capa/capa.jpg',
+                link: 'https://model-niver-morango-animado.netlify.app/'
+            },
+            {
+                id: 'maria-luiza-enrolados',
+                name: 'Rapunzel Lilás',
+                theme: 'Disney',
+                keywords: ['15 anos', 'debutante', 'enrolados', 'rapunzel', 'disney', 'lilás', 'roxo'],
+                cover: 'Links e capas/Convite Maria Luiza 15 Anos Enrolados/capa/capa.jpg',
+                link: 'https://model-niver-rapunzel-lilas-marialuiza.netlify.app/'
+            },
+            {
+                id: 'maris-16-anos',
+                name: 'Neon Balada',
+                theme: 'Neon / Moderno',
+                keywords: ['15 anos', '16 anos', 'debutante', 'neon', 'balada', 'festa', 'moderno', 'colorido'],
+                cover: 'Links e capas/Convite Maris 16 Anos/capa/capa.jpg',
+                link: 'https://model-niver-neonbalada-maris.netlify.app/'
+            },
+            {
+                id: 'patricia-50-anos',
+                name: 'Pool Party Adulto',
+                theme: 'Tropical / Piscina',
+                keywords: ['aniversário', 'pool party', 'piscina', 'adulto', 'tropical'],
+                cover: 'Links e capas/Convite Patricia 50 Anos/capa/capa.jpg',
+                link: 'https://model-niver-poolparty50-patricia.netlify.app/'
+            },
+            {
+                id: 'nicolly-rose-marsala',
+                name: 'Rose Marsala',
+                theme: 'Rosa e Vinho',
+                keywords: ['15 anos', 'debutante', 'rose', 'marsala', 'rosa', 'vinho', 'elegante'],
+                cover: 'Links e capas/Convite Rose Marsala Nicolly 15 Debutante/capa/capa.jpg',
+                link: 'https://model-niver-rosemarsala-nicolly.netlify.app/'
+            },
+            {
+                id: 'sarah-rosa-dourado',
+                name: 'Rosa e Dourado',
+                theme: 'Rosa e Dourado',
+                keywords: ['15 anos', 'debutante', 'rosa', 'dourado', 'elegante', 'clássico'],
+                cover: 'Links e capas/Convite Sarah Vitória Rosa e Dourado 15 Anos/capa/capa.jpg',
+                link: 'https://model-niver-rosadourado-sarah-longo.netlify.app/'
+            },
+            {
+                id: 'taysa-harry-potter',
+                name: 'Harry Potter',
+                theme: 'Magia / Fantasia',
+                keywords: ['aniversário', 'harry potter', 'magia', 'hogwarts', 'fantasia'],
+                cover: 'Links e capas/Convite Taysa Harry Potter/capa/capa.jpg',
+                link: 'https://model-niver-harrypotter-taysa.netlify.app/'
+            },
+            {
+                id: 'bruna-disney',
+                name: 'Viagem à Disney',
+                theme: 'Disney / Parques',
+                keywords: ['15 anos', 'debutante', 'disney', 'viagem', 'orlando', 'parque', 'divertido'],
+                cover: 'Links e capas/Convite Viagem à Disney Bruna 15 Anos/capa/capa.jpg',
+                link: 'https://model-niver-viagemdisney-bruna.netlify.app/'
+            },
+            {
+                id: 'maria-fernanda-rosa-lilas',
+                name: 'Rosa, Lilás e Dourado',
+                theme: 'Rosa Lilás Dourado',
+                keywords: ['15 anos', 'debutante', 'rosa', 'lilás', 'dourado', 'elegante'],
+                cover: 'Links e capas/Maria Fernanda 15 Anos Convite Rosa, Lilás e Dourado/capa/capa.jpg',
+                link: 'https://model-niver-rosalilasdourado-mafe.netlify.app/'
+            },
+            {
+                id: 'rafaella-baile-mascaras',
+                name: 'Baile de Máscaras',
+                theme: 'Vermelho Elegante',
+                keywords: ['15 anos', 'debutante', 'baile', 'máscaras', 'vermelho', 'elegante', 'masquerade'],
+                cover: 'Links e capas/Rafaella 15 Anos/capa/capa.jpg',
+                link: 'https://model-niver-bailemaskvermelho-rafaell.netlify.app/'
+            },
+            {
+                id: 'rafaella-marcelo-casamento',
+                name: 'Casamento Branco e Prata',
+                theme: 'Branco e Prata',
+                keywords: ['casamento', 'branco', 'prata', 'clássico', 'elegante'],
+                cover: 'Links e capas/Rafaella e Marcelo Convite/capa/capa.jpg',
+                link: 'https://model-casam-brancoprata-rafamarcelo.netlify.app/'
+            }
+        ];
+
+        // Get selected model from localStorage
+        function getSelectedModel() {
+            return localStorage.getItem('selectedModel');
+        }
+
+        // Set selected model
+        function selectModel(modelId) {
+            localStorage.setItem('selectedModel', modelId);
+            const model = models.find(m => m.id === modelId);
+            if (model) {
+                localStorage.setItem('selectedModelData', JSON.stringify(model));
+            }
+            renderModels(document.getElementById('searchInput').value);
+            // Optionally redirect
+            // window.location.href = 'orcamento.html';
+        }
+
+        // Set search suggestion
+        function setSuggestion(term) {
+            document.getElementById('searchInput').value = term;
+            renderModels(term);
+
+            // Update button states
+            document.querySelectorAll('.suggestion-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.toLowerCase() === term.toLowerCase());
+            });
+        }
+
+        // Create model card HTML - More compact for desktop
+        function createModelCard(model, isSelected) {
+            const card = document.createElement('div');
+            card.className = `model-card relative ${isSelected ? 'selected' : ''}`;
+            card.dataset.id = model.id;
+            card.dataset.keywords = model.keywords.join(' ').toLowerCase();
+
+            card.innerHTML = `
+                <div class="relative overflow-hidden">
+                    <div class="lazy-loading aspect-[3/4]">
+                        <img src="${model.cover}" 
+                             alt="${model.name}" 
+                             class="model-cover opacity-0 transition-opacity duration-300"
+                             loading="lazy"
+                             onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('lazy-loading');"
+                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 400%22%3E%3Crect fill=%22%231a1a2e%22 width=%22300%22 height=%22400%22/%3E%3Ctext fill=%22%23666%22 x=%22150%22 y=%22200%22 text-anchor=%22middle%22 font-size=%2214%22%3EImagem não disponível%3C/text%3E%3C/svg%3E'; this.parentElement.classList.remove('lazy-loading');">
+                    </div>
+                </div>
+                <div class="p-3">
+                    <h3 class="font-semibold text-sm mb-0.5 line-clamp-1">${model.name}</h3>
+                    <p class="text-xs text-accent-light mb-3">${model.theme}</p>
+                    <div class="flex flex-col gap-1.5">
+                        <button onclick="event.stopPropagation(); selectModel('${model.id}')" 
+                                class="btn-primary w-full py-1.5 px-3 rounded-lg text-xs font-medium">
+                            ${isSelected ? '✓ Selecionado' : 'Escolher'}
+                        </button>
+                        <a href="${model.link}" target="_blank" 
+                           class="btn-secondary w-full py-1.5 px-3 rounded-lg text-xs text-center">
+                            Ver Prévia
+                        </a>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Render all models
+        function renderModels(searchTerm = '') {
+            const grid = document.getElementById('modelsGrid');
+            const selectedId = getSelectedModel();
+            const term = searchTerm.toLowerCase().trim();
+
+            // Sort models: matching first, then the rest
+            const sortedModels = [...models].sort((a, b) => {
+                if (!term) return 0;
+
+                // Check for exact keyword match (full word)
+                const aExactMatch = a.keywords.some(k => k === term);
+                const bExactMatch = b.keywords.some(k => k === term);
+                if (aExactMatch && !bExactMatch) return -1;
+                if (!aExactMatch && bExactMatch) return 1;
+
+                // Check for partial match
+                const aMatch = a.keywords.some(k => k.includes(term)) || a.name.toLowerCase().includes(term) || a.theme.toLowerCase().includes(term);
+                const bMatch = b.keywords.some(k => k.includes(term)) || b.name.toLowerCase().includes(term) || b.theme.toLowerCase().includes(term);
+                if (aMatch && !bMatch) return -1;
+                if (!aMatch && bMatch) return 1;
+                return 0;
+            });
+
+            grid.innerHTML = '';
+            sortedModels.forEach(model => {
+                const isSelected = model.id === selectedId;
+                const isMatch = term && (
+                    model.keywords.some(k => k.includes(term)) ||
+                    model.name.toLowerCase().includes(term) ||
+                    model.theme.toLowerCase().includes(term)
+                );
+                const card = createModelCard(model, isSelected);
+                if (isMatch) {
+                    card.classList.add('matched-highlight');
+                    card.style.boxShadow = '0 0 20px rgba(212, 175, 55, 0.3)';
+                }
+                grid.appendChild(card);
+            });
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            renderModels(e.target.value);
+            // Clear active state on suggestion buttons
+            document.querySelectorAll('.suggestion-btn').forEach(btn => btn.classList.remove('active'));
+        });
+
+        // Initial render
+        renderModels();
+    </script>
+</body>
+
+</html>
