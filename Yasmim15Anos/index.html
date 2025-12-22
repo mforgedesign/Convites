@@ -101,6 +101,17 @@
         }
     </style>
 
+
+            <style>
+                :root {
+                    --button-color: #1a365d;
+                }
+                .custom-button-bg {
+                    background-color: var(--button-color) !important;
+                }
+                
+            </style>
+            
 </head>
 
 <body class="w-full h-[100dvh] flex justify-center items-center">
@@ -117,7 +128,7 @@
         </video>
 
         <audio id="musicaFundo" loop preload="auto">
-            <source src="musica/musica.mp3" type="audio/mp3">
+            <source src="musica/musica_1766439891.mp3?v=1766439891" type="audio/mp3">
         </audio>
 
         <button id="btnMute"
@@ -231,13 +242,13 @@
                 <div class="border-t border-white/10 pt-3 mt-2">
                     <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">
                         Você vai com a caravana? <span class="text-stone-400 font-normal">(Ônibus Opcional
-                            R$35)</span>
+                            R$45)</span>
                     </label>
                     <div class="flex items-center gap-2 mt-1">
                         <input type="checkbox" id="check-bus"
                             class="w-4 h-4 rounded bg-black/40 border-stone-500 text-green-500 focus:ring-green-500 focus:ring-offset-0">
                         <label for="check-bus" class="text-stone-200 text-xs cursor-pointer select-none drop-shadow">
-                            Sim, vou pagar os R$35
+                            Sim, vou pagar os R$45
                         </label>
                     </div>
                 </div>
@@ -252,33 +263,33 @@
 
     <script>
         // ==================================================================
-        // 1. CONFIGURAÇÃO DOS BOTÕES (Editado)
+        // 1. CONFIGURAÇÃO DOS BOTÕES (Editado com Piscina)
         // ==================================================================
         const menuConfig = [
-            {
-                "id": "manual",
-                "titulo": "Manual do Convidado",
-                "icone": "fa-solid fa-book",
-                "link": "#",
-                "manualText": "<div>\n    <h3><i class=\"fa-solid fa-heart\"></i> Mensagem Especial</h3>\n    <p>Há 15 anos, Deus me presenteou com a vida. Hoje, deixo para trás a infância e começo a escrever um novo capítulo da minha história. Cada sorriso, cada ensinamento e cada pessoa que caminha ao meu lado fazem parte de quem eu sou.</p>\n    <p>Este momento é ainda mais especial porque você está aqui para compartilhá-lo comigo. Que esse dia seja repleto de alegria, amor e memórias inesquecíveis.</p>\n    <p>Obrigada por fazer parte da minha história!</p>\n</div>\n\n<div>\n    <h3><i class=\"fa-solid fa-bus\"></i> Transporte</h3>\n    <p>Para sua comodidade, oferecemos a opção de transporte em ônibus para o evento. O valor é de <strong>R$ 35,00</strong>.</p>\n    <p>Por favor, confirme sua presença e efetue o pagamento até o dia <strong>15 de janeiro</strong>. Utilize a chave Pix abaixo:</p>\n    <p><strong>Chave Pix: 08566418719</strong></p>\n</div>\n\n<div>\n    <h3><i class=\"fa-solid fa-exclamation-circle\"></i> Importante</h3>\n    <p>Por gentileza, note que quem não confirmar a presença será automaticamente excluído da lista de convidados e não conseguirá entrar no evento.</p>\n</div>"
-            },
-            {
-                "titulo": "Como Chegar",
-                "icone": "fa-solid fa-location-dot",
-                "link": "https://maps.app.goo.gl/ECdB2ds2e7YaA2a87"
-            },
-            {
-                "titulo": "Lista de Presentes",
-                "icone": "fa-solid fa-gift",
-                "link": "#",
-                "isGiftImage": true
-            },
-            {
-                "titulo": "Confirmar Presença",
-                "icone": "fa-regular fa-circle-check",
-                "link": "5521979552802" // Número atualizado
-            }
-        ];
+    {
+        "id": "manual",
+        "titulo": "Manual do Convidado",
+        "icone": "fa-solid fa-book",
+        "link": "#",
+        "manualText": "<div>\n    <h3><i class=\"fa-solid fa-heart\"></i> Bem-vindo ao nosso casamento!</h3>\n    <p>Há 15 anos, Deus me presenteou com a vida. Hoje, deixo para trás a infância e começo a escrever um novo capítulo da minha história. Cada sorriso, cada ensinamento e cada pessoa que caminha ao meu lado fazem parte de quem eu sou.</p>\n    <p>Este momento é ainda mais especial porque você está aqui para compartilhá-lo comigo. Que esse dia seja repleto de alegria, amor e memórias inesquecíveis. Obrigada por fazer parte da minha história.</p>\n    \n    <h3><i class=\"fa-solid fa-bus\"></i> Transporte</h3>\n    <p>Haverá uma opção de transporte em ônibus para o evento. O valor é de <strong>R$ 35,00</strong>.</p>\n    <p>Por favor, confirme sua presença e efetue o pagamento até o dia <strong>15 de janeiro</strong>. Você pode realizar o pagamento através do Pix utilizando a chave <strong>08566418719</strong>.</p>\n    \n    <h3><i class=\"fa-solid fa-exclamation-triangle\"></i> Importante</h3>\n    <p>Quem não confirmar a presença ficará automaticamente excluído da lista de convidados e não poderá entrar no evento.</p>\n</div>"
+    },
+    {
+        "titulo": "Como Chegar",
+        "icone": "fa-solid fa-location-dot",
+        "link": "https://maps.app.goo.gl/ECdB2ds2e7YaA2a87"
+    },
+    {
+        "titulo": "Lista de Presentes",
+        "icone": "fa-solid fa-gift",
+        "link": "#",
+        "isGiftImage": true
+    },
+    {
+        "titulo": "Confirmar Presença",
+        "icone": "fa-regular fa-circle-check",
+        "link": "5521988013436"
+    }
+];
         
         // Injected by AutoBuilder
         const buttonSize = parseFloat('1') || 1.0;
