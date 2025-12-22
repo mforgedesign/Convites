@@ -725,6 +725,11 @@
                     </select>
                 </div>
 
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Tema do Convite *</label>
+                    <input type="text" id="temaConvite" class="form-input" placeholder="Ex: Rapunzel, Boteco, Tropical">
+                </div>
+
                 <div id="idadeContainer" class="hidden">
                     <label class="block text-sm text-gray-400 mb-2">Idade</label>
                     <input type="number" id="idade" class="form-input" placeholder="Ex: 15">
@@ -985,7 +990,9 @@
             const alertIcon = document.getElementById('alertIcon');
 
             alertTitle.textContent = title;
-            alertMessage.textContent = message;
+            alertTitle.textContent = title;
+            // Use innerHTML to support formatted lists
+            alertMessage.innerHTML = message;
 
             // Set icon based on type
             if (type === 'success') {
@@ -1023,6 +1030,11 @@
         });
         document.getElementById('horaInicio').addEventListener('change', function () {
             if (this.value) {
+                this.classList.remove('border-red-500', 'border-2');
+            }
+        });
+        document.getElementById('temaConvite').addEventListener('input', function () {
+            if (this.value.trim()) {
                 this.classList.remove('border-red-500', 'border-2');
             }
         });
@@ -1308,20 +1320,30 @@
                 nomesInput.classList.add('border-red-500', 'border-2');
                 missingRequired.push('Nome(s)');
             }
+            const temaConviteInput = document.getElementById('temaConvite');
+            const temaConvite = temaConviteInput.value.trim();
+            if (!temaConvite) {
+                temaConviteInput.classList.add('border-red-500', 'border-2');
+                missingRequired.push('Tema do Convite');
+            }
             if (!dataEvento) {
                 dataEventoInput.classList.add('border-red-500', 'border-2');
                 missingRequired.push('Data do Evento');
             }
             if (!horaInicio) {
                 horaInicioInput.classList.add('border-red-500', 'border-2');
-                missingRequired.push('Hora de Inicio');
+                missingRequired.push('Hora de Início');
             }
 
             if (missingRequired.length > 0) {
-                showCustomAlert('Por favor, preencha os campos obrigatorios:\\n\\n- ' + missingRequired.join('\\n- '), 'Campos Obrigatorios', 'error');
+                const message = '<div class="text-left font-medium">Por favor, preencha os campos obrigatórios:</div><ul class="text-left list-disc list-inside mt-2 space-y-1 text-gray-300">' +
+                    missingRequired.map(field => `<li>${field}</li>`).join('') +
+                    '</ul>';
+                showCustomAlert(message, 'Campos Obrigatórios', 'error');
                 document.getElementById('dadosEvento').scrollIntoView({ behavior: 'smooth', block: 'start' });
                 return;
             }
+
 
             const tipoEvento = document.getElementById('tipoEvento');
             const tipoEventoValue = tipoEvento.value;
@@ -1379,6 +1401,7 @@ ${selectedOptions.join('\n')}
 
 *DADOS DO EVENTO:*
 - Nome(s): ${nomes}
+- Tema: ${temaConvite}
 `;
             if (tipoEventoText) message += `- Tipo: ${tipoEventoText}\n`;
             if (idade) message += `- Idade: ${idade} anos\n`;
