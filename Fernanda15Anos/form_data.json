@@ -8,7 +8,7 @@
   "colors": "",
   "buttonColor": "#f08eb1",
   "phrase": "",
-  "music": "",
+  "music": "musica",
   "mapsLink": "https://maps.app.goo.gl/u4vtogKq4LZgW2ox6",
   "giftsLink": "",
   "giftMode": "image",
@@ -21,6 +21,6 @@
   "manual": "(Quebre linha quando necessário) Social, trajes finos. Chegue no horário: Sua presença pontual é muito importante para nós.\n Confirme sua presença: Por favor, confirme presença pelo menos 15 dias antes do evento.\n Divirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.\n Não vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.",
   "whatsapp": "929925837783",
   "confirmLink": "",
-  "processedManualText": "\n<div>\n    <h3><i class=\"fa-solid fa-calendar-check\"></i> Social, trajes finos</h3>\n    <p>Chegue no horário: Sua presença pontual é muito importante para nós.</p>\n    \n    <h3><i class=\"fa-solid fa-envelope\"></i> Confirme sua presença</h3>\n    <p>Por favor, confirme presença pelo menos 15 dias antes do evento.</p>\n    \n    <h3><i class=\"fa-solid fa-smile\"></i> Divirta-se bastante!</h3>\n    <p>Estamos ansiosos para celebrar este momento especial com você.</p>\n    \n    <h3><i class=\"fa-solid fa-heart\"></i> Não vá embora sem me dar um abraço e comer um pedaço do bolo</h3>\n    <p>Queremos compartilhar cada instante com você.</p>\n</div>\n",
+  "processedManualText": "<div>\n    <h3><i class=\"fa-solid fa-users\"></i> Bem-vindo ao nosso Casamento!</h3>\n    <p>Estamos muito felizes em tê-lo conosco para celebrar este momento especial.</p>\n    \n    <h3><i class=\"fa-solid fa-calendar-check\"></i> Informações Importantes</h3>\n    <ul>\n        <li>\n            <i class=\"fa-solid fa-tuxedo\"></i> <strong>Traje:</strong> Social, trajes finos.\n        </li>\n        <li>\n            <i class=\"fa-solid fa-clock\"></i> <strong>Chegue no horário:</strong> Sua presença pontual é muito importante para nós.\n        </li>\n        <li>\n            <i class=\"fa-solid fa-check-circle\"></i> <strong>Confirme sua presença:</strong> Por favor, confirme presença pelo menos 15 dias antes do evento.\n        </li>\n    </ul>\n    \n    <h3><i class=\"fa-solid fa-heart\"></i> Aproveite!</h3>\n    <p>Divirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.</p>\n    \n    <h3><i class=\"fa-solid fa-gift\"></i> Não se esqueça!</h3>\n    <p>Não vá embora sem me dar um abraço e comer um pedaço do bolo. Queremos compartilhar cada instante com você!</p>\n</div>",
   "slug": "Fernanda15Anos"
 }
