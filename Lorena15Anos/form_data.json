@@ -11,8 +11,8 @@
   "music": "musica",
   "mapsLink": "https://maps.app.goo.gl/oe9dQzPjNV19t1du7",
   "giftsLink": "",
-  "giftMode": "none",
-  "giftImageUrl": null,
+  "giftMode": "image",
+  "giftImageUrl": "/output/presentes.jpg",
   "extraLink": "",
   "extraName": "",
   "extraIcon": "",
@@ -21,6 +21,6 @@
   "manual": "Chegue no horário: Sua presença pontual é muito importante para nós.\nConfirme sua presença: Por favor, confirme presença pelo menos 15 dias antes do evento.\nDivirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.\nNão vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.",
   "whatsapp": "5521964039787",
   "confirmLink": "https://docs.google.com/forms/d/e/1FAIpQLSdrQCE6HomNkLjoRE1ol-d1yACmm9DF7AgI8m3B4aT_Wvd4Ug/viewform?usp=publish-editor",
-  "processedManualText": "<div>\n    <h3><i class=\"fa-solid fa-clock\"></i> Chegue no horário</h3>\n    <p>Sua presença pontual é muito importante para nós.</p>\n    \n    <h3><i class=\"fa-solid fa-check-circle\"></i> Confirme sua presença</h3>\n    <p>Por favor, confirme presença pelo menos 15 dias antes do evento.</p>\n    \n    <h3><i class=\"fa-solid fa-smile\"></i> Divirta-se bastante!</h3>\n    <p>Estamos ansiosos para celebrar este momento especial com você.</p>\n    \n    <h3><i class=\"fa-solid fa-gift\"></i> Não vá embora sem me dar um abraço e comer um pedaço do bolo</h3>\n    <p>Queremos compartilhar cada instante com você.</p>\n</div>",
+  "processedManualText": "<div>\n    <h3><i class=\"fa-solid fa-clock\"></i> Chegue no horário</h3>\n    <p>Sua presença pontual é muito importante para nós.</p>\n    \n    <h3><i class=\"fa-solid fa-check-circle\"></i> Confirme sua presença</h3>\n    <p>Por favor, confirme presença pelo menos 15 dias antes do evento.</p>\n    \n    <h3><i class=\"fa-solid fa-smile\"></i> Divirta-se bastante!</h3>\n    <p>Estamos ansiosos para celebrar este momento especial com você.</p>\n    \n    <h3><i class=\"fa-solid fa-heart\"></i> Não vá embora sem me dar um abraço e comer um pedaço do bolo</h3>\n    <p>Queremos compartilhar cada instante com você.</p>\n</div>",
   "slug": "Lorena15Anos"
 }
