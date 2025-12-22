@@ -4,20 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-
-    <title>Convite - Yasmim | Aniversário</title>
-
-    <meta property="og:title" content="Convite - Yasmim | Aniversário">
-    <meta property="og:description" content="Clique para ver o convite interativo!">
-    <meta property="og:image" content="capa/capa_1766427027.jpg?v=1766427027">
-    <meta property="og:type" content="website">
-
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💌</text></svg>">
+    <title>Convite Interativo</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -93,7 +80,7 @@
 
     <style>
         :root {
-            --button-color: #1a365d;
+            --button-color: #6b0b0b;
         }
 
         .custom-button-bg {
@@ -120,15 +107,15 @@
         class="relative w-full max-w-[480px] h-full bg-black shadow-2xl overflow-hidden transition-all duration-300">
 
         <video id="videoLoop" class="camada z-10 invisivel" playsinline loop muted>
-            <source src="loop/loop_1766427027.mp4?v=1766427027" type="video/mp4">
+            <source src="loop/loop_1766441120.mp4?v=1766441120" type="video/mp4">
         </video>
 
         <video id="videoAbertura" class="camada z-20" playsinline muted>
-            <source src="abertura/abertura_1766427027.mp4?v=1766427027" type="video/mp4">
+            <source src="abertura/abertura_1766441120.mp4?v=1766441120" type="video/mp4">
         </video>
 
         <audio id="musicaFundo" loop preload="auto">
-            <source src="musica/musica_1766440978.mp3?v=1766440978" type="audio/mp3">
+            <source src="musica/musica_1766441120.mp3?v=1766441120" type="audio/mp3">
         </audio>
 
         <button id="btnMute"
@@ -141,13 +128,8 @@
             Pular
         </button>
 
-        <div id="containerShadow"
-            class="absolute bottom-0 left-0 w-full z-30 pb-10 px-2 pt-20 invisivel transition-opacity duration-1000"
-            style="background: linear-gradient(to top, #000000E6, #00000066, transparent);">
-        </div>
-
         <div id="containerBotoes"
-            class="absolute left-0 w-full z-40 pb-10 px-2 invisivel transition-opacity duration-1000 flex justify-center"
+            class="absolute left-0 w-full z-40 pb-10 px-2 bg-gradient-to-t from-black/80 via-black/40 to-transparent pt-20 invisivel transition-opacity duration-1000 flex justify-center"
             style="bottom: 0px;">
             <div id="gridBotoes" class="flex flex-row flex-nowrap justify-evenly gap-1 w-full max-w-[480px]">
             </div>
@@ -155,13 +137,13 @@
 
         <div id="capaInicial"
             class="absolute inset-0 z-50 bg-cover bg-center flex flex-col items-center justify-center cursor-pointer transition-opacity duration-700"
-            style="background-image: url('capa/capa_1766427027.jpg?v=1766427027');">
+            style="background-image: url('capa/capa_1766441120.jpg?v=1766441120');">
             <div class="absolute inset-0 bg-black/20"></div>
 
             <div id="dicaInteractionContainer" class="relative z-10 flex flex-col items-center gap-4 animate-pulse">
                 <i class="fa-solid fa-hand-pointer text-5xl text-white drop-shadow-lg animar-clique"></i>
                 <h1 class="texto-capa text-2xl font-bold uppercase tracking-widest text-center px-4">
-                    Clique para interagir!
+                    Toque para interagir!
                 </h1>
             </div>
         </div>
@@ -173,97 +155,32 @@
         <div
             class="relative w-full max-w-[400px] h-[80%] rounded-xl shadow-2xl overflow-hidden flex flex-col border border-white/20">
             <div class="absolute inset-0 z-0">
-                <img src="loop/folha_vazia_1766427027.jpg?v=1766427027"
-                    class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="loop/folha_vazia_1766441120.jpg?v=1766441120" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/60"></div>
             </div>
 
             <div class="relative z-10 flex justify-between items-center p-4 border-b border-white/10">
-                <h2 id="manualTitle" class="text-xl font-bold text-white">Manual do Convidado</h2>
+                <h2 class="text-xl font-bold text-white">Manual do Convidado</h2>
                 <button id="btnCloseManual" class="text-white hover:text-gray-300 transition-colors">
                     <i class="fa-solid fa-xmark text-2xl"></i>
                 </button>
             </div>
 
             <div class="relative z-10 p-6 overflow-y-auto custom-scrollbar text-white text-center space-y-6">
+                <div class="space-y-2">
+                    <i class="fa-solid fa-circle-info text-3xl text-yellow-400 mb-2"></i>
+                    <h3 class="font-bold text-lg">Siga essas instruções e divirta-se</h3>
+                </div>
+
                 <div id="manualContent" class="text-sm leading-relaxed text-left">
                     </div>
             </div>
         </div>
     </div>
 
-    <div id="popupPresentes"
-        class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm invisivel">
-        <div class="relative max-w-[90vw] max-h-[90vh] rounded-xl shadow-2xl overflow-hidden">
-            <button id="btnClosePresentes"
-                class="absolute top-3 right-3 z-10 bg-black/50 text-white hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center transition-colors border border-white/20">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-            <img id="imagemPresentes" src="presentes/presentes_1766427027.jpg?v=1766427027"
-                class="max-w-full max-h-[85vh] object-contain rounded-lg">
-        </div>
-    </div>
-
-    <div id="popupRSVP"
-        class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm invisivel">
-        <div
-            class="relative w-full max-w-[350px] rounded-xl shadow-2xl overflow-hidden border border-white/20 m-4 flex flex-col">
-
-            <div class="absolute inset-0 z-0">
-                <img src="loop/folha_vazia_1766427027.jpg?v=1766427027"
-                    class="w-full h-full object-cover opacity-90 blur-[2px]">
-                <div class="absolute inset-0 bg-black/70"></div>
-            </div>
-
-            <div
-                class="relative z-10 flex justify-between items-center p-4 border-b border-white/10 bg-black/30 backdrop-blur-sm">
-                <h2 class="text-lg font-bold text-white"><i class="fa-brands fa-whatsapp text-green-500 mr-2"></i>
-                    Confirmar Presença</h2>
-                <button id="btnCloseRSVP" class="text-white hover:text-gray-300 transition-colors">
-                    <i class="fa-solid fa-xmark text-xl"></i>
-                </button>
-            </div>
-
-            <div class="relative z-10 p-6 space-y-4">
-                <div>
-                    <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Seu Nome Completo *</label>
-                    <input type="text" id="rsvp-name"
-                        class="w-full bg-black/40 border border-stone-500/50 rounded p-2 text-white focus:border-green-500 focus:outline-none placeholder-stone-400 truncate backdrop-blur-sm"
-                        placeholder="Ex: Maria Silva">
-                </div>
-
-                <div>
-                    <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Seu WhatsApp *</label>
-                    <input type="tel" id="rsvp-phone"
-                        class="w-full bg-black/40 border border-stone-500/50 rounded p-2 text-white focus:border-green-500 focus:outline-none placeholder-stone-400 truncate backdrop-blur-sm"
-                        placeholder="(DDD) 99999-9999">
-                </div>
-
-                <div class="border-t border-white/10 pt-3 mt-2">
-                    <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">
-                        Você vai com a caravana? <span class="text-stone-400 font-normal">(Ônibus Opcional
-                            R$45)</span>
-                    </label>
-                    <div class="flex items-center gap-2 mt-1">
-                        <input type="checkbox" id="check-bus"
-                            class="w-4 h-4 rounded bg-black/40 border-stone-500 text-green-500 focus:ring-green-500 focus:ring-offset-0">
-                        <label for="check-bus" class="text-stone-200 text-xs cursor-pointer select-none drop-shadow">
-                            Sim, vou pagar os R$45
-                        </label>
-                    </div>
-                </div>
-
-                <button id="btn-confirm-rsvp"
-                    class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-3 rounded-lg transition-colors mt-4 shadow-lg flex items-center justify-center gap-2">
-                    Confirmar no WhatsApp <i class="fa-solid fa-paper-plane"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
     <script>
         // ==================================================================
-        // 1. CONFIGURAÇÃO DOS BOTÕES (Editado com Piscina)
+        // 1. CONFIGURAÇÃO DOS BOTÕES
         // ==================================================================
         const menuConfig = [
     {
@@ -290,9 +207,6 @@
         "link": "5521988013436"
     }
 ];
-        
-        // Injected by AutoBuilder
-        const buttonSize = parseFloat('1') || 1.0;
 
         // ==================================================================
         // 2. REFERÊNCIAS DO DOM
@@ -305,7 +219,6 @@
         const btnMute = document.getElementById('btnMute');
         const iconMute = document.getElementById('iconMute');
         const containerBotoes = document.getElementById('containerBotoes');
-        const containerShadow = document.getElementById('containerShadow');
         const gridBotoes = document.getElementById('gridBotoes');
 
         // Popup Refs
@@ -313,22 +226,126 @@
         const btnCloseManual = document.getElementById('btnCloseManual');
         const manualContent = document.getElementById('manualContent');
 
-        const popupPresentes = document.getElementById('popupPresentes');
-        const btnClosePresentes = document.getElementById('btnClosePresentes');
-
-        // Popup RSVP Refs
-        const popupRSVP = document.getElementById('popupRSVP');
-        const btnCloseRSVP = document.getElementById('btnCloseRSVP');
-        const inputName = document.getElementById('rsvp-name');
-        const inputPhone = document.getElementById('rsvp-phone');
-        const btnConfirmRSVP = document.getElementById('btn-confirm-rsvp');
-        const checkBus = document.getElementById('check-bus'); // Referência do ônibus
-
-        let currentRSVPNumber = "";
-        
         let transicaoFeita = false;
         let estaMutado = false;
         let iniciouInteracao = false;
+
+        // ==================================================================
+        // 3. GERAR BOTÕES DINAMICAMENTE
+        // ==================================================================
+        menuConfig.forEach(btn => {
+            if (btn.link && btn.link.trim() !== "") {
+                const isManual = btn.titulo.toLowerCase().includes("manual");
+                const href = isManual ? "#" : btn.link;
+                const target = isManual ? "" : 'target="_blank"';
+
+                const btnHtml = `
+                <a href="${href}" ${target} class="group flex flex-col items-center gap-1 focus:outline-none min-w-[50px] max-w-[80px] cursor-pointer" ${isManual ? 'onclick="abrirManual(event)"' : ''}>
+                    <div class="rounded-full border border-stone-300 p-[2px] transition-transform duration-300 group-hover:scale-105 group-active:scale-95">
+                        <div class="w-12 h-12 rounded-full bg-stone-800 custom-button-bg text-white flex items-center justify-center shadow-lg group-hover:bg-stone-700 transition-colors">
+                            <i class="${btn.icone} text-lg"></i>
+                        </div>
+                    </div>
+                    <span class="text-[10px] uppercase font-bold text-white tracking-wide text-center leading-tight drop-shadow-md">
+                        ${btn.titulo}
+                    </span>
+                </a>
+                `;
+                gridBotoes.innerHTML += btnHtml;
+
+                if (isManual && btn.manualText) {
+                    manualContent.innerHTML = btn.manualText;
+                }
+            }
+        });
+
+        // ==================================================================
+        // 4. LÓGICA DE INÍCIO (SOLUÇÃO APLICADA)
+        // ==================================================================
+        
+        const iniciarExperiencia = async (e) => {
+            if (iniciouInteracao) return;
+            iniciouInteracao = true;
+
+            console.log("Iniciando experiência via Click.");
+
+            capa.classList.add('invisivel');
+
+            // 1. Áudio (Reset + Play)
+            audio.volume = 0.5;
+            audio.muted = false; 
+            audio.currentTime = 0; // Correção para Android: Garante que o áudio não está "preso"
+
+            try {
+                await audio.play();
+                console.log("Áudio tocando com sucesso.");
+            } catch (err) {
+                console.warn("Autoplay de áudio bloqueado ou falhou:", err);
+            }
+
+            // 2. Vídeo
+            videoAbertura.muted = true;
+            videoAbertura.currentTime = 0;
+            
+            try {
+                await videoAbertura.play();
+                console.log("Vídeo tocando.");
+            } catch (err) {
+                console.warn("Erro ao iniciar vídeo:", err);
+            }
+
+            // Mostra controles
+            btnPular.classList.remove('invisivel');
+            btnMute.classList.remove('invisivel');
+        };
+
+        // CORREÇÃO: Usamos APENAS o 'click'. 
+        // Remover o 'touchstart' evita que o Android bloqueie o áudio por considerar o toque um evento passivo.
+        capa.addEventListener('click', iniciarExperiencia);
+
+
+        // ==================================================================
+        // 5. LÓGICA DE TRANSIÇÃO (CROSSFADE)
+        // ==================================================================
+        function iniciarLoopSequence() {
+            if (transicaoFeita) return;
+            transicaoFeita = true;
+            btnPular.classList.add('invisivel');
+            
+            videoLoop.muted = true;
+            videoLoop.play().catch(e => console.log("Erro loop:", e));
+            
+            videoLoop.classList.remove('invisivel');
+            videoAbertura.classList.add('invisivel');
+            containerBotoes.classList.remove('invisivel');
+            setTimeout(() => { videoAbertura.pause(); }, 800);
+        }
+
+        videoAbertura.addEventListener('timeupdate', () => {
+            const tempoRestante = videoAbertura.duration - videoAbertura.currentTime;
+            if (tempoRestante <= 0.8 && !transicaoFeita && videoAbertura.duration > 0) {
+                iniciarLoopSequence();
+            }
+        });
+
+        videoAbertura.addEventListener('ended', iniciarLoopSequence);
+        btnPular.addEventListener('click', iniciarLoopSequence);
+
+        // ==================================================================
+        // 6. CONTROLE DE MUTE
+        // ==================================================================
+        btnMute.addEventListener('click', () => {
+            estaMutado = !estaMutado;
+            if (estaMutado) {
+                audio.muted = true;
+                iconMute.className = "fa-solid fa-volume-xmark";
+                btnMute.classList.add("bg-red-500/50");
+            } else {
+                audio.muted = false;
+                iconMute.className = "fa-solid fa-volume-high";
+                btnMute.classList.remove("bg-red-500/50");
+            }
+        });
 
         // ==================================================================
         // 7. LÓGICA DO POPUP MANUAL
@@ -348,248 +365,6 @@
                 popupManual.classList.add('invisivel');
             }
         });
-
-        // ==================================================================
-        // 8. LÓGICA DO POPUP PRESENTES
-        // ==================================================================
-        window.abrirPresentes = function (e) {
-            e.preventDefault();
-            popupPresentes.classList.remove('invisivel');
-        }
-
-        btnClosePresentes.addEventListener('click', () => {
-            popupPresentes.classList.add('invisivel');
-        });
-
-        popupPresentes.addEventListener('click', (e) => {
-            if (e.target === popupPresentes) {
-                popupPresentes.classList.add('invisivel');
-            }
-        });
-
-        // ==================================================================
-        // 9. LÓGICA DO POPUP RSVP (CONFIRMAÇÃO) - ATUALIZADA
-        // ==================================================================
-
-        window.abrirRSVP = function (e, link) {
-            e.preventDefault();
-
-            // 1. Detect if it is a phone number or URL
-            const isWhatsappLink = link.includes("wa.me") || link.includes("whatsapp.com");
-            const isExternalUrl = link.startsWith("http") && !isWhatsappLink;
-
-            // If it looks like a URL but NOT a whatsapp URL, open it directly
-            if (isExternalUrl) {
-                window.open(link, '_blank');
-                return;
-            }
-
-            // It is a phone (either raw digits or wa.me link)
-            currentRSVPNumber = link.replace(/\D/g, '');
-
-            // Reset Form
-            inputName.value = "";
-            inputPhone.value = "";
-            checkBus.checked = false; // Resetar checkbox do ônibus
-
-            popupRSVP.classList.remove('invisivel');
-        }
-
-        // Close Logic
-        btnCloseRSVP.addEventListener('click', () => popupRSVP.classList.add('invisivel'));
-        popupRSVP.addEventListener('click', (e) => {
-            if (e.target === popupRSVP) popupRSVP.classList.add('invisivel');
-        });
-
-        // Send Logic
-        btnConfirmRSVP.addEventListener('click', () => {
-            const name = inputName.value.trim();
-            const phone = inputPhone.value.trim();
-
-            if (!name || !phone) {
-                alert("Por favor, preencha Nome e WhatsApp.");
-                return;
-            }
-
-            let message = `Olá! Gostaria de confirmar minha presença.\n\n*Nome:* ${name}\n*Telefone:* ${phone}`;
-
-            // Lógica do Ônibus
-            if (checkBus.checked) {
-                message += `\n*Transporte:* Vou no ônibus`;
-            } else {
-                message += `\n*Transporte:* Não vou no ônibus`;
-            }
-
-            const waUrl = `https://wa.me/${currentRSVPNumber}?text=${encodeURIComponent(message)}`;
-            window.open(waUrl, '_blank');
-
-            popupRSVP.classList.add('invisivel');
-        });
-
-        // ==================================================================
-        // 3. GERAR BOTÕES DINAMICAMENTE
-        // ==================================================================
-        menuConfig.forEach(btn => {
-            if (btn.link && (btn.link.trim() !== "" || btn.isGiftImage)) {
-
-                const isGiftImage = btn.isGiftImage === true;
-
-                // Create elements
-                const anchor = document.createElement('a');
-                anchor.className = "group flex flex-col items-center gap-1 focus:outline-none min-w-[50px] max-w-[80px] cursor-pointer";
-                anchor.target = "_blank";
-
-                // Logic for href/click
-                // Check for Confirmation Logic
-                const isRSVP = btn.titulo.toLowerCase().includes("confirmar") || btn.titulo.toLowerCase().includes("presença");
-
-                if (btn.id === 'manual') {
-                    anchor.href = "#";
-                    anchor.target = "";
-                    anchor.addEventListener('click', abrirManual);
-                } else if (isGiftImage) {
-                    anchor.href = "#";
-                    anchor.target = "";
-                    anchor.addEventListener('click', abrirPresentes);
-                } else if (isRSVP) {
-                    // Smart RSVP Logic
-                    anchor.href = "#";
-                    anchor.addEventListener('click', (e) => abrirRSVP(e, btn.link));
-                } else {
-                    anchor.href = btn.link;
-                }
-
-                // Calculate sizes
-                const basePx = 48;
-                const sizePx = basePx * buttonSize;
-                const baseIconRem = 1.125;
-                const iconRem = baseIconRem * buttonSize;
-
-                anchor.innerHTML = `
-                    <div class="rounded-full border border-stone-300 p-[2px] transition-transform duration-300 group-hover:scale-105 group-active:scale-95">
-                        <div class="rounded-full bg-stone-800 custom-button-bg text-white flex items-center justify-center shadow-lg group-hover:bg-stone-700 transition-colors"
-                             style="width: ${sizePx}px; height: ${sizePx}px;">
-                            <i class="${btn.icone}" style="font-size: ${iconRem}rem;"></i>
-                        </div>
-                    </div>
-                    <span class="text-[10px] uppercase font-bold text-white tracking-wide text-center leading-tight drop-shadow-md">
-                        ${btn.titulo}
-                    </span>
-                    `;
-
-                gridBotoes.appendChild(anchor);
-
-                // Se for manual, injeta o conteúdo se disponível
-                if (btn.id === 'manual' && btn.manualText) {
-                    manualContent.innerHTML = btn.manualText;
-                }
-            }
-        });
-
-        // ==================================================================
-        // 4. LÓGICA DE INÍCIO - INICIA AMBOS OS VÍDEOS NO MESMO GESTO
-        // ==================================================================
-
-        capa.addEventListener('click', function () {
-            if (iniciouInteracao) return;
-            iniciouInteracao = true;
-
-            // Esconde a capa
-            capa.classList.add('invisivel');
-
-            // Inicia a música (loop infinito)
-            if (audio) {
-                audio.volume = 0.5;
-                audio.currentTime = 0;
-                // Force reload to bypass weird caching glitches
-                audio.load();
-
-                var playPromise = audio.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(_ => {
-                        console.log("Audio started playing successfully");
-                    })
-                        .catch(error => {
-                            console.error("Audio playback failed:", error);
-                            // Retry once on interaction
-                            setTimeout(() => audio.play(), 500);
-                        });
-                }
-            }
-
-            // SOLUÇÃO iOS: Inicia AMBOS os vídeos no mesmo gesto do usuário
-            // O loop fica tocando na camada de trás, invisível por enquanto
-            if (videoLoop) {
-                videoLoop.muted = true;
-                videoLoop.play().catch(function (e) { console.error("Loop play failed:", e); });
-            }
-
-            // Vídeo de abertura na camada da frente
-            if (videoAbertura) {
-                videoAbertura.currentTime = 0;
-                videoAbertura.play().catch(function (e) { console.error("Intro play failed:", e); });
-            }
-
-            // Mostra controles
-            btnPular.classList.remove('invisivel');
-            btnMute.classList.remove('invisivel');
-        });
-
-        // ==================================================================
-        // 5. LÓGICA DE TRANSIÇÃO PARA O LOOP
-        // ==================================================================
-
-        function irParaLoop() {
-            if (transicaoFeita) return;
-            transicaoFeita = true;
-
-            // Esconde botão pular
-            btnPular.classList.add('invisivel');
-
-            // O loop já está tocando na camada de trás desde o início
-            // Apenas revelamos ele escondendo a abertura (crossfade)
-            videoLoop.classList.remove('invisivel');
-            videoAbertura.classList.add('invisivel');
-            containerBotoes.classList.remove('invisivel');
-            containerShadow.classList.remove('invisivel');
-
-            // Pausa o vídeo de abertura após a transição visual
-            setTimeout(function () { videoAbertura.pause(); }, 800);
-        }
-
-        // Gatilho 1: Quando o vídeo termina
-        videoAbertura.onended = irParaLoop;
-
-        // Gatilho 2: Pouco antes do vídeo terminar (transição suave)
-        videoAbertura.ontimeupdate = function () {
-            if (videoAbertura.duration > 0 &&
-                videoAbertura.currentTime >= videoAbertura.duration - 0.5) {
-                irParaLoop();
-            }
-        };
-
-        // Gatilho 3: Botão pular
-        btnPular.onclick = irParaLoop;
-
-        // ==================================================================
-        // 6. CONTROLE DE MUTE
-        // ==================================================================
-        btnMute.addEventListener('click', () => {
-            estaMutado = !estaMutado;
-            if (estaMutado) {
-                audio.muted = true;
-                videoAbertura.muted = true;
-                videoLoop.muted = true;
-                iconMute.className = "fa-solid fa-volume-xmark";
-                btnMute.classList.add("bg-red-500/50");
-            } else {
-                audio.muted = false;
-                if (!transicaoFeita) videoAbertura.muted = false;
-                iconMute.className = "fa-solid fa-volume-high";
-                btnMute.classList.remove("bg-red-500/50");
-            }
-        });
-
 
     </script>
 </body>
