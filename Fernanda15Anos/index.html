@@ -15,7 +15,7 @@
     <!-- Open Graph for WhatsApp/Social Preview -->
     <meta property="og:title" content="Convite - Fernanda | 15 Anos / Debutante">
     <meta property="og:description" content="Clique para ver o convite interativo!">
-    <meta property="og:image" content="capa/capa_1766419391.jpg?v=1766419391">
+    <meta property="og:image" content="capa/capa_1766430710.jpg?v=1766430710">
     <meta property="og:type" content="website">
 
     <!-- Envelope Favicon -->
@@ -111,15 +111,15 @@
         class="relative w-full max-w-[480px] h-full bg-black shadow-2xl overflow-hidden transition-all duration-300">
 
         <video id="videoLoop" class="camada z-10 invisivel" playsinline loop muted>
-            <source src="loop/loop_1766419391.mp4?v=1766419391" type="video/mp4">
+            <source src="loop/loop_1766430710.mp4?v=1766430710" type="video/mp4">
         </video>
 
         <video id="videoAbertura" class="camada z-20" playsinline muted>
-            <source src="abertura/abertura_1766419391.mp4?v=1766419391" type="video/mp4">
+            <source src="abertura/abertura_1766430710.mp4?v=1766430710" type="video/mp4">
         </video>
 
         <audio id="musicaFundo" loop preload="auto">
-            <source src="musica/musica_1766419391.mp3?v=1766419391" type="audio/mp3">
+            <source src="musica/musica_1766430710.mp3?v=1766430710" type="audio/mp3">
         </audio>
 
         <button id="btnMute"
@@ -134,7 +134,8 @@
 
         <!-- Gradiente de fundo fixo (não se move) -->
         <div id="containerShadow"
-            class="absolute bottom-0 left-0 w-full z-35 pb-10 px-2 bg-gradient-to-t from-black/80 via-black/40 to-transparent pt-20 invisivel transition-opacity duration-1000">
+            class="absolute bottom-0 left-0 w-full z-30 pb-10 px-2 pt-20 invisivel transition-opacity duration-1000"
+            style="background: linear-gradient(to top, #000000E6, #00000066, transparent);">
         </div>
 
         <!-- Container dos botões (se move com offset) -->
@@ -147,7 +148,7 @@
 
         <div id="capaInicial"
             class="absolute inset-0 z-50 bg-cover bg-center flex flex-col items-center justify-center cursor-pointer transition-opacity duration-700"
-            style="background-image: url('capa/capa_1766419391.jpg?v=1766419391');">
+            style="background-image: url('capa/capa_1766430710.jpg?v=1766430710');">
             <div class="absolute inset-0 bg-black/20"></div>
 
             <div id="dicaInteractionContainer" class="relative z-10 flex flex-col items-center gap-4 animate-pulse">
@@ -167,7 +168,7 @@
             class="relative w-full max-w-[400px] h-[80%] rounded-xl shadow-2xl overflow-hidden flex flex-col border border-white/20">
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="loop/folha_vazia_1766419391.jpg?v=1766419391" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="loop/folha_vazia_1766430710.jpg?v=1766430710" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/60"></div>
             </div>
 
@@ -196,7 +197,7 @@
                 class="absolute top-3 right-3 z-10 bg-black/50 text-white hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center transition-colors border border-white/20">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <img id="imagemPresentes" src="presentes/presentes_1766419391.jpg?v=1766419391"
+            <img id="imagemPresentes" src="presentes/presentes_1766430710.jpg?v=1766430710"
                 class="max-w-full max-h-[85vh] object-contain rounded-lg">
         </div>
     </div>
@@ -209,7 +210,7 @@
 
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="loop/folha_vazia_1766419391.jpg?v=1766419391" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="loop/folha_vazia_1766430710.jpg?v=1766430710" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/70"></div>
             </div>
 
@@ -239,7 +240,7 @@
                         placeholder="(DDD) 99999-9999">
                 </div>
 
-                <div id="container-acompanhantes">
+                <div id="container-acompanhantes" class="">
                     <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Total de Acompanhantes</label>
                     <div class="flex items-center gap-3">
                         <button id="btn-dec-acomp"
@@ -253,7 +254,7 @@
                         anfitrião.</p>
                 </div>
 
-                <div class="flex items-center gap-2 mt-2">
+                <div class="flex items-center gap-2 mt-2 ">
                     <input type="checkbox" id="check-no-acomp"
                         class="w-4 h-4 rounded bg-black/40 border-stone-500 text-green-500 focus:ring-green-500 focus:ring-offset-0">
                     <label for="check-no-acomp"
@@ -279,7 +280,7 @@
         "titulo": "Manual do Convidado",
         "icone": "fa-solid fa-book",
         "link": "#",
-        "manualText": "\n<div>\n    <h3><i class=\"fa-solid fa-users\"></i> Bem-vindo ao meu Aniversário!</h3>\n    <p>Estamos muito felizes em ter você conosco para celebrar este momento especial. Aqui estão algumas informações importantes:</p>\n\n    <h3><i class=\"fa-solid fa-calendar-check\"></i> Confirmação de Presença</h3>\n    <p>Por favor, confirme sua presença pelo menos <strong>15 dias antes</strong> do evento.</p>\n\n    <h3><i class=\"fa-solid fa-clock\"></i> Chegue no Horário</h3>\n    <p>Sua presença pontual é muito importante para nós. Agradecemos sua colaboração!</p>\n\n    <h3><i class=\"fa-solid fa-tshirt\"></i> Traje</h3>\n    <p>O traje para o evento é <strong>social, trajes finos</strong>.</p>\n\n    <h3><i class=\"fa-solid fa-heart\"></i> Divirta-se!</h3>\n    <p>Estamos ansiosos para celebrar este momento especial com você. Divirta-se bastante!</p>\n\n    <h3><i class=\"fa-solid fa-gift\"></i> Não se esqueça!\n    <p>Não vá embora sem me dar um abraço e comer um pedaço do bolo. Queremos compartilhar cada instante com você. Não vá embora sem me dar um abraço e comer um pedaço do bolo!</p>\n</div>\n"
+        "manualText": "<div>\n    <h3><i class=\"fa-solid fa-user-friends\"></i> Manual de Convidados</h3>\n    <p>Seja bem-vindo! Estamos muito felizes em tê-lo conosco neste momento especial. Aqui estão algumas informações importantes para que você possa aproveitar ao máximo a celebração:</p>\n    \n    <h3><i class=\"fa-solid fa-calendar-check\"></i> Confirmação de Presença</h3>\n    <p>Por favor, confirme sua presença pelo menos 15 dias antes do evento. Sua participação é muito importante para nós!</p>\n    \n    <h3><i class=\"fa-solid fa-clock\"></i> Chegada Pontual</h3>\n    <p>Chegue no horário! Sua presença pontual é essencial para que possamos iniciar a celebração juntos.</p>\n    \n    <h3><i class=\"fa-solid fa-smile\"></i> Divirta-se!</h3>\n    <p>Estamos ansiosos para celebrar este momento especial com você. Aproveite cada instante!</p>\n    \n    <h3><i class=\"fa-solid fa-heart\"></i> Não Vá Embora Sem Nos Abraçar</h3>\n    <p>Queremos compartilhar cada instante com você. Não se esqueça de nos dar um abraço e comer um pedaço do bolo!</p>\n</div>"
     },
     {
         "titulo": "Como Chegar",
@@ -295,7 +296,7 @@
     {
         "titulo": "Confirmar Presença",
         "icone": "fa-regular fa-circle-check",
-        "link": "929925837783"
+        "link": "92992583783"
     }
 ];
         // Injected by AutoBuilder
