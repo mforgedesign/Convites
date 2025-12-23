@@ -6,23 +6,23 @@
   "theme": "Tropical",
   "age": "",
   "colors": "",
-  "buttonColor": "#172e54",
+  "buttonColor": "#2d2d2d",
   "phrase": "",
   "music": "PERFECT - ED SHEERAN Cello & Piano Cover - SwissDuo (PIANOCELLO)",
   "mapsLink": "https://maps.app.goo.gl/BYNcvCzVhNPvCQVj6?g_st=awb",
   "giftsLink": "",
-  "giftMode": "none",
-  "giftImageUrl": null,
+  "giftMode": "image",
+  "giftImageUrl": "/output/presentes.jpg",
   "extraLinks": [
     {
       "name": "Falar com a Noiva",
       "link": "https://wa.me/5574999126543",
-      "icon": "fa-solid fa-heart"
+      "icon": "fa-solid fa-person-dress"
     },
     {
       "name": "Falar com o Noivo",
       "link": "https://wa.me/5575982914872",
-      "icon": "fa-solid fa-gem"
+      "icon": "fa-solid fa-user-tie"
     }
   ],
   "buttonsOffset": 0,
@@ -31,8 +31,8 @@
   "whatsapp": "5574999126543",
   "confirmLink": "https://wa.me/5574999126543?text=Olá!%20Gostaria%20de%20confirmar%20minha%20presença%20no%20casamento%20de%20Ana%20Laura%20e%20Jonathas!",
   "processedManualText": "",
-  "manualMode": "image",
-  "manualImageUrl": "/output/manual.jpg",
+  "manualMode": "text",
+  "manualImageUrl": null,
   "slug": "Ana&Jonathas",
   "showTimer": false
 }
