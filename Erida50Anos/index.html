@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <title>Convite de Casamento</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        /* Fundo Estático */
+        .background-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        /* Utilitários */
+        .invisivel {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .texto-sombra {
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Animação do Tooltip de Música */
+        @keyframes bounce-x {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+        }
+        .animar-seta {
+            animation: bounce-x 1s infinite;
+        }
+
+        :root {
+            --button-color: #2d2d2d;
+        }
+        .custom-button-bg {
+            background-color: var(--button-color) !important;
+        }
+        
+        /* Scrollbar customizada para o popup */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 3px; }
+
+        /* Efeito Dourado Convincente */
+        .gold-gradient-bg {
+            background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            background-size: 400% 400%;
+            animation: shimmer 5s linear infinite;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 400% 400%;
+            animation: shimmer 5s linear infinite;
+        }
+
+        .gold-gradient-border {
+            border-image: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            border-image-slice: 1;
+            background-size: 400% 400%;
+            animation: shimmer 5s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 400% 50%;
+            }
+        }
+    </style>
+</head>
+
+<body class="w-full h-[100dvh] flex justify-center items-center">
+
+    <div id="mainContainer" class="relative w-full max-w-[480px] h-full bg-black shadow-2xl overflow-hidden">
+
+        <img src="folha.jpg" alt="Fundo do Convite" class="background-img">
+
+        <audio id="musicaFundo" loop preload="auto">
+            <source src="musica.mp3" type="audio/mp3">
+        </audio>
+
+        <div class="absolute top-6 left-6 z-50 flex items-center gap-3">
+            <button id="btnMusicControl" 
+                class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg hover:bg-white/30 transition-all active:scale-95">
+                <i id="iconMusic" class="fa-solid fa-play ml-1"></i>
+            </button>
+            
+            <div id="musicTooltip" class="bg-black/60 backdrop-blur-md text-white text-xs px-3 py-2 rounded-lg border border-white/10 shadow-xl animar-seta transition-opacity duration-500">
+                <span class="font-semibold">Clique para ouvir a música 🎵</span>
+                <div class="absolute left-[-6px] top-1/2 -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-r-[6px] border-r-black/60 border-b-[6px] border-b-transparent"></div>
+            </div>
+        </div>
+
+        <div id="containerShadow"
+            class="absolute bottom-0 left-0 w-full z-30 pb-10 px-2 pt-20"
+            style="background: linear-gradient(to top, #000000E6, #00000066, transparent);">
+        </div>
+
+        <div id="containerBotoes"
+            class="absolute left-0 w-full z-40 pb-10 px-2 flex justify-center"
+            style="bottom: 0px;">
+            <div id="gridBotoes" class="flex flex-row flex-nowrap justify-evenly gap-8 w-full max-w-[400px]">
+                </div>
+        </div>
+
+    </div>
+
+    <div id="popupRSVP" class="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-sm invisivel transition-all duration-300 opacity-0">
+        <div class="relative w-full max-w-[350px] rounded-xl shadow-2xl overflow-hidden border border-white/20 m-4 flex flex-col bg-stone-900">
+
+            <div class="relative z-10 flex justify-between items-center p-4 border-b border-white/10 bg-black/30">
+                <h2 class="text-lg font-bold text-white"><i class="fa-brands fa-whatsapp text-green-500 mr-2"></i>
+                    Confirmar Presença</h2>
+                <button id="btnCloseRSVP" class="text-white hover:text-gray-300 transition-colors">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <div class="relative z-10 p-6 space-y-4">
+                <div>
+                    <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Seu Nome Completo *</label>
+                    <input type="text" id="rsvp-name"
+                        class="w-full bg-black/40 border border-stone-500/50 rounded p-2 text-white focus:border-green-500 focus:outline-none placeholder-stone-500"
+                        placeholder="Ex: Maria Silva">
+                </div>
+
+                <div>
+                    <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Seu Telefone *</label>
+                    <input type="tel" id="rsvp-phone"
+                        class="w-full bg-black/40 border border-stone-500/50 rounded p-2 text-white focus:border-green-500 focus:outline-none placeholder-stone-500"
+                        placeholder="(DDD) 99999-9999">
+                </div>
+
+                <div id="container-acompanhantes">
+                    <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Total de Acompanhantes</label>
+                    <div class="flex items-center gap-3">
+                        <button id="btn-dec-acomp" class="w-10 h-10 bg-stone-700 rounded text-white font-bold hover:bg-stone-600">-</button>
+                        <span id="txt-acomp-count" class="text-white font-bold text-xl w-8 text-center">0</span>
+                        <button id="btn-inc-acomp" class="w-10 h-10 bg-stone-700 rounded text-white font-bold hover:bg-stone-600">+</button>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 mt-2">
+                    <input type="checkbox" id="check-no-acomp" class="w-4 h-4 rounded bg-black/40 border-stone-500 text-green-500 focus:ring-green-500">
+                    <label for="check-no-acomp" class="text-stone-300 text-xs cursor-pointer select-none">Vou sozinho(a)</label>
+                </div>
+
+                <button id="btn-confirm-rsvp"
+                    class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-3 rounded-lg transition-colors mt-2 shadow-lg flex items-center justify-center gap-2">
+                    Enviar no WhatsApp <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================================================================
+        // 1. CONFIGURAÇÃO DOS BOTÕES
+        // ==================================================================
+        const menuConfig = [
+            {
+                "titulo": "Como Chegar",
+                "icone": "fa-solid fa-location-dot",
+                "link": "https://maps.app.goo.gl/gDCZn2opUQWthwaT9"
+            },
+            {
+                "titulo": "Confirmar Presença",
+                "icone": "fa-solid fa-check", // Ícone corrigido para um único check
+                // O número de telefone está aqui e será processado na lógica de RSVP
+                "link": "https://wa.me/5518991426075?text=Olá!%20Gostaria%20de%20confirmar%20minha%20presença!"
+            }
+        ];
+
+        const buttonSize = 1.2; // Tamanho dos botões
+
+        // ==================================================================
+        // 2. LÓGICA DE ÁUDIO (PLAY/PAUSE)
+        // ==================================================================
+        const audio = document.getElementById('musicaFundo');
+        const btnMusicControl = document.getElementById('btnMusicControl');
+        const iconMusic = document.getElementById('iconMusic');
+        const musicTooltip = document.getElementById('musicTooltip');
+        
+        let isPlaying = false;
+
+        btnMusicControl.addEventListener('click', () => {
+            // Esconde o tooltip na primeira interação
+            if (musicTooltip) {
+                musicTooltip.style.opacity = '0';
+                setTimeout(() => musicTooltip.remove(), 600);
+            }
+
+            if (isPlaying) {
+                audio.pause();
+                iconMusic.classList.remove('fa-pause');
+                iconMusic.classList.add('fa-play');
+                iconMusic.classList.add('ml-1'); // Ajuste visual para o ícone de play ficar centralizado
+                isPlaying = false;
+            } else {
+                audio.play().then(() => {
+                    iconMusic.classList.remove('fa-play');
+                    iconMusic.classList.remove('ml-1');
+                    iconMusic.classList.add('fa-pause');
+                    isPlaying = true;
+                }).catch(e => console.error("Erro ao reproduzir:", e));
+            }
+        });
+
+        // ==================================================================
+        // 3. GERAR BOTÕES
+        // ==================================================================
+        const gridBotoes = document.getElementById('gridBotoes');
+
+        menuConfig.forEach(btn => {
+            const anchor = document.createElement('a');
+            anchor.className = "group flex flex-col items-center gap-2 focus:outline-none min-w-[70px] cursor-pointer";
+            
+            // Lógica de RSVP vs Link Normal
+            const isRSVP = btn.titulo.toLowerCase().includes("confirmar");
+
+            if (isRSVP) {
+                anchor.href = "#";
+                anchor.addEventListener('click', (e) => abrirRSVP(e, btn.link));
+            } else {
+                anchor.href = btn.link;
+                anchor.target = "_blank";
+            }
+
+            // Estilização
+            const basePx = 48;
+            const sizePx = basePx * buttonSize;
+            const baseIconRem = 1.125;
+            const iconRem = baseIconRem * buttonSize;
+
+            anchor.innerHTML = `
+                <div class="rounded-full border gold-gradient-border p-[2px] transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
+                    <div class="rounded-full gold-gradient-bg text-black flex items-center justify-center shadow-lg group-hover:opacity-90 transition-opacity"
+                         style="width: ${sizePx}px; height: ${sizePx}px;">
+                        <i class="${btn.icone}" style="font-size: ${iconRem}rem;"></i>
+                    </div>
+                </div>
+                <span class="text-[11px] uppercase font-bold gold-gradient-text tracking-wide text-center leading-tight drop-shadow-md">
+                    ${btn.titulo}
+                </span>
+            `;
+
+            gridBotoes.appendChild(anchor);
+        });
+
+        // ==================================================================
+        // 4. LÓGICA DO POPUP RSVP
+        // ==================================================================
+        const popupRSVP = document.getElementById('popupRSVP');
+        const btnCloseRSVP = document.getElementById('btnCloseRSVP');
+        const inputName = document.getElementById('rsvp-name');
+        const inputPhone = document.getElementById('rsvp-phone');
+        const txtAcompCount = document.getElementById('txt-acomp-count');
+        const checkNoAcomp = document.getElementById('check-no-acomp');
+        const btnConfirmRSVP = document.getElementById('btn-confirm-rsvp');
+        let currentRSVPNumber = "";
+        let acompCount = 0;
+
+        // Controle numérico
+        document.getElementById('btn-dec-acomp').addEventListener('click', () => {
+            if (acompCount > 0) { acompCount--; txtAcompCount.textContent = acompCount; }
+        });
+        document.getElementById('btn-inc-acomp').addEventListener('click', () => {
+            acompCount++; txtAcompCount.textContent = acompCount;
+        });
+
+        // Checkbox "Vou sozinho"
+        checkNoAcomp.addEventListener('change', (e) => {
+            const container = document.getElementById('container-acompanhantes');
+            if (e.target.checked) {
+                container.classList.add('opacity-50', 'pointer-events-none');
+                acompCount = 0;
+            } else {
+                container.classList.remove('opacity-50', 'pointer-events-none');
+            }
+        });
+
+        function abrirRSVP(e, link) {
+            e.preventDefault();
+            
+            // Extrai apenas os números do link do WhatsApp
+            currentRSVPNumber = "5518991426075"; // Forçando o número solicitado
+            
+            // Reseta form
+            inputName.value = "";
+            inputPhone.value = "";
+            acompCount = 0;
+            txtAcompCount.textContent = "0";
+            checkNoAcomp.checked = false;
+            document.getElementById('container-acompanhantes').classList.remove('opacity-50', 'pointer-events-none');
+
+            // Exibe
+            popupRSVP.classList.remove('invisivel');
+            setTimeout(() => popupRSVP.classList.remove('opacity-0'), 10);
+        }
+
+        function fecharRSVP() {
+            popupRSVP.classList.add('opacity-0');
+            setTimeout(() => popupRSVP.classList.add('invisivel'), 300);
+        }
+
+        btnCloseRSVP.addEventListener('click', fecharRSVP);
+        popupRSVP.addEventListener('click', (e) => {
+            if (e.target === popupRSVP) fecharRSVP();
+        });
+
+        btnConfirmRSVP.addEventListener('click', () => {
+            const name = inputName.value.trim();
+            const phone = inputPhone.value.trim();
+
+            if (!name || !phone) {
+                alert("Por favor, preencha seu Nome e Telefone.");
+                return;
+            }
+
+            let message = `Olá! Gostaria de confirmar minha presença.\n\n*Nome:* ${name}\n*Telefone:* ${phone}`;
+
+            if (!checkNoAcomp.checked) {
+                message += acompCount > 0 ? `\n*Acompanhantes:* ${acompCount}` : `\n*Acompanhantes:* Nenhum`;
+            } else {
+                message += `\n*Acompanhantes:* Nenhum (Vou sozinho)`;
+            }
+
+            const waUrl = `https://wa.me/${currentRSVPNumber}?text=${encodeURIComponent(message)}`;
+            window.open(waUrl, '_blank');
+            fecharRSVP();
+        });
+    </script>
+</body>
+</html>
