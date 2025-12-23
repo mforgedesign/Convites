@@ -13,14 +13,15 @@
   "giftsLink": "",
   "giftMode": "image",
   "giftImageUrl": "/output/presentes.jpg",
-  "extraLink": "",
-  "extraName": "",
-  "extraIcon": "",
+  "extraLinks": [],
   "buttonsOffset": 0,
   "buttonSize": 1,
   "manual": "",
   "whatsapp": "+5521976803240",
   "confirmLink": "",
   "processedManualText": "",
-  "slug": "Joana-15-Anos"
+  "manualMode": "text",
+  "manualImageUrl": null,
+  "slug": "Joana-15-Anos",
+  "showTimer": false
 }
