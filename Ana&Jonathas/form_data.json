@@ -34,5 +34,5 @@
   "manualMode": "image",
   "manualImageUrl": "/output/manual.jpg",
   "slug": "Ana&Jonathas",
-  "showTimer": true
+  "showTimer": false
 }
