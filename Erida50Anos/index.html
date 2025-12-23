@@ -79,12 +79,7 @@
             animation: shimmer 5s linear infinite;
         }
 
-        .gold-gradient-border {
-            border-image: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-            border-image-slice: 1;
-            background-size: 400% 400%;
-            animation: shimmer 5s linear infinite;
-        }
+        /* Classe de borda removida pois não é mais usada */
 
         @keyframes shimmer {
             0% {
@@ -193,8 +188,7 @@
             },
             {
                 "titulo": "Confirmar Presença",
-                "icone": "fa-solid fa-check", // Ícone corrigido para um único check
-                // O número de telefone está aqui e será processado na lógica de RSVP
+                "icone": "fa-solid fa-check",
                 "link": "https://wa.me/5518991426075?text=Olá!%20Gostaria%20de%20confirmar%20minha%20presença!"
             }
         ];
@@ -260,8 +254,9 @@
             const baseIconRem = 1.125;
             const iconRem = baseIconRem * buttonSize;
 
+            // ALTERAÇÃO AQUI: Removidas as classes 'border', 'gold-gradient-border' e 'p-[2px]'
             anchor.innerHTML = `
-                <div class="rounded-full border gold-gradient-border p-[2px] transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
+                <div class="rounded-full transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
                     <div class="rounded-full gold-gradient-bg text-black flex items-center justify-center shadow-lg group-hover:opacity-90 transition-opacity"
                          style="width: ${sizePx}px; height: ${sizePx}px;">
                         <i class="${btn.icone}" style="font-size: ${iconRem}rem;"></i>
