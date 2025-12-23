@@ -17,12 +17,12 @@
     {
       "name": "Falar com a Noiva",
       "link": "https://wa.me/5574999126543",
-      "icon": "fa-solid fa-person-dress"
+      "icon": "fa-solid fa-heart"
     },
     {
       "name": "Falar com o Noivo",
       "link": "https://wa.me/5575982914872",
-      "icon": "fa-solid fa-user-tie"
+      "icon": "fa-solid fa-gem"
     }
   ],
   "buttonsOffset": 0,
