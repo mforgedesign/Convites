@@ -1,0 +1,38 @@
+{
+  "names": "Ana Laura & Jonathas",
+  "date": "2026-02-07",
+  "time": "16:30",
+  "eventType": "Casamento",
+  "theme": "Tropical",
+  "age": "",
+  "colors": "",
+  "buttonColor": "#2d2d2d",
+  "phrase": "",
+  "music": "PERFECT - ED SHEERAN Cello & Piano Cover - SwissDuo (PIANOCELLO)",
+  "mapsLink": "https://maps.app.goo.gl/BYNcvCzVhNPvCQVj6?g_st=awb",
+  "giftsLink": "",
+  "giftMode": "none",
+  "giftImageUrl": null,
+  "extraLinks": [
+    {
+      "link": "https://wa.me/5574999126543",
+      "name": "Falar com a Noiva",
+      "icon": "fa-solid fa-person-dress"
+    },
+    {
+      "link": "https://wa.me/5575982914872",
+      "name": "Falar com o Noivo",
+      "icon": "fa-solid fa-user-tie"
+    }
+  ],
+  "buttonsOffset": 0,
+  "buttonSize": 1,
+  "manual": "",
+  "whatsapp": "5574999126543",
+  "confirmLink": "https://wa.me/5574999126543?text=Olá!%20Gostaria%20de%20confirmar%20minha%20presença%20no%20casamento%20de%20Ana%20Laura%20e%20Jonathas!",
+  "processedManualText": "",
+  "manualMode": "image",
+  "manualImageUrl": "/output/manual.jpg",
+  "slug": "Ana&Jonathas",
+  "showTimer": false
+}
