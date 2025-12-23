@@ -15,7 +15,7 @@
     <!-- Open Graph for WhatsApp/Social Preview -->
     <meta property="og:title" content="Convite - Joana | Debutante">
     <meta property="og:description" content="Clique para ver o convite interativo!">
-    <meta property="og:image" content="capa/capa_1766493644.jpg?v=1766493644">
+    <meta property="og:image" content="capa/capa_1766531120.jpg?v=1766531120">
     <meta property="og:type" content="website">
 
     <!-- Envelope Favicon -->
@@ -91,6 +91,11 @@
         .blur-background {
             filter: blur(5px) brightness(0.5);
         }
+
+        /* Sombra suave para o cronômetro */
+        .texto-sombra {
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
+        }
     </style>
 
             <style>
@@ -111,15 +116,15 @@
         class="relative w-full max-w-[480px] h-full bg-black shadow-2xl overflow-hidden transition-all duration-300">
 
         <video id="videoLoop" class="camada z-10 invisivel" playsinline loop muted>
-            <source src="loop/loop_1766493644.mp4?v=1766493644" type="video/mp4">
+            <source src="loop/loop_1766531120.mp4?v=1766531120" type="video/mp4">
         </video>
 
         <video id="videoAbertura" class="camada z-20" playsinline muted>
-            <source src="abertura/abertura_1766493644.mp4?v=1766493644" type="video/mp4">
+            <source src="abertura/abertura_1766531120.mp4?v=1766531120" type="video/mp4">
         </video>
 
         <audio id="musicaFundo" loop preload="auto">
-            <source src="musica/musica_1766493644.mp3?v=1766493644" type="audio/mp3">
+            <source src="musica/musica_1766531120.mp3?v=1766531120" type="audio/mp3">
         </audio>
 
         <button id="btnMute"
@@ -131,6 +136,31 @@
             class="absolute top-4 right-4 z-40 bg-white/20 backdrop-blur-sm border border-white/40 text-white px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-wider invisivel hover:bg-white/30 transition-all">
             Pular
         </button>
+
+        <!-- Timer Countdown -->
+        <div id="countdownContainer"
+            class="absolute top-[34px] left-0 w-full z-40 flex flex-col items-center justify-center invisivel transition-opacity duration-1000 texto-sombra pointer-events-none hidden">
+            <h2 class="text-white text-[10px] sm:text-xs uppercase tracking-[0.2em] mb-2 font-semibold opacity-90">
+                Contagem Regressiva</h2>
+            <div class="flex gap-3 sm:gap-4 text-white">
+                <div class="flex flex-col items-center">
+                    <span id="contadorMeses" class="text-xl sm:text-2xl font-bold leading-none">00</span>
+                    <span class="text-[8px] sm:text-[10px] uppercase opacity-80">Meses</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <span id="contadorDias" class="text-xl sm:text-2xl font-bold leading-none">00</span>
+                    <span class="text-[8px] sm:text-[10px] uppercase opacity-80">Dias</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <span id="contadorHoras" class="text-xl sm:text-2xl font-bold leading-none">00</span>
+                    <span class="text-[8px] sm:text-[10px] uppercase opacity-80">Hs</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <span id="contadorMinutos" class="text-xl sm:text-2xl font-bold leading-none">00</span>
+                    <span class="text-[8px] sm:text-[10px] uppercase opacity-80">Min</span>
+                </div>
+            </div>
+        </div>
 
         <!-- Gradiente de fundo fixo (não se move) -->
         <div id="containerShadow"
@@ -148,7 +178,7 @@
 
         <div id="capaInicial"
             class="absolute inset-0 z-50 bg-cover bg-center flex flex-col items-center justify-center cursor-pointer transition-opacity duration-700"
-            style="background-image: url('capa/capa_1766493644.jpg?v=1766493644');">
+            style="background-image: url('capa/capa_1766531120.jpg?v=1766531120');">
             <div class="absolute inset-0 bg-black/20"></div>
 
             <div id="dicaInteractionContainer" class="relative z-10 flex flex-col items-center gap-4 animate-pulse">
@@ -168,7 +198,7 @@
             class="relative w-full max-w-[400px] h-[80%] rounded-xl shadow-2xl overflow-hidden flex flex-col border border-white/20">
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="loop/folha_vazia_1766493644.jpg?v=1766493644" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="loop/folha_vazia_1766531120.jpg?v=1766531120" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/60"></div>
             </div>
 
@@ -197,8 +227,20 @@
                 class="absolute top-3 right-3 z-10 bg-black/50 text-white hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center transition-colors border border-white/20">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <img id="imagemPresentes" src="presentes/presentes_1766493644.jpg?v=1766493644"
+            <img id="imagemPresentes" src="presentes/presentes_1766531120.jpg?v=1766531120"
                 class="max-w-full max-h-[85vh] object-contain rounded-lg">
+        </div>
+    </div>
+
+    <!-- Popup Imagem do Manual -->
+    <div id="popupManualImage"
+        class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm invisivel">
+        <div class="relative max-w-[90vw] max-h-[90vh] rounded-xl shadow-2xl overflow-hidden">
+            <button id="btnCloseManualImage"
+                class="absolute top-3 right-3 z-10 bg-black/50 text-white hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center transition-colors border border-white/20">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <img id="imagemManual" src="manual/manual_1766531120.jpg?v=1766531120" class="max-w-full max-h-[85vh] object-contain rounded-lg">
         </div>
     </div>
 
@@ -210,7 +252,7 @@
 
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="loop/folha_vazia_1766493644.jpg?v=1766493644" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="loop/folha_vazia_1766531120.jpg?v=1766531120" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/70"></div>
             </div>
 
@@ -240,7 +282,7 @@
                         placeholder="(DDD) 99999-9999">
                 </div>
 
-                <div id="container-acompanhantes" class="">
+                <div id="container-acompanhantes" class="hidden">
                     <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Total de Acompanhantes</label>
                     <div class="flex items-center gap-3">
                         <button id="btn-dec-acomp"
@@ -254,7 +296,7 @@
                         anfitrião.</p>
                 </div>
 
-                <div class="flex items-center gap-2 mt-2 ">
+                <div class="flex items-center gap-2 mt-2 hidden">
                     <input type="checkbox" id="check-no-acomp"
                         class="w-4 h-4 rounded bg-black/40 border-stone-500 text-green-500 focus:ring-green-500 focus:ring-offset-0">
                     <label for="check-no-acomp"
@@ -332,6 +374,9 @@
         let estaMutado = false;
         let iniciouInteracao = false;
 
+        // Timer Ref
+        const countdownContainer = document.getElementById('countdownContainer');
+
         // ==================================================================
         // 7. LÓGICA DO POPUP MANUAL (DEFINIDO ANTES PARA USAR NO LOOP)
         // ==================================================================
@@ -370,6 +415,31 @@
         });
 
         // ==================================================================
+        // 8.5. LÓGICA DO POPUP IMAGEM MANUAL
+        // ==================================================================
+        const popupManualImage = document.getElementById('popupManualImage');
+        const btnCloseManualImage = document.getElementById('btnCloseManualImage');
+
+        window.abrirManualImage = function (e) {
+            e.preventDefault();
+            popupManualImage.classList.remove('invisivel');
+        }
+
+        if (btnCloseManualImage) {
+            btnCloseManualImage.addEventListener('click', () => {
+                popupManualImage.classList.add('invisivel');
+            });
+        }
+
+        if (popupManualImage) {
+            popupManualImage.addEventListener('click', (e) => {
+                if (e.target === popupManualImage) {
+                    popupManualImage.classList.add('invisivel');
+                }
+            });
+        }
+
+        // ==================================================================
         // 9. LÓGICA DO POPUP RSVP (CONFIRMAÇÃO)
         // ==================================================================
 
@@ -391,6 +461,9 @@
                 container.classList.remove('hidden');
             }
         });
+
+        // Injected State for Logic
+        const companionHideClass = "hidden";
 
         window.abrirRSVP = function (e, link) {
             e.preventDefault();
@@ -415,7 +488,20 @@
             acompCount = 0;
             txtAcompCount.textContent = "0";
             checkNoAcomp.checked = false;
-            document.getElementById('container-acompanhantes').classList.remove('hidden');
+
+            // Visibility Logic: Respect Global Settings
+            const containerAcomp = document.getElementById('container-acompanhantes');
+            const checkContainer = document.getElementById('check-no-acomp').parentElement;
+
+            if (companionHideClass.trim() === 'hidden') {
+                // Feature Disabled globally
+                containerAcomp.classList.add('hidden');
+                checkContainer.classList.add('hidden');
+            } else {
+                // Feature Enabled
+                containerAcomp.classList.remove('hidden');
+                checkContainer.classList.remove('hidden');
+            }
 
             popupRSVP.classList.remove('invisivel');
         }
@@ -438,14 +524,17 @@
 
             let message = `Olá! Gostaria de confirmar minha presença.\n\n*Nome:* ${name}\n*Telefone:* ${phone}`;
 
-            if (!checkNoAcomp.checked) {
-                if (acompCount > 0) {
-                    message += `\n*Acompanhantes:* ${acompCount}`;
+            // Only include companion info if feature is enabled
+            if (companionHideClass.trim() !== 'hidden') {
+                if (!checkNoAcomp.checked) {
+                    if (acompCount > 0) {
+                        message += `\n*Acompanhantes:* ${acompCount}`;
+                    } else {
+                        message += `\n*Acompanhantes:* Nenhum`;
+                    }
                 } else {
-                    message += `\n*Acompanhantes:* Nenhum`;
+                    message += `\n*Acompanhantes:* Nenhum (Vou sozinho)`;
                 }
-            } else {
-                message += `\n*Acompanhantes:* Nenhum (Vou sozinho)`;
             }
 
             const waUrl = `https://wa.me/${currentRSVPNumber}?text=${encodeURIComponent(message)}`;
@@ -458,9 +547,10 @@
         // 3. GERAR BOTÕES DINAMICAMENTE
         // ==================================================================
         menuConfig.forEach(btn => {
-            if (btn.link && (btn.link.trim() !== "" || btn.isGiftImage)) {
+            if (btn.link && (btn.link.trim() !== "" || btn.isGiftImage || btn.isManualImage)) {
 
                 const isGiftImage = btn.isGiftImage === true;
+                const isManualImage = btn.isManualImage === true;
 
                 // Create elements
                 const anchor = document.createElement('a');
@@ -471,7 +561,13 @@
                 // Check for Confirmation Logic
                 const isRSVP = btn.titulo.toLowerCase().includes("confirmar") || btn.titulo.toLowerCase().includes("presença");
 
-                if (btn.id === 'manual') {
+                if (btn.id === 'manual' && isManualImage) {
+                    // Manual with Image mode: open image popup
+                    anchor.href = "#";
+                    anchor.target = "";
+                    anchor.addEventListener('click', abrirManualImage);
+                } else if (btn.id === 'manual') {
+                    // Manual with Text mode: open text popup
                     anchor.href = "#";
                     anchor.target = "";
                     anchor.addEventListener('click', abrirManual);
@@ -582,6 +678,11 @@
             containerBotoes.classList.remove('invisivel');
             containerShadow.classList.remove('invisivel');
 
+            // Mostra o timer apenas se não estiver hidden (timer ativado)
+            if (countdownContainer && !countdownContainer.classList.contains('hidden')) {
+                countdownContainer.classList.remove('invisivel');
+            }
+
             // Pausa o vídeo de abertura após a transição visual
             setTimeout(function () { videoAbertura.pause(); }, 800);
         }
@@ -618,6 +719,51 @@
                 btnMute.classList.remove("bg-red-500/50");
             }
         });
+
+        // ==================================================================
+        // TIMER DE CONTAGEM REGRESSIVA
+        // ==================================================================
+        function atualizarCronometro() {
+            const dataAlvo = new Date('2025-04-12T20:00:00');
+            const agora = new Date();
+
+            let diferenca = dataAlvo - agora;
+
+            if (diferenca <= 0 || isNaN(dataAlvo.getTime())) {
+                document.getElementById('contadorMeses').innerText = "00";
+                document.getElementById('contadorDias').innerText = "00";
+                document.getElementById('contadorHoras').innerText = "00";
+                document.getElementById('contadorMinutos').innerText = "00";
+                return;
+            }
+
+            let anos = dataAlvo.getFullYear() - agora.getFullYear();
+            let meses = dataAlvo.getMonth() - agora.getMonth();
+            let dias = dataAlvo.getDate() - agora.getDate();
+            let horas = dataAlvo.getHours() - agora.getHours();
+            let minutos = dataAlvo.getMinutes() - agora.getMinutes();
+
+            if (minutos < 0) { minutos += 60; horas--; }
+            if (horas < 0) { horas += 24; dias--; }
+            if (dias < 0) {
+                const mesAnterior = new Date(dataAlvo.getFullYear(), dataAlvo.getMonth(), 0);
+                dias += mesAnterior.getDate();
+                meses--;
+            }
+            if (meses < 0) { meses += 12; anos--; }
+
+            const totalMeses = (anos * 12) + meses;
+            const fmt = (num) => num < 10 ? `0${num}` : num;
+
+            document.getElementById('contadorMeses').innerText = fmt(totalMeses);
+            document.getElementById('contadorDias').innerText = fmt(dias);
+            document.getElementById('contadorHoras').innerText = fmt(horas);
+            document.getElementById('contadorMinutos').innerText = fmt(minutos);
+        }
+
+        // Inicia e atualiza a cada segundo
+        atualizarCronometro();
+        setInterval(atualizarCronometro, 1000);
 
 
     </script>
