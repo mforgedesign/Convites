@@ -1,0 +1,22 @@
+{
+  "names": "Lara ",
+  "date": "2026-02-20",
+  "time": "08:30",
+  "eventType": "Aniversário",
+  "theme": "Floral",
+  "age": "15",
+  "colors": "azul royal, azul claro, branco",
+  "buttonColor": "#004aad",
+  "phrase": "",
+  "music": "Photograph",
+  "mapsLink": "https://maps.app.goo.gl/xxpVJ7gw6sXJmJuT7",
+  "giftsLink": "https://www.canva.com/design/DAG75Wje2K4/xbCiiFTIiglPHwq00rSYYA/view?utm_content=DAG75Wje2K4&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h6b54370beb",
+  "extraLink": "",
+  "extraName": "",
+  "extraIcon": "",
+  "buttonsOffset": 0,
+  "manual": "festa das 20h30 às 02h\nChegue no horário: Sua presença pontual é muito importante para nós.\n Confirme sua presença: Por favor, confirme presença pelo menos 15 dias antes do evento.\n Divirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.\n Não vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.\n\n* Confirmação de Presença \n* Cerimonial Márcia de Paula +55 61 99282-6769\n",
+  "whatsapp": "5561992826769",
+  "confirmLink": "https://wa.me/5561992826769?text=Olá!%20Gostaria%20de%20confirmar%20minha%20presença%20nos%2015%20anos%20da%20Lara.",
+  "processedManualText": "\n<div>\n    <h3><i class=\"fa-solid fa-clock\"></i> Horário</h3>\n    <p>Festa das 20h30 às 02h</p>\n    <p><i class=\"fa-solid fa-bell\"></i> Chegue no horário: Sua presença pontual é muito importante para nós.</p>\n</div>\n\n<div>\n    <h3><i class=\"fa-solid fa-check-circle\"></i> Confirmação de Presença</h3>\n    <p>Por favor, confirme presença pelo menos 15 dias antes do evento.</p>\n    <ul>\n        <li>Confirmação de Presença</li>\n        <li>Cerimonial Márcia de Paula <i class=\"fa-solid fa-phone\"></i> +55 61 99282-6769</li>\n    </ul>\n</div>\n\n<div>\n    <h3><i class=\"fa-solid fa-smile\"></i> Divirta-se!</h3>\n    <p>Divirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.</p>\n</div>\n\n<div>\n    <h3><i class=\"fa-solid fa-heart\"></i> Despedida</h3>\n    <p>Não vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.</p>\n</div>\n"
+}
