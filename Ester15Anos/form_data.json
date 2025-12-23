@@ -22,5 +22,6 @@
   "whatsapp": "5521990326163",
   "confirmLink": "",
   "processedManualText": "<div>\n    <h3><i class=\"fa-solid fa-gift\"></i> Manual de Convidados - Aniversário Debutante</h3>\n    <p>Seja bem-vindo(a) ao nosso evento especial! Estamos muito felizes em celebrar este momento único com você.</p>\n    \n    <h3><i class=\"fa-solid fa-user-tie\"></i> Traje</h3>\n    <p>Pedimos que todos os convidados venham vestidos de forma social. Para garantir a harmonia da festa, solicitamos que evitem o uso das cores:</p>\n    <ul>\n        <li><i class=\"fa-solid fa-times\"></i> Preto</li>\n        <li><i class=\"fa-solid fa-times\"></i> Vermelho</li>\n    </ul>\n    \n    <p>Agradecemos a sua compreensão e colaboração para tornar este dia ainda mais especial!</p>\n</div>",
-  "slug": "Ester15Anos"
+  "slug": "Ester15Anos",
+  "showTimer": false
 }
