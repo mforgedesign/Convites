@@ -6,7 +6,7 @@
   "theme": "Tropical",
   "age": "",
   "colors": "",
-  "buttonColor": "#2d2d2d",
+  "buttonColor": "#172e54",
   "phrase": "",
   "music": "PERFECT - ED SHEERAN Cello & Piano Cover - SwissDuo (PIANOCELLO)",
   "mapsLink": "https://maps.app.goo.gl/BYNcvCzVhNPvCQVj6?g_st=awb",
@@ -15,13 +15,13 @@
   "giftImageUrl": null,
   "extraLinks": [
     {
-      "link": "https://wa.me/5574999126543",
       "name": "Falar com a Noiva",
+      "link": "https://wa.me/5574999126543",
       "icon": "fa-solid fa-person-dress"
     },
     {
-      "link": "https://wa.me/5575982914872",
       "name": "Falar com o Noivo",
+      "link": "https://wa.me/5575982914872",
       "icon": "fa-solid fa-user-tie"
     }
   ],
@@ -34,5 +34,5 @@
   "manualMode": "image",
   "manualImageUrl": "/output/manual.jpg",
   "slug": "Ana&Jonathas",
-  "showTimer": false
+  "showTimer": true
 }
