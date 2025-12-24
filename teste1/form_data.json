@@ -1,0 +1,33 @@
+{
+  "names": "Fulanos",
+  "date": "",
+  "time": "",
+  "eventType": "",
+  "theme": "",
+  "age": "",
+  "colors": "",
+  "buttonColor": "#292524",
+  "phrase": "",
+  "music": "believer",
+  "mapsLink": "https://maps.app.goo.gl/BYNcvCzVhNPvCQVj6?g_st=awb",
+  "giftsLink": "",
+  "giftMode": "image",
+  "giftImageUrl": "/output/presentes.jpg",
+  "extraLinks": [
+    {
+      "link": "https://docs.google.com/forms/u/0/",
+      "name": "Teste",
+      "icon": "fa-solid fa-star"
+    }
+  ],
+  "buttonsOffset": 0,
+  "buttonSize": 1,
+  "manual": "Só pode flamenguista",
+  "whatsapp": "5511939047235",
+  "confirmLink": "",
+  "processedManualText": "<div>\n    <h3><i class=\"fa-solid fa-heart\"></i> Bem-vindo ao nosso casamento!</h3>\n    <p>Estamos muito felizes em celebrar este dia especial com você. Para tornar a experiência ainda mais agradável, temos algumas informações importantes.</p>\n    \n    <h3><i class=\"fa-solid fa-futbol\"></i> Apenas Flamenguistas!</h3>\n    <p>Pedimos que todos os convidados compartilhem da mesma paixão! Venha vestido com as cores do Flamengo e traga toda a sua energia para torcer junto conosco.</p>\n    \n    <h3><i class=\"fa-solid fa-calendar-check\"></i> Data e Hora</h3>\n    <p>Não esqueça: nosso grande dia será no dia XX de mês de 2023, às XX:XX.</p>\n    \n    <h3><i class=\"fa-solid fa-map-marker-alt\"></i> Local do Evento</h3>\n    <p>O evento acontecerá no endereço: Rua Exemplo, 123, Cidade, Estado.</p>\n    \n    <h3><i class=\"fa-solid fa-utensils\"></i> Alimentação</h3>\n    <p>Teremos um delicioso buffet preparado especialmente para vocês. Esperamos que desfrutem!</p>\n    \n    <h3><i class=\"fa-solid fa-camera\"></i> Registro de Memórias</h3>\n    <p>Não esqueça de registrar os melhores momentos! Haverá um espaço dedicado para fotos divertidas.</p>\n    \n    <h3><i class=\"fa-solid fa-gift\"></i> Presentes</h3>\n    <p>Sua presença é o nosso maior presente, mas se desejar, uma contribuição em nossa lista de presentes será muito apreciada.</p>\n    \n    <h3><i class=\"fa-solid fa-comments\"></i> Contato</h3>\n    <p>Se tiver alguma dúvida, não hesite em nos contatar pelo e-mail: contato@exemplo.com.</p>\n    \n    <h3><i class=\"fa-solid fa-smile\"></i> Estamos ansiosos para celebrar com você!</h3>\n</div>",
+  "manualMode": "text",
+  "manualImageUrl": null,
+  "slug": "teste1",
+  "showTimer": false
+}
