@@ -192,11 +192,18 @@ async function importFromGitHubUrl(liveUrl, displayName) {
         // LIMPAR TODOS OS DADOS ANTERIORES
         localStorage.clear();
 
-        // Limpar campos de texto/textarea manualmente para garantir
-        const allInputs = document.querySelectorAll('input[type="text"], input[type="number"], input[type="date"], input[type="time"], input[type="url"], textarea');
-        allInputs.forEach(input => {
-            if (input.type === 'color') return;
-            input.value = '';
+        // Limpar campos do formulário especificamente (não todos os inputs da página)
+        const formInputIds = [
+            'input-names', 'input-date', 'input-time', 'input-event-type', 'input-age',
+            'input-theme', 'input-colors', 'input-phrase', 'input-location', 'input-music',
+            'input-slug', 'input-maps', 'input-gifts', 'input-whatsapp', 'input-confirm-link',
+            'input-manual', 'input-manual-name', 'input-manual-sync', 'input-manual-final',
+            'input-extra', 'input-extra-name', 'input-extra-icon',
+            'input-gift-suggestions'
+        ];
+        formInputIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = '';
         });
 
         // Resetar checkboxes para valores padrão
