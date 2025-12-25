@@ -622,3 +622,308 @@
 #audio-trimmer .fade-controls i {
     opacity: 0.7;
 }
+
+/* ===== MOBILE RESPONSIVE STYLES ===== */
+
+/* Mobile Menu Toggle Button (injected via JS) */
+#mobile-menu-toggle {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    left: 16px;
+    z-index: 1000;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.5);
+}
+
+/* ===== MOBILE BREAKPOINT (max-width: 768px) ===== */
+@media screen and (max-width: 768px) {
+    
+    /* Body adjustments */
+    body {
+        overflow: auto !important;
+        height: auto !important;
+        min-height: 100vh;
+    }
+    
+    /* Header - compact on mobile */
+    header {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 12px !important;
+    }
+    
+    header > div:first-child {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    header h1 {
+        font-size: 1.1rem !important;
+    }
+    
+    header button,
+    header label {
+        flex: 1;
+        justify-content: center;
+        padding: 8px 12px !important;
+        font-size: 0.75rem !important;
+    }
+    
+    header button span,
+    header label span {
+        display: none;
+    }
+    
+    header button i,
+    header label i {
+        margin: 0;
+    }
+    
+    /* Main Container - stack vertically */
+    .flex.flex-1.overflow-hidden {
+        flex-direction: column !important;
+        overflow: visible !important;
+    }
+    
+    /* Sidebar - horizontal scrollable tabs on mobile */
+    aside, nav {
+        width: 100% !important;
+        min-width: unset !important;
+        max-height: none !important;
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+        border-right: none !important;
+        border-bottom: 1px solid #374151 !important;
+    }
+    
+    /* Sidebar title - hide on mobile */
+    aside > p.text-gray-500,
+    nav > p.text-gray-500 {
+        display: none;
+    }
+    
+    /* Tab buttons - horizontal layout */
+    nav, .space-y-1 {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        gap: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .tab-btn {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        padding: 10px 14px !important;
+        font-size: 0.75rem !important;
+        border-left: none !important;
+        border-bottom: 3px solid transparent;
+    }
+    
+    .tab-btn.active {
+        border-left-color: transparent !important;
+        border-bottom-color: #60a5fa !important;
+    }
+    
+    .tab-btn span {
+        display: none;
+    }
+    
+    .tab-btn i {
+        margin: 0;
+        font-size: 1rem;
+    }
+    
+    /* Main content area */
+    main, .flex-1.overflow-y-auto {
+        width: 100% !important;
+        padding: 12px !important;
+        overflow: visible !important;
+    }
+    
+    /* Form sections */
+    .max-w-4xl {
+        max-width: 100% !important;
+    }
+    
+    /* Grid adjustments - single column on mobile */
+    .grid-cols-2,
+    .grid-cols-3,
+    .grid-cols-4,
+    .grid-cols-5,
+    .grid-cols-6 {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .col-span-1,
+    .col-span-2,
+    .col-span-3,
+    .col-span-4,
+    .col-span-5,
+    .col-span-6 {
+        grid-column: span 1 !important;
+    }
+    
+    /* Form groups */
+    .form-group {
+        margin-bottom: 12px;
+    }
+    
+    .form-group label {
+        font-size: 0.75rem;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        font-size: 16px !important; /* Prevents iOS zoom */
+        padding: 12px !important;
+    }
+    
+    /* Buttons */
+    button {
+        min-height: 44px; /* Touch-friendly */
+    }
+    
+    /* Media previews */
+    [id$="-container"] {
+        min-height: 150px !important;
+    }
+    
+    /* Toast notifications */
+    #toast-container {
+        left: 10px;
+        right: 10px;
+        top: 10px;
+    }
+    
+    .toast {
+        min-width: unset !important;
+        max-width: 100% !important;
+    }
+    
+    /* Modals */
+    .modal-content {
+        min-width: unset !important;
+        max-width: 95vw !important;
+        margin: 10px;
+        padding: 16px !important;
+    }
+    
+    /* Extra links section */
+    .extra-link-row {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+    
+    /* Gifts and Manual popups */
+    #preview-buttons-modal .grid,
+    #preview-modal-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+    }
+    
+    /* Chatbot - adjust position */
+    #chatbot-container {
+        width: calc(100vw - 32px) !important;
+        right: 16px !important;
+        bottom: 80px !important;
+        max-height: 60vh !important;
+    }
+    
+    #chatbot-toggle {
+        bottom: 16px !important;
+        right: 16px !important;
+    }
+    
+    /* Hide mobile menu toggle (we use horizontal tabs instead) */
+    #mobile-menu-toggle {
+        display: none;
+    }
+    
+    /* Section headers */
+    h2 {
+        font-size: 1.25rem !important;
+    }
+    
+    h3 {
+        font-size: 1rem !important;
+    }
+    
+    /* Prompt boxes */
+    .prompt-box {
+        padding: 12px !important;
+    }
+    
+    .prompt-box textarea {
+        font-size: 14px !important;
+    }
+    
+    /* Range sliders */
+    input[type="range"] {
+        width: 100% !important;
+    }
+    
+    /* Color inputs */
+    input[type="color"] {
+        width: 50px !important;
+        height: 40px !important;
+    }
+    
+    /* Preview buttons modal */
+    #preview-modal-buttons-container {
+        padding: 8px !important;
+    }
+    
+    #preview-modal-buttons-container button {
+        padding: 8px 12px !important;
+        font-size: 0.75rem !important;
+    }
+}
+
+/* ===== SMALL MOBILE (max-width: 480px) ===== */
+@media screen and (max-width: 480px) {
+    
+    header h1 {
+        font-size: 0.9rem !important;
+    }
+    
+    .tab-btn {
+        padding: 8px 10px !important;
+    }
+    
+    .tab-btn i {
+        font-size: 0.9rem;
+    }
+    
+    /* Stack action buttons vertically */
+    .flex.gap-2,
+    .flex.gap-3,
+    .flex.gap-4 {
+        flex-direction: column !important;
+    }
+    
+    .flex.gap-2 > *,
+    .flex.gap-3 > *,
+    .flex.gap-4 > * {
+        width: 100%;
+    }
+    
+    /* History cards */
+    .history-card {
+        padding: 12px !important;
+    }
+    
+    /* GitHub deploy section */
+    #preview-modal-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
