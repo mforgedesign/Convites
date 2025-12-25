@@ -897,6 +897,29 @@
         padding: 8px 12px !important;
         font-size: 0.75rem !important;
     }
+
+    /* Confirmation modals - ensure buttons are clickable */
+    .fixed.inset-0.z-50 {
+        padding: 16px !important;
+    }
+
+    .fixed.inset-0.z-50>div {
+        max-width: 90vw !important;
+        max-height: 90vh !important;
+        overflow: auto;
+    }
+
+    /* Ensure modal buttons stay horizontal */
+    .fixed.inset-0.z-50 .flex.gap-2,
+    .fixed.inset-0.z-50 .flex.gap-3 {
+        flex-direction: row !important;
+        flex-wrap: wrap;
+    }
+
+    .fixed.inset-0.z-50 button {
+        min-height: 44px;
+        padding: 12px 16px !important;
+    }
 }
 
 /* ===== SMALL MOBILE (max-width: 480px) ===== */
@@ -914,26 +937,22 @@
         font-size: 0.9rem;
     }
 
-    /* Stack action buttons vertically */
-    .flex.gap-2,
-    .flex.gap-3,
-    .flex.gap-4 {
-        flex-direction: column !important;
-    }
-
-    .flex.gap-2>*,
-    .flex.gap-3>*,
-    .flex.gap-4>* {
-        width: 100%;
-    }
-
     /* History cards */
     .history-card {
-        padding: 12px !important;
+        padding: 8px !important;
+    }
+
+    .history-card h3 {
+        font-size: 0.7rem !important;
     }
 
     /* GitHub deploy section */
     #preview-modal-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Forms - stack inputs */
+    .grid.grid-cols-6 {
         grid-template-columns: 1fr !important;
     }
 }
