@@ -562,25 +562,6 @@ document.addEventListener('DOMContentLoaded', () => {
     tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             try {
-                const targetTab = btn.getAttribute('data-tab');
-
-                // Auto-download music check when switching tabs (with null checks)
-                const currentTabContent = document.querySelector('.tab-content:not(.hidden)');
-                if (currentTabContent && (currentTabContent.id === 'tab-music' || currentTabContent.id === 'tab-form')) {
-                    const musicInput = document.getElementById('input-music');
-                    const musicVal = musicInput ? musicInput.value : '';
-                    const audioEl = document.getElementById('preview-audio');
-                    const audioHasSource = audioEl && audioEl.src && audioEl.src.includes('musica.mp3');
-
-                    // Skip if importing or music already exists
-                    if (musicVal && typeof musicDownloadTriggered !== 'undefined' && !musicDownloadTriggered && typeof isImporting !== 'undefined' && !isImporting && !audioHasSource) {
-                        musicDownloadTriggered = true;
-                        if (typeof downloadMusicAutomatically === 'function') {
-                            downloadMusicAutomatically(musicVal);
-                        }
-                    }
-                }
-
                 // Standard Tab Switching
                 tabBtns.forEach(b => b.classList.remove('active'));
                 tabContents.forEach(c => {
