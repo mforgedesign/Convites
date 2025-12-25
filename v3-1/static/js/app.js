@@ -1,4 +1,270 @@
-// ===== SUPABASE EDGE FUNCTIONS CONFIGURATION =====\r\n// Esta é a versão WEB do AutoBuilder 3.1\r\n// Todas as chamadas de API são feitas para Supabase Edge Functions\r\n\r\nconst SUPABASE_URL = 'https://pvfzyheznsoyxsufyqzu.supabase.co';\r\nconst SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB2Znp5aGV6bnNveXhzdWZ5cXp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY2NjY3OTMsImV4cCI6MjA4MjI0Mjc5M30.IZK9MQOKe8jimDgal-czPR3umsGfSBLCK9uvuQAZ4QA';\r\n\r\n// Mapeamento de endpoints Flask -> Edge Functions\r\nconst API_ENDPOINTS = {\r\n    '/api/generate-prompts': `${SUPABASE_URL}/functions/v1/generate-prompts`,\r\n    '/api/generate-image': `${SUPABASE_URL}/functions/v1/generate-image`,\r\n    '/api/generate-video': `${SUPABASE_URL}/functions/v1/generate-video`,\r\n    '/api/fill-leaf': `${SUPABASE_URL}/functions/v1/fill-leaf`,\r\n    '/api/generate-manual': `${SUPABASE_URL}/functions/v1/generate-manual`,\r\n    '/api/suggest-icon': `${SUPABASE_URL}/functions/v1/suggest-icon`,\r\n    '/api/generate-whatsapp-link': `${SUPABASE_URL}/functions/v1/generate-whatsapp-link`,\r\n    '/api/check-slug-existence': `${SUPABASE_URL}/functions/v1/check-slug`,\r\n    '/api/deploy-github': `${SUPABASE_URL}/functions/v1/deploy-github`,\r\n    '/api/chatbot': `${SUPABASE_URL}/functions/v1/chatbot`,\r\n};\r\n\r\n// Funcionalidades desabilitadas na versão web\r\nconst DISABLED_ENDPOINTS = [\r\n    '/api/download-music',\r\n    '/api/audio-duration',\r\n    '/api/trim-audio',\r\n    '/api/restore-audio',\r\n    '/api/run-dashboard',\r\n    '/api/save-state',\r\n    '/api/load-state',\r\n    '/api/clear-cache',\r\n    '/api/custom-index',\r\n];\r\n\r\n// Wrapper para chamadas fetch que redireciona para Supabase Edge Functions\r\nconst originalFetch = window.fetch;\r\nwindow.fetch = async function(url, options = {}) {\r\n    // Verifica se é uma chamada para API local\r\n    if (typeof url === 'string' && url.startsWith('/api/')) {\r\n        // Verifica se o endpoint está desabilitado\r\n        const isDisabled = DISABLED_ENDPOINTS.some(e => url.startsWith(e));\r\n        if (isDisabled) {\r\n            console.warn(`[Web Version] Endpoint desabilitado: ${url}`);\r\n            return new Response(JSON.stringify({ \r\n                error: 'Esta funcionalidade não está disponível na versão web.',\r\n                disabled: true \r\n            }), { \r\n                status: 503,\r\n                headers: { 'Content-Type': 'application/json' }\r\n            });\r\n        }\r\n        \r\n        // Redireciona para Supabase Edge Functions\r\n        const edgeUrl = API_ENDPOINTS[url];\r\n        if (edgeUrl) {\r\n            console.log(`[Web Version] Redirecionando ${url} -> ${edgeUrl}`);\r\n            return originalFetch(edgeUrl, {\r\n                ...options,\r\n                headers: {\r\n                    ...options.headers,\r\n                    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,\r\n                    'apikey': SUPABASE_ANON_KEY,\r\n                }\r\n            });\r\n        }\r\n    }\r\n    \r\n    // Chamada original para URLs não mapeadas\r\n    return originalFetch(url, options);\r\n};\r\n\r\n// ===== CUSTOM NOTIFICATION SYSTEM =====
+// ===== SUPABASE EDGE FUNCTIONS CONFIGURATION =====
+// Esta é a versão WEB do AutoBuilder 3.1
+// Todas as chamadas de API são feitas para Supabase Edge Functions
+
+const SUPABASE_URL = 'https://pvfzyheznsoyxsufyqzu.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB2Znp5aGV6bnNveXhzdWZ5cXp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY2NjY3OTMsImV4cCI6MjA4MjI0Mjc5M30.IZK9MQOKe8jimDgal-czPR3umsGfSBLCK9uvuQAZ4QA';
+
+// Mapeamento de endpoints Flask -> Edge Functions
+const API_ENDPOINTS = {
+    '/api/generate-prompts': `${SUPABASE_URL}/functions/v1/generate-prompts`,
+    '/api/generate-image': `${SUPABASE_URL}/functions/v1/generate-image`,
+    '/api/generate-video': `${SUPABASE_URL}/functions/v1/generate-video`,
+    '/api/fill-leaf': `${SUPABASE_URL}/functions/v1/fill-leaf`,
+    '/api/generate-manual': `${SUPABASE_URL}/functions/v1/generate-manual`,
+    '/api/suggest-icon': `${SUPABASE_URL}/functions/v1/suggest-icon`,
+    '/api/generate-whatsapp-link': `${SUPABASE_URL}/functions/v1/generate-whatsapp-link`,
+    '/api/check-slug-existence': `${SUPABASE_URL}/functions/v1/check-slug`,
+    '/api/deploy-github': `${SUPABASE_URL}/functions/v1/deploy-github`,
+    '/api/chatbot': `${SUPABASE_URL}/functions/v1/chatbot`,
+    '/api/list-convites': `${SUPABASE_URL}/functions/v1/list-convites`,
+};
+
+// Funcionalidades desabilitadas na versão web
+const DISABLED_ENDPOINTS = [
+    '/api/download-music',
+    '/api/audio-duration',
+    '/api/trim-audio',
+    '/api/restore-audio',
+    '/api/run-dashboard',
+    '/api/save-state',
+    '/api/load-state',
+    '/api/clear-cache',
+    '/api/custom-index',
+    '/api/history',
+];
+
+// Wrapper para chamadas fetch que redireciona para Supabase Edge Functions
+const originalFetch = window.fetch;
+window.fetch = async function (url, options = {}) {
+    // Verifica se é uma chamada para API local
+    if (typeof url === 'string' && url.startsWith('/api/')) {
+        // Verifica se o endpoint está desabilitado
+        const isDisabled = DISABLED_ENDPOINTS.some(e => url.startsWith(e));
+        if (isDisabled) {
+            console.warn(`[Web Version] Endpoint desabilitado: ${url}`);
+            return new Response(JSON.stringify({
+                error: 'Esta funcionalidade não está disponível na versão web.',
+                disabled: true
+            }), {
+                status: 503,
+                headers: { 'Content-Type': 'application/json' }
+            });
+        }
+
+        // Redireciona para Supabase Edge Functions
+        const edgeUrl = API_ENDPOINTS[url];
+        if (edgeUrl) {
+            console.log(`[Web Version] Redirecionando ${url} -> ${edgeUrl}`);
+            return originalFetch(edgeUrl, {
+                ...options,
+                headers: {
+                    ...options.headers,
+                    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                    'apikey': SUPABASE_ANON_KEY,
+                }
+            });
+        }
+    }
+
+    // Chamada original para URLs não mapeadas
+    return originalFetch(url, options);
+};
+
+// ===== GITHUB HISTORY FUNCTIONS (Versão Web) =====
+
+async function loadGitHubHistory() {
+    const tokenInput = document.getElementById('history-github-token');
+    const listContainer = document.getElementById('history-list');
+    const loadingDiv = document.getElementById('history-loading');
+    const emptyDiv = document.getElementById('history-empty');
+
+    const token = tokenInput?.value?.trim();
+    if (!token) {
+        showToast('Informe o token do GitHub para carregar os convites.', 'warning');
+        return;
+    }
+
+    // Salvar token para próxima vez
+    localStorage.setItem('github_token', token);
+
+    // Show loading
+    listContainer.innerHTML = '';
+    loadingDiv?.classList.remove('hidden');
+    emptyDiv?.classList.add('hidden');
+
+    try {
+        const response = await fetch('/api/list-convites', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                github_user: 'mforgedesign',
+                github_token: token,
+                repo_name: 'convites'
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || data.error) {
+            throw new Error(data.error || 'Erro ao carregar convites');
+        }
+
+        loadingDiv?.classList.add('hidden');
+
+        if (!data.convites || data.convites.length === 0) {
+            emptyDiv?.classList.remove('hidden');
+            return;
+        }
+
+        // Render cards
+        data.convites.forEach(convite => {
+            const card = document.createElement('div');
+            card.className = 'history-card bg-gray-800 border border-gray-700 rounded-lg overflow-hidden cursor-pointer hover:border-green-500 transition-all hover:shadow-lg hover:shadow-green-500/20';
+            card.dataset.slug = convite.slug;
+            card.dataset.url = convite.url;
+
+            const coverImg = convite.coverUrl
+                ? `<img src="${convite.coverUrl}" alt="${convite.slug}" class="w-full h-32 object-cover">`
+                : `<div class="w-full h-32 bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
+                     <i class="fa-solid fa-gift text-4xl text-white/50"></i>
+                   </div>`;
+
+            card.innerHTML = `
+                ${coverImg}
+                <div class="p-3">
+                    <h3 class="text-white font-semibold text-sm truncate">${convite.slug}</h3>
+                    <div class="flex items-center gap-2 mt-2">
+                        <a href="${convite.url}" target="_blank" 
+                           class="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1"
+                           onclick="event.stopPropagation()">
+                            <i class="fa-solid fa-external-link-alt"></i> Ver
+                        </a>
+                        <span class="text-xs text-gray-500">|</span>
+                        <span class="text-xs text-green-400 flex items-center gap-1">
+                            <i class="fa-solid fa-download"></i> Importar
+                        </span>
+                    </div>
+                </div>
+            `;
+
+            card.addEventListener('click', () => importFromGitHubUrl(convite.url, convite.slug));
+            listContainer.appendChild(card);
+        });
+
+        showToast(`${data.convites.length} convites encontrados!`, 'success');
+
+    } catch (error) {
+        loadingDiv?.classList.add('hidden');
+        showToast('Erro ao carregar convites: ' + error.message, 'error');
+        console.error('Erro ao carregar histórico GitHub:', error);
+    }
+}
+
+async function importFromGitHubUrl(url, slug) {
+    const confirmed = await showConfirm(
+        `Deseja importar o convite <strong>${slug}</strong>?<br><br>Isso substituirá os dados atuais do editor.`,
+        { title: 'Importar Convite', confirmText: 'Importar', icon: 'fa-cloud-arrow-down' }
+    );
+
+    if (!confirmed) return;
+
+    // Show loading
+    showToast('Importando convite do GitHub...', 'info');
+
+    try {
+        // Buscar dados do HTML publicado
+        const htmlResponse = await originalFetch(url);
+        if (!htmlResponse.ok) throw new Error('Não foi possível acessar o convite');
+
+        const html = await htmlResponse.text();
+
+        // Extrair dados do HTML
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+
+        // Extrair configurações do menuConfig
+        const scripts = doc.querySelectorAll('script');
+        let menuConfig = null;
+
+        for (const script of scripts) {
+            const match = script.textContent?.match(/const\s+menuConfig\s*=\s*(\{[\s\S]*?\});/);
+            if (match) {
+                try {
+                    menuConfig = eval('(' + match[1] + ')');
+                } catch (e) {
+                    console.warn('Erro ao parsear menuConfig:', e);
+                }
+            }
+        }
+
+        // Aplicar dados aos campos
+        if (menuConfig) {
+            // Limpar campos atuais
+            localStorage.clear();
+
+            // Preencher campos do formulário
+            if (menuConfig.maps) setInputValue('input-maps', menuConfig.maps);
+            if (menuConfig.gifts) setInputValue('input-gifts', menuConfig.gifts);
+            if (menuConfig.whatsapp) setInputValue('input-whatsapp', menuConfig.whatsapp);
+            if (menuConfig.confirmLink) setInputValue('input-confirm-link', menuConfig.confirmLink);
+            if (menuConfig.manualText) {
+                setInputValue('input-manual', menuConfig.manualText);
+                setInputValue('input-manual-sync', menuConfig.manualText);
+            }
+            if (menuConfig.manualName) setInputValue('input-manual-name', menuConfig.manualName);
+        }
+
+        // Preencher slug
+        setInputValue('input-slug', slug);
+
+        // Preencher URLs de mídia
+        const baseUrl = url.endsWith('/') ? url : url + '/';
+
+        // Tentar carregar capa
+        const coverPreview = document.getElementById('preview-cover');
+        if (coverPreview) {
+            const capaUrl = baseUrl + 'capa/';
+            coverPreview.src = capaUrl;
+        }
+
+        showToast('Convite importado com sucesso!', 'success');
+
+        // Mudar para aba do formulário
+        document.querySelector('[data-tab="tab-form"]')?.click();
+
+    } catch (error) {
+        showToast('Erro ao importar: ' + error.message, 'error');
+        console.error('Erro ao importar do GitHub:', error);
+    }
+}
+
+function setInputValue(id, value) {
+    const el = document.getElementById(id);
+    if (el) {
+        el.value = value;
+        localStorage.setItem(id, value);
+    }
+}
+
+// Init GitHub History on page load
+document.addEventListener('DOMContentLoaded', () => {
+    // Restore saved token
+    const savedToken = localStorage.getItem('github_token');
+    const tokenInput = document.getElementById('history-github-token');
+    if (savedToken && tokenInput) {
+        tokenInput.value = savedToken;
+    }
+
+    // Bind buttons
+    const loadBtn = document.getElementById('btn-load-github-history');
+    if (loadBtn) loadBtn.addEventListener('click', loadGitHubHistory);
+
+    const refreshBtn = document.getElementById('btn-refresh-history');
+    if (refreshBtn) refreshBtn.addEventListener('click', loadGitHubHistory);
+});
+
+// ===== CUSTOM NOTIFICATION SYSTEM =====
 
 /**
  * Show a toast notification (non-blocking, auto-dismiss)
