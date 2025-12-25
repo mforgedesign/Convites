@@ -73,30 +73,28 @@ window.fetch = async function (url, options = {}) {
 };
 
 // ===== GITHUB HISTORY FUNCTIONS
-// Histórico com lazy loading e infinite scroll
+// Histórico com paginação e botões de navegação
 let historyPage = 1;
 let historyLoading = false;
-let historyHasMore = true;
-const historyPerPage = 50;
+let historyTotal = 0;
+const historyPerPage = 6;
 
-async function loadGitHubHistoryPage(append = false) {
-    if (historyLoading || (!historyHasMore && append)) return;
+async function loadGitHubHistoryPage(page = 1) {
+    if (historyLoading) return;
 
     const listContainer = document.getElementById('history-list');
     const loadingDiv = document.getElementById('history-loading');
     const emptyDiv = document.getElementById('history-empty');
+    const paginationDiv = document.getElementById('history-pagination');
 
     if (!listContainer) return;
 
     historyLoading = true;
+    historyPage = page;
 
-    if (!append) {
-        listContainer.innerHTML = '';
-        historyPage = 1;
-        historyHasMore = true;
-        emptyDiv?.classList.add('hidden'); // Hide empty message when starting fresh load
-    }
-
+    listContainer.innerHTML = '';
+    emptyDiv?.classList.add('hidden');
+    paginationDiv?.classList.add('hidden');
     loadingDiv?.classList.remove('hidden');
 
     try {
@@ -114,15 +112,15 @@ async function loadGitHubHistoryPage(append = false) {
         }
 
         if (!data.convites || data.convites.length === 0) {
-            if (!append) emptyDiv?.classList.remove('hidden');
-            historyHasMore = false;
+            emptyDiv?.classList.remove('hidden');
             historyLoading = false;
             return;
         }
 
-        historyHasMore = data.hasMore;
+        historyTotal = data.total || 0;
+        const totalPages = Math.ceil(historyTotal / historyPerPage);
 
-        // Render cards progressivamente
+        // Render cards
         data.convites.forEach(convite => {
             const card = document.createElement('div');
             card.className = 'history-card bg-gray-800 rounded-lg border border-gray-700 overflow-hidden hover:border-purple-500 transition-all group relative';
@@ -158,7 +156,8 @@ async function loadGitHubHistoryPage(append = false) {
             listContainer.appendChild(card);
         });
 
-        historyPage++;
+        // Update pagination UI
+        updateHistoryPagination(totalPages);
         historyLoading = false;
 
     } catch (error) {
@@ -169,26 +168,55 @@ async function loadGitHubHistoryPage(append = false) {
     }
 }
 
-// Infinite scroll para histórico
-function setupHistoryInfiniteScroll() {
-    const tabHistory = document.getElementById('tab-history');
-    if (!tabHistory) return;
+function updateHistoryPagination(totalPages) {
+    let paginationDiv = document.getElementById('history-pagination');
 
-    tabHistory.addEventListener('scroll', () => {
-        const scrollTop = tabHistory.scrollTop;
-        const scrollHeight = tabHistory.scrollHeight;
-        const clientHeight = tabHistory.clientHeight;
+    // Create pagination div if it doesn't exist
+    if (!paginationDiv) {
+        paginationDiv = document.createElement('div');
+        paginationDiv.id = 'history-pagination';
+        paginationDiv.className = 'flex items-center justify-center gap-4 mt-6 pb-4';
+        const tabHistory = document.getElementById('tab-history');
+        if (tabHistory) tabHistory.appendChild(paginationDiv);
+    }
 
-        // Load more when 200px from bottom
-        if (scrollTop + clientHeight >= scrollHeight - 200) {
-            loadGitHubHistoryPage(true);
-        }
-    });
+    if (totalPages <= 1) {
+        paginationDiv.classList.add('hidden');
+        return;
+    }
+
+    paginationDiv.classList.remove('hidden');
+    paginationDiv.innerHTML = `
+        <button id="btn-history-prev" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors" ${historyPage <= 1 ? 'disabled' : ''}>
+            <i class="fa-solid fa-chevron-left mr-1"></i> Anterior
+        </button>
+        <span class="text-gray-400 text-sm">
+            Página <span class="text-white font-bold">${historyPage}</span> de <span class="text-white font-bold">${totalPages}</span>
+        </span>
+        <button id="btn-history-next" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors" ${historyPage >= totalPages ? 'disabled' : ''}>
+            Próxima <i class="fa-solid fa-chevron-right ml-1"></i>
+        </button>
+    `;
+
+    // Add event listeners
+    const prevBtn = document.getElementById('btn-history-prev');
+    const nextBtn = document.getElementById('btn-history-next');
+
+    if (prevBtn) {
+        prevBtn.onclick = () => {
+            if (historyPage > 1) loadGitHubHistoryPage(historyPage - 1);
+        };
+    }
+    if (nextBtn) {
+        nextBtn.onclick = () => {
+            if (historyPage < totalPages) loadGitHubHistoryPage(historyPage + 1);
+        };
+    }
 }
 
 // Backwards compatibility
 async function loadGitHubHistory() {
-    await loadGitHubHistoryPage(false);
+    await loadGitHubHistoryPage(1);
 }
 
 async function importFromGitHubUrl(liveUrl, displayName) {
