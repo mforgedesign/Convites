@@ -18,6 +18,7 @@ const API_ENDPOINTS = {
     '/api/deploy-github': `${SUPABASE_URL}/functions/v1/deploy-github`,
     '/api/chatbot': `${SUPABASE_URL}/functions/v1/chatbot`,
     '/api/list-convites': `${SUPABASE_URL}/functions/v1/list-convites`,
+    '/api/import-from-github': `${SUPABASE_URL}/functions/v1/import-from-github`,
 };
 
 // Funcionalidades desabilitadas na versão web
@@ -105,37 +106,41 @@ async function loadGitHubHistory() {
             return;
         }
 
-        // Render cards
+        // Render cards - layout estilo versão desktop
         data.convites.forEach(convite => {
             const card = document.createElement('div');
-            card.className = 'history-card bg-gray-800 border border-gray-700 rounded-lg overflow-hidden cursor-pointer hover:border-green-500 transition-all hover:shadow-lg hover:shadow-green-500/20';
+            card.className = 'history-card bg-gray-800 rounded-lg border border-gray-700 overflow-hidden hover:border-purple-500 transition-all group relative';
             card.dataset.slug = convite.slug;
             card.dataset.url = convite.url;
 
-            const coverImg = convite.coverUrl
-                ? `<img src="${convite.coverUrl}" alt="${convite.slug}" class="w-full h-28 md:h-32 object-cover" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-28 md:h-32 bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center\\'><i class=\\'fa-solid fa-gift text-3xl text-white/50\\'></i></div>'">`
-                : `<div class="w-full h-28 md:h-32 bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
-                     <i class="fa-solid fa-gift text-3xl text-white/50"></i>
-                   </div>`;
+            // Thumbnail com aspect-ratio 9:16 (vertical como capa de convite)
+            const thumbHtml = convite.coverUrl
+                ? `<img src="${convite.coverUrl}" class="w-full h-full object-cover group-hover:scale-105 transition-transform" alt="Capa" onerror="this.src='';this.onerror=null;this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-gray-600\\'><i class=\\'fa-solid fa-image text-2xl\\'></i></div>'">`
+                : `<div class="w-full h-full flex items-center justify-center text-gray-600 bg-gradient-to-br from-purple-900 to-blue-900"><i class="fa-solid fa-gift text-3xl text-white/30"></i></div>`;
 
             card.innerHTML = `
-                ${coverImg}
-                <div class="p-2 md:p-3">
-                    <h3 class="text-white font-semibold text-xs md:text-sm truncate">${convite.slug}</h3>
-                    <div class="flex items-center gap-2 mt-2">
-                        <a href="${convite.url}" target="_blank" 
-                           class="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1"
-                           onclick="event.stopPropagation()">
-                            <i class="fa-solid fa-external-link-alt"></i> <span class="hidden md:inline">Ver</span>
-                        </a>
-                        <span class="text-xs text-green-400 flex items-center gap-1">
-                            <i class="fa-solid fa-download"></i> <span class="hidden md:inline">Importar</span>
-                        </span>
+                <div class="aspect-[9/16] bg-gray-900 overflow-hidden relative cursor-pointer">
+                    ${thumbHtml}
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4">
+                        <span class="text-white text-sm font-semibold"><i class="fa-solid fa-file-import mr-1"></i> Importar</span>
                     </div>
+                    <a href="${convite.url}" target="_blank" 
+                       class="absolute bottom-12 left-1/2 -translate-x-1/2 bg-green-600 hover:bg-green-500 text-white text-xs px-3 py-1.5 rounded opacity-0 group-hover:opacity-100 transition-opacity z-10 whitespace-nowrap"
+                       onclick="event.stopPropagation()">
+                        <i class="fa-solid fa-external-link mr-1"></i> Acessar
+                    </a>
+                </div>
+                <div class="p-2">
+                    <h4 class="font-semibold text-white truncate text-sm" title="${convite.slug}">${convite.slug}</h4>
                 </div>
             `;
 
-            card.addEventListener('click', () => importFromGitHubUrl(convite.url, convite.slug));
+            // Click thumbnail to import
+            card.querySelector('.aspect-\\[9\\/16\\]').addEventListener('click', (e) => {
+                if (e.target.closest('a')) return; // Don't import if clicking access link
+                importFromGitHubUrl(convite.url, convite.slug);
+            });
+
             listContainer.appendChild(card);
         });
 
@@ -147,58 +152,141 @@ async function loadGitHubHistory() {
     }
 }
 
-async function importFromGitHubUrl(url, slug) {
+async function importFromGitHubUrl(liveUrl, displayName) {
     const confirmed = await showConfirm(
-        `Deseja importar o convite <strong>${slug}</strong>?<br><br>Isso substituirá os dados atuais do editor.`,
-        { title: 'Importar Convite', confirmText: 'Importar', icon: 'fa-cloud-arrow-down' }
+        `Deseja importar o convite <strong>${displayName}</strong>?<br><br>Isso substituirá os dados atuais do editor.`,
+        { title: 'Importar do GitHub', confirmText: 'Importar', icon: 'fa-brands fa-github' }
     );
 
     if (!confirmed) return;
 
-    showToast('Importando convite do GitHub...', 'info');
+    // Show loading popup
+    const loadingPopup = document.createElement('div');
+    loadingPopup.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm';
+    loadingPopup.innerHTML = `
+        <div class="bg-gray-800 p-8 rounded-xl text-center">
+            <i class="fa-brands fa-github fa-spin text-4xl text-green-500 mb-4"></i>
+            <p class="text-white">Importando do GitHub...</p>
+            <p class="text-gray-400 text-sm mt-2">${displayName}</p>
+        </div>
+    `;
+    document.body.appendChild(loadingPopup);
 
     try {
-        const htmlResponse = await originalFetch(url);
-        if (!htmlResponse.ok) throw new Error('Não foi possível acessar o convite');
+        // Usar Edge Function para processar o HTML
+        const response = await fetch('/api/import-from-github', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ liveUrl })
+        });
 
-        const html = await htmlResponse.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
+        const result = await response.json();
+        loadingPopup.remove();
 
-        // Extrair menuConfig
-        const scripts = doc.querySelectorAll('script');
-        let menuConfig = null;
+        if (!response.ok || result.error) {
+            throw new Error(result.error || 'Erro ao importar');
+        }
 
-        for (const script of scripts) {
-            const match = script.textContent?.match(/const\s+menuConfig\s*=\s*(\{[\s\S]*?\});/);
-            if (match) {
-                try {
-                    menuConfig = eval('(' + match[1] + ')');
-                } catch (e) {
-                    console.warn('Erro ao parsear menuConfig:', e);
+        const data = result.data;
+
+        // Limpar dados atuais
+        localStorage.clear();
+
+        // Aplicar dados do formulário
+        if (data.formData) {
+            const fieldMappings = {
+                'slug': 'input-slug',
+                'mapsLink': 'input-maps',
+                'maps': 'input-maps',
+                'giftsLink': 'input-gifts',
+                'gifts': 'input-gifts',
+                'whatsapp': 'input-whatsapp',
+                'confirmLink': 'input-confirm-link',
+                'manual': 'input-manual',
+                'manualText': 'input-manual',
+                'manualName': 'input-manual-name',
+                'buttonColor': 'input-button-color',
+                'shadowColor': 'input-shadow-color',
+                'buttonSize': 'input-button-size',
+                'buttonsOffset': 'input-buttons-offset',
+                'giftSuggestions': 'input-gift-suggestions',
+                'extraLink': 'input-extra',
+                'extraName': 'input-extra-name',
+                'extraIcon': 'input-extra-icon'
+            };
+
+            for (const [dataKey, inputId] of Object.entries(fieldMappings)) {
+                if (data.formData[dataKey] !== undefined) {
+                    setInputValue(inputId, data.formData[dataKey]);
                 }
             }
-        }
 
-        if (menuConfig) {
-            if (menuConfig.maps) setInputValue('input-maps', menuConfig.maps);
-            if (menuConfig.gifts) setInputValue('input-gifts', menuConfig.gifts);
-            if (menuConfig.whatsapp) setInputValue('input-whatsapp', menuConfig.whatsapp);
-            if (menuConfig.confirmLink) setInputValue('input-confirm-link', menuConfig.confirmLink);
-            if (menuConfig.manualText) {
-                setInputValue('input-manual', menuConfig.manualText);
-                setInputValue('input-manual-sync', menuConfig.manualText);
+            // Sync manual text to other fields
+            if (data.formData.manualText || data.formData.manual) {
+                const manualText = data.formData.manualText || data.formData.manual;
+                setInputValue('input-manual-sync', manualText);
             }
-            if (menuConfig.manualName) setInputValue('input-manual-name', menuConfig.manualName);
+
+            // Checkboxes
+            if (data.formData.allowCompanion !== undefined) {
+                const el = document.getElementById('check-allow-companion');
+                if (el) el.checked = data.formData.allowCompanion;
+            }
+            if (data.formData.interactHint !== undefined) {
+                const el = document.getElementById('check-interact-hint');
+                if (el) el.checked = data.formData.interactHint;
+            }
+            if (data.formData.showTimer !== undefined) {
+                const el = document.getElementById('check-show-timer');
+                if (el) el.checked = data.formData.showTimer;
+            }
         }
 
-        setInputValue('input-slug', slug);
+        // Aplicar previews de mídia
+        if (data.files) {
+            const timestamp = Date.now();
 
-        showToast('Convite importado com sucesso!', 'success');
-        document.querySelector('[data-tab="tab-form"]')?.click();
+            if (data.files['capa.jpg']) {
+                const preview = document.getElementById('preview-cover');
+                if (preview) {
+                    preview.src = data.files['capa.jpg'] + '?t=' + timestamp;
+                    preview.classList.remove('hidden');
+                }
+            }
+
+            if (data.files['abertura.mp4']) {
+                const preview = document.getElementById('preview-anim-cover');
+                if (preview) {
+                    preview.src = data.files['abertura.mp4'] + '?t=' + timestamp;
+                    preview.classList.remove('hidden');
+                }
+            }
+
+            if (data.files['loop.mp4']) {
+                const preview = document.getElementById('preview-anim-leaf');
+                if (preview) {
+                    preview.src = data.files['loop.mp4'] + '?t=' + timestamp;
+                    preview.classList.remove('hidden');
+                }
+            }
+
+            if (data.files['musica.mp3']) {
+                const audioPreview = document.getElementById('preview-audio');
+                if (audioPreview) {
+                    audioPreview.src = data.files['musica.mp3'] + '?t=' + timestamp;
+                }
+                document.getElementById('music-status')?.classList.remove('hidden');
+            }
+        }
+
+        showToast('✓ Convite importado do GitHub com sucesso!', 'success');
+
+        // Switch to form tab
+        document.querySelector('.tab-btn[data-tab="tab-form"]')?.click();
 
     } catch (error) {
-        showToast('Erro ao importar: ' + error.message, 'error');
+        loadingPopup.remove();
+        showToast('Erro ao importar do GitHub: ' + error.message, 'error');
         console.error('Erro ao importar do GitHub:', error);
     }
 }
@@ -208,6 +296,7 @@ function setInputValue(id, value) {
     if (el) {
         el.value = value;
         localStorage.setItem(id, value);
+        el.dispatchEvent(new Event('input'));
     }
 }
 
@@ -227,6 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const refreshBtn = document.getElementById('btn-refresh-history');
     if (refreshBtn) refreshBtn.addEventListener('click', loadGitHubHistory);
 });
+
 
 // ===== CUSTOM NOTIFICATION SYSTEM =====
 
