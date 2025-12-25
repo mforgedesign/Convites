@@ -495,6 +495,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabBtns = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
 
+    // Register click handlers for tab switching
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetTab = btn.dataset.tab;
+
+            // Remove active class from all buttons
+            tabBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            btn.classList.add('active');
+
+            // Hide all tab contents
+            tabContents.forEach(content => content.classList.add('hidden'));
+            // Show target tab content
+            const targetContent = document.getElementById(targetTab);
+            if (targetContent) targetContent.classList.remove('hidden');
+        });
+    });
+
     // WhatsApp Link Generation Trigger
     let generatedWhatsAppLink = localStorage.getItem('generatedWhatsAppLink') || '';
 
