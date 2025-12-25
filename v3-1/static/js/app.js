@@ -77,7 +77,7 @@ window.fetch = async function (url, options = {}) {
 let historyPage = 1;
 let historyLoading = false;
 let historyHasMore = true;
-const historyPerPage = 12;
+const historyPerPage = 50;
 
 async function loadGitHubHistoryPage(append = false) {
     if (historyLoading || (!historyHasMore && append)) return;
