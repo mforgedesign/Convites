@@ -16,17 +16,9 @@
     background: #6b7280;
 }
 
-/* Tab Content Visibility - Force hidden/visible */
-.tab-content {
+/* Tab Content Visibility */
+.tab-content.hidden {
     display: none !important;
-}
-
-.tab-content:not(.hidden) {
-    display: block !important;
-}
-
-.tab-content.active {
-    display: block !important;
 }
 
 /* Tab Button Styling */
