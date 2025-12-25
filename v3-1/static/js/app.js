@@ -74,19 +74,11 @@ window.fetch = async function (url, options = {}) {
 // ===== GITHUB HISTORY FUNCTIONS (Versão Web) =====
 
 async function loadGitHubHistory() {
-    const tokenInput = document.getElementById('history-github-token');
     const listContainer = document.getElementById('history-list');
     const loadingDiv = document.getElementById('history-loading');
     const emptyDiv = document.getElementById('history-empty');
 
-    const token = tokenInput?.value?.trim();
-    if (!token) {
-        showToast('Informe o token do GitHub para carregar os convites.', 'warning');
-        return;
-    }
-
-    // Salvar token para próxima vez
-    localStorage.setItem('github_token', token);
+    if (!listContainer) return;
 
     // Show loading
     listContainer.innerHTML = '';
@@ -97,20 +89,16 @@ async function loadGitHubHistory() {
         const response = await fetch('/api/list-convites', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                github_user: 'mforgedesign',
-                github_token: token,
-                repo_name: 'convites'
-            })
+            body: JSON.stringify({})
         });
 
         const data = await response.json();
 
+        loadingDiv?.classList.add('hidden');
+
         if (!response.ok || data.error) {
             throw new Error(data.error || 'Erro ao carregar convites');
         }
-
-        loadingDiv?.classList.add('hidden');
 
         if (!data.convites || data.convites.length === 0) {
             emptyDiv?.classList.remove('hidden');
@@ -125,24 +113,23 @@ async function loadGitHubHistory() {
             card.dataset.url = convite.url;
 
             const coverImg = convite.coverUrl
-                ? `<img src="${convite.coverUrl}" alt="${convite.slug}" class="w-full h-32 object-cover">`
-                : `<div class="w-full h-32 bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
-                     <i class="fa-solid fa-gift text-4xl text-white/50"></i>
+                ? `<img src="${convite.coverUrl}" alt="${convite.slug}" class="w-full h-28 md:h-32 object-cover" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-28 md:h-32 bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center\\'><i class=\\'fa-solid fa-gift text-3xl text-white/50\\'></i></div>'">`
+                : `<div class="w-full h-28 md:h-32 bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
+                     <i class="fa-solid fa-gift text-3xl text-white/50"></i>
                    </div>`;
 
             card.innerHTML = `
                 ${coverImg}
-                <div class="p-3">
-                    <h3 class="text-white font-semibold text-sm truncate">${convite.slug}</h3>
+                <div class="p-2 md:p-3">
+                    <h3 class="text-white font-semibold text-xs md:text-sm truncate">${convite.slug}</h3>
                     <div class="flex items-center gap-2 mt-2">
                         <a href="${convite.url}" target="_blank" 
                            class="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1"
                            onclick="event.stopPropagation()">
-                            <i class="fa-solid fa-external-link-alt"></i> Ver
+                            <i class="fa-solid fa-external-link-alt"></i> <span class="hidden md:inline">Ver</span>
                         </a>
-                        <span class="text-xs text-gray-500">|</span>
                         <span class="text-xs text-green-400 flex items-center gap-1">
-                            <i class="fa-solid fa-download"></i> Importar
+                            <i class="fa-solid fa-download"></i> <span class="hidden md:inline">Importar</span>
                         </span>
                     </div>
                 </div>
@@ -152,10 +139,9 @@ async function loadGitHubHistory() {
             listContainer.appendChild(card);
         });
 
-        showToast(`${data.convites.length} convites encontrados!`, 'success');
-
     } catch (error) {
         loadingDiv?.classList.add('hidden');
+        emptyDiv?.classList.remove('hidden');
         showToast('Erro ao carregar convites: ' + error.message, 'error');
         console.error('Erro ao carregar histórico GitHub:', error);
     }
@@ -169,21 +155,17 @@ async function importFromGitHubUrl(url, slug) {
 
     if (!confirmed) return;
 
-    // Show loading
     showToast('Importando convite do GitHub...', 'info');
 
     try {
-        // Buscar dados do HTML publicado
         const htmlResponse = await originalFetch(url);
         if (!htmlResponse.ok) throw new Error('Não foi possível acessar o convite');
 
         const html = await htmlResponse.text();
-
-        // Extrair dados do HTML
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
 
-        // Extrair configurações do menuConfig
+        // Extrair menuConfig
         const scripts = doc.querySelectorAll('script');
         let menuConfig = null;
 
@@ -198,12 +180,7 @@ async function importFromGitHubUrl(url, slug) {
             }
         }
 
-        // Aplicar dados aos campos
         if (menuConfig) {
-            // Limpar campos atuais
-            localStorage.clear();
-
-            // Preencher campos do formulário
             if (menuConfig.maps) setInputValue('input-maps', menuConfig.maps);
             if (menuConfig.gifts) setInputValue('input-gifts', menuConfig.gifts);
             if (menuConfig.whatsapp) setInputValue('input-whatsapp', menuConfig.whatsapp);
@@ -215,22 +192,9 @@ async function importFromGitHubUrl(url, slug) {
             if (menuConfig.manualName) setInputValue('input-manual-name', menuConfig.manualName);
         }
 
-        // Preencher slug
         setInputValue('input-slug', slug);
 
-        // Preencher URLs de mídia
-        const baseUrl = url.endsWith('/') ? url : url + '/';
-
-        // Tentar carregar capa
-        const coverPreview = document.getElementById('preview-cover');
-        if (coverPreview) {
-            const capaUrl = baseUrl + 'capa/';
-            coverPreview.src = capaUrl;
-        }
-
         showToast('Convite importado com sucesso!', 'success');
-
-        // Mudar para aba do formulário
         document.querySelector('[data-tab="tab-form"]')?.click();
 
     } catch (error) {
@@ -247,18 +211,18 @@ function setInputValue(id, value) {
     }
 }
 
-// Init GitHub History on page load
+// Carregar histórico automaticamente quando a aba for aberta
 document.addEventListener('DOMContentLoaded', () => {
-    // Restore saved token
-    const savedToken = localStorage.getItem('github_token');
-    const tokenInput = document.getElementById('history-github-token');
-    if (savedToken && tokenInput) {
-        tokenInput.value = savedToken;
+    const historyTab = document.querySelector('[data-tab="tab-history"]');
+    if (historyTab) {
+        historyTab.addEventListener('click', () => {
+            // Carrega apenas se ainda não tiver cards
+            const listContainer = document.getElementById('history-list');
+            if (listContainer && listContainer.children.length === 0) {
+                loadGitHubHistory();
+            }
+        });
     }
-
-    // Bind buttons
-    const loadBtn = document.getElementById('btn-load-github-history');
-    if (loadBtn) loadBtn.addEventListener('click', loadGitHubHistory);
 
     const refreshBtn = document.getElementById('btn-refresh-history');
     if (refreshBtn) refreshBtn.addEventListener('click', loadGitHubHistory);
