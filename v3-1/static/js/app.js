@@ -72,29 +72,41 @@ window.fetch = async function (url, options = {}) {
     return originalFetch(url, options);
 };
 
-// ===== GITHUB HISTORY FUNCTIONS (Versão Web) =====
+// ===== GITHUB HISTORY FUNCTIONS
+// Histórico com lazy loading e infinite scroll
+let historyPage = 1;
+let historyLoading = false;
+let historyHasMore = true;
+const historyPerPage = 12;
 
-async function loadGitHubHistory() {
+async function loadGitHubHistoryPage(append = false) {
+    if (historyLoading || (!historyHasMore && append)) return;
+
     const listContainer = document.getElementById('history-list');
     const loadingDiv = document.getElementById('history-loading');
     const emptyDiv = document.getElementById('history-empty');
 
     if (!listContainer) return;
 
-    // Show loading
-    listContainer.innerHTML = '';
+    historyLoading = true;
+
+    if (!append) {
+        listContainer.innerHTML = '';
+        historyPage = 1;
+        historyHasMore = true;
+        emptyDiv?.classList.add('hidden'); // Hide empty message when starting fresh load
+    }
+
     loadingDiv?.classList.remove('hidden');
-    emptyDiv?.classList.add('hidden');
 
     try {
         const response = await fetch('/api/list-convites', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({})
+            body: JSON.stringify({ page: historyPage, perPage: historyPerPage })
         });
 
         const data = await response.json();
-
         loadingDiv?.classList.add('hidden');
 
         if (!response.ok || data.error) {
@@ -102,18 +114,21 @@ async function loadGitHubHistory() {
         }
 
         if (!data.convites || data.convites.length === 0) {
-            emptyDiv?.classList.remove('hidden');
+            if (!append) emptyDiv?.classList.remove('hidden');
+            historyHasMore = false;
+            historyLoading = false;
             return;
         }
 
-        // Render cards - layout estilo versão desktop
+        historyHasMore = data.hasMore;
+
+        // Render cards progressivamente
         data.convites.forEach(convite => {
             const card = document.createElement('div');
             card.className = 'history-card bg-gray-800 rounded-lg border border-gray-700 overflow-hidden hover:border-purple-500 transition-all group relative';
             card.dataset.slug = convite.slug;
             card.dataset.url = convite.url;
 
-            // Thumbnail com aspect-ratio 9:16 (vertical como capa de convite)
             const thumbHtml = convite.coverUrl
                 ? `<img src="${convite.coverUrl}" class="w-full h-full object-cover group-hover:scale-105 transition-transform" alt="Capa" onerror="this.src='';this.onerror=null;this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-gray-600\\'><i class=\\'fa-solid fa-image text-2xl\\'></i></div>'">`
                 : `<div class="w-full h-full flex items-center justify-center text-gray-600 bg-gradient-to-br from-purple-900 to-blue-900"><i class="fa-solid fa-gift text-3xl text-white/30"></i></div>`;
@@ -135,21 +150,45 @@ async function loadGitHubHistory() {
                 </div>
             `;
 
-            // Click thumbnail to import
             card.querySelector('.aspect-\\[9\\/16\\]').addEventListener('click', (e) => {
-                if (e.target.closest('a')) return; // Don't import if clicking access link
+                if (e.target.closest('a')) return;
                 importFromGitHubUrl(convite.url, convite.slug);
             });
 
             listContainer.appendChild(card);
         });
 
+        historyPage++;
+        historyLoading = false;
+
     } catch (error) {
         loadingDiv?.classList.add('hidden');
-        emptyDiv?.classList.remove('hidden');
+        historyLoading = false;
         showToast('Erro ao carregar convites: ' + error.message, 'error');
         console.error('Erro ao carregar histórico GitHub:', error);
     }
+}
+
+// Infinite scroll para histórico
+function setupHistoryInfiniteScroll() {
+    const tabHistory = document.getElementById('tab-history');
+    if (!tabHistory) return;
+
+    tabHistory.addEventListener('scroll', () => {
+        const scrollTop = tabHistory.scrollTop;
+        const scrollHeight = tabHistory.scrollHeight;
+        const clientHeight = tabHistory.clientHeight;
+
+        // Load more when 200px from bottom
+        if (scrollTop + clientHeight >= scrollHeight - 200) {
+            loadGitHubHistoryPage(true);
+        }
+    });
+}
+
+// Backwards compatibility
+async function loadGitHubHistory() {
+    await loadGitHubHistoryPage(false);
 }
 
 async function importFromGitHubUrl(liveUrl, displayName) {
@@ -294,6 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (listContainer && listContainer.children.length === 0) {
                 loadGitHubHistory();
             }
+            setupHistoryInfiniteScroll();
         });
     }
 
