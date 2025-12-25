@@ -700,8 +700,8 @@
         overflow: visible !important;
     }
 
-    /* Show mobile menu button */
-    #mobile-menu-btn {
+    /* Show mobile menu button in header */
+    #mobile-menu-btn-header {
         display: flex !important;
     }
 
