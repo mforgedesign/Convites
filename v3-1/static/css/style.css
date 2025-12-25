@@ -715,13 +715,14 @@
     #sidebar {
         position: fixed !important;
         left: -280px;
-        top: 0;
+        top: 70px;
         bottom: 0;
         width: 280px !important;
         z-index: 45;
         transition: left 0.3s ease;
         overflow-y: auto !important;
         padding-top: 0;
+        border-top: 1px solid #374151;
     }
 
     #sidebar.open {
