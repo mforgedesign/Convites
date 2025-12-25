@@ -495,23 +495,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabBtns = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
 
-    // Register click handlers for tab switching
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const targetTab = btn.dataset.tab;
-
-            // Remove active class from all buttons
-            tabBtns.forEach(b => b.classList.remove('active'));
-            // Add active class to clicked button
-            btn.classList.add('active');
-
-            // Hide all tab contents
-            tabContents.forEach(content => content.classList.add('hidden'));
-            // Show target tab content
-            const targetContent = document.getElementById(targetTab);
-            if (targetContent) targetContent.classList.remove('hidden');
-        });
-    });
 
     // WhatsApp Link Generation Trigger
     let generatedWhatsAppLink = localStorage.getItem('generatedWhatsAppLink') || '';
@@ -578,43 +561,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Check if we are leaving the form tab (id='tab-form')
-            const targetTab = btn.getAttribute('data-tab');
-            const currentActiveBtn = document.querySelector('.tab-btn.active');
+            try {
+                const targetTab = btn.getAttribute('data-tab');
 
-            // If we are currently on tab-form and switching to another tab
-            // if (currentActiveBtn && currentActiveBtn.getAttribute('data-tab') === 'tab-form' && targetTab !== 'tab-form') {
-            //    // Call without await so it runs in background
-            //    generateWhatsAppLink();
-            // }
+                // Auto-download music check when switching tabs (with null checks)
+                const currentTabContent = document.querySelector('.tab-content:not(.hidden)');
+                if (currentTabContent && (currentTabContent.id === 'tab-music' || currentTabContent.id === 'tab-form')) {
+                    const musicInput = document.getElementById('input-music');
+                    const musicVal = musicInput ? musicInput.value : '';
+                    const audioEl = document.getElementById('preview-audio');
+                    const audioHasSource = audioEl && audioEl.src && audioEl.src.includes('musica.mp3');
 
-            // Auto-download music check when switching tabs
-            // We check if we are leaving a tab where music might have been entered (form or music tab)
-            const currentTabContent = document.querySelector('.tab-content.active');
-            if (currentTabContent && (currentTabContent.id === 'tab-music' || currentTabContent.id === 'tab-form')) {
-                const musicVal = document.getElementById('input-music').value;
-                const audioEl = document.getElementById('preview-audio');
-                const audioHasSource = audioEl && audioEl.src && audioEl.src.includes('musica.mp3');
-
-                // Skip if importing or music already exists
-                if (musicVal && !musicDownloadTriggered && !isImporting && !audioHasSource) {
-                    musicDownloadTriggered = true;
-                    // Run in background
-                    downloadMusicAutomatically(musicVal);
+                    // Skip if importing or music already exists
+                    if (musicVal && typeof musicDownloadTriggered !== 'undefined' && !musicDownloadTriggered && typeof isImporting !== 'undefined' && !isImporting && !audioHasSource) {
+                        musicDownloadTriggered = true;
+                        if (typeof downloadMusicAutomatically === 'function') {
+                            downloadMusicAutomatically(musicVal);
+                        }
+                    }
                 }
-            }
 
-            // Standard Tab Switching
-            tabBtns.forEach(b => b.classList.remove('active'));
-            tabContents.forEach(c => {
-                c.classList.remove('active');
-                c.classList.add('hidden');
-            });
-            btn.classList.add('active');
-            const targetId = btn.getAttribute('data-tab');
-            const targetContent = document.getElementById(targetId);
-            targetContent.classList.remove('hidden');
-            targetContent.classList.add('active');
+                // Standard Tab Switching
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => {
+                    c.classList.remove('active');
+                    c.classList.add('hidden');
+                });
+                btn.classList.add('active');
+                const targetId = btn.getAttribute('data-tab');
+                const targetContent = document.getElementById(targetId);
+                if (targetContent) {
+                    targetContent.classList.remove('hidden');
+                    targetContent.classList.add('active');
+                }
+            } catch (e) {
+                console.error('Tab switch error:', e);
+            }
         });
     });
 
