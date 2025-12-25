@@ -700,53 +700,55 @@
         overflow: visible !important;
     }
 
-    /* Sidebar - horizontal scrollable tabs on mobile */
-    aside,
-    nav {
-        width: 100% !important;
-        min-width: unset !important;
-        max-height: none !important;
-        overflow-x: auto !important;
-        overflow-y: visible !important;
-        border-right: none !important;
-        border-bottom: 1px solid #374151 !important;
-    }
-
-    /* Sidebar title - hide on mobile */
-    aside>p.text-gray-500,
-    nav>p.text-gray-500 {
-        display: none;
-    }
-
-    /* Tab buttons - horizontal layout */
-    nav,
-    .space-y-1 {
+    /* Show mobile menu button */
+    #mobile-menu-btn {
         display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        gap: 0 !important;
-        padding: 0 !important;
     }
 
+    /* Close button visible on mobile */
+    #close-sidebar-btn {
+        display: block !important;
+    }
+
+    /* Sidebar - overlay no mobile */
+    #sidebar {
+        position: fixed !important;
+        left: -280px;
+        top: 0;
+        bottom: 0;
+        width: 280px !important;
+        z-index: 45;
+        transition: left 0.3s ease;
+        overflow-y: auto !important;
+    }
+
+    #sidebar.open {
+        left: 0 !important;
+    }
+
+    /* Sidebar title visible on mobile */
+    #sidebar>div:first-child {
+        display: flex !important;
+    }
+
+    /* Tab buttons - vertical layout for sidebar */
     .tab-btn {
-        flex: 0 0 auto;
-        white-space: nowrap;
-        padding: 10px 14px !important;
-        font-size: 0 !important;
-        /* Esconde o texto inline */
-        border-left: none !important;
-        border-bottom: 3px solid transparent;
+        width: 100%;
+        text-align: left;
+        padding: 14px 16px !important;
+        font-size: 0.9rem !important;
+        border-left: 3px solid transparent;
+        border-bottom: none !important;
     }
 
     .tab-btn.active {
-        border-left-color: transparent !important;
-        border-bottom-color: #60a5fa !important;
+        border-left-color: #60a5fa !important;
+        border-bottom-color: transparent !important;
     }
 
     .tab-btn i {
-        margin: 0;
+        margin-right: 10px;
         font-size: 1rem !important;
-        /* Restaura tamanho do ícone */
     }
 
     /* Main content area */
@@ -762,12 +764,13 @@
         max-width: 100% !important;
     }
 
-    /* Grid adjustments - single column on mobile */
-    .grid-cols-2,
-    .grid-cols-3,
-    .grid-cols-4,
-    .grid-cols-5,
-    .grid-cols-6 {
+    /* Grid adjustments - keep 2 columns for history cards */
+    #history-list {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    /* Forms - single column */
+    .grid.grid-cols-6 {
         grid-template-columns: 1fr !important;
     }
 
