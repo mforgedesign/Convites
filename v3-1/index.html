@@ -22,6 +22,10 @@
     <!-- Top Navigation Bar -->
     <header class="bg-gray-800 border-b border-gray-700 p-4 flex justify-between items-center shadow-lg z-50">
         <div class="flex items-center gap-3">
+            <!-- Mobile Menu Button (in header) -->
+            <button id="mobile-menu-btn-header" class="hidden text-white p-2 hover:bg-gray-700 rounded-lg">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
             <img src="static/icon.svg" alt="Logo" class="w-10 h-10 invert">
             <h1
                 class="text-xl font-bold tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
@@ -51,12 +55,6 @@
 
     <!-- Main Content Area -->
     <div class="flex flex-1 overflow-hidden">
-
-        <!-- Mobile Menu Toggle Button -->
-        <button id="mobile-menu-btn"
-            class="hidden fixed bottom-4 left-4 z-50 bg-blue-600 hover:bg-blue-500 text-white w-14 h-14 rounded-full shadow-lg items-center justify-center text-xl">
-            <i class="fa-solid fa-bars"></i>
-        </button>
 
         <!-- Mobile Menu Overlay -->
         <div id="mobile-menu-overlay" class="hidden fixed inset-0 bg-black/60 z-40" onclick="closeMobileMenu()"></div>
@@ -1001,16 +999,18 @@
     function openMobileMenu() {
         document.getElementById('sidebar').classList.add('open');
         document.getElementById('mobile-menu-overlay').classList.remove('hidden');
-        document.getElementById('mobile-menu-btn').innerHTML = '<i class="fa-solid fa-xmark"></i>';
+        const btn = document.getElementById('mobile-menu-btn-header');
+        if (btn) btn.innerHTML = '<i class="fa-solid fa-xmark text-xl"></i>';
     }
 
     function closeMobileMenu() {
         document.getElementById('sidebar').classList.remove('open');
         document.getElementById('mobile-menu-overlay').classList.add('hidden');
-        document.getElementById('mobile-menu-btn').innerHTML = '<i class="fa-solid fa-bars"></i>';
+        const btn = document.getElementById('mobile-menu-btn-header');
+        if (btn) btn.innerHTML = '<i class="fa-solid fa-bars text-xl"></i>';
     }
 
-    document.getElementById('mobile-menu-btn')?.addEventListener('click', function () {
+    document.getElementById('mobile-menu-btn-header')?.addEventListener('click', function () {
         const sidebar = document.getElementById('sidebar');
         if (sidebar.classList.contains('open')) {
             closeMobileMenu();
