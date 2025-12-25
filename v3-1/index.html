@@ -725,28 +725,16 @@
                     <p class="text-gray-400 text-sm">Hospede seu convite gratuitamente no seu domínio (mforge.com.br).
                     </p>
 
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="col-span-1">
-                            <label class="block text-gray-400 text-sm mb-1">Usuário GitHub</label>
-                            <input type="text" id="input-github-user" placeholder="Ex: seuusuario" value="mforgedesign"
-                                class="w-full bg-gray-900 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-green-500">
+                    <div class="w-full">
+                        <label class="block text-gray-400 text-sm mb-1">Nome do Link (Slug)</label>
+                        <div class="flex items-center">
+                            <span
+                                class="bg-gray-700 text-gray-300 px-3 py-2 rounded-l-lg border border-r-0 border-gray-600">convites.mforge.com.br/</span>
+                            <input type="text" id="input-slug" placeholder="nome-do-evento"
+                                class="flex-1 bg-gray-900 border border-gray-600 rounded-r-lg px-4 py-2 text-white focus:outline-none focus:border-green-500 text-lg">
                         </div>
-                        <div class="col-span-1">
-                            <label class="block text-gray-400 text-sm mb-1">Token (PAT)</label>
-                            <input type="password" id="input-github-token" placeholder="ghp_..."
-                                class="w-full bg-gray-900 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-green-500">
-                        </div>
-                        <div class="col-span-2">
-                            <label class="block text-gray-400 text-sm mb-1">Nome do Link (Slug)</label>
-                            <div class="flex items-center">
-                                <span
-                                    class="bg-gray-700 text-gray-300 px-3 py-2 rounded-l-lg border border-r-0 border-gray-600">/</span>
-                                <input type="text" id="input-slug" placeholder="nome-do-casal"
-                                    class="w-full bg-gray-900 border border-gray-600 rounded-r-lg px-4 py-2 text-white focus:outline-none focus:border-green-500">
-                            </div>
-                            <p class="text-xs text-gray-500 mt-1">Ex:
-                                convites.mforge.com.br/<strong>nome-do-casal</strong></p>
-                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Use apenas letras, números e hífens. Ex:
+                            <strong>aniversario-joana-15-anos</strong></p>
                     </div>
 
                     <button id="btn-deploy-github"
