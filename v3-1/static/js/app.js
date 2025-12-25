@@ -323,6 +323,11 @@ async function importFromGitHubUrl(liveUrl, displayName) {
                 localStorage.setItem('giftMode', 'image');
             }
             if (data.files['folha_vazia.jpg']) localStorage.setItem('leafEmptyUrl', data.files['folha_vazia.jpg']);
+            if (data.files['folha_preenchida.jpg']) localStorage.setItem('leafFilledUrl', data.files['folha_preenchida.jpg']);
+            if (data.files['manual.jpg']) {
+                localStorage.setItem('manualImageUrl', data.files['manual.jpg']);
+                localStorage.setItem('manualMode', 'image');
+            }
         }
 
         // Marcar que foi importado e recarregar a página
@@ -844,7 +849,9 @@ document.addEventListener('DOMContentLoaded', () => {
             'animLeafUrl': { elementId: 'preview-anim-leaf', type: 'video' },
             'musicUrl': { elementId: 'preview-audio', type: 'audio', statusId: 'music-status' },
             'leafEmptyUrl': { elementId: 'preview-leaf-empty', type: 'img' },
-            'giftImageUrl': { elementId: 'preview-gifts-image', type: 'img' }
+            'leafFilledUrl': { elementId: 'preview-leaf-filled', type: 'img' },
+            'giftImageUrl': { elementId: 'preview-gifts-image', type: 'img' },
+            'manualImageUrl': { elementId: 'preview-manual-image', type: 'img' }
         };
 
         for (const [storageKey, config] of Object.entries(mediaMapping)) {
@@ -869,6 +876,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const giftMode = localStorage.getItem('giftMode');
         if (giftMode === 'image') {
             if (typeof updateGiftModeDisplay === 'function') updateGiftModeDisplay();
+        }
+
+        // Restore manual mode
+        const manualMode = localStorage.getItem('manualMode');
+        if (manualMode === 'image') {
+            if (typeof updateManualModeDisplay === 'function') updateManualModeDisplay();
         }
     }
     restoreImportedMedia();
@@ -4128,54 +4141,28 @@ async function pollGitHubActionsStatus(username, token, repo = 'convites') {
 
 const initGitHubDeploy = () => {
     const btnDeployGithub = document.getElementById('btn-deploy-github');
-    const inputGithubUser = document.getElementById('input-github-user');
-    const inputGithubToken = document.getElementById('input-github-token');
     const inputSlug = document.getElementById('input-slug');
     const deployResult = document.getElementById('deploy-result');
 
     if (btnDeployGithub) {
-        // --- Server-Side Persistence ---
-        // 1. Load Data on Init
-        fetch('/api/load-project-data')
-            .then(r => r.json())
-            .then(data => {
-                const d = data.data || {};
-                if (d.github_user) inputGithubUser.value = d.github_user;
-                if (d.github_token) inputGithubToken.value = d.github_token;
-                if (d.github_slug) inputSlug.value = d.github_slug;
-            })
-            .catch(err => console.error("Error loading project data:", err));
+        // Load slug from localStorage
+        const savedSlug = localStorage.getItem('input-slug');
+        if (savedSlug && inputSlug) inputSlug.value = savedSlug;
 
-        // 2. Save Data on Input
-        const saveProjectData = (key, value) => {
-            fetch('/api/save-project-data', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ [key]: value })
-            }).catch(err => console.error("Error saving project data:", err));
-        };
-
-        // Debounce helper
-        let timeout;
-        const debouncedSave = (key, value) => {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => saveProjectData(key, value), 500);
-        };
-
-        inputGithubUser.addEventListener('input', (e) => debouncedSave('github_user', e.target.value));
-        inputGithubToken.addEventListener('input', (e) => debouncedSave('github_token', e.target.value));
-        inputSlug.addEventListener('input', (e) => debouncedSave('github_slug', e.target.value));
+        // Save slug on change
+        if (inputSlug) {
+            inputSlug.addEventListener('input', (e) => {
+                localStorage.setItem('input-slug', e.target.value);
+            });
+        }
 
         btnDeployGithub.addEventListener('click', async () => {
-            const user = inputGithubUser.value.trim();
-            const token = inputGithubToken.value.trim();
-            const slug = inputSlug.value.trim();
+            const slug = inputSlug?.value?.trim();
 
-            if (!user || !token || !slug) {
-                showToast('Por favor, preencha Usuário, Token e Slug.', "success");
+            if (!slug) {
+                showToast('Por favor, preencha o nome do link (slug).', "error");
                 return;
             }
-            // (LocalStorage removed as user requested server persistence)
 
             const btn = btnDeployGithub;
             const originalHTML = btn.innerHTML;
@@ -4190,7 +4177,7 @@ const initGitHubDeploy = () => {
                 const checkResp = await fetch('/api/check-slug-existence', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username: user, token: token, slug: slug })
+                    body: JSON.stringify({ slug: slug })
                 });
 
                 // Robust verify check
@@ -4234,11 +4221,7 @@ const initGitHubDeploy = () => {
                 const response = await fetch('/api/deploy-github-stream', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        username: user,
-                        token: token,
-                        slug: slug
-                    })
+                    body: JSON.stringify({ slug: slug })
                 });
 
                 if (!response.ok) {
@@ -4323,8 +4306,7 @@ const initGitHubDeploy = () => {
                 deployResult.classList.remove('hidden', 'bg-red-900/30', 'border-red-700', 'text-red-300', 'bg-blue-900/30', 'border-blue-700', 'text-blue-300');
                 deployResult.classList.add('bg-green-900/30', 'border-green-700', 'text-green-300');
 
-                // 5. Start polling GitHub Actions status
-                pollGitHubActionsStatus(user, token, 'convites');
+                // GitHub Pages deploy completo
 
 
             } catch (error) {
@@ -4416,16 +4398,9 @@ document.getElementById('btn-run-dashboard')?.addEventListener('click', async ()
 
     async function handleCustomZipDeploy(file) {
         const slug = document.getElementById('input-slug')?.value?.trim();
-        const githubUser = document.getElementById('input-github-user')?.value?.trim();
-        const githubToken = document.getElementById('input-github-token')?.value?.trim();
 
         if (!slug) {
             showToast('Por favor, preencha o campo Slug antes de publicar.', 'error');
-            return;
-        }
-
-        if (!githubUser || !githubToken) {
-            showToast('Por favor, preencha as credenciais do GitHub.', 'error');
             return;
         }
 
@@ -4440,8 +4415,6 @@ document.getElementById('btn-run-dashboard')?.addEventListener('click', async ()
             const formData = new FormData();
             formData.append('file', file);
             formData.append('slug', slug);
-            formData.append('githubUser', githubUser);
-            formData.append('githubToken', githubToken);
 
             const response = await fetch('/api/deploy-custom-zip', {
                 method: 'POST',
