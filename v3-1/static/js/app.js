@@ -214,6 +214,28 @@ async function importFromGitHubUrl(liveUrl, displayName) {
         const checkShowTimer = document.getElementById('check-show-timer');
         if (checkShowTimer) checkShowTimer.checked = false;
 
+        // Limpar previews de arquivos
+        const previewsToReset = [
+            { id: 'preview-cover', type: 'img' },
+            { id: 'preview-anim-cover', type: 'video' },
+            { id: 'preview-anim-leaf', type: 'video' },
+            { id: 'preview-leaf-empty', type: 'img' },
+            { id: 'preview-leaf-filled', type: 'img' },
+            { id: 'preview-gift-image', type: 'img' },
+            { id: 'preview-manual-image', type: 'img' },
+            { id: 'preview-audio', type: 'audio' }
+        ];
+        previewsToReset.forEach(({ id, type }) => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.src = '';
+                el.classList.add('hidden');
+            }
+        });
+        // Esconder status de música
+        const musicStatus = document.getElementById('music-status');
+        if (musicStatus) musicStatus.classList.add('hidden');
+
         // Aplicar dados do formulário - MAPEAMENTO COMPLETO
         if (data.formData) {
             // Mapeamento completo de campos (form_data.json usa nomes de input IDs)
