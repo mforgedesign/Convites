@@ -787,6 +787,43 @@ document.addEventListener('DOMContentLoaded', () => {
     loadData();
     loadMediaUrls(); // Restore media previews from localStorage
 
+    // Restore media previews from localStorage (for imported data)
+    function restoreImportedMedia() {
+        const mediaMapping = {
+            'coverUrl': { elementId: 'preview-cover', type: 'img' },
+            'animCoverUrl': { elementId: 'preview-anim-cover', type: 'video' },
+            'animLeafUrl': { elementId: 'preview-anim-leaf', type: 'video' },
+            'musicUrl': { elementId: 'preview-audio', type: 'audio', statusId: 'music-status' },
+            'leafEmptyUrl': { elementId: 'preview-leaf-empty', type: 'img' },
+            'giftImageUrl': { elementId: 'preview-gifts-image', type: 'img' }
+        };
+
+        for (const [storageKey, config] of Object.entries(mediaMapping)) {
+            const url = localStorage.getItem(storageKey);
+            if (url && url.startsWith('http')) {
+                const element = document.getElementById(config.elementId);
+                if (element) {
+                    element.src = url + '?t=' + Date.now();
+                    element.classList.remove('hidden');
+                    console.log(`Restored ${storageKey} to ${config.elementId}`);
+
+                    // Show music status if applicable
+                    if (config.statusId) {
+                        const statusEl = document.getElementById(config.statusId);
+                        if (statusEl) statusEl.classList.remove('hidden');
+                    }
+                }
+            }
+        }
+
+        // Restore gift mode
+        const giftMode = localStorage.getItem('giftMode');
+        if (giftMode === 'image') {
+            if (typeof updateGiftModeDisplay === 'function') updateGiftModeDisplay();
+        }
+    }
+    restoreImportedMedia();
+
     formInputs.forEach(input => {
         input.addEventListener('input', () => {
             localStorage.setItem(input.id, input.value);
