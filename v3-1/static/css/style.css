@@ -664,34 +664,35 @@
     header {
         flex-wrap: wrap;
         gap: 8px;
-        padding: 12px !important;
+        padding: 10px !important;
     }
 
     header>div:first-child {
-        width: 100%;
-        justify-content: center;
+        width: auto;
+        flex-shrink: 0;
     }
 
     header h1 {
-        font-size: 1.1rem !important;
+        font-size: 0.95rem !important;
     }
 
-    header button,
+    /* Header action buttons - smaller but WITH names */
+    header button:not(#mobile-menu-btn-header),
     header label {
-        flex: 1;
-        justify-content: center;
-        padding: 8px 12px !important;
-        font-size: 0.75rem !important;
+        padding: 6px 10px !important;
+        font-size: 0.7rem !important;
     }
 
-    header button span,
-    header label span {
-        display: none;
+    /* Mobile menu button - compact */
+    #mobile-menu-btn-header {
+        padding: 6px 10px !important;
+        margin-right: 4px;
     }
 
     header button i,
     header label i {
-        margin: 0;
+        margin-right: 4px;
+        font-size: 0.8rem;
     }
 
     /* Main Container - stack vertically */
@@ -710,7 +711,7 @@
         display: block !important;
     }
 
-    /* Sidebar - overlay no mobile */
+    /* Sidebar - overlay no mobile, starts BELOW header */
     #sidebar {
         position: fixed !important;
         left: -280px;
@@ -720,6 +721,7 @@
         z-index: 45;
         transition: left 0.3s ease;
         overflow-y: auto !important;
+        padding-top: 0;
     }
 
     #sidebar.open {
