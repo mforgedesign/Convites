@@ -181,230 +181,92 @@ async function importFromGitHubUrl(liveUrl, displayName) {
         });
 
         const result = await response.json();
-        loadingPopup.remove();
 
         if (!response.ok || result.error) {
+            loadingPopup.remove();
             throw new Error(result.error || 'Erro ao importar');
         }
 
         const data = result.data;
 
-        // LIMPAR TODOS OS DADOS ANTERIORES
+        // LIMPAR localStorage (igual botão "novo convite")
         localStorage.clear();
 
-        // Limpar campos do formulário especificamente (não todos os inputs da página)
-        const formInputIds = [
-            'input-names', 'input-date', 'input-time', 'input-event-type', 'input-age',
-            'input-theme', 'input-colors', 'input-phrase', 'input-location', 'input-music',
-            'input-slug', 'input-maps', 'input-gifts', 'input-whatsapp', 'input-confirm-link',
-            'input-manual', 'input-manual-name', 'input-manual-sync', 'input-manual-final',
-            'input-extra', 'input-extra-name', 'input-extra-icon',
-            'input-gift-suggestions'
-        ];
-        formInputIds.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.value = '';
-        });
-
-        // Resetar checkboxes para valores padrão
-        const checkAllowCompanion = document.getElementById('check-allow-companion');
-        if (checkAllowCompanion) checkAllowCompanion.checked = true;
-        const checkInteractHint = document.getElementById('check-interact-hint');
-        if (checkInteractHint) checkInteractHint.checked = true;
-        const checkShowTimer = document.getElementById('check-show-timer');
-        if (checkShowTimer) checkShowTimer.checked = false;
-
-        // Limpar previews de arquivos
-        const previewsToReset = [
-            { id: 'preview-cover', type: 'img' },
-            { id: 'preview-anim-cover', type: 'video' },
-            { id: 'preview-anim-leaf', type: 'video' },
-            { id: 'preview-leaf-empty', type: 'img' },
-            { id: 'preview-leaf-filled', type: 'img' },
-            { id: 'preview-gift-image', type: 'img' },
-            { id: 'preview-manual-image', type: 'img' },
-            { id: 'preview-audio', type: 'audio' }
-        ];
-        previewsToReset.forEach(({ id, type }) => {
-            const el = document.getElementById(id);
-            if (el) {
-                el.src = '';
-                el.classList.add('hidden');
-            }
-        });
-        // Esconder status de música
-        const musicStatus = document.getElementById('music-status');
-        if (musicStatus) musicStatus.classList.add('hidden');
-
-        // Aplicar dados do formulário - MAPEAMENTO COMPLETO
+        // Salvar dados do formulário no localStorage
         if (data.formData) {
-            // Mapeamento completo de campos (form_data.json usa nomes de input IDs)
+            // Mapeamento de campos
             const fieldMappings = {
-                // Dados básicos do evento
-                'input-names': 'input-names',
-                'names': 'input-names',
-                'input-date': 'input-date',
-                'date': 'input-date',
-                'input-time': 'input-time',
-                'time': 'input-time',
-                'input-event-type': 'input-event-type',
-                'eventType': 'input-event-type',
-                'input-age': 'input-age',
-                'age': 'input-age',
-                'input-theme': 'input-theme',
-                'theme': 'input-theme',
-                'input-colors': 'input-colors',
-                'colors': 'input-colors',
-                'input-phrase': 'input-phrase',
-                'phrase': 'input-phrase',
-                'input-location': 'input-location',
-                'location': 'input-location',
-                'input-music': 'input-music',
-                'music': 'input-music',
-                // Slug
-                'input-slug': 'input-slug',
-                'slug': 'input-slug',
-                // Links
-                'input-maps': 'input-maps',
-                'mapsLink': 'input-maps',
-                'maps': 'input-maps',
-                'input-gifts': 'input-gifts',
-                'giftsLink': 'input-gifts',
-                'gifts': 'input-gifts',
-                'input-whatsapp': 'input-whatsapp',
-                'whatsapp': 'input-whatsapp',
-                'input-confirm-link': 'input-confirm-link',
-                'confirmLink': 'input-confirm-link',
-                // Manual
-                'input-manual': 'input-manual',
-                'manual': 'input-manual',
-                'manualText': 'input-manual',
-                'input-manual-name': 'input-manual-name',
-                'manualName': 'input-manual-name',
-                // Extra button
-                'input-extra': 'input-extra',
-                'extraLink': 'input-extra',
-                'input-extra-name': 'input-extra-name',
-                'extraName': 'input-extra-name',
-                'input-extra-icon': 'input-extra-icon',
-                'extraIcon': 'input-extra-icon',
-                // Styling
-                'input-button-color': 'input-button-color',
-                'buttonColor': 'input-button-color',
-                'input-shadow-color': 'input-shadow-color',
-                'shadowColor': 'input-shadow-color',
-                'input-button-size': 'input-button-size',
-                'buttonSize': 'input-button-size',
-                'input-buttons-offset': 'input-buttons-offset',
-                'buttonsOffset': 'input-buttons-offset',
-                // Gift suggestions
-                'input-gift-suggestions': 'input-gift-suggestions',
-                'giftSuggestions': 'input-gift-suggestions'
+                'input-names': ['input-names', 'names'],
+                'input-date': ['input-date', 'date'],
+                'input-time': ['input-time', 'time'],
+                'input-event-type': ['input-event-type', 'eventType'],
+                'input-age': ['input-age', 'age'],
+                'input-theme': ['input-theme', 'theme'],
+                'input-colors': ['input-colors', 'colors'],
+                'input-phrase': ['input-phrase', 'phrase'],
+                'input-location': ['input-location', 'location'],
+                'input-music': ['input-music', 'music'],
+                'input-slug': ['input-slug', 'slug'],
+                'input-maps': ['input-maps', 'mapsLink', 'maps'],
+                'input-gifts': ['input-gifts', 'giftsLink', 'gifts'],
+                'input-whatsapp': ['input-whatsapp', 'whatsapp'],
+                'input-confirm-link': ['input-confirm-link', 'confirmLink'],
+                'input-manual': ['input-manual', 'manual', 'manualText'],
+                'input-manual-name': ['input-manual-name', 'manualName'],
+                'input-extra': ['input-extra', 'extraLink'],
+                'input-extra-name': ['input-extra-name', 'extraName'],
+                'input-extra-icon': ['input-extra-icon', 'extraIcon'],
+                'input-button-color': ['input-button-color', 'buttonColor'],
+                'input-shadow-color': ['input-shadow-color', 'shadowColor'],
+                'input-button-size': ['input-button-size', 'buttonSize'],
+                'input-buttons-offset': ['input-buttons-offset', 'buttonsOffset'],
+                'input-gift-suggestions': ['input-gift-suggestions', 'giftSuggestions']
             };
 
-            for (const [dataKey, inputId] of Object.entries(fieldMappings)) {
-                if (data.formData[dataKey] !== undefined && data.formData[dataKey] !== null && data.formData[dataKey] !== '') {
-                    setInputValue(inputId, data.formData[dataKey]);
+            // Salvar cada campo no localStorage
+            for (const [localStorageKey, possibleKeys] of Object.entries(fieldMappings)) {
+                for (const key of possibleKeys) {
+                    if (data.formData[key] !== undefined && data.formData[key] !== null && data.formData[key] !== '') {
+                        localStorage.setItem(localStorageKey, data.formData[key]);
+                        break;
+                    }
                 }
-            }
-
-            // Sync manual text to sync fields
-            const manualText = data.formData['input-manual'] || data.formData.manualText || data.formData.manual || '';
-            if (manualText) {
-                setInputValue('input-manual', manualText);
-                setInputValue('input-manual-sync', manualText);
-                const manualFinal = document.getElementById('input-manual-final');
-                if (manualFinal) manualFinal.value = manualText;
             }
 
             // Checkboxes
             if (data.formData['check-allow-companion'] !== undefined) {
-                const el = document.getElementById('check-allow-companion');
-                if (el) el.checked = data.formData['check-allow-companion'];
-            } else if (data.formData.allowCompanion !== undefined) {
-                const el = document.getElementById('check-allow-companion');
-                if (el) el.checked = data.formData.allowCompanion;
+                localStorage.setItem('check-allow-companion', data.formData['check-allow-companion']);
             }
-
             if (data.formData['check-interact-hint'] !== undefined) {
-                const el = document.getElementById('check-interact-hint');
-                if (el) el.checked = data.formData['check-interact-hint'];
-            } else if (data.formData.interactHint !== undefined) {
-                const el = document.getElementById('check-interact-hint');
-                if (el) el.checked = data.formData.interactHint;
+                localStorage.setItem('check-interact-hint', data.formData['check-interact-hint']);
             }
-
             if (data.formData['check-show-timer'] !== undefined) {
-                const el = document.getElementById('check-show-timer');
-                if (el) el.checked = data.formData['check-show-timer'];
-            } else if (data.formData.showTimer !== undefined) {
-                const el = document.getElementById('check-show-timer');
-                if (el) el.checked = data.formData.showTimer;
+                localStorage.setItem('check-show-timer', data.formData['check-show-timer']);
             }
         }
 
-        // Aplicar previews de mídia
+        // Salvar URLs de mídia no localStorage
         if (data.files) {
-            const timestamp = Date.now();
-
-            if (data.files['capa.jpg']) {
-                const preview = document.getElementById('preview-cover');
-                if (preview) {
-                    preview.src = data.files['capa.jpg'] + '?t=' + timestamp;
-                    preview.classList.remove('hidden');
-                }
-            }
-
-            if (data.files['abertura.mp4']) {
-                const preview = document.getElementById('preview-anim-cover');
-                if (preview) {
-                    preview.src = data.files['abertura.mp4'] + '?t=' + timestamp;
-                    preview.classList.remove('hidden');
-                }
-            }
-
-            if (data.files['loop.mp4']) {
-                const preview = document.getElementById('preview-anim-leaf');
-                if (preview) {
-                    preview.src = data.files['loop.mp4'] + '?t=' + timestamp;
-                    preview.classList.remove('hidden');
-                }
-            }
-
-            if (data.files['musica.mp3']) {
-                const audioPreview = document.getElementById('preview-audio');
-                if (audioPreview) {
-                    audioPreview.src = data.files['musica.mp3'] + '?t=' + timestamp;
-                }
-                document.getElementById('music-status')?.classList.remove('hidden');
-            }
-
-            // Imagem de presentes
+            if (data.files['capa.jpg']) localStorage.setItem('coverUrl', data.files['capa.jpg']);
+            if (data.files['abertura.mp4']) localStorage.setItem('animCoverUrl', data.files['abertura.mp4']);
+            if (data.files['loop.mp4']) localStorage.setItem('animLeafUrl', data.files['loop.mp4']);
+            if (data.files['musica.mp3']) localStorage.setItem('musicUrl', data.files['musica.mp3']);
             if (data.files['presentes.jpg']) {
-                const preview = document.getElementById('preview-gift-image');
-                if (preview) {
-                    preview.src = data.files['presentes.jpg'] + '?t=' + timestamp;
-                    preview.classList.remove('hidden');
-                }
-                // Marcar modo imagem de presentes
-                const giftImageRadio = document.getElementById('gift-mode-image');
-                if (giftImageRadio) giftImageRadio.checked = true;
+                localStorage.setItem('giftImageUrl', data.files['presentes.jpg']);
+                localStorage.setItem('giftMode', 'image');
             }
-
-            // Folha vazia
-            if (data.files['folha_vazia.jpg']) {
-                const preview = document.getElementById('preview-leaf-empty');
-                if (preview) {
-                    preview.src = data.files['folha_vazia.jpg'] + '?t=' + timestamp;
-                    preview.classList.remove('hidden');
-                }
-            }
+            if (data.files['folha_vazia.jpg']) localStorage.setItem('leafEmptyUrl', data.files['folha_vazia.jpg']);
         }
 
-        showToast('✓ Convite importado do GitHub com sucesso!', 'success');
+        // Marcar que foi importado e recarregar a página
+        localStorage.setItem('importedFrom', liveUrl);
 
-        // Switch to form tab
-        document.querySelector('.tab-btn[data-tab="tab-form"]')?.click();
+        showToast('✓ Importando... A página será recarregada.', 'success');
+
+        // Recarregar a página para aplicar os dados (igual botão "novo convite")
+        setTimeout(() => {
+            location.reload();
+        }, 500);
 
     } catch (error) {
         loadingPopup.remove();
