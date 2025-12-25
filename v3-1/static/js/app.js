@@ -173,7 +173,7 @@ async function importFromGitHubUrl(liveUrl, displayName) {
     document.body.appendChild(loadingPopup);
 
     try {
-        // Usar Edge Function para processar o HTML
+        // Usar Edge Function para processar o HTML e form_data.json
         const response = await fetch('/api/import-from-github', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -189,54 +189,126 @@ async function importFromGitHubUrl(liveUrl, displayName) {
 
         const data = result.data;
 
-        // Limpar dados atuais
+        // LIMPAR TODOS OS DADOS ANTERIORES
         localStorage.clear();
 
-        // Aplicar dados do formulário
+        // Limpar campos de texto/textarea manualmente para garantir
+        const allInputs = document.querySelectorAll('input[type="text"], input[type="number"], input[type="date"], input[type="time"], input[type="url"], textarea');
+        allInputs.forEach(input => {
+            if (input.type === 'color') return;
+            input.value = '';
+        });
+
+        // Resetar checkboxes para valores padrão
+        const checkAllowCompanion = document.getElementById('check-allow-companion');
+        if (checkAllowCompanion) checkAllowCompanion.checked = true;
+        const checkInteractHint = document.getElementById('check-interact-hint');
+        if (checkInteractHint) checkInteractHint.checked = true;
+        const checkShowTimer = document.getElementById('check-show-timer');
+        if (checkShowTimer) checkShowTimer.checked = false;
+
+        // Aplicar dados do formulário - MAPEAMENTO COMPLETO
         if (data.formData) {
+            // Mapeamento completo de campos (form_data.json usa nomes de input IDs)
             const fieldMappings = {
+                // Dados básicos do evento
+                'input-names': 'input-names',
+                'names': 'input-names',
+                'input-date': 'input-date',
+                'date': 'input-date',
+                'input-time': 'input-time',
+                'time': 'input-time',
+                'input-event-type': 'input-event-type',
+                'eventType': 'input-event-type',
+                'input-age': 'input-age',
+                'age': 'input-age',
+                'input-theme': 'input-theme',
+                'theme': 'input-theme',
+                'input-colors': 'input-colors',
+                'colors': 'input-colors',
+                'input-phrase': 'input-phrase',
+                'phrase': 'input-phrase',
+                'input-location': 'input-location',
+                'location': 'input-location',
+                'input-music': 'input-music',
+                'music': 'input-music',
+                // Slug
+                'input-slug': 'input-slug',
                 'slug': 'input-slug',
+                // Links
+                'input-maps': 'input-maps',
                 'mapsLink': 'input-maps',
                 'maps': 'input-maps',
+                'input-gifts': 'input-gifts',
                 'giftsLink': 'input-gifts',
                 'gifts': 'input-gifts',
+                'input-whatsapp': 'input-whatsapp',
                 'whatsapp': 'input-whatsapp',
+                'input-confirm-link': 'input-confirm-link',
                 'confirmLink': 'input-confirm-link',
+                // Manual
+                'input-manual': 'input-manual',
                 'manual': 'input-manual',
                 'manualText': 'input-manual',
+                'input-manual-name': 'input-manual-name',
                 'manualName': 'input-manual-name',
-                'buttonColor': 'input-button-color',
-                'shadowColor': 'input-shadow-color',
-                'buttonSize': 'input-button-size',
-                'buttonsOffset': 'input-buttons-offset',
-                'giftSuggestions': 'input-gift-suggestions',
+                // Extra button
+                'input-extra': 'input-extra',
                 'extraLink': 'input-extra',
+                'input-extra-name': 'input-extra-name',
                 'extraName': 'input-extra-name',
-                'extraIcon': 'input-extra-icon'
+                'input-extra-icon': 'input-extra-icon',
+                'extraIcon': 'input-extra-icon',
+                // Styling
+                'input-button-color': 'input-button-color',
+                'buttonColor': 'input-button-color',
+                'input-shadow-color': 'input-shadow-color',
+                'shadowColor': 'input-shadow-color',
+                'input-button-size': 'input-button-size',
+                'buttonSize': 'input-button-size',
+                'input-buttons-offset': 'input-buttons-offset',
+                'buttonsOffset': 'input-buttons-offset',
+                // Gift suggestions
+                'input-gift-suggestions': 'input-gift-suggestions',
+                'giftSuggestions': 'input-gift-suggestions'
             };
 
             for (const [dataKey, inputId] of Object.entries(fieldMappings)) {
-                if (data.formData[dataKey] !== undefined) {
+                if (data.formData[dataKey] !== undefined && data.formData[dataKey] !== null && data.formData[dataKey] !== '') {
                     setInputValue(inputId, data.formData[dataKey]);
                 }
             }
 
-            // Sync manual text to other fields
-            if (data.formData.manualText || data.formData.manual) {
-                const manualText = data.formData.manualText || data.formData.manual;
+            // Sync manual text to sync fields
+            const manualText = data.formData['input-manual'] || data.formData.manualText || data.formData.manual || '';
+            if (manualText) {
+                setInputValue('input-manual', manualText);
                 setInputValue('input-manual-sync', manualText);
+                const manualFinal = document.getElementById('input-manual-final');
+                if (manualFinal) manualFinal.value = manualText;
             }
 
             // Checkboxes
-            if (data.formData.allowCompanion !== undefined) {
+            if (data.formData['check-allow-companion'] !== undefined) {
+                const el = document.getElementById('check-allow-companion');
+                if (el) el.checked = data.formData['check-allow-companion'];
+            } else if (data.formData.allowCompanion !== undefined) {
                 const el = document.getElementById('check-allow-companion');
                 if (el) el.checked = data.formData.allowCompanion;
             }
-            if (data.formData.interactHint !== undefined) {
+
+            if (data.formData['check-interact-hint'] !== undefined) {
+                const el = document.getElementById('check-interact-hint');
+                if (el) el.checked = data.formData['check-interact-hint'];
+            } else if (data.formData.interactHint !== undefined) {
                 const el = document.getElementById('check-interact-hint');
                 if (el) el.checked = data.formData.interactHint;
             }
-            if (data.formData.showTimer !== undefined) {
+
+            if (data.formData['check-show-timer'] !== undefined) {
+                const el = document.getElementById('check-show-timer');
+                if (el) el.checked = data.formData['check-show-timer'];
+            } else if (data.formData.showTimer !== undefined) {
                 const el = document.getElementById('check-show-timer');
                 if (el) el.checked = data.formData.showTimer;
             }
@@ -276,6 +348,27 @@ async function importFromGitHubUrl(liveUrl, displayName) {
                     audioPreview.src = data.files['musica.mp3'] + '?t=' + timestamp;
                 }
                 document.getElementById('music-status')?.classList.remove('hidden');
+            }
+
+            // Imagem de presentes
+            if (data.files['presentes.jpg']) {
+                const preview = document.getElementById('preview-gift-image');
+                if (preview) {
+                    preview.src = data.files['presentes.jpg'] + '?t=' + timestamp;
+                    preview.classList.remove('hidden');
+                }
+                // Marcar modo imagem de presentes
+                const giftImageRadio = document.getElementById('gift-mode-image');
+                if (giftImageRadio) giftImageRadio.checked = true;
+            }
+
+            // Folha vazia
+            if (data.files['folha_vazia.jpg']) {
+                const preview = document.getElementById('preview-leaf-empty');
+                if (preview) {
+                    preview.src = data.files['folha_vazia.jpg'] + '?t=' + timestamp;
+                    preview.classList.remove('hidden');
+                }
             }
         }
 
