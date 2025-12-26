@@ -850,16 +850,34 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Restore extra link fields explicitly
-        const extraFields = ['input-extra', 'input-extra-name', 'input-extra-icon'];
-        extraFields.forEach(id => {
-            const val = localStorage.getItem(id);
-            const el = document.getElementById(id);
-            if (val && el) {
-                el.value = val;
-                console.log(`Restored extra field ${id}: ${val}`);
+        // Restore extra link fields - CREATE them dynamically if data exists
+        const extraLink = localStorage.getItem('input-extra');
+        const extraName = localStorage.getItem('input-extra-name');
+        const extraIcon = localStorage.getItem('input-extra-icon');
+
+        if (extraLink && extraLink.trim() !== '') {
+            // Create the extra link field dynamically
+            const container = document.getElementById('extra-links-container');
+            if (container && container.children.length === 0) {
+                const linkId = 'extra-link-restored';
+                const div = document.createElement('div');
+                div.className = 'flex gap-2 items-center bg-gray-900/50 p-2 rounded-lg border border-gray-700';
+                div.id = linkId;
+                div.innerHTML = `
+                    <input type="text" class="flex-1 bg-gray-800 border border-gray-600 rounded px-3 py-2 text-white text-sm" 
+                           placeholder="Nome do botão" value="${extraName || ''}" data-field="name">
+                    <input type="text" class="flex-1 bg-gray-800 border border-gray-600 rounded px-3 py-2 text-white text-sm" 
+                           placeholder="URL do link" value="${extraLink}" data-field="link">
+                    <input type="text" class="w-32 bg-gray-800 border border-gray-600 rounded px-3 py-2 text-white text-sm" 
+                           placeholder="fa-solid fa-star" value="${extraIcon || ''}" data-field="icon">
+                    <button type="button" class="text-red-500 hover:text-red-400 p-2" onclick="this.parentElement.remove()">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                `;
+                container.appendChild(div);
+                console.log('Created extra link field with:', extraLink, extraName, extraIcon);
             }
-        });
+        }
 
         updateGiftLinkDisplay();
     }
