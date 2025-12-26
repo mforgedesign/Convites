@@ -104,11 +104,11 @@
     <div id="mainContainer"
         class="relative w-full max-w-[480px] h-full bg-black shadow-2xl overflow-hidden transition-all duration-300">
 
-        <video id="videoLoop" class="camada z-10 invisivel" playsinline loop muted>
+        <video id="videoLoop" class="camada z-10 invisivel" playsinline loop muted preload="auto">
             <source src="loop/loop.mp4" type="video/mp4">
         </video>
 
-        <video id="videoAbertura" class="camada z-20" playsinline muted>
+        <video id="videoAbertura" class="camada z-20" playsinline muted preload="auto">
             <source src="abertura/abertura.mp4" type="video/mp4">
         </video>
 
@@ -620,13 +620,25 @@
             // O loop fica tocando na camada de trás, invisível por enquanto
             if (videoLoop) {
                 videoLoop.muted = true;
-                videoLoop.play().catch(function (e) { console.error("Loop play failed:", e); });
+                videoLoop.play().catch(function (e) {
+                    console.error("Loop play failed:", e);
+                    // Retry
+                    setTimeout(() => videoLoop.play().catch(e2 => console.error("Loop retry failed:", e2)), 500);
+                });
             }
 
-            // Vídeo de abertura na camada da frente
+            // Vídeo de abertura na camada da frente com retry robusto
             if (videoAbertura) {
                 videoAbertura.currentTime = 0;
-                videoAbertura.play().catch(function (e) { console.error("Intro play failed:", e); });
+                const playIntro = (attempt = 1) => {
+                    videoAbertura.play().catch(function (e) {
+                        console.error(`Intro play failed (attempt ${attempt}):`, e);
+                        if (attempt < 3) {
+                            setTimeout(() => playIntro(attempt + 1), 500);
+                        }
+                    });
+                };
+                playIntro();
             }
 
             // Mostra controles
