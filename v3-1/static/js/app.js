@@ -73,35 +73,29 @@ window.fetch = async function (url, options = {}) {
 };
 
 // ===== GITHUB HISTORY FUNCTIONS
-// Histórico com paginação e botões de navegação
-let historyPage = 1;
+// Histórico com carregamento progressivo (streaming)
 let historyLoading = false;
-let historyTotal = 0;
-const historyPerPage = 6;
 
-async function loadGitHubHistoryPage(page = 1) {
+async function loadGitHubHistory() {
     if (historyLoading) return;
 
     const listContainer = document.getElementById('history-list');
     const loadingDiv = document.getElementById('history-loading');
     const emptyDiv = document.getElementById('history-empty');
-    const paginationDiv = document.getElementById('history-pagination');
 
     if (!listContainer) return;
 
     historyLoading = true;
-    historyPage = page;
-
     listContainer.innerHTML = '';
     emptyDiv?.classList.add('hidden');
-    paginationDiv?.classList.add('hidden');
     loadingDiv?.classList.remove('hidden');
 
     try {
+        // Primeiro: busca lista de slugs (modo streaming - rápido)
         const response = await fetch('/api/list-convites', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ page: historyPage, perPage: historyPerPage })
+            body: JSON.stringify({ streaming: true })
         });
 
         const data = await response.json();
@@ -117,23 +111,21 @@ async function loadGitHubHistoryPage(page = 1) {
             return;
         }
 
-        historyTotal = data.total || 0;
-        const totalPages = Math.ceil(historyTotal / historyPerPage);
-
-        // Render cards
-        data.convites.forEach(convite => {
+        // Renderiza todos os cards com placeholder de loading
+        const cards = [];
+        data.convites.forEach((convite, index) => {
             const card = document.createElement('div');
             card.className = 'history-card bg-gray-800 rounded-lg border border-gray-700 overflow-hidden hover:border-purple-500 transition-all group relative';
             card.dataset.slug = convite.slug;
             card.dataset.url = convite.url;
-
-            const thumbHtml = convite.coverUrl
-                ? `<img src="${convite.coverUrl}" class="w-full h-full object-cover group-hover:scale-105 transition-transform" alt="Capa" onerror="this.src='';this.onerror=null;this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-gray-600\\'><i class=\\'fa-solid fa-image text-2xl\\'></i></div>'">`
-                : `<div class="w-full h-full flex items-center justify-center text-gray-600 bg-gradient-to-br from-purple-900 to-blue-900"><i class="fa-solid fa-gift text-3xl text-white/30"></i></div>`;
+            card.dataset.index = index;
 
             card.innerHTML = `
                 <div class="aspect-[9/16] bg-gray-900 overflow-hidden relative cursor-pointer">
-                    ${thumbHtml}
+                    <div class="w-full h-full flex flex-col items-center justify-center text-gray-600 bg-gradient-to-br from-gray-800 to-gray-900" id="thumb-${index}">
+                        <i class="fa-solid fa-spinner fa-spin text-2xl text-purple-500 mb-2"></i>
+                        <span class="text-xs text-gray-500">Carregando...</span>
+                    </div>
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4">
                         <span class="text-white text-sm font-semibold"><i class="fa-solid fa-file-import mr-1"></i> Importar</span>
                     </div>
@@ -154,10 +146,11 @@ async function loadGitHubHistoryPage(page = 1) {
             });
 
             listContainer.appendChild(card);
+            cards.push({ card, convite, index });
         });
 
-        // Update pagination UI
-        updateHistoryPagination(totalPages);
+        // Carrega capas progressivamente
+        loadCoversProgressively(cards);
         historyLoading = false;
 
     } catch (error) {
@@ -168,55 +161,67 @@ async function loadGitHubHistoryPage(page = 1) {
     }
 }
 
-function updateHistoryPagination(totalPages) {
-    let paginationDiv = document.getElementById('history-pagination');
+// Carrega capas uma a uma para feedback visual progressivo
+async function loadCoversProgressively(cards) {
+    for (const { convite, index } of cards) {
+        const thumbContainer = document.getElementById(`thumb-${index}`);
+        if (!thumbContainer) continue;
 
-    // Create pagination div if it doesn't exist
-    if (!paginationDiv) {
-        paginationDiv = document.createElement('div');
-        paginationDiv.id = 'history-pagination';
-        paginationDiv.className = 'flex items-center justify-center gap-4 mt-6 pb-4';
-        const tabHistory = document.getElementById('tab-history');
-        if (tabHistory) tabHistory.appendChild(paginationDiv);
-    }
+        try {
+            // Tenta buscar capa via Edge Function
+            const coverUrl = await fetchCoverUrl(convite.slug);
 
-    if (totalPages <= 1) {
-        paginationDiv.classList.add('hidden');
-        return;
-    }
+            if (coverUrl) {
+                thumbContainer.outerHTML = `
+                    <img src="${coverUrl}" class="w-full h-full object-cover group-hover:scale-105 transition-transform" alt="Capa" 
+                         onerror="this.src='';this.onerror=null;this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-gray-600 bg-gradient-to-br from-purple-900 to-blue-900\\'><i class=\\'fa-solid fa-gift text-3xl text-white/30\\'></i></div>'">
+                `;
+            } else {
+                // Sem capa - mostra ícone de presente
+                thumbContainer.innerHTML = `
+                    <i class="fa-solid fa-gift text-3xl text-white/30"></i>
+                `;
+                thumbContainer.className = 'w-full h-full flex items-center justify-center text-gray-600 bg-gradient-to-br from-purple-900 to-blue-900';
+            }
+        } catch (e) {
+            // Erro - mostra ícone de erro
+            thumbContainer.innerHTML = `
+                <i class="fa-solid fa-image text-2xl text-gray-600"></i>
+            `;
+            thumbContainer.className = 'w-full h-full flex items-center justify-center text-gray-600';
+        }
 
-    paginationDiv.classList.remove('hidden');
-    paginationDiv.innerHTML = `
-        <button id="btn-history-prev" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors" ${historyPage <= 1 ? 'disabled' : ''}>
-            <i class="fa-solid fa-chevron-left mr-1"></i> Anterior
-        </button>
-        <span class="text-gray-400 text-sm">
-            Página <span class="text-white font-bold">${historyPage}</span> de <span class="text-white font-bold">${totalPages}</span>
-        </span>
-        <button id="btn-history-next" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors" ${historyPage >= totalPages ? 'disabled' : ''}>
-            Próxima <i class="fa-solid fa-chevron-right ml-1"></i>
-        </button>
-    `;
-
-    // Add event listeners
-    const prevBtn = document.getElementById('btn-history-prev');
-    const nextBtn = document.getElementById('btn-history-next');
-
-    if (prevBtn) {
-        prevBtn.onclick = () => {
-            if (historyPage > 1) loadGitHubHistoryPage(historyPage - 1);
-        };
-    }
-    if (nextBtn) {
-        nextBtn.onclick = () => {
-            if (historyPage < totalPages) loadGitHubHistoryPage(historyPage + 1);
-        };
+        // Pequeno delay para efeito visual progressivo
+        await new Promise(r => setTimeout(r, 50));
     }
 }
 
-// Backwards compatibility
-async function loadGitHubHistory() {
-    await loadGitHubHistoryPage(1);
+// Busca URL da capa de um convite
+async function fetchCoverUrl(slug) {
+    try {
+        // Tenta capa/ folder primeiro
+        const capaFolderUrl = `https://convites.mforge.com.br/${slug}/capa/`;
+
+        // Usa GitHub API via nossa Edge Function indiretamente
+        // Por simplicidade, tenta URLs comuns diretamente
+        const possibleUrls = [
+            `https://convites.mforge.com.br/${slug}/capa/capa.jpg`,
+            `https://convites.mforge.com.br/${slug}/capa.jpg`
+        ];
+
+        for (const url of possibleUrls) {
+            try {
+                const response = await fetch(url, { method: 'HEAD' });
+                if (response.ok) return url;
+            } catch (e) {
+                continue;
+            }
+        }
+
+        return null;
+    } catch (e) {
+        return null;
+    }
 }
 
 async function importFromGitHubUrl(liveUrl, displayName) {
