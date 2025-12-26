@@ -19,6 +19,7 @@ const API_ENDPOINTS = {
     '/api/chatbot': `${SUPABASE_URL}/functions/v1/chatbot`,
     '/api/list-convites': `${SUPABASE_URL}/functions/v1/list-convites`,
     '/api/import-from-github': `${SUPABASE_URL}/functions/v1/import-from-github`,
+    '/api/get-cover': `${SUPABASE_URL}/functions/v1/get-cover`,
 };
 
 // Funcionalidades desabilitadas na versão web
@@ -73,7 +74,7 @@ window.fetch = async function (url, options = {}) {
 };
 
 // ===== GITHUB HISTORY FUNCTIONS
-// Histórico com carregamento progressivo (streaming)
+// Histórico com carregamento progressivo real
 let historyLoading = false;
 
 async function loadGitHubHistory() {
@@ -91,11 +92,11 @@ async function loadGitHubHistory() {
     loadingDiv?.classList.remove('hidden');
 
     try {
-        // Primeiro: busca lista de slugs (modo streaming - rápido)
+        // Busca lista de slugs rapidamente
         const response = await fetch('/api/list-convites', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ streaming: true })
+            body: JSON.stringify({})
         });
 
         const data = await response.json();
@@ -105,52 +106,29 @@ async function loadGitHubHistory() {
             throw new Error(data.error || 'Erro ao carregar convites');
         }
 
-        if (!data.convites || data.convites.length === 0) {
+        const slugs = data.slugs || [];
+
+        if (slugs.length === 0) {
             emptyDiv?.classList.remove('hidden');
             historyLoading = false;
             return;
         }
 
-        // Renderiza todos os cards com placeholder de loading
-        const cards = [];
-        data.convites.forEach((convite, index) => {
-            const card = document.createElement('div');
-            card.className = 'history-card bg-gray-800 rounded-lg border border-gray-700 overflow-hidden hover:border-purple-500 transition-all group relative';
-            card.dataset.slug = convite.slug;
-            card.dataset.url = convite.url;
-            card.dataset.index = index;
-
-            card.innerHTML = `
-                <div class="aspect-[9/16] bg-gray-900 overflow-hidden relative cursor-pointer">
-                    <div class="w-full h-full flex flex-col items-center justify-center text-gray-600 bg-gradient-to-br from-gray-800 to-gray-900" id="thumb-${index}">
-                        <i class="fa-solid fa-spinner fa-spin text-2xl text-purple-500 mb-2"></i>
-                        <span class="text-xs text-gray-500">Carregando...</span>
-                    </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4">
-                        <span class="text-white text-sm font-semibold"><i class="fa-solid fa-file-import mr-1"></i> Importar</span>
-                    </div>
-                    <a href="${convite.url}" target="_blank" 
-                       class="absolute bottom-12 left-1/2 -translate-x-1/2 bg-green-600 hover:bg-green-500 text-white text-xs px-3 py-1.5 rounded opacity-0 group-hover:opacity-100 transition-opacity z-10 whitespace-nowrap"
-                       onclick="event.stopPropagation()">
-                        <i class="fa-solid fa-external-link mr-1"></i> Acessar
-                    </a>
-                </div>
-                <div class="p-2">
-                    <h4 class="font-semibold text-white truncate text-sm" title="${convite.slug}">${convite.slug}</h4>
-                </div>
-            `;
-
-            card.querySelector('.aspect-\\[9\\/16\\]').addEventListener('click', (e) => {
-                if (e.target.closest('a')) return;
-                importFromGitHubUrl(convite.url, convite.slug);
-            });
-
+        // Renderiza cards um a um com pequeno delay para efeito visual
+        for (let i = 0; i < slugs.length; i++) {
+            const convite = slugs[i];
+            const card = createHistoryCard(convite, i);
             listContainer.appendChild(card);
-            cards.push({ card, convite, index });
-        });
 
-        // Carrega capas progressivamente
-        loadCoversProgressively(cards);
+            // Pequeno delay entre cards para efeito cascata
+            if (i < 20) { // Só delay nos primeiros 20
+                await new Promise(r => setTimeout(r, 30));
+            }
+        }
+
+        // Inicia busca de capas em paralelo (em lotes para não sobrecarregar)
+        loadCoversInBatches(slugs);
+
         historyLoading = false;
 
     } catch (error) {
@@ -161,66 +139,81 @@ async function loadGitHubHistory() {
     }
 }
 
-// Carrega capas uma a uma para feedback visual progressivo
-async function loadCoversProgressively(cards) {
-    for (const { convite, index } of cards) {
-        const thumbContainer = document.getElementById(`thumb-${index}`);
-        if (!thumbContainer) continue;
+function createHistoryCard(convite, index) {
+    const card = document.createElement('div');
+    card.className = 'history-card bg-gray-800 rounded-lg border border-gray-700 overflow-hidden hover:border-purple-500 transition-all group relative animate-fade-in';
+    card.dataset.slug = convite.slug;
+    card.dataset.url = convite.url;
+    card.id = `card-${index}`;
 
-        try {
-            // Tenta buscar capa via Edge Function
-            const coverUrl = await fetchCoverUrl(convite.slug);
+    card.innerHTML = `
+        <div class="aspect-[9/16] bg-gray-900 overflow-hidden relative cursor-pointer">
+            <div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900" id="thumb-${index}">
+                <i class="fa-solid fa-spinner fa-spin text-xl text-purple-500/50 mb-2"></i>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4">
+                <span class="text-white text-sm font-semibold"><i class="fa-solid fa-file-import mr-1"></i> Importar</span>
+            </div>
+            <a href="${convite.url}" target="_blank" 
+               class="absolute bottom-12 left-1/2 -translate-x-1/2 bg-green-600 hover:bg-green-500 text-white text-xs px-3 py-1.5 rounded opacity-0 group-hover:opacity-100 transition-opacity z-10 whitespace-nowrap"
+               onclick="event.stopPropagation()">
+                <i class="fa-solid fa-external-link mr-1"></i> Acessar
+            </a>
+        </div>
+        <div class="p-2">
+            <h4 class="font-semibold text-white truncate text-sm" title="${convite.slug}">${convite.slug}</h4>
+        </div>
+    `;
 
-            if (coverUrl) {
-                thumbContainer.outerHTML = `
-                    <img src="${coverUrl}" class="w-full h-full object-cover group-hover:scale-105 transition-transform" alt="Capa" 
-                         onerror="this.src='';this.onerror=null;this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-gray-600 bg-gradient-to-br from-purple-900 to-blue-900\\'><i class=\\'fa-solid fa-gift text-3xl text-white/30\\'></i></div>'">
-                `;
-            } else {
-                // Sem capa - mostra ícone de presente
-                thumbContainer.innerHTML = `
-                    <i class="fa-solid fa-gift text-3xl text-white/30"></i>
-                `;
-                thumbContainer.className = 'w-full h-full flex items-center justify-center text-gray-600 bg-gradient-to-br from-purple-900 to-blue-900';
-            }
-        } catch (e) {
-            // Erro - mostra ícone de erro
-            thumbContainer.innerHTML = `
-                <i class="fa-solid fa-image text-2xl text-gray-600"></i>
-            `;
-            thumbContainer.className = 'w-full h-full flex items-center justify-center text-gray-600';
-        }
+    card.querySelector('.aspect-\\[9\\/16\\]').addEventListener('click', (e) => {
+        if (e.target.closest('a')) return;
+        importFromGitHubUrl(convite.url, convite.slug);
+    });
 
-        // Pequeno delay para efeito visual progressivo
-        await new Promise(r => setTimeout(r, 50));
+    return card;
+}
+
+// Carrega capas em lotes paralelos
+async function loadCoversInBatches(slugs) {
+    const BATCH_SIZE = 5; // Processa 5 capas por vez
+
+    for (let i = 0; i < slugs.length; i += BATCH_SIZE) {
+        const batch = slugs.slice(i, i + BATCH_SIZE);
+
+        // Processa lote em paralelo
+        await Promise.all(batch.map((convite, batchIndex) =>
+            loadSingleCover(convite.slug, i + batchIndex)
+        ));
     }
 }
 
-// Busca URL da capa de um convite
-async function fetchCoverUrl(slug) {
+async function loadSingleCover(slug, index) {
+    const thumbContainer = document.getElementById(`thumb-${index}`);
+    if (!thumbContainer) return;
+
     try {
-        // Tenta capa/ folder primeiro
-        const capaFolderUrl = `https://convites.mforge.com.br/${slug}/capa/`;
+        const response = await fetch('/api/get-cover', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ slug })
+        });
 
-        // Usa GitHub API via nossa Edge Function indiretamente
-        // Por simplicidade, tenta URLs comuns diretamente
-        const possibleUrls = [
-            `https://convites.mforge.com.br/${slug}/capa/capa.jpg`,
-            `https://convites.mforge.com.br/${slug}/capa.jpg`
-        ];
+        const data = await response.json();
 
-        for (const url of possibleUrls) {
-            try {
-                const response = await fetch(url, { method: 'HEAD' });
-                if (response.ok) return url;
-            } catch (e) {
-                continue;
-            }
+        if (data.coverUrl) {
+            thumbContainer.outerHTML = `
+                <img src="${data.coverUrl}" class="w-full h-full object-cover group-hover:scale-105 transition-transform" alt="Capa" 
+                     onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-900 to-blue-900\\'><i class=\\'fa-solid fa-gift text-3xl text-white/30\\'></i></div>'">
+            `;
+        } else {
+            // Sem capa
+            thumbContainer.innerHTML = `<i class="fa-solid fa-gift text-3xl text-white/30"></i>`;
+            thumbContainer.className = 'w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-900 to-blue-900';
         }
-
-        return null;
     } catch (e) {
-        return null;
+        // Erro - mostra ícone
+        thumbContainer.innerHTML = `<i class="fa-solid fa-image text-2xl text-gray-600"></i>`;
+        thumbContainer.className = 'w-full h-full flex items-center justify-center';
     }
 }
 
