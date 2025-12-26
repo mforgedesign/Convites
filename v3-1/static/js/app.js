@@ -4515,3 +4515,59 @@ document.getElementById('btn-run-dashboard')?.addEventListener('click', async ()
         }
     }
 })();
+
+// ===== GITHUB ACTIONS STATUS CHECKER =====
+(function () {
+    const GITHUB_ACTIONS_URL = 'https://api.github.com/repos/mforgedesign/Convites/actions/runs?per_page=5';
+
+    async function checkGitHubActionsStatus() {
+        const statusEl = document.getElementById('github-actions-status');
+        if (!statusEl) return;
+
+        try {
+            const response = await fetch(GITHUB_ACTIONS_URL, {
+                headers: { 'Accept': 'application/vnd.github.v3+json' }
+            });
+
+            if (!response.ok) {
+                statusEl.innerHTML = '<i class="fa-solid fa-question-circle"></i> Desconhecido';
+                statusEl.className = 'text-xs bg-gray-600/30 text-gray-400 px-2 py-1 rounded-full flex items-center gap-1';
+                return;
+            }
+
+            const data = await response.json();
+            const runs = data.workflow_runs || [];
+
+            // Check for any in-progress runs
+            const inProgress = runs.filter(r => r.status === 'in_progress' || r.status === 'queued');
+            const latestRun = runs[0];
+
+            if (inProgress.length > 0) {
+                statusEl.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> ${inProgress.length} em andamento`;
+                statusEl.className = 'text-xs bg-yellow-600/30 text-yellow-300 px-2 py-1 rounded-full flex items-center gap-1';
+            } else if (latestRun) {
+                if (latestRun.conclusion === 'success') {
+                    statusEl.innerHTML = '<i class="fa-solid fa-check-circle"></i> Sucesso';
+                    statusEl.className = 'text-xs bg-green-600/30 text-green-300 px-2 py-1 rounded-full flex items-center gap-1';
+                } else if (latestRun.conclusion === 'failure') {
+                    statusEl.innerHTML = '<i class="fa-solid fa-times-circle"></i> Falhou';
+                    statusEl.className = 'text-xs bg-red-600/30 text-red-300 px-2 py-1 rounded-full flex items-center gap-1';
+                } else {
+                    statusEl.innerHTML = '<i class="fa-solid fa-minus-circle"></i> Ocioso';
+                    statusEl.className = 'text-xs bg-gray-600/30 text-gray-400 px-2 py-1 rounded-full flex items-center gap-1';
+                }
+            } else {
+                statusEl.innerHTML = '<i class="fa-solid fa-minus-circle"></i> Nenhum';
+                statusEl.className = 'text-xs bg-gray-600/30 text-gray-400 px-2 py-1 rounded-full flex items-center gap-1';
+            }
+        } catch (e) {
+            console.error('GitHub Actions status check failed:', e);
+            statusEl.innerHTML = '<i class="fa-solid fa-exclamation-triangle"></i> Erro';
+            statusEl.className = 'text-xs bg-red-600/30 text-red-300 px-2 py-1 rounded-full flex items-center gap-1';
+        }
+    }
+
+    // Check immediately and then every 30 seconds
+    checkGitHubActionsStatus();
+    setInterval(checkGitHubActionsStatus, 30000);
+})();
