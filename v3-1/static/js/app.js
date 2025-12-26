@@ -308,6 +308,12 @@ async function importFromGitHubUrl(liveUrl, displayName) {
             if (data.formData['check-show-timer'] !== undefined) {
                 localStorage.setItem('check-show-timer', data.formData['check-show-timer']);
             }
+
+            // Save extra links array if available
+            if (data.formData.extraLinksArray && Array.isArray(data.formData.extraLinksArray)) {
+                localStorage.setItem('extraLinksArray', JSON.stringify(data.formData.extraLinksArray));
+                console.log('Saved extraLinksArray:', data.formData.extraLinksArray.length, 'items');
+            }
         }
 
         // Salvar URLs de mídia no localStorage
@@ -851,31 +857,50 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Restore extra link fields - CREATE them dynamically if data exists
-        const extraLink = localStorage.getItem('input-extra');
-        const extraName = localStorage.getItem('input-extra-name');
-        const extraIcon = localStorage.getItem('input-extra-icon');
+        // First try to get the array of extra links
+        let extraLinksArray = [];
+        const savedArray = localStorage.getItem('extraLinksArray');
+        if (savedArray) {
+            try {
+                extraLinksArray = JSON.parse(savedArray);
+                console.log('Loaded extraLinksArray:', extraLinksArray.length, 'items');
+            } catch (e) {
+                console.error('Failed to parse extraLinksArray:', e);
+            }
+        }
 
-        if (extraLink && extraLink.trim() !== '') {
-            // Create the extra link field dynamically
+        // Fallback to single extra link if no array
+        if (extraLinksArray.length === 0) {
+            const extraLink = localStorage.getItem('input-extra');
+            const extraName = localStorage.getItem('input-extra-name');
+            const extraIcon = localStorage.getItem('input-extra-icon');
+            if (extraLink && extraLink.trim() !== '') {
+                extraLinksArray = [{ link: extraLink, name: extraName || '', icon: extraIcon || '' }];
+            }
+        }
+
+        // Create all extra link fields
+        if (extraLinksArray.length > 0) {
             const container = document.getElementById('extra-links-container');
             if (container && container.children.length === 0) {
-                const linkId = 'extra-link-restored';
-                const div = document.createElement('div');
-                div.className = 'flex gap-2 items-center bg-gray-900/50 p-2 rounded-lg border border-gray-700';
-                div.id = linkId;
-                div.innerHTML = `
-                    <input type="text" class="flex-1 bg-gray-800 border border-gray-600 rounded px-3 py-2 text-white text-sm" 
-                           placeholder="Nome do botão" value="${extraName || ''}" data-field="name">
-                    <input type="text" class="flex-1 bg-gray-800 border border-gray-600 rounded px-3 py-2 text-white text-sm" 
-                           placeholder="URL do link" value="${extraLink}" data-field="link">
-                    <input type="text" class="w-32 bg-gray-800 border border-gray-600 rounded px-3 py-2 text-white text-sm" 
-                           placeholder="fa-solid fa-star" value="${extraIcon || ''}" data-field="icon">
-                    <button type="button" class="text-red-500 hover:text-red-400 p-2" onclick="this.parentElement.remove()">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                `;
-                container.appendChild(div);
-                console.log('Created extra link field with:', extraLink, extraName, extraIcon);
+                extraLinksArray.forEach((extra, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'flex gap-2 items-center bg-gray-900/50 p-2 rounded-lg border border-gray-700';
+                    div.id = `extra-link-restored-${index}`;
+                    div.innerHTML = `
+                        <input type="text" class="flex-1 bg-gray-800 border border-gray-600 rounded px-3 py-2 text-white text-sm" 
+                               placeholder="Nome do botão" value="${extra.name || ''}" data-field="name">
+                        <input type="text" class="flex-1 bg-gray-800 border border-gray-600 rounded px-3 py-2 text-white text-sm" 
+                               placeholder="URL do link" value="${extra.link || ''}" data-field="link">
+                        <input type="text" class="w-32 bg-gray-800 border border-gray-600 rounded px-3 py-2 text-white text-sm" 
+                               placeholder="fa-solid fa-star" value="${extra.icon || ''}" data-field="icon">
+                        <button type="button" class="text-red-500 hover:text-red-400 p-2" onclick="this.parentElement.remove()">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    `;
+                    container.appendChild(div);
+                });
+                console.log('Created', extraLinksArray.length, 'extra link field(s)');
             }
         }
 
