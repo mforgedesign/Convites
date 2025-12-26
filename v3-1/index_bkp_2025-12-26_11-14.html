@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoBuilder 3.1</title>
+    <link rel="icon" type="image/x-icon" href="static/icon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="static/icon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/chatbot.css">
+</head>
+
+<body class="bg-gray-900 text-white font-['Outfit'] h-screen flex flex-col overflow-hidden">
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-gray-800 border-b border-gray-700 p-4 flex justify-between items-center shadow-lg z-50">
+        <div class="flex items-center gap-3">
+            <!-- Mobile Menu Button (in header) -->
+            <button id="mobile-menu-btn-header" class="hidden text-white p-2 hover:bg-gray-700 rounded-lg">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+            <img src="static/icon.svg" alt="Logo" class="w-10 h-10 invert">
+            <h1
+                class="text-xl font-bold tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+                AutoBuilder 3.1</h1>
+        </div>
+        <button id="btn-clear-cache"
+            class="bg-red-600/80 hover:bg-red-500 text-white px-4 py-2 rounded-lg shadow-md transition-all flex items-center gap-2"
+            title="Limpar Cache e Criar Novo Convite">
+            <i class="fa-solid fa-trash"></i>
+            <span class="text-sm font-semibold">Novo Convite</span>
+        </button>
+        <label
+            class="bg-blue-600/80 hover:bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md transition-all flex items-center gap-2 cursor-pointer"
+            title="Importar convite de um arquivo ZIP">
+            <i class="fa-solid fa-file-zipper"></i>
+            <span class="text-sm font-semibold">Importar ZIP</span>
+            <input type="file" id="import-zip" class="hidden" accept=".zip">
+        </label>
+        <label
+            class="bg-purple-600/80 hover:bg-purple-500 text-white px-4 py-2 rounded-lg shadow-md transition-all flex items-center gap-2 cursor-pointer"
+            title="Importar convite de uma pasta descompactada">
+            <i class="fa-solid fa-folder-open"></i>
+            <span class="text-sm font-semibold">Importar Pasta</span>
+            <input type="file" id="import-folder" class="hidden" webkitdirectory directory multiple>
+        </label>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="flex flex-1 overflow-hidden">
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu-overlay" class="hidden fixed inset-0 bg-black/60 z-40" onclick="closeMobileMenu()"></div>
+
+        <!-- Sidebar / Tabs -->
+        <nav id="sidebar"
+            class="w-64 bg-gray-800 border-r border-gray-700 flex flex-col overflow-y-auto custom-scrollbar">
+            <div
+                class="p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider flex justify-between items-center">
+                <span>Etapas de Criação</span>
+                <button id="close-sidebar-btn" class="hidden text-gray-400 hover:text-white p-1">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <button class="tab-btn" data-tab="tab-history">
+                <i class="fa-solid fa-clock-rotate-left"></i> Histórico
+            </button>
+            <button class="tab-btn active" data-tab="tab-form">
+                <i class="fa-solid fa-pen-to-square"></i> 1. Formulário
+            </button>
+            <button class="tab-btn" data-tab="tab-prompts">
+                <i class="fa-solid fa-robot"></i> 2. Prompts
+            </button>
+            <button class="tab-btn" data-tab="tab-cover">
+                <i class="fa-solid fa-image"></i> 3. Capa
+            </button>
+            <button class="tab-btn" data-tab="tab-opening">
+                <i class="fa-solid fa-film"></i> 4. Animação Abertura
+            </button>
+            <button class="tab-btn" data-tab="tab-leaf">
+                <i class="fa-solid fa-file"></i> 5. Folha
+            </button>
+            <button class="tab-btn" data-tab="tab-leaf-anim">
+                <i class="fa-solid fa-video"></i> 6. Animação Folha
+            </button>
+            <button class="tab-btn" data-tab="tab-manual">
+                <i class="fa-solid fa-book-open"></i> 7. Manual Convidado
+            </button>
+            <button class="tab-btn" data-tab="tab-gift">
+                <i class="fa-solid fa-gift"></i> 8. Presentes
+            </button>
+            <button class="tab-btn" data-tab="tab-music">
+                <i class="fa-solid fa-music"></i> 9. Música
+            </button>
+            <button class="tab-btn" data-tab="tab-finalize">
+                <i class="fa-solid fa-flag-checkered"></i> 10. Finalizar
+            </button>
+            <button class="tab-btn" data-tab="tab-tools">
+                <i class="fa-solid fa-toolbox"></i> Ferramentas
+            </button>
+        </nav>
+
+        <!-- Tab Content -->
+        <main class="flex-1 bg-gray-900 relative overflow-hidden">
+
+            <!-- Tab: History (Versão Web - Lista convites do GitHub) -->
+            <div id="tab-history" class="tab-content p-4 md:p-8 overflow-y-auto h-full custom-scrollbar hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl md:text-2xl font-bold text-white">
+                        <i class="fa-brands fa-github text-gray-400 mr-2"></i>
+                        Convites Publicados
+                    </h2>
+                    <button id="btn-refresh-history" class="text-gray-400 hover:text-white transition-colors p-2"
+                        title="Atualizar lista">
+                        <i class="fa-solid fa-rotate"></i>
+                    </button>
+                </div>
+
+                <p class="text-gray-400 text-sm mb-4">
+                    Clique em um convite para importá-lo ao editor.
+                </p>
+
+                <div id="history-list"
+                    class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+                    <!-- Cards gerados via JS -->
+                </div>
+
+                <div id="history-loading" class="text-center text-gray-500 py-8">
+                    <i class="fa-solid fa-spinner fa-spin text-2xl"></i>
+                    <p class="mt-2">Buscando convites...</p>
+                </div>
+
+                <div id="history-empty" class="text-center text-gray-500 py-8 hidden">
+                    <i class="fa-solid fa-box-open text-4xl mb-4"></i>
+                    <p>Nenhum convite publicado encontrado.</p>
+                </div>
+            </div>
+
+            <!-- Tab 1: Form -->
+            <div id="tab-form" class="tab-content active p-4 overflow-y-auto h-full custom-scrollbar">
+                <h2 class="text-xl font-bold mb-4 text-white">Preencher Formulário</h2>
+                <div class="grid grid-cols-6 gap-3 w-full">
+                    <!-- Row 1: Nome, Data, Hora, Idade -->
+                    <div class="form-group col-span-3">
+                        <label>Nome(s)</label>
+                        <input type="text" id="input-names" placeholder="Ex: Maria & João">
+                    </div>
+                    <div class="form-group col-span-1">
+                        <label>Data</label>
+                        <input type="date" id="input-date">
+                    </div>
+                    <div class="form-group col-span-1">
+                        <label>Hora</label>
+                        <input type="time" id="input-time">
+                    </div>
+                    <div class="form-group col-span-1">
+                        <label>Idade</label>
+                        <input type="number" id="input-age" placeholder="15">
+                    </div>
+
+                    <!-- Row 2: Tipo Evento, Tema -->
+                    <div class="form-group col-span-3">
+                        <label>Tipo de Evento</label>
+                        <input type="text" id="input-event-type" placeholder="Ex: Casamento, Aniversário">
+                    </div>
+                    <div class="form-group col-span-3">
+                        <label>Tema do Evento</label>
+                        <input type="text" id="input-theme" placeholder="Ex: Jardim Encantado, Cyberpunk">
+                    </div>
+
+                    <!-- Row 3: Paleta de Cores + Botões (compacto) -->
+                    <div class="form-group col-span-3">
+                        <label>Paleta de Cores</label>
+                        <input type="text" id="input-colors" placeholder="Ex: Dourado e Branco, Tons Pastéis">
+                    </div>
+                    <div class="form-group col-span-1">
+                        <label class="text-xs">Cor Botões</label>
+                        <input type="color" id="input-button-color" value="#292524"
+                            class="h-9 w-full cursor-pointer rounded bg-gray-800 border border-gray-700 p-0.5">
+                    </div>
+                    <div class="form-group col-span-1">
+                        <label class="text-xs" title="Posição vertical">Y (px)</label>
+                        <input type="number" id="input-buttons-offset" placeholder="0" value="0" class="text-center">
+                    </div>
+                    <div class="form-group col-span-1">
+                        <label class="text-xs">Tam: <span id="size-display" class="text-purple-400">1.0x</span></label>
+                        <input type="range" id="input-button-size" min="0.5" max="1.5" step="0.1" value="1.0"
+                            class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-purple-500 mt-2">
+                    </div>
+
+                    <!-- Prévia dos Botões (menor) -->
+                    <div class="col-span-6 flex justify-end -mt-1 mb-1">
+                        <button id="btn-preview-buttons"
+                            class="bg-purple-600 hover:bg-purple-500 text-white text-sm font-bold py-1.5 px-4 rounded-lg transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-mobile-screen"></i> Prévia dos Botões
+                        </button>
+                    </div>
+
+                    <!-- Frase -->
+                    <div class="form-group col-span-6">
+                        <label>Frase do Convite (Opcional)</label>
+                        <textarea id="input-phrase" rows="2"
+                            placeholder="Uma frase bonita para o convite..."></textarea>
+                    </div>
+
+                    <!-- Row 5: Música, Maps -->
+                    <!-- Row 5: Música, Local, Maps -->
+                    <div class="form-group col-span-2">
+                        <label>Música (Nome)</label>
+                        <input type="text" id="input-music" placeholder="Ex: Ed Sheeran - Perfect">
+                    </div>
+                    <div class="form-group col-span-2">
+                        <label>Local do Evento</label>
+                        <input type="text" id="input-location" placeholder="Ex: Salão de Festas Aurora">
+                    </div>
+                    <div class="form-group col-span-2">
+                        <label>Link Maps</label>
+                        <input type="url" id="input-maps" placeholder="https://maps...">
+                    </div>
+
+                    <!-- Row 5b: Presentes Link -->
+                    <div class="form-group col-span-3">
+                        <label>Link Presentes</label>
+                        <input type="url" id="input-gifts" placeholder="https://...">
+                    </div>
+
+                    <!-- Row 5c: Sugestões de Presentes -->
+                    <div class="form-group col-span-3">
+                        <label>Sugestões de Presentes <span class="text-gray-500 text-[10px]">(habilita
+                                preenchimento)</span></label>
+                        <input type="text" id="input-gift-suggestions"
+                            placeholder="Ex: Brinquedos educativos, livros infantis...">
+                    </div>
+
+                    <!-- Row 6: Links Extras (Dinâmicos) -->
+                    <div class="col-span-6">
+                        <div class="flex items-center gap-2 mb-2">
+                            <label class="text-sm font-medium text-gray-300">Links Extras</label>
+                            <button type="button" id="btn-add-extra-link"
+                                class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold py-1 px-3 rounded-full transition-colors flex items-center gap-1">
+                                <i class="fa-solid fa-plus"></i> Adicionar Link Extra
+                            </button>
+                        </div>
+                        <div id="extra-links-container" class="space-y-2">
+                            <!-- Links extras dinâmicos serão inseridos aqui via JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Row 8: Manual -->
+                    <div class="form-group col-span-2">
+                        <label>Nome do Manual <span class="text-gray-500 text-[10px]">(botão/título)</span></label>
+                        <input type="text" id="input-manual-name" placeholder="Manual do Convidado">
+                    </div>
+                    <div class="form-group col-span-4">
+                        <label>Instruções Manual dos Convidados</label>
+                        <textarea id="input-manual" rows="2"
+                            placeholder="Traje esporte fino, chegar com 30min de antecedência..."></textarea>
+                    </div>
+
+                    <!-- Row 9: WhatsApp, Link Confirmação + Opções (compacto) -->
+                    <div class="form-group col-span-2">
+                        <label>WhatsApp (Confirmação)</label>
+                        <input type="tel" id="input-whatsapp" placeholder="5511999999999">
+                    </div>
+                    <div class="form-group col-span-2">
+                        <label>Link de Confirmação</label>
+                        <input type="url" id="input-confirm-link" placeholder="https://wa.me/...">
+                    </div>
+                    <!-- Checkboxes inline -->
+                    <div class="col-span-2 flex flex-col gap-1 justify-center">
+                        <label
+                            class="flex items-center gap-2 text-xs text-gray-300 cursor-pointer select-none bg-gray-800/50 px-2 py-1 rounded border border-gray-700">
+                            <input type="checkbox" id="check-allow-companion" checked
+                                class="w-4 h-4 rounded text-purple-600 focus:ring-purple-500 bg-gray-700 border-gray-600 cursor-pointer">
+                            Permitir Acompanhante
+                        </label>
+                        <label
+                            class="flex items-center gap-2 text-xs text-gray-300 cursor-pointer select-none bg-gray-800/50 px-2 py-1 rounded border border-gray-700">
+                            <input type="checkbox" id="check-show-timer"
+                                class="w-4 h-4 rounded text-purple-600 focus:ring-purple-500 bg-gray-700 border-gray-600 cursor-pointer">
+                            <i class="fa-solid fa-hourglass-half text-purple-400"></i> Timer Regressivo
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Prompts -->
+            <div id="tab-prompts" class="tab-content p-8 overflow-y-auto h-full custom-scrollbar hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-white">Prompts Gerados</h2>
+                    <button id="btn-regenerate-prompts"
+                        class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg shadow-md transition-all">
+                        <i class="fa-solid fa-rotate"></i> Regenerar Prompts
+                    </button>
+                </div>
+                <div class="space-y-6 max-w-4xl">
+                    <div class="prompt-box">
+                        <label>1. Prompt Capa</label>
+                        <textarea id="prompt-cover" rows="4"></textarea>
+                    </div>
+                    <div class="prompt-box">
+                        <label>2. Prompt Folha</label>
+                        <textarea id="prompt-leaf" rows="4"></textarea>
+                    </div>
+                    <div class="prompt-box">
+                        <label>3. Prompt Animação Capa <span class="text-gray-500 text-xs">(preset fixo)</span></label>
+                        <textarea id="prompt-anim-cover" rows="4"></textarea>
+                    </div>
+                    <div class="prompt-box">
+                        <label>4. Prompt Animação Folha <span class="text-gray-500 text-xs">(preset fixo)</span></label>
+                        <textarea id="prompt-anim-leaf" rows="4"></textarea>
+                    </div>
+                    <div class="prompt-box border-l-4 border-purple-500">
+                        <label>5. Prompt Preenchimento Folha <span
+                                class="text-purple-400 text-xs">(NanoBanana)</span></label>
+                        <textarea id="prompt-fill-leaf" rows="4"
+                            placeholder="Prompt gerado automaticamente para preencher a folha com os dados do convite..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3: Cover -->
+            <div id="tab-cover" class="tab-content p-8 h-full hidden flex flex-col items-center justify-center">
+                <div class="w-full max-w-4xl flex flex-col items-center gap-6">
+                    <!-- Synced Prompt Field -->
+                    <div class="w-full max-w-xl">
+                        <label class="text-sm text-gray-400 mb-1 block">Prompt da Capa (sincronizado)</label>
+                        <textarea id="prompt-cover-sync" rows="3"
+                            class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-300 focus:border-blue-500 focus:outline-none"
+                            placeholder="Prompt será gerado na aba de Prompts..."></textarea>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button id="btn-create-cover"
+                            class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-lg font-bold transition-all">
+                            <i class="fa-solid fa-wand-magic"></i> Criar Capa (Fal.ai)
+                        </button>
+                        <label
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg font-bold transition-all cursor-pointer">
+                            <i class="fa-solid fa-upload"></i> Upload Capa
+                            <input type="file" id="upload-cover" class="hidden" accept="image/*">
+                        </label>
+                    </div>
+
+                    <div id="preview-cover-container"
+                        class="relative w-[300px] aspect-[9/16] bg-gray-800 rounded-lg shadow-2xl border border-gray-700 flex items-center justify-center overflow-hidden">
+                        <p class="text-gray-500 text-sm">Nenhuma capa gerada</p>
+                        <img id="preview-cover" src="" class="absolute inset-0 w-full h-full object-cover hidden">
+                    </div>
+                    <a id="download-cover" href="#" download="capa.jpg"
+                        class="hidden text-blue-400 hover:text-blue-300 underline mt-2">Download Capa</a>
+                </div>
+            </div>
+
+            <!-- Tab 4: Opening Animation -->
+            <div id="tab-opening" class="tab-content p-8 h-full hidden flex flex-col items-center justify-center">
+                <div class="w-full max-w-4xl flex flex-col items-center gap-6">
+                    <div class="flex gap-4">
+                        <button id="btn-create-anim-cover"
+                            class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-lg font-bold transition-all">
+                            <i class="fa-solid fa-video"></i> Animar Abertura (Hailuo)
+                        </button>
+                        <label
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg font-bold transition-all cursor-pointer">
+                            <i class="fa-solid fa-upload"></i> Upload Vídeo
+                            <input type="file" id="upload-anim-cover" class="hidden" accept="video/*">
+                        </label>
+                    </div>
+
+                    <div id="preview-anim-cover-container"
+                        class="relative w-[300px] aspect-[9/16] bg-gray-800 rounded-lg shadow-2xl border border-gray-700 flex items-center justify-center overflow-hidden">
+                        <p class="text-gray-500 text-sm">Nenhuma animação</p>
+                        <video id="preview-anim-cover" src="" class="absolute inset-0 w-full h-full object-cover hidden"
+                            controls loop></video>
+                    </div>
+                    <a id="download-anim-cover" href="#" download="abertura.mp4"
+                        class="hidden text-blue-400 hover:text-blue-300 underline mt-2">Download Vídeo</a>
+                </div>
+            </div>
+
+            <!-- Tab 5: Leaf -->
+            <div id="tab-leaf"
+                class="tab-content p-8 h-full hidden flex flex-col items-center justify-center overflow-y-auto custom-scrollbar">
+                <div class="w-full max-w-4xl flex flex-col items-center gap-6">
+                    <!-- Synced Prompt Fields -->
+                    <div class="w-full max-w-xl flex flex-col gap-3">
+                        <div>
+                            <label class="text-sm text-gray-400 mb-1 block">Prompt Folha (sincronizado)</label>
+                            <textarea id="prompt-leaf-sync" rows="2"
+                                class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-300 focus:border-blue-500 focus:outline-none"
+                                placeholder="Prompt será gerado na aba de Prompts..."></textarea>
+                        </div>
+                        <div>
+                            <label class="text-sm text-purple-400 mb-1 block">Prompt Preenchimento
+                                (sincronizado)</label>
+                            <textarea id="prompt-fill-leaf-sync" rows="2"
+                                class="w-full bg-gray-800 border border-purple-700 rounded-lg px-3 py-2 text-sm text-gray-300 focus:border-purple-500 focus:outline-none"
+                                placeholder="Prompt de preenchimento será gerado na aba de Prompts..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 flex-wrap justify-center">
+                        <button id="btn-create-leaf"
+                            class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-lg font-bold transition-all">
+                            <i class="fa-solid fa-leaf"></i> Criar Folha
+                        </button>
+                        <button id="btn-fill-leaf"
+                            class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg shadow-lg font-bold transition-all">
+                            <i class="fa-solid fa-pen-nib"></i> Preencher Folha (NanoBanana)
+                        </button>
+                        <label
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg font-bold transition-all cursor-pointer">
+                            <i class="fa-solid fa-upload"></i> Vazia
+                            <input type="file" id="upload-leaf" class="hidden" accept="image/*">
+                        </label>
+                        <label
+                            class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg font-bold transition-all cursor-pointer">
+                            <i class="fa-solid fa-upload"></i> Preenchida
+                            <input type="file" id="upload-leaf-filled" class="hidden" accept="image/*">
+                        </label>
+                    </div>
+
+                    <div class="flex gap-8">
+                        <div id="preview-leaf-empty-container"
+                            class="relative w-[250px] aspect-[9/16] bg-gray-800 rounded-lg shadow-2xl border border-gray-700 flex items-center justify-center overflow-hidden">
+                            <p class="text-gray-500 text-sm">Folha Vazia</p>
+                            <img id="preview-leaf-empty" src=""
+                                class="absolute inset-0 w-full h-full object-cover hidden">
+                        </div>
+                        <div id="preview-leaf-filled-container"
+                            class="relative w-[250px] aspect-[9/16] bg-gray-800 rounded-lg shadow-2xl border border-gray-700 flex items-center justify-center overflow-hidden">
+                            <p class="text-gray-500 text-sm">Folha Preenchida</p>
+                            <img id="preview-leaf-filled" src=""
+                                class="absolute inset-0 w-full h-full object-cover hidden">
+                        </div>
+                    </div>
+                    <a id="download-leaf-filled" href="#" download="folha_preenchida.jpg"
+                        class="hidden text-blue-400 hover:text-blue-300 underline mt-2">Download Folha Preenchida</a>
+                </div>
+            </div>
+
+            <!-- Tab 6: Leaf Animation -->
+            <div id="tab-leaf-anim" class="tab-content p-8 h-full hidden flex flex-col items-center justify-center">
+                <div class="w-full max-w-4xl flex flex-col items-center gap-6">
+                    <div class="flex gap-4">
+                        <button id="btn-create-anim-leaf"
+                            class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-lg font-bold transition-all">
+                            <i class="fa-solid fa-video"></i> Criar Loop (Hailuo)
+                        </button>
+                        <label
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg font-bold transition-all cursor-pointer">
+                            <i class="fa-solid fa-upload"></i> Upload Loop
+                            <input type="file" id="upload-anim-leaf" class="hidden" accept="video/*">
+                        </label>
+                    </div>
+
+                    <div id="preview-anim-leaf-container"
+                        class="relative w-[300px] aspect-[9/16] bg-gray-800 rounded-lg shadow-2xl border border-gray-700 flex items-center justify-center overflow-hidden">
+                        <p class="text-gray-500 text-sm">Nenhum loop</p>
+                        <video id="preview-anim-leaf" src="" class="absolute inset-0 w-full h-full object-cover hidden"
+                            controls loop></video>
+                    </div>
+                    <a id="download-anim-leaf" href="#" download="loop.mp4"
+                        class="hidden text-blue-400 hover:text-blue-300 underline mt-2">Download Loop</a>
+                </div>
+            </div>
+
+            <!-- Tab 7: Guest Manual -->
+            <div id="tab-manual"
+                class="tab-content p-8 h-full hidden flex flex-col items-center justify-center overflow-y-auto custom-scrollbar">
+                <h2 class="text-2xl font-bold mb-6 text-white">Manual do Convidado</h2>
+
+                <!-- Modo Atual -->
+                <div id="manual-mode-display" class="mb-4 p-3 rounded-lg border border-gray-700 bg-gray-800/50">
+                    <span id="manual-mode-text" class="text-sm font-semibold text-gray-400">
+                        <i class="fa-solid fa-circle-question text-gray-400"></i> Nenhum modo configurado
+                    </span>
+                </div>
+
+                <p class="text-gray-400 text-center max-w-lg mb-4">
+                    Escolha entre gerar um <strong>texto via IA</strong> (abre popup com texto) ou usar uma
+                    <strong>imagem</strong> (abre popup com imagem).
+                </p>
+
+                <!-- Botões de Ação -->
+                <div class="flex gap-4 flex-wrap justify-center mb-6">
+                    <button id="btn-generate-manual"
+                        class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-lg font-bold transition-all">
+                        <i class="fa-solid fa-wand-magic"></i> Gerar Manual (IA)
+                    </button>
+                    <label
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg font-bold transition-all cursor-pointer">
+                        <i class="fa-solid fa-upload"></i> Upload Imagem
+                        <input type="file" id="upload-manual-image" class="hidden" accept="image/*">
+                    </label>
+                    <button id="btn-preview-manual"
+                        class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg shadow-lg font-bold transition-all disabled:bg-gray-600 disabled:cursor-not-allowed"
+                        disabled>
+                        <i class="fa-solid fa-eye"></i> Ver Prévia
+                    </button>
+                </div>
+
+                <p id="manual-status" class="hidden text-sm mb-4"></p>
+
+                <!-- Conteúdo dividido: Texto OU Imagem -->
+                <div class="w-full max-w-4xl flex flex-col lg:flex-row gap-6">
+                    <!-- Seção de Texto -->
+                    <div id="manual-text-section" class="flex-1">
+                        <label class="text-sm text-gray-400 mb-1 block">Instruções para o Manual (Sincronizado)</label>
+                        <textarea id="input-manual-sync" rows="3"
+                            class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-300 focus:border-blue-500 focus:outline-none mb-4"
+                            placeholder="Traje esporte fino, chegar com 30min de antecedência..."></textarea>
+
+                        <label class="text-sm text-gray-400 mb-1 block">Texto Final do Manual (Editável)</label>
+                        <textarea id="input-manual-final" rows="6"
+                            class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-300 focus:border-blue-500 focus:outline-none font-mono"
+                            placeholder="O conteúdo gerado aparecerá aqui..."></textarea>
+                        <p class="text-xs text-gray-500 mt-1">Este é o código HTML/Texto que aparecerá no popup.</p>
+                    </div>
+
+                    <!-- Seção de Imagem -->
+                    <div id="manual-image-section" class="flex-1 flex flex-col items-center">
+                        <label class="text-sm text-gray-400 mb-1 block">Imagem do Manual</label>
+                        <div id="preview-manual-container"
+                            class="relative w-[250px] aspect-[9/16] bg-gray-800 rounded-lg shadow-2xl border border-gray-700 flex items-center justify-center overflow-hidden">
+                            <p class="text-gray-500 text-sm text-center px-4">Nenhuma imagem<br>(Texto via IA)</p>
+                            <img id="preview-manual-image" src=""
+                                class="absolute inset-0 w-full h-full object-cover hidden">
+                        </div>
+                        <button id="btn-remove-manual-image"
+                            class="hidden mt-2 text-sm text-red-400 hover:text-red-300 underline">
+                            <i class="fa-solid fa-trash"></i> Remover Imagem
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 8: Presentes -->
+            <div id="tab-gift"
+                class="tab-content p-8 h-full hidden flex flex-col items-center justify-center overflow-y-auto custom-scrollbar">
+                <h2 class="text-2xl font-bold mb-4 text-white">Presentes</h2>
+                <p class="text-gray-400 text-center max-w-lg mb-4">
+                    Configure como o botão de presentes funcionará. Você pode usar um <strong>link</strong> (redireciona
+                    para URL)
+                    ou uma <strong>imagem</strong> (abre popup no convite).
+                </p>
+
+                <!-- Modo Atual -->
+                <div id="gift-mode-display" class="mb-4 p-3 rounded-lg border border-gray-700 bg-gray-800/50">
+                    <span id="gift-mode-text" class="text-sm font-semibold text-gray-400">
+                        <i class="fa-solid fa-circle-question text-gray-400"></i> Nenhum modo configurado
+                    </span>
+                </div>
+
+                <!-- Synced Gift Suggestions Field -->
+                <div class="w-full max-w-md mb-4">
+                    <label class="block text-sm font-medium text-purple-400 mb-2">
+                        <i class="fa-solid fa-gift mr-2"></i>Sugestões de Presentes (sincronizado)
+                    </label>
+                    <textarea id="input-gift-suggestions-sync" rows="2"
+                        placeholder="Ex: Brinquedos educativos, livros infantis..."
+                        class="w-full bg-gray-800 border border-purple-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition-colors text-sm"></textarea>
+                    <p class="text-xs text-gray-500 mt-1">Se preenchido, habilita preenchimento de imagem de presentes
+                    </p>
+                </div>
+
+                <!-- Opção 1: Link -->
+                <div class="w-full max-w-md mb-6">
+                    <label class="block text-sm font-medium text-gray-300 mb-2">
+                        <i class="fa-solid fa-link mr-2 text-blue-400"></i>Link da Lista de Presentes
+                    </label>
+                    <input type="url" id="input-gifts-tab" placeholder="https://..."
+                        class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500 transition-colors">
+                    <p class="text-xs text-gray-500 mt-1">Cole aqui o link ou edite no formulário (são sincronizados)
+                    </p>
+                </div>
+
+                <!-- Separador -->
+                <div class="flex items-center gap-4 w-full max-w-md mb-6">
+                    <div class="flex-1 h-px bg-gray-700"></div>
+                    <span class="text-gray-500 text-sm">OU</span>
+                    <div class="flex-1 h-px bg-gray-700"></div>
+                </div>
+
+                <!-- Opção 2: Upload/Gerar Imagem -->
+                <div class="flex gap-4 mb-4 flex-wrap justify-center">
+                    <label
+                        class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-lg font-bold transition-all cursor-pointer flex items-center gap-2">
+                        <i class="fa-solid fa-image"></i> Upload Imagem
+                        <input type="file" id="upload-gifts-image" class="hidden" accept="image/*">
+                    </label>
+                    <button id="btn-copy-leaf-to-gifts"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-bold transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-copy"></i> Copiar Folha
+                    </button>
+                    <button id="btn-fill-gifts"
+                        class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-bold transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-pen-nib"></i> Preencher Presentes
+                    </button>
+                    <button id="btn-remove-gifts-image"
+                        class="hidden bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-trash"></i> Remover
+                    </button>
+                </div>
+
+                <!-- Preview Container (sempre visível para arrastar e soltar) -->
+                <div id="preview-gifts-container"
+                    class="relative w-[250px] aspect-[9/16] bg-gray-800 rounded-lg shadow-2xl border border-gray-700 border-dashed flex items-center justify-center overflow-hidden cursor-pointer transition-all hover:border-purple-500"
+                    title="Arraste uma imagem aqui ou clique para fazer upload">
+                    <p id="gifts-placeholder-text" class="text-gray-500 text-sm text-center px-4 absolute z-0">
+                        <i class="fa-solid fa-cloud-arrow-up text-2xl mb-2 block"></i>
+                        Arraste uma imagem aqui
+                    </p>
+                    <img id="preview-gifts-image" src=""
+                        class="absolute inset-0 w-full h-full object-cover hidden z-10">
+                </div>
+                <a id="download-gifts-image" href="#" download="presentes.jpg"
+                    class="hidden text-blue-400 hover:text-blue-300 underline mt-2">Download Imagem</a>
+            </div>
+
+            <!-- Tab 9: Music (Web Version - Upload Only) -->
+            <div id="tab-music" class="tab-content p-8 h-full hidden flex flex-col items-center justify-center">
+                <div class="w-full max-w-4xl flex flex-col items-center gap-6">
+                    <h2 class="text-2xl font-bold text-white">Música de Fundo</h2>
+
+                    <!-- Web Version Notice -->
+                    <div class="bg-yellow-900/30 border border-yellow-600/50 rounded-lg p-4 max-w-md text-center">
+                        <p class="text-yellow-300 text-sm">
+                            <i class="fa-solid fa-info-circle mr-2"></i>
+                            Na versão web, apenas upload de arquivos MP3 é suportado.
+                        </p>
+                    </div>
+
+                    <label
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg shadow-lg font-bold transition-all cursor-pointer text-lg">
+                        <i class="fa-solid fa-upload"></i> Fazer Upload de MP3
+                        <input type="file" id="upload-music" class="hidden" accept="audio/mp3,.mp3">
+                    </label>
+
+                    <div id="music-status" class="mt-4 text-center hidden">
+                        <p class="text-green-400 font-semibold"><i class="fa-solid fa-check-circle"></i> Música
+                            Carregada!</p>
+                        <p id="music-filename" class="text-sm text-gray-400 mt-1">musica.mp3</p>
+                        <audio id="preview-audio" controls class="mt-4"></audio>
+                        <button id="btn-remove-music"
+                            class="mt-4 text-red-400 hover:text-red-300 text-sm underline">Remover Música</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 10: Finalize -->
+            <div id="tab-finalize"
+                class="tab-content p-8 h-full hidden flex flex-col items-center overflow-y-auto custom-scrollbar">
+                <h2 class="text-3xl font-bold mb-8 text-white">Seu Convite está Pronto!</h2>
+
+                <div class="mb-6 flex flex-col gap-4 bg-gray-800 p-4 rounded-xl border border-gray-700 max-w-md w-full">
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" id="check-interact-hint" checked
+                            class="w-5 h-5 rounded text-blue-600 focus:ring-blue-500 bg-gray-700 border-gray-600">
+                        <label for="check-interact-hint" class="text-gray-300 font-medium cursor-pointer select-none">
+                            Mostrar dica de clique (Mãozinha e Texto)
+                        </label>
+                    </div>
+                    <div class="flex items-center gap-3 border-t border-gray-700 pt-4">
+                        <label class="text-gray-400 text-sm">Sombra Inferior:</label>
+                        <input type="color" id="input-shadow-color" value="#000000"
+                            class="w-8 h-8 rounded cursor-pointer bg-transparent border-0 p-0">
+                    </div>
+
+                    <!-- Custom Index Upload -->
+                    <div class="border-t border-gray-700 pt-4">
+                        <label class="text-gray-400 text-sm block mb-2">Template Personalizado (Avançado):</label>
+                        <div id="custom-index-upload-area" class="relative">
+                            <input type="file" id="input-custom-index" accept=".html,.htm" class="hidden">
+                            <button id="btn-upload-custom-index"
+                                class="w-full bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 text-purple-300 py-2 px-4 rounded-lg text-sm transition-colors flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-code"></i> Usar index.html Personalizado
+                            </button>
+                        </div>
+                        <div id="custom-index-status"
+                            class="hidden mt-2 p-3 bg-green-900/30 border border-green-500/50 rounded-lg flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-check-circle text-green-400"></i>
+                                <span class="text-green-300 text-sm font-medium">Template personalizado ativo</span>
+                            </div>
+                            <button id="btn-remove-custom-index"
+                                class="text-red-400 hover:text-red-300 p-1 hover:bg-red-500/20 rounded transition-colors"
+                                title="Remover e usar template padrão">
+                                <i class="fa-solid fa-trash text-sm"></i>
+                            </button>
+                        </div>
+                        <p class="text-gray-500 text-[10px] mt-1">Substitui o template final gerado pelo builder.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-6 mb-8">
+                    <button id="btn-preview-final"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl shadow-xl font-bold text-lg transition-all flex items-center gap-3">
+                        <i class="fa-solid fa-eye"></i> Ver Prévia
+                    </button>
+                    <button id="btn-save-only"
+                        class="bg-yellow-600 hover:bg-yellow-700 text-white px-8 py-4 rounded-xl shadow-xl font-bold text-lg transition-all flex items-center gap-3">
+                        <i class="fa-solid fa-floppy-disk"></i> Salvar
+                    </button>
+                    <button id="btn-download-zip"
+                        class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl shadow-xl font-bold text-lg transition-all flex items-center gap-3">
+                        <i class="fa-solid fa-file-zipper"></i> Baixar ZIP
+                    </button>
+                </div>
+
+                <!-- GitHub Hosting Section (New) -->
+                <div
+                    class="w-full max-w-2xl bg-gray-800 rounded-xl border border-gray-700 p-6 flex flex-col gap-4 shadow-lg">
+                    <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-brands fa-github text-white"></i> Publicar no GitHub Pages
+                    </h3>
+                    <p class="text-gray-400 text-sm">Hospede seu convite gratuitamente no seu domínio (mforge.com.br).
+                    </p>
+
+                    <div class="w-full">
+                        <label class="block text-gray-400 text-sm mb-1">Nome do Link (Slug)</label>
+                        <div class="flex items-center">
+                            <span
+                                class="bg-gray-700 text-gray-300 px-3 py-2 rounded-l-lg border border-r-0 border-gray-600">convites.mforge.com.br/</span>
+                            <input type="text" id="input-slug" placeholder="nome-do-evento"
+                                class="flex-1 bg-gray-900 border border-gray-600 rounded-r-lg px-4 py-2 text-white focus:outline-none focus:border-green-500 text-lg">
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Use apenas letras, números e hífens. Ex:
+                            <strong>aniversario-joana-15-anos</strong>
+                        </p>
+                    </div>
+
+                    <button id="btn-deploy-github"
+                        class="mt-2 bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-bold transition-all flex items-center justify-center gap-2 w-full">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Publicar Online
+                    </button>
+
+                    <!-- Result Area -->
+                    <div id="deploy-result"
+                        class="hidden mt-2 p-3 bg-green-900/30 border border-green-700 rounded-lg text-green-300 text-sm text-center break-all">
+                    </div>
+
+                    <!-- Custom ZIP Deploy Section -->
+                    <div class="mt-4 pt-4 border-t border-gray-700">
+                        <h4 class="text-sm font-semibold text-gray-400 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-file-import"></i> Deploy Direto de ZIP Customizado
+                        </h4>
+                        <p class="text-xs text-gray-500 mb-3">
+                            Publique um ZIP sem passar pelo builder. Não salva no histórico.
+                        </p>
+                        <div id="custom-zip-dropzone"
+                            class="border-2 border-dashed border-gray-600 hover:border-purple-500 rounded-lg p-4 text-center cursor-pointer transition-colors">
+                            <i class="fa-solid fa-cloud-arrow-up text-2xl text-gray-500 mb-2"></i>
+                            <p class="text-sm text-gray-400">Arraste um ZIP aqui ou clique para selecionar</p>
+                            <input type="file" id="input-custom-zip-deploy" class="hidden" accept=".zip">
+                        </div>
+                        <div id="custom-zip-deploy-status" class="hidden mt-2 text-sm text-center"></div>
+                    </div>
+                </div>
+
+                <p class="mt-8 text-gray-500 text-sm max-w-md text-center">
+                    O arquivo ZIP contém todos os arquivos necessários. Basta extrair e abrir o index.html ou fazer
+                    upload para um servidor web.
+                </p>
+            </div>
+
+            <!-- Tab: Tools -->
+            <div id="tab-tools" class="tab-content p-8 overflow-y-auto h-full custom-scrollbar hidden">
+                <div class="max-w-2xl mx-auto space-y-8">
+                    <h2 class="text-2xl font-bold text-white text-center mb-8">
+                        <i class="fa-solid fa-toolbox mr-2"></i> Ferramentas e Links Úteis
+                    </h2>
+
+                    <!-- Dashboard CMS Section -->
+                    <div
+                        class="bg-gradient-to-br from-purple-900/50 to-indigo-900/50 p-6 rounded-xl border border-purple-700/50">
+                        <h3 class="text-lg font-semibold text-purple-300 mb-4">
+                            <i class="fa-solid fa-gauge-high mr-2"></i> Dashboard de Modelos
+                        </h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Gerencie modelos do site oficial de convites da MForge Studios.
+                        </p>
+                        <button id="btn-run-dashboard" disabled
+                            class="w-full py-3 px-4 bg-gray-600 text-gray-400 font-semibold rounded-lg cursor-not-allowed flex items-center justify-center gap-2"
+                            title="Disponível apenas na versão Desktop">
+                            <i class="fa-solid fa-rocket"></i> Dashboard CMS (Desktop Only)
+                        </button>
+                        <p class="text-xs text-gray-500 mt-2 text-center">Esta funcionalidade está disponível apenas na
+                            versão Desktop do Builder.</p>
+                    </div>
+
+                    <!-- Useful Links Section -->
+                    <div class="bg-gray-800/80 p-6 rounded-xl border border-gray-700">
+                        <h3 class="text-lg font-semibold text-white mb-4">
+                            <i class="fa-solid fa-link mr-2"></i> Links Úteis
+                        </h3>
+
+                        <div class="space-y-3">
+                            <!-- Official Site -->
+                            <a href="https://convites.mforge.com.br/home/index.html" target="_blank"
+                                class="link-item flex items-center gap-3 p-3 bg-gray-700/50 hover:bg-gray-700 rounded-lg transition-colors group">
+                                <div
+                                    class="w-10 h-10 bg-amber-600/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-globe text-amber-400"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-medium text-white group-hover:text-amber-300 transition-colors">
+                                        Site Oficial MForge Convites</div>
+                                    <div class="text-xs text-gray-400">Galeria de modelos de convites publicados</div>
+                                </div>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-gray-500"></i>
+                            </a>
+
+                            <!-- Seedream v4 -->
+                            <a href="https://fal.ai/models/fal-ai/bytedance/seedream/v4/text-to-image" target="_blank"
+                                class="link-item flex items-center gap-3 p-3 bg-gray-700/50 hover:bg-gray-700 rounded-lg transition-colors group">
+                                <div
+                                    class="w-10 h-10 bg-green-600/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-wand-magic-sparkles text-green-400"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-medium text-white group-hover:text-green-300 transition-colors">
+                                        Seedream v4 (Fal.ai)</div>
+                                    <div class="text-xs text-gray-400">Gerador de imagens - texto para imagem</div>
+                                </div>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-gray-500"></i>
+                            </a>
+
+                            <!-- Seedream v4.5 Edit -->
+                            <a href="https://fal.ai/models/fal-ai/bytedance/seedream/v4.5/edit" target="_blank"
+                                class="link-item flex items-center gap-3 p-3 bg-gray-700/50 hover:bg-gray-700 rounded-lg transition-colors group">
+                                <div
+                                    class="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-paint-brush text-blue-400"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-medium text-white group-hover:text-blue-300 transition-colors">
+                                        Seedream v4.5 Edit (Fal.ai)</div>
+                                    <div class="text-xs text-gray-400">Editor de imagens - preenchimento inteligente
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-gray-500"></i>
+                            </a>
+
+                            <!-- Hailuo -->
+                            <a href="https://fal.ai/models/fal-ai/minimax/hailuo-02/standard/image-to-video/playground"
+                                target="_blank"
+                                class="link-item flex items-center gap-3 p-3 bg-gray-700/50 hover:bg-gray-700 rounded-lg transition-colors group">
+                                <div
+                                    class="w-10 h-10 bg-red-600/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-clapperboard text-red-400"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-medium text-white group-hover:text-red-300 transition-colors">
+                                        Hailuo 02 (Fal.ai)</div>
+                                    <div class="text-xs text-gray-400">Gerador de vídeo - imagem para vídeo</div>
+                                </div>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-gray-500"></i>
+                            </a>
+
+                            <!-- PXZ.ai Free -->
+                            <a href="https://pxz.ai/tools/image-generator" target="_blank"
+                                class="link-item flex items-center gap-3 p-3 bg-gray-700/50 hover:bg-gray-700 rounded-lg transition-colors group">
+                                <div
+                                    class="w-10 h-10 bg-cyan-600/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-star text-cyan-400"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-medium text-white group-hover:text-cyan-300 transition-colors">
+                                        PXZ.ai - Seedream Gratuito</div>
+                                    <div class="text-xs text-gray-400">Gerador gratuito para prévias de envelopes</div>
+                                </div>
+                                <span class="text-xs bg-cyan-600/30 text-cyan-300 px-2 py-1 rounded-full">Grátis</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-gray-500"></i>
+                            </a>
+
+                            <!-- GitHub Actions -->
+                            <a href="https://github.com/mforgedesign/Convites/actions" target="_blank"
+                                id="github-actions-link"
+                                class="link-item flex items-center gap-3 p-3 bg-gray-700/50 hover:bg-gray-700 rounded-lg transition-colors group">
+                                <div
+                                    class="w-10 h-10 bg-gray-600/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-brands fa-github text-gray-400"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-medium text-white group-hover:text-gray-300 transition-colors">
+                                        GitHub Actions</div>
+                                    <div class="text-xs text-gray-400">Status dos deploys e builds</div>
+                                </div>
+                                <span id="github-actions-status"
+                                    class="text-xs bg-gray-600/30 text-gray-400 px-2 py-1 rounded-full flex items-center gap-1">
+                                    <i class="fa-solid fa-circle-notch fa-spin"></i> Verificando...
+                                </span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-gray-500"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-500 text-xs text-center">
+                        <i class="fa-solid fa-info-circle mr-1"></i>
+                        Links externos abrem em uma nova aba do navegador.
+                    </p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Chatbot Components -->
+    <div id="chatbot-float-btn" class="chatbot-float-btn" title="Assistente IA">
+        <i class="fa-solid fa-robot"></i>
+    </div>
+
+    <div id="chatbot-popup" class="chatbot-popup">
+        <div class="chat-header">
+            <div class="chat-title">
+                <i class="fa-solid fa-sparkles"></i>
+                Assistente AutoBuilder
+            </div>
+            <button id="chatbot-close-btn" class="chat-close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div id="chatbot-messages" class="chat-messages custom-scrollbar">
+            <!-- Messages injected by JS -->
+        </div>
+
+        <div class="chat-input-area">
+            <input type="text" id="chatbot-input" class="chat-input" placeholder="Digite sua mensagem...">
+            <button id="chatbot-send-btn" class="chat-send-btn">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="static/js/app.js"></script>
+    <script src="static/js/chatbot.js"></script>
+    <!-- Preview Buttons Modal -->
+    <div id="preview-buttons-modal"
+        class="fixed inset-0 z-[70] flex items-center justify-center bg-black/80 backdrop-blur-sm hidden">
+        <div class="relative bg-gray-900 rounded-2xl shadow-2xl p-4 border border-gray-700 flex flex-col items-center">
+            <button id="close-preview-modal"
+                class="absolute -top-4 -right-4 bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-500 transition-colors z-50">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-white font-bold mb-4">Prévia dos Botões (Mobile)</h3>
+
+            <!-- Mobile Container (360x640 ratio approx) -->
+            <div
+                class="relative w-[360px] h-[640px] bg-black rounded-lg overflow-hidden border-4 border-gray-800 shadow-inner flex flex-col justify-end">
+                <!-- Background Layer -->
+                <div id="preview-modal-bg" class="absolute inset-0 z-0">
+                    <video id="preview-modal-video" class="w-full h-full object-cover hidden" loop muted playsinline
+                        autoplay></video>
+                    <img id="preview-modal-image" class="w-full h-full object-cover opacity-50 bg-gray-800"
+                        src="static/img/placeholder_leaf.jpg">
+                </div>
+
+                <!-- Static Shadow Gradient -->
+                <div id="preview-modal-shadow"
+                    class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black/80 to-transparent z-10 pointer-events-none">
+                </div>
+
+                <!-- Buttons Container (Moves with Offset) -->
+                <div id="preview-modal-buttons-container"
+                    class="relative z-20 w-full pb-10 px-2 flex justify-center pt-4 transition-all duration-300">
+                    <div id="preview-modal-grid" class="flex flex-row flex-nowrap justify-evenly gap-1 w-full px-2">
+                        <!-- Simulated Buttons -->
+                    </div>
+                </div>
+
+
+
+
+                <p class="text-gray-500 text-xs mt-4 text-center max-w-xs">
+                    A visualização é aproximada. O vídeo de loop será exibido se disponível.
+                </p>
+
+                <!-- Simulated Gift Popup -->
+                <div id="preview-modal-popup-gift"
+                    class="absolute inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden">
+                    <div
+                        class="relative max-w-[90%] max-h-[80%] bg-transparent rounded-xl shadow-2xl overflow-hidden flex flex-col items-center">
+                        <button id="close-preview-popup-gift"
+                            class="absolute top-2 right-2 z-10 bg-black/50 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-black/70 border border-white/20">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                        <img id="preview-modal-gift-image" src=""
+                            class="max-w-full max-h-[100%] object-contain rounded-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+
+<script>
+    // Mobile sidebar toggle
+    function openMobileMenu() {
+        document.getElementById('sidebar').classList.add('open');
+        document.getElementById('mobile-menu-overlay').classList.remove('hidden');
+        const btn = document.getElementById('mobile-menu-btn-header');
+        if (btn) btn.innerHTML = '<i class="fa-solid fa-xmark text-xl"></i>';
+    }
+
+    function closeMobileMenu() {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('mobile-menu-overlay').classList.add('hidden');
+        const btn = document.getElementById('mobile-menu-btn-header');
+        if (btn) btn.innerHTML = '<i class="fa-solid fa-bars text-xl"></i>';
+    }
+
+    document.getElementById('mobile-menu-btn-header')?.addEventListener('click', function () {
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar.classList.contains('open')) {
+            closeMobileMenu();
+        } else {
+            openMobileMenu();
+        }
+    });
+
+    document.getElementById('close-sidebar-btn')?.addEventListener('click', closeMobileMenu);
+
+    // Close menu when tab is clicked on mobile
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                closeMobileMenu();
+            }
+        });
+    });
+</script>
+
+</html>
