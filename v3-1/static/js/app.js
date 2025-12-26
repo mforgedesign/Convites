@@ -834,6 +834,33 @@ document.addEventListener('DOMContentLoaded', () => {
             const val = localStorage.getItem(id);
             if (val) document.getElementById(id).value = val;
         });
+
+        // Restore checkboxes
+        const checkboxMappings = {
+            'check-allow-companion': 'check-allow-companion',
+            'check-interact-hint': 'check-interact-hint',
+            'check-show-timer': 'check-show-timer'
+        };
+        for (const [storageKey, elementId] of Object.entries(checkboxMappings)) {
+            const savedValue = localStorage.getItem(storageKey);
+            const checkbox = document.getElementById(elementId);
+            if (checkbox && savedValue !== null) {
+                checkbox.checked = savedValue === 'true' || savedValue === true;
+                console.log(`Restored checkbox ${elementId}: ${checkbox.checked}`);
+            }
+        }
+
+        // Restore extra link fields explicitly
+        const extraFields = ['input-extra', 'input-extra-name', 'input-extra-icon'];
+        extraFields.forEach(id => {
+            const val = localStorage.getItem(id);
+            const el = document.getElementById(id);
+            if (val && el) {
+                el.value = val;
+                console.log(`Restored extra field ${id}: ${val}`);
+            }
+        });
+
         updateGiftLinkDisplay();
     }
     loadData();
