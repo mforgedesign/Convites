@@ -6,7 +6,7 @@
   "theme": "",
   "age": "50",
   "colors": "",
-  "buttonColor": "#292524",
+  "buttonColor": "#eba000",
   "buttonsOffset": 0,
   "buttonSize": 1,
   "phrase": "",
@@ -21,7 +21,7 @@
     {
       "link": "https://calm-queijadas-6a7781.netlify.app/",
       "name": "Galeria de Fotos",
-      "icon": "fa-solid fa-picture"
+      "icon": "fa-solid fa-image"
     }
   ],
   "manual": "",
