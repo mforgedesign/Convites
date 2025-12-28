@@ -1,0 +1,39 @@
+{
+  "names": "Érida 50 Anos",
+  "date": "2026-02-21",
+  "time": "19:30",
+  "eventType": "",
+  "theme": "",
+  "age": "50",
+  "colors": "",
+  "buttonColor": "#292524",
+  "buttonsOffset": 0,
+  "buttonSize": 1,
+  "phrase": "",
+  "music": "musica2",
+  "location": "Espaço Maria Luiza - AV. Da Saudade, 970 - Centro, Promissão - SP",
+  "mapsLink": "https://maps.app.goo.gl/gDCZn2opUQWthwaT9",
+  "giftsLink": "",
+  "giftSuggestions": "",
+  "giftMode": "none",
+  "giftImageUrl": null,
+  "extraLinks": [
+    {
+      "link": "https://calm-queijadas-6a7781.netlify.app/",
+      "name": "Galeria de Fotos",
+      "icon": "fa-solid fa-picture"
+    }
+  ],
+  "manual": "",
+  "manualName": "Manual do Convidado",
+  "whatsapp": "5518991426075",
+  "confirmLink": "",
+  "processedManualText": "",
+  "manualMode": "text",
+  "manualImageUrl": null,
+  "shadowColor": "#000000",
+  "slug": "Erida50Anos",
+  "showTimer": false,
+  "allowCompanion": true,
+  "interactHint": true
+}
