@@ -5,20 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Prevent browser caching - always fetch fresh content -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 
     <title>Convite - Érida 50 Anos</title>
 
-    <!-- Open Graph for WhatsApp/Social Preview -->
     <meta property="og:title" content="Convite - Érida 50 Anos">
     <meta property="og:description" content="Clique para ver o convite interativo!">
-    <meta property="og:image" content="capa/capa_1766936714.jpg?v=1766936714">
+    <meta property="og:image" content="capa/capa_1767005003.jpg?v=1767005003">
     <meta property="og:type" content="website">
 
-    <!-- Envelope Favicon -->
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💌</text></svg>">
 
@@ -116,15 +113,15 @@
         class="relative w-full max-w-[480px] h-full bg-black shadow-2xl overflow-hidden transition-all duration-300">
 
         <video id="videoLoop" class="camada z-10 invisivel" playsinline loop muted>
-            <source src="loop/loop_1766936714.mp4?v=1766936714" type="video/mp4">
+            <source src="loop/loop_1767005003.mp4?v=1767005003" type="video/mp4">
         </video>
 
         <video id="videoAbertura" class="camada z-20" playsinline muted>
-            <source src="abertura/abertura_1766936714.mp4?v=1766936714" type="video/mp4">
+            <source src="abertura/abertura_1767005003.mp4?v=1767005003" type="video/mp4">
         </video>
 
         <audio id="musicaFundo" loop preload="auto">
-            <source src="musica/musica_1766936714.mp3?v=1766936714" type="audio/mp3">
+            <source src="musica/musica_1767005003.mp3?v=1767005003" type="audio/mp3">
         </audio>
 
         <button id="btnMute"
@@ -137,7 +134,6 @@
             Pular
         </button>
 
-        <!-- Timer Countdown -->
         <div id="countdownContainer"
             class="absolute top-[34px] left-0 w-full z-40 flex flex-col items-center justify-center invisivel transition-opacity duration-1000 texto-sombra pointer-events-none hidden">
             <h2 class="text-white text-[10px] sm:text-xs uppercase tracking-[0.2em] mb-2 font-semibold opacity-90">
@@ -162,13 +158,11 @@
             </div>
         </div>
 
-        <!-- Gradiente de fundo fixo (não se move) -->
         <div id="containerShadow"
             class="absolute bottom-0 left-0 w-full z-30 pb-10 px-2 pt-20 invisivel transition-opacity duration-1000"
             style="background: linear-gradient(to top, #000000E6, #00000066, transparent);">
         </div>
 
-        <!-- Container dos botões (se move com offset) -->
         <div id="containerBotoes"
             class="absolute left-0 w-full z-40 pb-10 px-2 invisivel transition-opacity duration-1000 flex justify-center"
             style="bottom: 0px;">
@@ -178,7 +172,7 @@
 
         <div id="capaInicial"
             class="absolute inset-0 z-50 bg-cover bg-center flex flex-col items-center justify-center cursor-pointer transition-opacity duration-700"
-            style="background-image: url('capa/capa_1766936714.jpg?v=1766936714');">
+            style="background-image: url('capa/capa_1767005003.jpg?v=1767005003');">
             <div class="absolute inset-0 bg-black/20"></div>
 
             <div id="dicaInteractionContainer" class="relative z-10 flex flex-col items-center gap-4 animate-pulse">
@@ -191,18 +185,15 @@
 
     </div>
 
-    <!-- Popup Manual do Convidado -->
     <div id="popupManual"
         class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm invisivel">
         <div
             class="relative w-full max-w-[400px] h-[80%] rounded-xl shadow-2xl overflow-hidden flex flex-col border border-white/20">
-            <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="loop/folha_vazia_1766936714.jpg?v=1766936714" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="loop/folha_vazia_1767005003.jpg?v=1767005003" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/60"></div>
             </div>
 
-            <!-- Header -->
             <div class="relative z-10 flex justify-between items-center p-4 border-b border-white/10">
                 <h2 id="manualTitle" class="text-xl font-bold text-white">Manual do Convidado</h2>
                 <button id="btnCloseManual" class="text-white hover:text-gray-300 transition-colors">
@@ -210,16 +201,13 @@
                 </button>
             </div>
 
-            <!-- Content -->
             <div class="relative z-10 p-6 overflow-y-auto custom-scrollbar text-white text-center space-y-6">
                 <div id="manualContent" class="text-sm leading-relaxed text-left">
-                    <!-- Conteúdo do manual será inserido aqui -->
-                </div>
+                    </div>
             </div>
         </div>
     </div>
 
-    <!-- Popup Imagem de Presentes -->
     <div id="popupPresentes"
         class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm invisivel">
         <div class="relative max-w-[90vw] max-h-[90vh] rounded-xl shadow-2xl overflow-hidden">
@@ -232,7 +220,6 @@
         </div>
     </div>
 
-    <!-- Popup Imagem do Manual -->
     <div id="popupManualImage"
         class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm invisivel">
         <div class="relative max-w-[90vw] max-h-[90vh] rounded-xl shadow-2xl overflow-hidden">
@@ -244,19 +231,16 @@
         </div>
     </div>
 
-    <!-- Popup Confirmação RSVP -->
     <div id="popupRSVP"
         class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm invisivel">
         <div
             class="relative w-full max-w-[350px] rounded-xl shadow-2xl overflow-hidden border border-white/20 m-4 flex flex-col">
 
-            <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="loop/folha_vazia_1766936714.jpg?v=1766936714" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="loop/folha_vazia_1767005003.jpg?v=1767005003" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/70"></div>
             </div>
 
-            <!-- Header -->
             <div
                 class="relative z-10 flex justify-between items-center p-4 border-b border-white/10 bg-black/30 backdrop-blur-sm">
                 <h2 class="text-lg font-bold text-white"><i class="fa-brands fa-whatsapp text-green-500 mr-2"></i>
@@ -266,7 +250,6 @@
                 </button>
             </div>
 
-            <!-- Form -->
             <div class="relative z-10 p-6 space-y-4">
                 <div>
                     <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Seu Nome Completo *</label>
@@ -282,26 +265,11 @@
                         placeholder="(DDD) 99999-9999">
                 </div>
 
-                <div id="container-acompanhantes" class="">
-                    <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Total de Acompanhantes</label>
-                    <div class="flex items-center gap-3">
-                        <button id="btn-dec-acomp"
-                            class="w-10 h-10 bg-stone-700/80 rounded text-white font-bold hover:bg-stone-600 transition-colors backdrop-blur-sm">-</button>
-                        <span id="txt-acomp-count"
-                            class="text-white font-bold text-xl w-8 text-center drop-shadow-md">0</span>
-                        <button id="btn-inc-acomp"
-                            class="w-10 h-10 bg-stone-700/80 rounded text-white font-bold hover:bg-stone-600 transition-colors backdrop-blur-sm">+</button>
-                    </div>
-                    <p class="text-[10px] text-stone-400 mt-1 drop-shadow">* Apenas acompanhantes autorizados pelo
-                        anfitrião.</p>
-                </div>
-
-                <div class="flex items-center gap-2 mt-2 ">
-                    <input type="checkbox" id="check-no-acomp"
-                        class="w-4 h-4 rounded bg-black/40 border-stone-500 text-green-500 focus:ring-green-500 focus:ring-offset-0">
-                    <label for="check-no-acomp"
-                        class="text-stone-200 text-xs cursor-pointer select-none drop-shadow">Vou sozinho(a) / Sem
-                        acompanhantes</label>
+                <div>
+                    <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Deixe uma mensagem de carinho (Opcional)</label>
+                    <textarea id="rsvp-message" rows="3"
+                        class="w-full bg-black/40 border border-stone-500/50 rounded p-2 text-white focus:border-green-500 focus:outline-none placeholder-stone-400 backdrop-blur-sm resize-none"
+                        placeholder="Escreva algo especial para a aniversariante..."></textarea>
                 </div>
 
                 <button id="btn-confirm-rsvp"
@@ -314,7 +282,7 @@
 
     <script>
         // ==================================================================
-        // 1. CONFIGURAÇÃO DOS BOTÕES (Edite Aqui!)
+        // 1. CONFIGURAÇÃO DOS BOTÕES
         // ==================================================================
         const menuConfig = [
     {
@@ -329,7 +297,7 @@
     },
     {
         "titulo": "Galeria de Fotos",
-        "icone": "fa-solid fa-image",
+        "icone": "fa-solid fa-picture",
         "link": "https://calm-queijadas-6a7781.netlify.app/"
     }
 ];
@@ -363,12 +331,10 @@
         const btnCloseRSVP = document.getElementById('btnCloseRSVP');
         const inputName = document.getElementById('rsvp-name');
         const inputPhone = document.getElementById('rsvp-phone');
-        const txtAcompCount = document.getElementById('txt-acomp-count');
-        const checkNoAcomp = document.getElementById('check-no-acomp');
+        const inputMessage = document.getElementById('rsvp-message'); // Nova Referência
         const btnConfirmRSVP = document.getElementById('btn-confirm-rsvp');
         let currentRSVPNumber = "";
-        let acompCount = 0;
-
+        
         let transicaoFeita = false;
         let estaMutado = false;
         let iniciouInteracao = false;
@@ -377,7 +343,7 @@
         const countdownContainer = document.getElementById('countdownContainer');
 
         // ==================================================================
-        // 7. LÓGICA DO POPUP MANUAL (DEFINIDO ANTES PARA USAR NO LOOP)
+        // 7. LÓGICA DO POPUP MANUAL
         // ==================================================================
         window.abrirManual = function (e) {
             e.preventDefault();
@@ -396,7 +362,7 @@
         });
 
         // ==================================================================
-        // 8. LÓGICA DO POPUP PRESENTES (DEFINIDO ANTES PARA USAR NO LOOP)
+        // 8. LÓGICA DO POPUP PRESENTES
         // ==================================================================
         window.abrirPresentes = function (e) {
             e.preventDefault();
@@ -439,30 +405,8 @@
         }
 
         // ==================================================================
-        // 9. LÓGICA DO POPUP RSVP (CONFIRMAÇÃO)
+        // 9. LÓGICA DO POPUP RSVP (CONFIRMAÇÃO - SIMPLIFICADO)
         // ==================================================================
-
-        // Counter Logic
-        document.getElementById('btn-dec-acomp').addEventListener('click', () => {
-            if (acompCount > 0) { acompCount--; txtAcompCount.textContent = acompCount; }
-        });
-        document.getElementById('btn-inc-acomp').addEventListener('click', () => {
-            acompCount++; txtAcompCount.textContent = acompCount;
-        });
-
-        // Checkbox Logic
-        checkNoAcomp.addEventListener('change', (e) => {
-            const container = document.getElementById('container-acompanhantes');
-            if (e.target.checked) {
-                container.classList.add('hidden');
-                acompCount = 0;
-            } else {
-                container.classList.remove('hidden');
-            }
-        });
-
-        // Injected State for Logic
-        const companionHideClass = "";
 
         window.abrirRSVP = function (e, link) {
             e.preventDefault();
@@ -484,23 +428,7 @@
             // Reset Form
             inputName.value = "";
             inputPhone.value = "";
-            acompCount = 0;
-            txtAcompCount.textContent = "0";
-            checkNoAcomp.checked = false;
-
-            // Visibility Logic: Respect Global Settings
-            const containerAcomp = document.getElementById('container-acompanhantes');
-            const checkContainer = document.getElementById('check-no-acomp').parentElement;
-
-            if (companionHideClass.trim() === 'hidden') {
-                // Feature Disabled globally
-                containerAcomp.classList.add('hidden');
-                checkContainer.classList.add('hidden');
-            } else {
-                // Feature Enabled
-                containerAcomp.classList.remove('hidden');
-                checkContainer.classList.remove('hidden');
-            }
+            inputMessage.value = ""; // Limpa mensagem
 
             popupRSVP.classList.remove('invisivel');
         }
@@ -515,6 +443,7 @@
         btnConfirmRSVP.addEventListener('click', () => {
             const name = inputName.value.trim();
             const phone = inputPhone.value.trim();
+            const messageText = inputMessage.value.trim();
 
             if (!name || !phone) {
                 alert("Por favor, preencha Nome e WhatsApp.");
@@ -523,17 +452,8 @@
 
             let message = `Olá! Gostaria de confirmar minha presença.\n\n*Nome:* ${name}\n*Telefone:* ${phone}`;
 
-            // Only include companion info if feature is enabled
-            if (companionHideClass.trim() !== 'hidden') {
-                if (!checkNoAcomp.checked) {
-                    if (acompCount > 0) {
-                        message += `\n*Acompanhantes:* ${acompCount}`;
-                    } else {
-                        message += `\n*Acompanhantes:* Nenhum`;
-                    }
-                } else {
-                    message += `\n*Acompanhantes:* Nenhum (Vou sozinho)`;
-                }
+            if (messageText) {
+                message += `\n\n*Mensagem de carinho:* ${messageText}`;
             }
 
             const waUrl = `https://wa.me/${currentRSVPNumber}?text=${encodeURIComponent(message)}`;
