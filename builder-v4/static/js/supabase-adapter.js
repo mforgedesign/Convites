@@ -1,3 +1,4 @@
+/* Deployed: 2026-01-01T16:46:41.768Z */
 /**
  * Supabase API Adapter for Auto Builder v4
  * ==========================================
@@ -128,33 +129,84 @@
         const file = formData.get('file');
 
         if (!file) {
+            console.error('[Upload] No file provided');
             return createResponse({ error: 'No file provided' }, 400);
         }
 
-        // Upload to Supabase Storage
-        const fileName = `${context}/${Date.now()}_${file.name}`;
-        const { data, error } = await supabase.storage
-            .from('invitation-assets')
-            .upload(fileName, file);
+        // Validate file size (10MB limit)
+        const MAX_SIZE = 10 * 1024 * 1024; // 10MB
+        if (file.size > MAX_SIZE) {
+            console.error('[Upload] File too large:', file.size, 'bytes (max: 10MB)');
+            return createResponse({
+                error: `Arquivo muito grande (${(file.size / 1024 / 1024).toFixed(2)}MB). Máximo: 10MB`
+            }, 400);
+        }
 
-        if (error) throw error;
+        // Validate file type
+        const validImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+        const validVideoTypes = ['video/mp4', 'video/webm'];
+        const validAudioTypes = ['audio/mpeg', 'audio/mp3', 'audio/m4a', 'audio/wav'];
+        const validTypes = [...validImageTypes, ...validVideoTypes, ...validAudioTypes];
 
-        // Get public URL
-        const { data: urlData } = supabase.storage
-            .from('invitation-assets')
-            .getPublicUrl(fileName);
+        if (!validTypes.includes(file.type)) {
+            console.error('[Upload] Invalid file type:', file.type);
+            return createResponse({
+                error: `Tipo de arquivo inválido: ${file.type}`
+            }, 400);
+        }
 
-        // Store in state
-        window.builderState.assets[context] = urlData.publicUrl;
-
-        return createResponse({
-            success: true,
-            data: {
-                url: urlData.publicUrl,
-                context: context,
-                file_url: urlData.publicUrl // Compatibility with windows.js expectations
-            }
+        console.log('[Upload] Starting upload:', {
+            context,
+            filename: file.name,
+            size: `${(file.size / 1024).toFixed(2)}KB`,
+            type: file.type
         });
+
+        try {
+            // Upload to Supabase Storage
+            const fileName = `${context}/${Date.now()}_${file.name}`;
+            const { data, error } = await supabase.storage
+                .from('invitation-assets')
+                .upload(fileName, file, {
+                    cacheControl: '3600',
+                    upsert: false
+                });
+
+            if (error) {
+                console.error('[Upload] Supabase error:', error);
+                throw new Error(error.message || 'Upload to Supabase failed');
+            }
+
+            // Get public URL
+            const { data: urlData } = supabase.storage
+                .from('invitation-assets')
+                .getPublicUrl(fileName);
+
+            if (!urlData || !urlData.publicUrl) {
+                throw new Error('Failed to get public URL');
+            }
+
+            // Store in state
+            window.builderState.assets[context] = urlData.publicUrl;
+
+            console.log('[Upload] Success:', urlData.publicUrl);
+
+            return createResponse({
+                success: true,
+                data: {
+                    url: urlData.publicUrl,
+                    context: context,
+                    file_url: urlData.publicUrl // Compatibility with windows.js expectations
+                }
+            });
+
+        } catch (error) {
+            console.error('[Upload] Exception:', error);
+            return createResponse({
+                error: error.message || 'Upload failed',
+                details: error.toString()
+            }, 500);
+        }
     }
 
     /**
