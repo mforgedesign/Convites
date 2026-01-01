@@ -468,6 +468,119 @@
                 }
             });
         }
+
+        // ✅ Custom ZIP Upload
+        const zipDropzone = document.getElementById('custom-zip-dropzone');
+        if (zipDropzone) {
+            const zipInput = zipDropzone.querySelector('input[type="file"]');
+
+            if (zipInput) {
+                // File input change handler
+                zipInput.addEventListener('change', handleZipUpload);
+
+                // Drag and drop handlers
+                zipDropzone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zipDropzone.classList.add('border-brand-500', 'bg-brand-100');
+                });
+
+                zipDropzone.addEventListener('dragleave', () => {
+                    zipDropzone.classList.remove('border-brand-500', 'bg-brand-100');
+                });
+
+                zipDropzone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zipDropzone.classList.remove('border-brand-500', 'bg-brand-100');
+
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0 && files[0].name.endsWith('.zip')) {
+                        zipInput.files = files;
+                        handleZipUpload({ target: zipInput });
+                    } else {
+                        alert('Por favor, arraste apenas arquivos .zip');
+                    }
+                });
+            }
+
+            async function handleZipUpload(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                if (!file.name.endsWith('.zip')) {
+                    alert('Por favor, selecione um arquivo .zip');
+                    return;
+                }
+
+                const slugInput = document.getElementById('slug-input');
+                const slug = slugInput?.value;
+
+                if (!slug) {
+                    alert('Por favor, preencha o slug do convite antes de fazer upload.');
+                    return;
+                }
+
+                // Confirm action
+                if (!confirm(`Publicar ZIP personalizado para "${slug}"?\n\nIsso irá substituir qualquer convite existente neste slug.`)) {
+                    return;
+                }
+
+                const deployStatus = document.getElementById('deploy-status');
+                const publishResult = document.getElementById('publish-result');
+                const publishUrl = document.getElementById('publish-url');
+
+                // Show status
+                if (deployStatus) deployStatus.classList.remove('hidden');
+
+                try {
+                    // Step 1: Preparing
+                    updateDeployStep('step-build', 'loading');
+                    zipDropzone.classList.add('opacity-50', 'pointer-events-none');
+
+                    // Step 2: Upload ZIP
+                    updateDeployStep('step-upload', 'loading');
+
+                    const formData = new FormData();
+                    formData.append('zip', file);
+                    formData.append('slug', slug);
+
+                    const response = await fetch('/api/deploy-custom-zip', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        updateDeployStep('step-build', 'done');
+                        updateDeployStep('step-upload', 'done');
+                        updateDeployStep('step-live', 'done');
+
+                        // Show result
+                        if (publishResult) publishResult.classList.remove('hidden');
+                        if (publishUrl) {
+                            const url = data.url || `https://convites.mforge.com.br/${slug}`;
+                            publishUrl.href = url;
+                            publishUrl.textContent = url;
+                        }
+
+                        console.log('✅ Custom ZIP deployed:', data.url);
+                    } else {
+                        throw new Error(data.error || 'Deploy failed');
+                    }
+                } catch (err) {
+                    console.error('ZIP upload error:', err);
+                    alert('Erro ao fazer upload do ZIP: ' + err.message);
+
+                    // Reset status indicators
+                    updateDeployStep('step-build', 'reset');
+                    updateDeployStep('step-upload', 'reset');
+                    updateDeployStep('step-live', 'reset');
+                } finally {
+                    zipDropzone.classList.remove('opacity-50', 'pointer-events-none');
+                    zipInput.value = ''; // Reset input
+                }
+            }
+        }
     }
 
     function updateDeployStep(stepId, status) {
@@ -482,6 +595,11 @@
         } else if (status === 'loading') {
             step.classList.add('bg-brand-500', 'text-white');
             step.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xs"></i>';
+        } else if (status === 'reset') {
+            step.classList.add('bg-gray-200', 'text-gray-400');
+            const stepNum = stepId.replace('step-', '');
+            const nums = { 'build': '1', 'upload': '2', 'live': '3' };
+            step.textContent = nums[stepNum] || '';
         }
     }
 
