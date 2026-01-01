@@ -44,7 +44,22 @@
      */
     async function handleAPICall(url, options) {
         const method = options.method || 'GET';
-        const body = options.body ? JSON.parse(options.body) : null;
+
+        // Parse body - handle both JSON and FormData
+        let body = null;
+        if (options.body) {
+            if (options.body instanceof FormData) {
+                body = options.body; // Keep as FormData
+            } else if (typeof options.body === 'string') {
+                try {
+                    body = JSON.parse(options.body);
+                } catch (e) {
+                    body = options.body; // Keep as string if not JSON
+                }
+            } else {
+                body = options.body; // Already an object
+            }
+        }
 
         try {
             // Route mapping
@@ -53,7 +68,7 @@
             }
             else if (url.startsWith('/api/upload/')) {
                 const context = url.split('/api/upload/')[1];
-                return await handleUploadAPI(context, options);
+                return await handleUploadAPI(context, options); // Pass full options for FormData
             }
             else if (url === '/api/state') {
                 return await handleStateAPI('GET');
