@@ -1126,15 +1126,20 @@
 
     // ----------------------------------------
     // 4. PUBLISH (Deploy to GitHub with timestamps)
+    // The GitHub Token is stored securely in Supabase Edge Function
     // ----------------------------------------
     const publishBtn = document.getElementById('btn-publish');
+
     if (publishBtn) {
         publishBtn.addEventListener('click', async () => {
-            const slug = document.getElementById('slug-input')?.value.trim();
-            const token = document.getElementById('github-token')?.value.trim();
+            const slugInput = document.getElementById('slug-input');
+            const slug = slugInput?.value?.trim();
 
-            if (!slug || !token) {
-                alert('Por favor, preencha o Slug e o Token do GitHub.');
+            console.log('[Publish] Slug input:', slugInput, 'Value:', slug);
+
+            if (!slug) {
+                alert('Por favor, preencha o Slug do convite.');
+                slugInput?.focus();
                 return;
             }
 
@@ -1249,9 +1254,9 @@
                 updateDeployStep('step-upload', 'loading');
 
                 // We use /api/publish which is intercepted by supabase-adapter
+                // Edge Function has the GitHub token stored securely
                 const payload = {
                     slug: slug,
-                    token: token,
                     files: filesMap // { "index.html": "base64", "assets/foo.png": "base64" }
                 };
 
@@ -1287,6 +1292,97 @@
                 publishBtn.disabled = false;
             }
         });
+    }
+
+    // ----------------------------------------
+    // 5. CUSTOM ZIP UPLOAD (Bypass Build)
+    // ----------------------------------------
+    const customZipDropzone = document.getElementById('custom-zip-dropzone');
+    if (customZipDropzone) {
+        const zipInput = customZipDropzone.querySelector('input[type="file"]');
+
+        // Click handler
+        customZipDropzone.addEventListener('click', (e) => {
+            if (e.target !== zipInput) {
+                zipInput?.click();
+            }
+        });
+
+        // Drag and Drop
+        customZipDropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            customZipDropzone.classList.add('border-brand-500', 'bg-brand-50');
+        });
+
+        customZipDropzone.addEventListener('dragleave', () => {
+            customZipDropzone.classList.remove('border-brand-500', 'bg-brand-50');
+        });
+
+        customZipDropzone.addEventListener('drop', async (e) => {
+            e.preventDefault();
+            customZipDropzone.classList.remove('border-brand-500', 'bg-brand-50');
+            const file = e.dataTransfer.files[0];
+            if (file && file.name.endsWith('.zip')) {
+                await handleCustomZipUpload(file);
+            } else {
+                alert('Por favor, envie um arquivo .zip');
+            }
+        });
+
+        // File input change
+        if (zipInput) {
+            zipInput.addEventListener('change', async (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    await handleCustomZipUpload(file);
+                    zipInput.value = ''; // Reset for future uploads
+                }
+            });
+        }
+
+        async function handleCustomZipUpload(file) {
+            const slug = document.getElementById('slug-input')?.value?.trim();
+            if (!slug) {
+                alert('Por favor, preencha o Slug antes de fazer upload do ZIP.');
+                document.getElementById('slug-input')?.focus();
+                return;
+            }
+
+            if (!confirm(`Publicar ZIP personalizado em: mforgedesign.github.io/${slug}?`)) return;
+
+            console.log('[CustomZIP] Starting upload:', file.name, 'to', slug);
+
+            try {
+                // Read ZIP as base64
+                const reader = new FileReader();
+                const base64Zip = await new Promise((resolve, reject) => {
+                    reader.onload = () => resolve(reader.result.split(',')[1]);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+
+                // Send to API (intercepted by supabase-adapter -> Edge Function)
+                const response = await fetch('/api/deploy-custom-zip', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        slug: slug,
+                        zipBase64: base64Zip
+                    })
+                });
+
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.error || 'Falha no deploy');
+
+                const liveUrl = `https://mforgedesign.github.io/${slug}/`;
+                alert(`ZIP publicado com sucesso!\n\nAcesse: ${liveUrl}`);
+                window.open(liveUrl, '_blank');
+
+            } catch (err) {
+                console.error('[CustomZIP] Error:', err);
+                alert('Erro no upload: ' + err.message);
+            }
+        }
     }
 
     // Helper to reverse map contexts (since we defined map one way)
