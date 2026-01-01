@@ -1598,7 +1598,7 @@
                         <div class="absolute inset-0 bg-black/30"></div>
 
                         <!-- Timer -->
-                        <div class="absolute top-8 left-0 w-full flex justify-center z-10">
+                        <div id="mobile-preview-timer" class="absolute top-8 left-0 w-full flex justify-center z-10">
                             <div class="flex gap-3 text-white text-center">
                                 <div><span class="text-lg font-bold block leading-none">00</span><span
                                         class="text-[7px] uppercase opacity-80">Meses</span></div>
@@ -1666,9 +1666,29 @@
         }
 
         function openMobilePreview() {
-            // TODO: Implement mobile preview modal
-            console.log('Mobile preview modal');
+            document.getElementById('mobile-preview-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            // Sync preview content
+            syncMobilePreview();
         }
+
+        function closeMobilePreview() {
+            document.getElementById('mobile-preview-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function syncMobilePreview() {
+            // Copy buttons from main preview to mobile preview
+            const mainButtons = document.querySelector('#preview-buttons > div');
+            const mobileButtons = document.querySelector('#mobile-preview-buttons > div');
+            if (mainButtons && mobileButtons) {
+                mobileButtons.innerHTML = mainButtons.innerHTML;
+            }
+        }
+
+        // Listen for preview updates to sync mobile
+        document.addEventListener('linksExtrasUpdated', syncMobilePreview);
+        document.addEventListener('stateUpdated', syncMobilePreview);
 
         console.log('[AutoBuilder v4] Initialized');
     </script>
