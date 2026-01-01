@@ -880,21 +880,64 @@
                     filesMap[`convites/${slug}/data.json`] = btoa(JSON.stringify(appState, null, 2));
 
                     // Inject Variables and Add HTML
-                    // ... (Variable Injection Logic kept simple or assumed reused/synced) ...
                     // Basic replacements for the published HTML
-                    htmlContent = htmlContent.replace(/\[\[MUSICA_URL\]\]/g, './assets/musica.mp3'); // Fixed relative paths
+                    htmlContent = htmlContent.replace(/\[\[MUSICA_URL\]\]/g, './assets/musica.mp3');
                     htmlContent = htmlContent.replace(/\[\[CAPA_URL\]\]/g, './assets/capa.png');
                     htmlContent = htmlContent.replace(/\[\[FOLHA_URL\]\]/g, './assets/folha.png');
                     htmlContent = htmlContent.replace(/\[\[VIDEO_ABERTURA_URL\]\]/g, './assets/intro.mp4');
                     htmlContent = htmlContent.replace(/\[\[VIDEO_LOOP_URL\]\]/g, './assets/loop.mp4');
                     htmlContent = htmlContent.replace(/\[\[SLUG\]\]/g, slug);
 
-                    // Inject Text
+                    // Generate menuConfig for buttons (Presentes, Manual, etc.)
                     const formData = window.AutoBuilderForm ? window.AutoBuilderForm.data : {};
+                    const menuConfig = [];
+
+                    // Google Maps
+                    if (formData.link_google_maps || formData.google_maps_link) {
+                        menuConfig.push({ titulo: 'Como Chegar', icone: 'fa-solid fa-map-marker-alt', link: formData.link_google_maps || formData.google_maps_link, id: 'maps' });
+                    }
+
+                    // Gifts
+                    const giftsDropzone = document.querySelector('#gifts-image-dropzone');
+                    const hasGiftImage = giftsDropzone && giftsDropzone.style.backgroundImage && giftsDropzone.style.backgroundImage !== 'none';
+                    if (formData.link_presentes || formData.gifts_link) {
+                        menuConfig.push({ titulo: 'Lista de Presentes', icone: 'fa-solid fa-gift', link: formData.link_presentes || formData.gifts_link, id: 'gifts' });
+                    } else if (hasGiftImage) {
+                        menuConfig.push({ titulo: 'Sugestões de Presentes', icone: 'fa-solid fa-gift', link: '#', id: 'gifts', isGiftImage: true });
+                    }
+
+                    // Manual
+                    const manualDropzone = document.querySelector('#manual-image-dropzone');
+                    const hasManualImage = manualDropzone && manualDropzone.style.backgroundImage && manualDropzone.style.backgroundImage !== 'none';
+                    if (formData.manual_html || formData.manual_text) {
+                        menuConfig.push({ titulo: 'Manual do Convidado', icone: 'fa-solid fa-book-open', link: '#', id: 'manual', manualText: formData.manual_html || formData.manual_text });
+                    } else if (hasManualImage) {
+                        menuConfig.push({ titulo: 'Manual do Convidado', icone: 'fa-solid fa-book-open', link: '#', id: 'manual', isManualImage: true });
+                    }
+
+                    // RSVP (WhatsApp/Link)
+                    if (formData.numero_whatsapp || formData.whatsapp_number) {
+                        const cleanNum = (formData.numero_whatsapp || formData.whatsapp_number).replace(/\D/g, '');
+                        menuConfig.push({ titulo: 'Confirmar Presença', icone: 'fa-solid fa-check', link: `https://wa.me/${cleanNum}`, id: 'rsvp' });
+                    } else if (formData.link_confirmacao || formData.confirmation_link) {
+                        menuConfig.push({ titulo: 'Confirmar Presença', icone: 'fa-solid fa-check', link: formData.link_confirmacao || formData.confirmation_link, id: 'rsvp' });
+                    }
+
+                    // Inject menuConfig
+                    htmlContent = htmlContent.replace(/\[\[MENU_CONFIG\]\]/g, JSON.stringify(menuConfig));
+
+                    // Inject Text (form fields)
                     for (const [key, value] of Object.entries(formData)) {
                         const regex = new RegExp(`\\[\\[${key.toUpperCase()}\\]\\]`, 'g');
                         htmlContent = htmlContent.replace(regex, value || '');
                     }
+
+                    // Inject default values for remaining placeholders
+                    htmlContent = htmlContent.replace(/\[\[BUTTON_SIZE\]\]/g, formData.button_size || '1.0');
+                    htmlContent = htmlContent.replace(/\[\[COMPANION_HIDE_CLASS\]\]/g, '');
+                    htmlContent = htmlContent.replace(/\[\[MANUAL_CONTENT\]\]/g, formData.manual_html || '');
+                    htmlContent = htmlContent.replace(/\[\[GIFTS_IMAGE_URL\]\]/g, './assets/gifts.png');
+                    htmlContent = htmlContent.replace(/\[\[MANUAL_IMAGE_URL\]\]/g, './assets/manual.png');
 
                     filesMap[`convites/${slug}/index.html`] = btoa(htmlContent); // HTML base64
 
