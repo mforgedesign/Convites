@@ -73,7 +73,88 @@
         wrapper.appendChild(circle);
         wrapper.appendChild(label);
 
+        // Add Click Handler for Interactivity
+        wrapper.addEventListener('click', (e) => {
+            e.stopPropagation();
+            handleButtonClick(btn);
+        });
+
         return wrapper;
+    }
+
+    /**
+     * Handles preview button clicks.
+     * @param {object} btn - Button config
+     */
+    function handleButtonClick(btn) {
+        console.log('[Preview] Button clicked:', btn);
+
+        // 1. Native Links & WhatsApp -> Open New Tab
+        if (btn.id === 'local' && currentState.link_google_maps) {
+            window.open(currentState.link_google_maps, '_blank');
+            return;
+        }
+        if (btn.id === 'confirmar' && currentState.numero_whatsapp) {
+            const num = currentState.numero_whatsapp.replace(/\D/g, '');
+            const url = `https://wa.me/${num}`;
+            window.open(url, '_blank');
+            return;
+        }
+
+        // 2. Presentes: Image (Popup) vs Link (New Tab)
+        if (btn.id === 'presentes') {
+            if (currentState.media_presentes && currentState.media_presentes.url) {
+                // Show Image Popup Simulation
+                showPreviewModal('Lista de Presentes', `<img src="${currentState.media_presentes.url}" class="max-w-full rounded mx-auto">`);
+            } else if (currentState.link_presentes) {
+                window.open(currentState.link_presentes, '_blank');
+            }
+            return;
+        }
+
+        // 3. Manual: Image (Popup) vs Text (Popup)
+        if (btn.id === 'manual') {
+            if (currentState.media_manual && currentState.media_manual.url) {
+                showPreviewModal('Manual dos Padrinhos', `<img src="${currentState.media_manual.url}" class="max-w-full rounded mx-auto">`);
+            } else if (currentState.manual_content) {
+                showPreviewModal('Manual dos Padrinhos', `<div class="text-left prose prose-sm max-w-none text-gray-800">${currentState.manual_content}</div>`);
+            }
+            return;
+        }
+
+        // 4. Extra Links
+        if (btn.type === 'extra' && btn.url) { // Assuming createButtonElement passes url if available, otherwise needed to find it
+            // Actually, createButtonElement receives { id, label, icon, ... }. For native, we rely on currentState lookup.
+            // For extra, we iterate currentState.links_extras. We should pass the URL to createButtonElement or look it up here.
+            // Let's modify renderButtons to pass URL for extras, or find it here.
+            // Simpler: pass it in createButtonElement.
+            // But wait, createButtonElement signature is (btn, color). btn object comes from loop.
+        }
+    }
+
+    // Helper for Extra Links (since my handleButtonClick above needs URL)
+    // I need to ensure renderButtons passes the 'url' property in the btn object.
+
+    /**
+     * Shows a simulated modal in the preview.
+     */
+    function showPreviewModal(title, contentHTML) {
+        // Target active preview (Mobile Logic only for now as it's easier to append to body or preview container)
+        // Ideally, we append to document.body and center it fixed.
+        const modal = document.createElement('div');
+        modal.className = 'fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm animate-fade-in';
+        modal.innerHTML = `
+            <div class="bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto relative p-6">
+                <button class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition" onclick="this.closest('.fixed').remove()">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+                <h3 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">${title}</h3>
+                <div class="space-y-4">
+                    ${contentHTML}
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
     }
 
     /**
@@ -135,7 +216,8 @@
                         id: 'extra-' + (link.id || Math.random()),
                         label: link.label,
                         icon: link.icon || 'fa-solid fa-link',
-                        type: 'extra'
+                        type: 'extra',
+                        url: link.url // Pass URL for click handler
                     }, color));
                 }
             });
