@@ -48,7 +48,7 @@
 
         // Load when window becomes visible
         document.addEventListener('windowChanged', (e) => {
-            if (e.detail?.window === 'history' && invitations.length === 0) {
+            if (e.detail?.windowId === 'history' && invitations.length === 0) {
                 loadInvitations();
             }
         });
