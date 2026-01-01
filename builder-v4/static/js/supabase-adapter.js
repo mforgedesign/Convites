@@ -1,4 +1,4 @@
-/* Deployed: 2026-01-01T16:46:41.768Z */
+/* Deployed: 2026-01-01T16:56:34.996Z */
 /**
  * Supabase API Adapter for Auto Builder v4
  * ==========================================
@@ -163,8 +163,31 @@
         });
 
         try {
+            // Sanitize filename (remove spaces, accents, special chars)
+            const sanitizeFilename = (name) => {
+                // Get extension
+                const ext = name.substring(name.lastIndexOf('.'));
+                const nameWithoutExt = name.substring(0, name.lastIndexOf('.'));
+
+                // Remove accents and special characters
+                const sanitized = nameWithoutExt
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+                    .replace(/[^a-zA-Z0-9_-]/g, '_') // Replace special chars with underscore
+                    .replace(/_{2,}/g, '_') // Replace multiple underscores with single
+                    .replace(/^_|_$/g, '') // Remove leading/trailing underscores
+                    .toLowerCase();
+
+                return sanitized + ext.toLowerCase();
+            };
+
             // Upload to Supabase Storage
-            const fileName = `${context}/${Date.now()}_${file.name}`;
+            const timestamp = Date.now();
+            const sanitizedName = sanitizeFilename(file.name);
+            const fileName = `${context}/${timestamp}_${sanitizedName}`;
+
+            console.log('[Upload] Sanitized filename:', fileName);
+
             const { data, error } = await supabase.storage
                 .from('invitation-assets')
                 .upload(fileName, file, {
