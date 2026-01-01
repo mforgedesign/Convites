@@ -191,7 +191,7 @@
 
         card.innerHTML = `
             <!-- Cover Thumbnail -->
-            <div class="h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden">
+            <div class="aspect-[9/16] bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden">
                 ${invitation.coverUrl
                 ? `<img src="${invitation.coverUrl}" alt="${invitation.slug}" class="w-full h-full object-cover">`
                 : `<i class="fa-solid fa-image text-5xl text-gray-300"></i>`
