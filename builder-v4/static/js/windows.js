@@ -949,7 +949,12 @@
     // ========================================
     // Initialize on DOM Ready
     // ========================================
+    // ========================================
+    // Expose to Global Scope
+    // ========================================
+    window.updateDropzonePreview = updateDropzonePreview;
 
+    // Auto-init
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initWindows);
     } else {
