@@ -1244,7 +1244,7 @@
                 htmlContent = htmlContent.replace(/\[\[SLUG\]\]/g, slug);
 
                 // Inject Text Data
-                const formData = window.AutoBuilderForm ? window.AutoBuilderForm.data : {};
+                const formData = (window.AutoBuilderForm && window.AutoBuilderForm.data) || {};
                 for (const [key, value] of Object.entries(formData)) {
                     const regex = new RegExp(`\\[\\[${key.toUpperCase()}\\]\\]`, 'g');
                     htmlContent = htmlContent.replace(regex, value || '');
