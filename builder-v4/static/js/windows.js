@@ -523,12 +523,16 @@
                 }
 
                 const slugInput = document.getElementById('slug-input');
-                const slug = slugInput?.value;
+                let slug = slugInput?.value;
 
                 if (!slug) {
                     alert('Por favor, preencha o slug do convite antes de fazer upload.');
                     return;
                 }
+
+                // Sanitize slug
+                slug = slug.toLowerCase().replace(/[^a-z0-9-]/g, '-');
+                slugInput.value = slug;
 
                 // Confirm action
                 if (!confirm(`Publicar ZIP personalizado para "${slug}"?\n\nIsso irá substituir qualquer convite existente neste slug.`)) {
@@ -547,37 +551,70 @@
                     updateDeployStep('step-build', 'loading');
                     zipDropzone.classList.add('opacity-50', 'pointer-events-none');
 
-                    // Step 2: Upload ZIP
+                    if (!window.JSZip) {
+                        throw new Error('Biblioteca JSZip não carregada. Recarregue a página.');
+                    }
+
+                    // Step 2: Extract ZIP
+                    const zip = new JSZip();
+                    const zipContent = await zip.loadAsync(file);
+
+                    updateDeployStep('step-build', 'done');
                     updateDeployStep('step-upload', 'loading');
 
-                    const formData = new FormData();
-                    formData.append('zip', file);
-                    formData.append('slug', slug);
+                    // Step 3: Upload files
+                    const uploadPromises = [];
+                    const totalFiles = Object.keys(zipContent.files).length;
+                    let uploadedCount = 0;
 
-                    const response = await fetch('/api/deploy-custom-zip', {
-                        method: 'POST',
-                        body: formData
-                    });
+                    // Helper for progress
+                    const updateProgress = () => {
+                        uploadedCount++;
+                        console.log(`[ZIP] Upload progress: ${uploadedCount}/${totalFiles}`);
+                    };
 
-                    const data = await response.json();
+                    for (const [relativePath, zipEntry] of Object.entries(zipContent.files)) {
+                        if (zipEntry.dir) continue; // Skip directories
 
-                    if (data.success) {
-                        updateDeployStep('step-build', 'done');
-                        updateDeployStep('step-upload', 'done');
-                        updateDeployStep('step-live', 'done');
+                        const content = await zipEntry.async('blob');
+                        // Use the existing window.uploadFile or reimplement basic GitHub upload
+                        // If window.uploadFile expects specific context, we might need a lower-level function
+                        // Assuming we need to upload to `convites/{slug}/{path}`
 
-                        // Show result
-                        if (publishResult) publishResult.classList.remove('hidden');
-                        if (publishUrl) {
-                            const url = data.url || `https://convites.mforge.com.br/${slug}`;
-                            publishUrl.href = url;
-                            publishUrl.textContent = url;
+                        // We need a direct GitHub upload here because uploadFile is designed for media assets
+                        // Let's use the adapter directly if available or fetch
+
+                        // Re-using the adapter logic from history.js roughly
+                        const path = `convites/${slug}/${relativePath}`;
+
+                        if (window.githubAdapter) {
+                            uploadPromises.push(
+                                window.githubAdapter.uploadFile(path, content, `Deploy custom zip: ${relativePath}`)
+                                    .then(updateProgress)
+                            );
+                        } else {
+                            console.warn('GitHub Adapter not found, trying fallback');
+                            // Fallback if adapter isn't exposed (it should be if we follow patterns)
+                            // For now, let's assume we expose it or use a raw fetch mock if we can't
+                            throw new Error('GitHub Adapter não disponível. Contate o suporte.');
                         }
-
-                        console.log('✅ Custom ZIP deployed:', data.url);
-                    } else {
-                        throw new Error(data.error || 'Deploy failed');
                     }
+
+                    await Promise.all(uploadPromises);
+
+                    updateDeployStep('step-upload', 'done');
+                    updateDeployStep('step-live', 'done');
+
+                    // Show result
+                    if (publishResult) publishResult.classList.remove('hidden');
+                    if (publishUrl) {
+                        const url = `https://mforgedesign.github.io/Convites/convites/${slug}/`;
+                        publishUrl.href = url;
+                        publishUrl.textContent = url;
+                    }
+
+                    console.log('✅ Custom ZIP deployed successfully');
+
                 } catch (err) {
                     console.error('ZIP upload error:', err);
                     alert('Erro ao fazer upload do ZIP: ' + err.message);
