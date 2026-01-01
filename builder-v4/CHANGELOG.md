@@ -671,3 +671,16 @@ Registro de todas as modificações do projeto, conforme as diretrizes das globa
 * `windows.js`:
     * **CRITICAL FIX**: Removed stray closing brace `}` at line 1167 that was prematurely terminating the IIFE.
     * Rationale: This syntax error caused the entire `windows.js` to fail silently, breaking ALL interactivity (mode toggles, music player, dropzones, finalize buttons, etc.). No console errors were shown because the script failed to parse entirely.
+
+## [2026-01-01 19:45] - Deploy Music Samples
+
+### Arquivos Adicionados (GitHub):
+* `builder-v4/musica-base/sample_enrolados.mp3` - "I See The Light" (Disney)
+* `builder-v4/musica-base/sample_perfect.mp3` - "Perfect" (Ed Sheeran Violin Cover)
+* `builder-v4/musica-base/sample_vivalavida.mp3` - "Viva La Vida" (Instrumental)
+* `builder-v4/musica-base/sample_enchanted.mp3` - "Enchanted" (Orchestral)
+
+### Arquivos Modificados:
+* `index.html`:
+    * Updated sample `data-sample` paths from `música base/` to `musica-base/` (URL-safe).
+    * Rationale: Files were deployed with clean names to avoid encoding issues with accented characters in URLs.
