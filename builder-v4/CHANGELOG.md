@@ -684,3 +684,14 @@ Registro de todas as modificações do projeto, conforme as diretrizes das globa
 * `index.html`:
     * Updated sample `data-sample` paths from `música base/` to `musica-base/` (URL-safe).
     * Rationale: Files were deployed with clean names to avoid encoding issues with accented characters in URLs.
+
+## [2026-01-01 20:20] - Fix Preview Buttons (Presentes & Manual)
+
+### Arquivos Modificados:
+* `final_template.html`:
+    * Changed `const menuConfig = []` to `const menuConfig = [[MENU_CONFIG]]` to allow dynamic injection.
+* `windows.js`:
+    * Added complete `menuConfig` generation logic to preview function.
+    * Now detects images in `#gifts-image-dropzone` and `#manual-image-dropzone`.
+    * Correctly injects `isGiftImage: true` and `isManualImage: true` flags.
+    * Rationale: Buttons for Presentes and Manual were not appearing in preview because menuConfig was empty.
