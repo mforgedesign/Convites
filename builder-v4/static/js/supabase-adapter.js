@@ -1,4 +1,3 @@
-/* Deployed: 2026-01-01T16:56:34.996Z */
 /**
  * Supabase API Adapter for Auto Builder v4
  * ==========================================
