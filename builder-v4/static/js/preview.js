@@ -259,14 +259,26 @@
     function setupEventListeners() {
         // Listen for state updates from form.js
         document.addEventListener('stateUpdated', (e) => {
+            // Handle bulk update from persistence
+            if (e.detail.source === 'persistence') {
+                console.log('[Preview] Restoring state from persistence');
+                if (e.detail.data && e.detail.data.formData) {
+                    Object.assign(currentState, e.detail.data.formData);
+
+                    // Force re-renders
+                    updateBackground();
+                    renderButtons();
+                    updateShadow(currentState.sombra_gradiente);
+                    updateButtonColors(currentState.cor_botoes);
+                    updateButtonPosition(currentState.posicao_botoes);
+                    updateTimerVisibility(currentState.timer_contagem);
+                }
+                return;
+            }
+
             const { field, value } = e.detail;
 
             // Update internal state
-            // The original instruction was to add manual_content to Object.assign in initPreview,
-            // but the provided code snippet for the change was for setupEventListeners.
-            // Assuming the intent was to ensure manual_content updates correctly here.
-            // The provided snippet had a syntax error with `if` followed by `case`.
-            // Reverting to the original structure but ensuring manual_content is handled.
             currentState[field] = value;
 
             switch (field) {
