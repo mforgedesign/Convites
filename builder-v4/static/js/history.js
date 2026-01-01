@@ -414,6 +414,12 @@
                 // Update state
                 if (window.builderState) {
                     window.builderState.formData = { ...importedData };
+
+                    // Add media assets to form data (so previews can sync)
+                    if (window.builderState.assets) {
+                        if (window.builderState.assets.presentes) importedData.media_presentes = { url: window.builderState.assets.presentes, type: 'image' };
+                        if (window.builderState.assets.manual) importedData.media_manual = { url: window.builderState.assets.manual, type: 'image' };
+                    }
                 }
             }
 
