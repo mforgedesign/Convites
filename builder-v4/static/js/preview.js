@@ -94,30 +94,38 @@
             window.open(currentState.link_google_maps, '_blank');
             return;
         }
-        if (btn.id === 'confirmar' && currentState.numero_whatsapp) {
-            const num = currentState.numero_whatsapp.replace(/\D/g, '');
-            const url = `https://wa.me/${num}`;
-            window.open(url, '_blank');
-            return;
-        }
 
-        // 2. Presentes: Image (Popup) vs Link (New Tab)
-        if (btn.id === 'presentes') {
-            if (currentState.media_presentes && currentState.media_presentes.url) {
-                // Show Image Popup Simulation
-                showPreviewModal('Lista de Presentes', `<img src="${currentState.media_presentes.url}" class="max-w-full rounded mx-auto">`);
-            } else if (currentState.link_presentes) {
-                window.open(currentState.link_presentes, '_blank');
+        // RSVP: Prioritize External Link over WhatsApp
+        if (btn.id === 'confirmar') {
+            if (currentState.link_confirmacao) {
+                window.open(currentState.link_confirmacao, '_blank');
+            } else if (currentState.numero_whatsapp) {
+                const num = currentState.numero_whatsapp.replace(/\D/g, '');
+                const url = `https://wa.me/${num}`;
+                window.open(url, '_blank');
             }
             return;
         }
 
-        // 3. Manual: Image (Popup) vs Text (Popup)
+        // 2. Presentes: Link (Priority) vs Image (Popup)
+        if (btn.id === 'presentes') {
+            if (currentState.link_presentes) {
+                window.open(currentState.link_presentes, '_blank');
+            } else if (currentState.media_presentes && currentState.media_presentes.url) {
+                // Show Image Popup Simulation
+                showPreviewModal('Lista de Presentes', `<img src="${currentState.media_presentes.url}" class="max-w-full rounded mx-auto">`);
+            }
+            return;
+        }
+
+        // 3. Manual: Text (Priority according to Doc State A?) vs Image
+        // Doc says: "SE Instruções do Manual contiver texto: Habilita Modo Texto... Desabilita modo imagem."
+        // So Text > Image is the Doc's priority.
         if (btn.id === 'manual') {
-            if (currentState.media_manual && currentState.media_manual.url) {
-                showPreviewModal('Manual dos Padrinhos', `<img src="${currentState.media_manual.url}" class="max-w-full rounded mx-auto">`);
-            } else if (currentState.manual_content) {
+            if (currentState.manual_content && currentState.manual_content.length > 0) {
                 showPreviewModal('Manual dos Padrinhos', `<div class="text-left prose prose-sm max-w-none text-gray-800">${currentState.manual_content}</div>`);
+            } else if (currentState.media_manual && currentState.media_manual.url) {
+                showPreviewModal('Manual dos Padrinhos', `<img src="${currentState.media_manual.url}" class="max-w-full rounded mx-auto">`);
             }
             return;
         }
