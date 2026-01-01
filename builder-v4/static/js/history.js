@@ -325,130 +325,153 @@
 
             const files = await filesResponse.json();
 
-            // Step 2: Find and download data.json
+            // Step 2: Download data.json
             updateStatus('Baixando configurações...');
             const dataFile = files.find(f => f.name === 'data.json' || f.name === 'data');
 
-            let importedData = {};
-            if (dataFile) {
-                const dataResponse = await fetch(dataFile.download_url);
-                if (dataResponse.ok) {
-                    importedData = await dataResponse.json();
-                    console.log('[History] Loaded data.json:', importedData);
-                }
-            }
-
-            // Step 3: Reset environment
-            updateStatus('Limpando ambiente atual...');
-            console.log('[History] Resetting environment...');
-
-            // Reset form if available
-            if (window.FormManager && typeof window.FormManager.reset === 'function') {
-                window.FormManager.reset();
-            }
-
-            // Clear builder state
-            if (window.builderState) {
-                window.builderState = {
-                    assets: {},
-                    formData: {},
-                    linksExtras: [],
-                    conversationHistory: []
-                };
-            }
-
-            // Step 4: Download and set assets
-            updateStatus('Importando imagens e vídeos...');
-            const assetTypes = {
-                'capa': ['capa'],
-                'folha_vazia': ['folha', 'sheet'],
-                'folha_preenchida': ['preenchida', 'filled'],
-                'folha_animada': ['animada', 'animated'],
-                'abertura': ['abertura', 'intro', 'opening'],
-                'loop': ['loop', 'background'],
-                'musica': ['musica', 'music', 'audio'],
-                'presentes': ['presentes', 'gifts'],
-                'manual': ['manual']
+            let appState = {
+                version: "4.0",
+                formData: {},
+                assetsMap: {},
+                linksExtras: []
             };
 
-            for (const [context, patterns] of Object.entries(assetTypes)) {
-                const assetFile = files.find(f => {
-                    const lowerName = f.name.toLowerCase();
-                    return patterns.some(pattern => lowerName.includes(pattern));
-                });
-
-                if (assetFile) {
-                    console.log(`[History] Found ${context}:`, assetFile.name);
-
-                    // Set the URL in state
-                    if (window.builderState) {
-                        window.builderState.assets[context] = assetFile.download_url;
-                    }
-
-                    // Update dropzone preview if element exists
-                    const dropzoneId = {
-                        'capa': 'cover-dropzone',
-                        'folha_vazia': 'leaf-dropzone',
-                        'folha_preenchida': 'fill-image-dropzone',
-                        'folha_animada': 'fill-video-dropzone',
-                        'abertura': 'intro-video-dropzone',
-                        'loop': 'loop-video-dropzone',
-                        'musica': 'music-dropzone',
-                        'presentes': 'gifts-image-dropzone',
-                        'manual': 'manual-image-dropzone'
-                    }[context];
-
-                    if (dropzoneId) {
-                        const dropzone = document.getElementById(dropzoneId);
-                        if (dropzone && window.updateDropzonePreview) {
-                            const type = assetFile.name.match(/\.(mp4|webm)$/i) ? 'video' :
-                                assetFile.name.match(/\.(mp3|m4a|wav)$/i) ? 'audio' : 'image';
-                            window.updateDropzonePreview(dropzone, assetFile.download_url, type);
-                        }
-                    }
-                }
-            }
-
-            // Step 5: Hydrate form data
-            if (importedData && Object.keys(importedData).length > 0) {
-                updateStatus('Preenchendo formulário...');
-                console.log('[History] Hydrating form data...');
-
-                // Fill form fields
-                for (const [key, value] of Object.entries(importedData)) {
-                    const input = document.querySelector(`[data-field="${key}"], [name="${key}"], #form-${key}`);
-                    if (input) {
-                        if (input.type === 'checkbox') {
-                            input.checked = !!value;
-                        } else if (input.type === 'color') {
-                            input.value = value || '#000000';
+            if (dataFile) {
+                try {
+                    const dataResponse = await fetch(dataFile.download_url);
+                    if (dataResponse.ok) {
+                        const json = await dataResponse.json();
+                        // Check if it's the new Brain structure
+                        if (json.formData) {
+                            appState = json;
                         } else {
-                            input.value = value || '';
+                            // Legacy: json is just formData
+                            appState.formData = json;
                         }
-
-                        // Trigger change event
-                        input.dispatchEvent(new Event('change', { bubbles: true }));
+                        console.log('[History] Loaded state:', appState);
                     }
+                } catch (e) {
+                    console.error('Error parsing data.json', e);
                 }
+            }
 
-                // Restore links extras if available
-                if (importedData.linksExtras && Array.isArray(importedData.linksExtras)) {
-                    if (window.LinksExtras && typeof window.LinksExtras.restore === 'function') {
-                        window.LinksExtras.restore(importedData.linksExtras);
-                    }
+            // Step 3: Clean Slate (Deep Reset)
+            updateStatus('Limpando ambiente atual...');
+            if (window.resetBuilderState) {
+                window.resetBuilderState();
+            } else {
+                // Fallback if not available yet (should be)
+                if (window.FormManager) window.FormManager.reset();
+                if (window.builderState) window.builderState.assets = {};
+            }
+
+            // Step 4: Asset Discovery (Enhance appState.assetsMap if empty/legacy)
+            // If it's legacy, assetsMap will be empty. We populate it from scanning 'files'.
+            // Even in new brain, we might want to ensure download_urls are used if we are not fetching by relative path?
+            // "Brain" has relative paths suitable for ZIP. For History, we need Absolute URLs.
+            // So we MUST map the "Brain" paths to real GitHub URLs or just scan files again.
+
+            // Strategy: Build a map of filename -> download_url from 'files'
+            const fileMap = {};
+            files.forEach(f => fileMap[f.name] = f.download_url);
+
+            // Also map complex paths if they exist (e.g. assets/foo.png) - GitHub API is flat for 'contents/slug' 
+            // wait, contents/{slug} returns immediate children. If assets are in a folder, they are in a subdir?
+            // "Publish" pushes structure: convites/{slug}/assets/foo.png
+            // So for 'contents/{slug}', we might see 'assets' as a dir?
+            // If so, we need to recurse or fetch assets dir.
+            // Let's check 'files' structure assumption.
+            // If 'assets' is a directory in the list, we need to fetch it?
+            // "Publish" pushes flattened? No, previous code `filesMap[\`convites/${slug}/${path}\`]`.
+            // So `contents/{slug}` will show `index.html`, `data.json` and `assets` (dir).
+
+            // WE NEED TO FETCH ASSETS DIR content if 'assets' is a dir.
+            const assetsDir = files.find(f => f.name === 'assets' && f.type === 'dir');
+            let assetFiles = [];
+
+            if (assetsDir) {
+                updateStatus('Listando pastas de assets...');
+                const assetsResponse = await fetch(assetsDir.url); // GitHub API url for the dir
+                if (assetsResponse.ok) {
+                    assetFiles = await assetsResponse.json();
                 }
+            } else {
+                // Legacy: assets might be mixed in root?
+                assetFiles = files.filter(f => f.type === 'file');
+            }
 
-                // Update state
-                if (window.builderState) {
-                    window.builderState.formData = { ...importedData };
+            // Create a Combined File Map (Name -> URL)
+            // Handle "assets/foo.png" mapping
+            const urlMap = {};
+            assetFiles.forEach(f => {
+                urlMap[f.name] = f.download_url; // filename -> url
+                urlMap[`assets/${f.name}`] = f.download_url; // path -> url
+            });
+            files.forEach(f => {
+                if (f.type === 'file') urlMap[f.name] = f.download_url;
+            });
 
-                    // Add media assets to form data (so previews can sync)
-                    if (window.builderState.assets) {
-                        if (window.builderState.assets.presentes) importedData.media_presentes = { url: window.builderState.assets.presentes, type: 'image' };
-                        if (window.builderState.assets.manual) importedData.media_manual = { url: window.builderState.assets.manual, type: 'image' };
+            // If appState is "Legacy", we need to populate assetsMap based on known patterns
+            const assetContexts = {
+                'capa': ['capa'],
+                'folha_vazia': ['folha', 'sheet'],
+                'vid_abertura': ['intro', 'abertura', 'opening'],
+                'vid_loop': ['loop', 'background'],
+                'musica': ['musica', 'music'],
+                'manual': ['manual'],
+                'presentes': ['presentes', 'gifts']
+            };
+
+            // 4a. Update assetsMap with REAL URLs
+            if (!appState.assetsMap) appState.assetsMap = {};
+
+            // If Brain exists using relative paths (assets/foo.png), we replace them with Absolute URLs
+            for (const [context, path] of Object.entries(appState.assetsMap)) {
+                // path is 'assets/musica.mp3'
+                // find in urlMap
+                if (urlMap[path]) {
+                    appState.assetsMap[context] = urlMap[path];
+                } else {
+                    // Start of path matching? 'musica.mp3'
+                    const filename = path.split('/').pop();
+                    if (urlMap[filename]) {
+                        appState.assetsMap[context] = urlMap[filename];
                     }
                 }
             }
+
+            // 4b. Legacy Fallback: Detect assets if missing from map
+            // Helper: Extract timestamp from filename (e.g., name_123456789.jpg)
+            const getTimestamp = (name) => {
+                const match = name.match(/_(\d{10,14})/);
+                return match ? parseInt(match[1]) : 0;
+            };
+
+            for (const [context, patterns] of Object.entries(assetContexts)) {
+                if (!appState.assetsMap[context]) {
+                    // Search in assetFiles
+                    const matches = assetFiles.filter(f => {
+                        const lower = f.name.toLowerCase();
+                        return patterns.some(p => lower.includes(p));
+                    });
+
+                    if (matches.length > 0) {
+                        // Sort by Timestamp (Newest First)
+                        matches.sort((a, b) => getTimestamp(b.name) - getTimestamp(a.name));
+                        // Pick the newest
+                        appState.assetsMap[context] = matches[0].download_url;
+
+                        if (matches.length > 1) {
+                            console.log(`[History] Multiple matches for ${context}, selected newest: ${matches[0].name}`);
+                        }
+                    }
+                }
+            }
+
+            // Step 5: Restore
+            updateStatus('Restaurando estado completo...');
+            await window.restoreBuilderState(appState);
+
 
             // Step 6: Navigate to form and trigger preview update
             updateStatus('Finalizando...');
