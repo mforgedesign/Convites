@@ -640,3 +640,15 @@ Registro de todas as modificações do projeto, conforme as diretrizes das globa
     * RSVP: Link Externo > WhatsApp.
     * Presentes: Link > Imagem.
     * Manual: Texto > Imagem.
+
+## [2026-01-01 18:50] - Fix UI Regressions (Links & Music)
+
+### Arquivos Modificados:
+* `index.html`:
+    * Injected "Ferramentas Externas" links (Seedream, Gemini, PXZ.ai) into "Folha Vazia", "Preencher Folha", "Presentes", and "Manual" windows.
+    * Injected "Ferramentas Externas" links (Hailuo, Kling, Veo 2) into "Animação" window (both Intro and Loop tabs).
+    * Rationale: Users need quick access to generation tools directly from the interface.
+
+* `static/js/windows.js`:
+    * Fix `setupMusicPlayer` to correctly define DOM elements (`playBtn`, `progressBar`, etc.) mapped to `index.html` IDs.
+    * Rationale: Fixed regression where Music Player controls were undefined and non-functional.
