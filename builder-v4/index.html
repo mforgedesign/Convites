@@ -1007,13 +1007,13 @@
                                     </p>
                                 </div>
                                 <!-- Mode Toggle -->
-                                <div class="flex items-center bg-gray-100 rounded-lg p-1">
-                                    <button id="fill-mode-overlay"
+                                <div id="fill-mode-buttons" class="flex items-center bg-gray-100 rounded-lg p-1">
+                                    <button id="fill-mode-overlay" data-mode="overlay"
                                         class="fill-mode-btn flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition bg-white shadow-sm text-brand-600">
                                         <i class="fa-solid fa-layer-group"></i>
                                         <span>Superposição</span>
                                     </button>
-                                    <button id="fill-mode-flat"
+                                    <button id="fill-mode-flat" data-mode="flat"
                                         class="fill-mode-btn flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition text-gray-500 hover:text-gray-700">
                                         <i class="fa-solid fa-object-ungroup"></i>
                                         <span>Composição Flat</span>
@@ -1158,13 +1158,13 @@
                                     <p class="text-sm text-gray-500 mt-1">Configure o modo de exibição de presentes</p>
                                 </div>
                                 <!-- Mode Toggle -->
-                                <div class="flex items-center bg-gray-100 rounded-lg p-1">
-                                    <button id="gifts-mode-link"
+                                <div id="gifts-mode-buttons" class="flex items-center bg-gray-100 rounded-lg p-1">
+                                    <button id="gifts-mode-link" data-mode="link"
                                         class="gifts-mode-btn flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition bg-white shadow-sm text-brand-600">
                                         <i class="fa-solid fa-link"></i>
                                         <span>Link Externo</span>
                                     </button>
-                                    <button id="gifts-mode-image"
+                                    <button id="gifts-mode-image" data-mode="image"
                                         class="gifts-mode-btn flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition text-gray-500 hover:text-gray-700">
                                         <i class="fa-solid fa-image"></i>
                                         <span>Popup de Imagem</span>
@@ -1296,13 +1296,13 @@
                                     </p>
                                 </div>
                                 <!-- Mode Toggle -->
-                                <div class="flex items-center bg-gray-100 rounded-lg p-1">
-                                    <button id="manual-mode-text"
+                                <div id="manual-mode-buttons" class="flex items-center bg-gray-100 rounded-lg p-1">
+                                    <button id="manual-mode-text" data-mode="text"
                                         class="manual-mode-btn flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition bg-white shadow-sm text-brand-600">
                                         <i class="fa-solid fa-align-left"></i>
                                         <span>Texto HTML</span>
                                     </button>
-                                    <button id="manual-mode-image"
+                                    <button id="manual-mode-image" data-mode="image"
                                         class="manual-mode-btn flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition text-gray-500 hover:text-gray-700">
                                         <i class="fa-solid fa-image"></i>
                                         <span>Imagem</span>
