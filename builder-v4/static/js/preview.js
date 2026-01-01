@@ -217,7 +217,7 @@
                         label: link.label,
                         icon: link.icon || 'fa-solid fa-link',
                         type: 'extra',
-                        url: link.url // Pass URL for click handler
+                        url: link.url
                     }, color));
                 }
             });
