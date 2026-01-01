@@ -247,6 +247,45 @@
      * @param {string} url - The URL of the uploaded file
      * @param {string} type - The file type (image/video/audio)
      */
+    function clearDropzone(dropzone, context, type) {
+        // Clear preview
+        dropzone.style.backgroundImage = '';
+        const video = dropzone.querySelector('video');
+        if (video) video.remove();
+
+        // Show icons/placeholders
+        dropzone.querySelectorAll('i, span').forEach(el => el.classList.remove('hidden'));
+
+        // Hide remove button
+        const removeBtn = dropzone.querySelector('.btn-remove-media');
+        if (removeBtn) removeBtn.classList.add('hidden');
+
+        // Clear input
+        const input = dropzone.querySelector('input[type="file"]');
+        if (input) input.value = '';
+
+        // Update State
+        if (window.AutoBuilderForm && window.AutoBuilderForm.updateField) {
+            window.AutoBuilderForm.updateField(context, null);
+        }
+
+        // Dispatch Null Update
+        document.dispatchEvent(new CustomEvent('mediaUpdated', {
+            detail: {
+                type: context,
+                data: null
+            }
+        }));
+
+        console.log(`🗑️ Clear media: ${context}`);
+    }
+
+    /**
+     * Updates a dropzone with a preview.
+     * @param {HTMLElement} dropzone - The dropzone element
+     * @param {string} url - The URL of the uploaded file
+     * @param {string} type - The file type (image/video/audio)
+     */
     function updateDropzonePreview(dropzone, url, type) {
         if (type === 'image') {
             dropzone.style.backgroundImage = `url(${url})`;
@@ -264,8 +303,13 @@
             video.autoplay = true;
             video.classList.add('absolute', 'inset-0', 'w-full', 'h-full', 'object-cover');
             dropzone.appendChild(video);
+            dropzone.appendChild(video);
             dropzone.querySelectorAll('i, span').forEach(el => el.classList.add('hidden'));
         }
+
+        // Show remove button
+        const removeBtn = dropzone.querySelector('.btn-remove-media');
+        if (removeBtn) removeBtn.classList.remove('hidden');
     }
 
     function setupDropzones() {
@@ -289,6 +333,18 @@
             if (!input) return;
 
             const context = DROPZONE_CONTEXTS[id];
+
+            // Setup Remove Button
+            const removeBtn = dropzone.querySelector('.btn-remove-media');
+            if (removeBtn) {
+                removeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent opening file dialog
+                    e.preventDefault();
+                    if (confirm('Remover este arquivo?')) {
+                        clearDropzone(dropzone, context, type);
+                    }
+                });
+            }
 
             input.addEventListener('change', async (e) => {
                 const file = e.target.files[0];
