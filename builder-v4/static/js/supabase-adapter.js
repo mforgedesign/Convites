@@ -86,9 +86,6 @@
             else if (url === '/api/publish') {
                 return await handlePublishAPI(body);
             }
-            else if (url === '/api/deploy-custom-zip') {
-                return await handleDeployCustomZipAPI(body);
-            }
             else if (url === '/api/history') {
                 return await handleHistoryAPI();
             }
