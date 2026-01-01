@@ -241,29 +241,207 @@
     }
 
     /**
-     * Import invitation to builder
+     * Import invitation to builder - FULL IMPLEMENTATION
      */
     async function importInvitation(slug) {
         try {
-            if (!confirm(`Importar o convite "${slug}" para o builder?\n\nIsso irá limpar todos os dados atuais do formulário.`)) {
+            const message = `Importar o convite "${slug}" para o builder?\n\n` +
+                `⚠️ ATENÇÃO: Isso irá substituir todos os dados atuais!\n\n` +
+                `O que será importado:\n` +
+                `✓ Todos os campos do formulário\n` +
+                `✓ Imagens (capa, folha, etc)\n` +
+                `✓ Vídeos (abertura, loop)\n` +
+                `✓ Áudio (música)\n` +
+                `✓ Links extras\n` +
+                `✓ Configurações visuais`;
+
+            if (!confirm(message)) {
                 return;
             }
 
-            console.log(`[History] Importing ${slug}...`);
+            // Show loading indicator
+            const loadingMsg = document.createElement('div');
+            loadingMsg.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50';
+            loadingMsg.innerHTML = `
+                <div class="bg-white rounded-lg p-6 max-w-md">
+                    <div class="flex items-center gap-4">
+                        <i class="fa-solid fa-spinner fa-spin text-3xl text-brand-500"></i>
+                        <div>
+                            <h3 class="font-semibold text-lg">Importando convite...</h3>
+                            <p class="text-sm text-gray-500" id="import-status">Baixando arquivos do GitHub...</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(loadingMsg);
 
-            // TODO: Implement full import logic
-            // 1. Reset environment (clear form, placeholders, chatbot)
-            // 2. Fetch assets from GitHub
-            // 3. Download data.json and hydrate state
+            const updateStatus = (msg) => {
+                const statusEl = document.getElementById('import-status');
+                if (statusEl) statusEl.textContent = msg;
+            };
 
-            alert('Funcionalidade de importação em desenvolvimento.\n\nEm breve você poderá importar todos os dados e assets automaticamente!');
+            console.log(`[History] Starting import of ${slug}...`);
 
-            // For now, just navigate to form window
-            window.Navigation.navigateTo('form');
+            // Step 1: Fetch files list from GitHub
+            updateStatus('Listando arquivos...');
+            const filesResponse = await fetch(
+                `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${slug}`,
+                { headers: { 'Accept': 'application/vnd.github.v3+json' } }
+            );
+
+            if (!filesResponse.ok) {
+                throw new Error('Não foi possível acessar os arquivos do convite');
+            }
+
+            const files = await filesResponse.json();
+
+            // Step 2: Find and download data.json
+            updateStatus('Baixando configurações...');
+            const dataFile = files.find(f => f.name === 'data.json' || f.name === 'data');
+
+            let importedData = {};
+            if (dataFile) {
+                const dataResponse = await fetch(dataFile.download_url);
+                if (dataResponse.ok) {
+                    importedData = await dataResponse.json();
+                    console.log('[History] Loaded data.json:', importedData);
+                }
+            }
+
+            // Step 3: Reset environment
+            updateStatus('Limpando ambiente atual...');
+            console.log('[History] Resetting environment...');
+
+            // Reset form if available
+            if (window.FormManager && typeof window.FormManager.reset === 'function') {
+                window.FormManager.reset();
+            }
+
+            // Clear builder state
+            if (window.builderState) {
+                window.builderState = {
+                    assets: {},
+                    formData: {},
+                    linksExtras: [],
+                    conversationHistory: []
+                };
+            }
+
+            // Step 4: Download and set assets
+            updateStatus('Importando imagens e vídeos...');
+            const assetTypes = {
+                'capa': ['capa'],
+                'folha_vazia': ['folha', 'sheet'],
+                'folha_preenchida': ['preenchida', 'filled'],
+                'folha_animada': ['animada', 'animated'],
+                'abertura': ['abertura', 'intro', 'opening'],
+                'loop': ['loop', 'background'],
+                'musica': ['musica', 'music', 'audio'],
+                'presentes': ['presentes', 'gifts'],
+                'manual': ['manual']
+            };
+
+            for (const [context, patterns] of Object.entries(assetTypes)) {
+                const assetFile = files.find(f => {
+                    const lowerName = f.name.toLowerCase();
+                    return patterns.some(pattern => lowerName.includes(pattern));
+                });
+
+                if (assetFile) {
+                    console.log(`[History] Found ${context}:`, assetFile.name);
+
+                    // Set the URL in state
+                    if (window.builderState) {
+                        window.builderState.assets[context] = assetFile.download_url;
+                    }
+
+                    // Update dropzone preview if element exists
+                    const dropzoneId = {
+                        'capa': 'cover-dropzone',
+                        'folha_vazia': 'leaf-dropzone',
+                        'folha_preenchida': 'fill-image-dropzone',
+                        'folha_animada': 'fill-video-dropzone',
+                        'abertura': 'intro-video-dropzone',
+                        'loop': 'loop-video-dropzone',
+                        'musica': 'music-dropzone',
+                        'presentes': 'gifts-image-dropzone',
+                        'manual': 'manual-image-dropzone'
+                    }[context];
+
+                    if (dropzoneId) {
+                        const dropzone = document.getElementById(dropzoneId);
+                        if (dropzone && window.updateDropzonePreview) {
+                            const type = assetFile.name.match(/\.(mp4|webm)$/i) ? 'video' :
+                                assetFile.name.match(/\.(mp3|m4a|wav)$/i) ? 'audio' : 'image';
+                            window.updateDropzonePreview(dropzone, assetFile.download_url, type);
+                        }
+                    }
+                }
+            }
+
+            // Step 5: Hydrate form data
+            if (importedData && Object.keys(importedData).length > 0) {
+                updateStatus('Preenchendo formulário...');
+                console.log('[History] Hydrating form data...');
+
+                // Fill form fields
+                for (const [key, value] of Object.entries(importedData)) {
+                    const input = document.querySelector(`[data-field="${key}"], [name="${key}"], #form-${key}`);
+                    if (input) {
+                        if (input.type === 'checkbox') {
+                            input.checked = !!value;
+                        } else if (input.type === 'color') {
+                            input.value = value || '#000000';
+                        } else {
+                            input.value = value || '';
+                        }
+
+                        // Trigger change event
+                        input.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                }
+
+                // Restore links extras if available
+                if (importedData.linksExtras && Array.isArray(importedData.linksExtras)) {
+                    if (window.LinksExtras && typeof window.LinksExtras.restore === 'function') {
+                        window.LinksExtras.restore(importedData.linksExtras);
+                    }
+                }
+
+                // Update state
+                if (window.builderState) {
+                    window.builderState.formData = { ...importedData };
+                }
+            }
+
+            // Step 6: Navigate to form and trigger preview update
+            updateStatus('Finalizando...');
+
+            // Trigger state update event
+            document.dispatchEvent(new CustomEvent('stateUpdated', {
+                detail: { source: 'import', data: importedData }
+            }));
+
+            // Remove loading
+            document.body.removeChild(loadingMsg);
+
+            // Show success and navigate
+            alert(`✅ Convite "${slug}" importado com sucesso!\n\nVocê pode agora editar e republicar.`);
+
+            if (window.Navigation && typeof window.Navigation.navigateTo === 'function') {
+                window.Navigation.navigateTo('form');
+            }
+
+            console.log('[History] Import completed successfully');
 
         } catch (error) {
             console.error('[History] Import error:', error);
-            alert('Erro ao importar convite: ' + error.message);
+
+            // Remove loading if exists
+            const loadingMsg = document.querySelector('.fixed.inset-0.bg-black\\/50');
+            if (loadingMsg) document.body.removeChild(loadingMsg);
+
+            alert(`❌ Erro ao importar convite:\n\n${error.message}\n\nVerifique o console para mais detalhes.`);
         }
     }
 
