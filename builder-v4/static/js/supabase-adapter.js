@@ -97,7 +97,7 @@
             body: {
                 message: body.message,
                 context: window.builderState,
-                conversation_history: window.builder State.conversationHistory
+                conversation_history: window.builderState.conversationHistory
             }
         });
 
@@ -134,8 +134,11 @@
 
         return createResponse({
             success: true,
-            file_url: urlData.publicUrl,
-            context: context
+            data: {
+                url: urlData.publicUrl,
+                context: context,
+                file_url: urlData.publicUrl // Compatibility with windows.js expectations
+            }
         });
     }
 
