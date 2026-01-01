@@ -430,7 +430,7 @@
             // Show success and navigate
             alert(`✅ Convite "${slug}" importado com sucesso!\n\nVocê pode agora editar e republicar.`);
 
-            if (window.AutoBuilderNav && typeof window.AutoBuilderNav.navigateTo === 'function') {
+            if (window.AutoBuilderNav && typeof window.AutoBuilderNav.showWindow === 'function') {
                 window.AutoBuilderNav.showWindow('form');
             }
 
