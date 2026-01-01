@@ -131,9 +131,29 @@
             return `${mins}:${secs.toString().padStart(2, '0')}`;
         }
 
+        // Store main player reference globally for coordination
+        window._mainAudioPlayer = audioPlayer;
+        window._mainPlayBtn = playBtn;
+        window._mainIsPlaying = () => isPlaying;
+        window._setMainIsPlaying = (val) => { isPlaying = val; };
+
         // Play/Pause toggle
         playBtn.addEventListener('click', () => {
             if (!audioPlayer.src) return;
+
+            // Stop any sample preview first
+            if (window._currentPreviewAudio) {
+                window._currentPreviewAudio.pause();
+                if (window._currentPreviewBtn) {
+                    const prevIcon = window._currentPreviewBtn.querySelector('i');
+                    if (prevIcon) {
+                        prevIcon.classList.remove('fa-pause');
+                        prevIcon.classList.add('fa-play');
+                    }
+                }
+                window._currentPreviewAudio = null;
+                window._currentPreviewBtn = null;
+            }
 
             if (isPlaying) {
                 audioPlayer.pause();
@@ -284,6 +304,15 @@
                                 prevIcon.classList.add('fa-play');
                             }
                         }
+                    }
+
+                    // Stop main player if playing
+                    if (window._mainAudioPlayer && !window._mainAudioPlayer.paused) {
+                        window._mainAudioPlayer.pause();
+                        if (window._mainPlayBtn) {
+                            window._mainPlayBtn.innerHTML = '<i class="fa-solid fa-play ml-1"></i>';
+                        }
+                        if (window._setMainIsPlaying) window._setMainIsPlaying(false);
                     }
 
                     // Create and play new audio
