@@ -105,8 +105,10 @@
 
             // Manual: Show if manual image exists OR content text exists
             if (key === 'manual') {
-                return (currentState.media_manual && currentState.media_manual.url) ||
+                const show = (currentState.media_manual && currentState.media_manual.url) ||
                     (currentState.manual_content && currentState.manual_content.length > 5);
+                console.log(`[Preview] Manual logic: manual_content="${currentState.manual_content}" show=${show}`);
+                return show;
             }
 
             return false;
