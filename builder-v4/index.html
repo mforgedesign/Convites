@@ -134,6 +134,11 @@
                     <i class="fa-regular fa-comments text-lg w-6 text-center"></i>
                     <span class="ml-3 text-sm font-medium">Chatbot</span>
                 </button>
+                <button id="btn-new-invitation"
+                    class="nav-btn flex items-center px-3 py-3 rounded-md transition-colors duration-200 group text-slate-400 hover:bg-slate-800 hover:text-white">
+                    <i class="fa-solid fa-plus-circle text-lg w-6 text-center"></i>
+                    <span class="ml-3 text-sm font-medium">Novo Convite</span>
+                </button>
                 <button data-window="history"
                     class="nav-btn flex items-center px-3 py-3 rounded-md transition-colors duration-200 group text-slate-400 hover:bg-slate-800 hover:text-white">
                     <i class="fa-solid fa-clock-rotate-left text-lg w-6 text-center"></i>
@@ -634,20 +639,71 @@
                                         <i class="fa-solid fa-wand-magic-sparkles"></i> Gerar com IA
                                     </button>
                                 </div>
+
+                                <!-- External Tools Links -->
+                                <div class="pt-4 border-t border-gray-100">
+                                    <p class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">
+                                        Ferramentas Avançadas</p>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                                        <a href="https://fal.ai/models/fal-ai/bytedance/seedream/v4/text-to-image"
+                                            target="_blank"
+                                            class="flex items-center gap-2 text-gray-600 hover:text-brand-600 p-2 bg-gray-50 rounded border border-gray-100 hover:border-brand-200 transition">
+                                            <i class="fa-solid fa-external-link-alt"></i> Seedream v4 (T2I)
+                                        </a>
+                                        <a href="https://fal.ai/models/fal-ai/bytedance/seedream/v4.5/edit"
+                                            target="_blank"
+                                            class="flex items-center gap-2 text-gray-600 hover:text-brand-600 p-2 bg-gray-50 rounded border border-gray-100 hover:border-brand-200 transition">
+                                            <i class="fa-solid fa-external-link-alt"></i> Seedream v4.5 (Edit)
+                                        </a>
+                                        <a href="https://gemini.google.com" target="_blank"
+                                            class="flex items-center gap-2 text-gray-600 hover:text-brand-600 p-2 bg-gray-50 rounded border border-gray-100 hover:border-brand-200 transition">
+                                            <i class="fa-solid fa-external-link-alt"></i> Gemini (Prompts)
+                                        </a>
+                                        <a href="https://pxz.ai/tools/image-generator" target="_blank"
+                                            class="flex items-center gap-2 text-gray-600 hover:text-brand-600 p-2 bg-gray-50 rounded border border-gray-100 hover:border-brand-200 transition">
+                                            <i class="fa-solid fa-external-link-alt"></i> PXZ.ai (Free)
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="w-full lg:w-64 shrink-0 flex flex-col gap-3">
-                                <label class="block text-sm font-medium text-gray-700">Preview do Arquivo</label>
-                                <div id="cover-dropzone"
-                                    class="w-full aspect-[9/16] bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 hover:bg-gray-50 hover:border-brand-300 transition-colors cursor-pointer relative overflow-hidden">
-                                    <input type="file" accept="image/*"
-                                        class="absolute inset-0 opacity-0 cursor-pointer">
-                                    <button
-                                        class="btn-remove-media absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 shadow-md transition z-10 hidden"
-                                        title="Remover">
-                                        <i class="fa-solid fa-times text-xs"></i>
-                                    </button>
-                                    <i class="fa-solid fa-cloud-arrow-up text-3xl mb-2"></i>
-                                    <span class="text-xs">Arraste ou Clique</span>
+                            <div class="w-full lg:w-64 shrink-0 flex flex-col gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Preview da Capa</label>
+                                    <div id="cover-dropzone"
+                                        class="w-full aspect-[9/16] bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 hover:bg-gray-50 hover:border-brand-300 transition-colors cursor-pointer relative overflow-hidden">
+                                        <input type="file" accept="image/*"
+                                            class="absolute inset-0 opacity-0 cursor-pointer">
+                                        <button
+                                            class="btn-remove-media absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 shadow-md transition z-10 hidden"
+                                            title="Remover">
+                                            <i class="fa-solid fa-times text-xs"></i>
+                                        </button>
+                                        <i class="fa-solid fa-image text-3xl mb-2"></i>
+                                        <span class="text-xs">Arraste a Capa</span>
+                                    </div>
+                                </div>
+
+                                <!-- Reference Image Dropzone -->
+                                <div>
+                                    <label
+                                        class="block text-sm font-medium text-gray-700 mb-2 flex justify-between items-center">
+                                        <span>Referência (Opcional)</span>
+                                        <i class="fa-solid fa-circle-question text-gray-400"
+                                            title="Use uma imagem para guiar a IA"></i>
+                                    </label>
+                                    <div id="cover-reference-dropzone"
+                                        class="w-full aspect-[9/16] bg-gray-50 rounded-lg border-2 border-dashed border-blue-200 flex flex-col items-center justify-center text-blue-400 hover:bg-white hover:border-blue-400 transition-colors cursor-pointer relative overflow-hidden">
+                                        <input type="file" accept="image/*"
+                                            class="absolute inset-0 opacity-0 cursor-pointer">
+                                        <button
+                                            class="btn-remove-media absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 shadow-md transition z-10 hidden"
+                                            title="Remover Referência">
+                                            <i class="fa-solid fa-times text-xs"></i>
+                                        </button>
+                                        <i class="fa-solid fa-eye-dropper text-2xl mb-1"></i>
+                                        <span class="text-[10px] text-center px-2">Arraste
+                                            Referência<br>(Img-to-Img)</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -732,21 +788,32 @@
                                     </div>
 
                                     <!-- Layer Previews (shown when animate is enabled) -->
-                                    <div id="leaf-layers" class="hidden grid grid-cols-2 gap-3">
-                                        <div class="text-center">
-                                            <div
-                                                class="w-full aspect-square bg-gray-200 rounded flex items-center justify-center text-gray-400 text-xs">
-                                                <i class="fa-solid fa-layer-group"></i>
+                                    <div id="leaf-layers" class="hidden space-y-3">
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <div class="text-center">
+                                                <div id="dropzone-leaf-only"
+                                                    class="w-full aspect-square bg-gray-50 rounded border border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 text-xs hover:border-brand-300 cursor-pointer relative overflow-hidden">
+                                                    <input type="file" accept="image/*"
+                                                        class="absolute inset-0 opacity-0 cursor-pointer">
+                                                    <i class="fa-solid fa-layer-group mb-1"></i>
+                                                    <span class="text-[10px]">Folha (PNG)</span>
+                                                </div>
                                             </div>
-                                            <span class="text-xs text-gray-500 mt-1 block">Folha Only</span>
-                                        </div>
-                                        <div class="text-center">
-                                            <div
-                                                class="w-full aspect-square bg-gray-200 rounded flex items-center justify-center text-gray-400 text-xs">
-                                                <i class="fa-solid fa-panorama"></i>
+                                            <div class="text-center">
+                                                <div id="dropzone-background-only"
+                                                    class="w-full aspect-square bg-gray-50 rounded border border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 text-xs hover:border-brand-300 cursor-pointer relative overflow-hidden">
+                                                    <input type="file" accept="image/*"
+                                                        class="absolute inset-0 opacity-0 cursor-pointer">
+                                                    <i class="fa-solid fa-panorama mb-1"></i>
+                                                    <span class="text-[10px]">Background (JPG)</span>
+                                                </div>
                                             </div>
-                                            <span class="text-xs text-gray-500 mt-1 block">Background Only</span>
                                         </div>
+
+                                        <button id="btn-process-layers"
+                                            class="w-full bg-purple-100 text-purple-700 py-2 rounded-md text-xs font-bold hover:bg-purple-200 transition flex items-center justify-center gap-2">
+                                            <i class="fa-solid fa-wand-sparkles"></i> Separar Camadas com IA
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -1092,8 +1159,8 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">Sugestões de
                                             Presentes</label>
-                                        <textarea id="gifts-suggestions" rows="4"
-                                            class="w-full rounded-md border-gray-300 bg-gray-50 border p-3 text-sm focus:border-brand-500 outline-none resize-none"
+                                        <textarea id="gifts-suggestions" rows="4" data-field="sugestoes_presentes"
+                                            class="form-input w-full rounded-md border-gray-300 bg-gray-50 border p-3 text-sm focus:border-brand-500 outline-none resize-none"
                                             placeholder="Liste os itens desejados (um por linha):&#10;Liquidificador&#10;Jogo de toalhas&#10;Vale presente..."></textarea>
                                     </div>
 
@@ -1339,16 +1406,17 @@
                             </h4>
 
                             <div id="music-samples-list" class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                <!-- Sample Item Template -->
+                                <!-- Sample 1: Enrolados -->
                                 <div class="sample-item bg-gray-50 rounded-lg p-3 border border-gray-200 hover:border-brand-300 hover:bg-brand-50 transition group cursor-pointer flex items-center gap-3"
-                                    data-sample="romantic.mp3" data-name="Piano Romântico">
+                                    data-sample="música base/sample_enrolados.mp3"
+                                    data-name="I See The Light (Instrumental)">
                                     <div
                                         class="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-gray-400 group-hover:text-brand-600 border border-gray-200">
                                         <i class="fa-solid fa-heart"></i>
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <p class="text-sm font-medium text-gray-700 truncate">Piano Romântico</p>
-                                        <p class="text-xs text-gray-400">Casamentos • 2:45</p>
+                                        <p class="text-sm font-medium text-gray-700 truncate">I See The Light</p>
+                                        <p class="text-xs text-gray-400">Disney • Romântico</p>
                                     </div>
                                     <button class="sample-preview-btn text-gray-400 hover:text-brand-600 p-1"
                                         title="Ouvir prévia">
@@ -1360,15 +1428,16 @@
                                     </button>
                                 </div>
 
+                                <!-- Sample 2: Perfect -->
                                 <div class="sample-item bg-gray-50 rounded-lg p-3 border border-gray-200 hover:border-brand-300 hover:bg-brand-50 transition group cursor-pointer flex items-center gap-3"
-                                    data-sample="party.mp3" data-name="Happy Birthday Remix">
+                                    data-sample="música base/sample_perfect.mp3" data-name="Perfect (Violin Cover)">
                                     <div
                                         class="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-gray-400 group-hover:text-brand-600 border border-gray-200">
-                                        <i class="fa-solid fa-cake-candles"></i>
+                                        <i class="fa-solid fa-music"></i>
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <p class="text-sm font-medium text-gray-700 truncate">Happy Birthday Remix</p>
-                                        <p class="text-xs text-gray-400">Aniversários • 3:12</p>
+                                        <p class="text-sm font-medium text-gray-700 truncate">Perfect (Violin)</p>
+                                        <p class="text-xs text-gray-400">Casamento • Clássico</p>
                                     </div>
                                     <button class="sample-preview-btn text-gray-400 hover:text-brand-600 p-1"
                                         title="Ouvir prévia">
@@ -1380,15 +1449,17 @@
                                     </button>
                                 </div>
 
+                                <!-- Sample 3: Viva La Vida -->
                                 <div class="sample-item bg-gray-50 rounded-lg p-3 border border-gray-200 hover:border-brand-300 hover:bg-brand-50 transition group cursor-pointer flex items-center gap-3"
-                                    data-sample="elegant.mp3" data-name="Orquestra Clássica">
+                                    data-sample="música base/sample_vivalavida.mp3"
+                                    data-name="Viva La Vida (Instrumental)">
                                     <div
                                         class="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-gray-400 group-hover:text-brand-600 border border-gray-200">
-                                        <i class="fa-solid fa-champagne-glasses"></i>
+                                        <i class="fa-solid fa-bolt"></i>
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <p class="text-sm font-medium text-gray-700 truncate">Orquestra Clássica</p>
-                                        <p class="text-xs text-gray-400">Formaturas • 4:30</p>
+                                        <p class="text-sm font-medium text-gray-700 truncate">Viva La Vida</p>
+                                        <p class="text-xs text-gray-400">Pop • Animado</p>
                                     </div>
                                     <button class="sample-preview-btn text-gray-400 hover:text-brand-600 p-1"
                                         title="Ouvir prévia">
@@ -1400,15 +1471,16 @@
                                     </button>
                                 </div>
 
+                                <!-- Sample 4: Enchanted -->
                                 <div class="sample-item bg-gray-50 rounded-lg p-3 border border-gray-200 hover:border-brand-300 hover:bg-brand-50 transition group cursor-pointer flex items-center gap-3"
-                                    data-sample="corporate.mp3" data-name="Corporate Upbeat">
+                                    data-sample="música base/sample_enchanted.mp3" data-name="Enchanted (Orchestral)">
                                     <div
                                         class="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-gray-400 group-hover:text-brand-600 border border-gray-200">
-                                        <i class="fa-solid fa-building"></i>
+                                        <i class="fa-solid fa-wand-magic-sparkles"></i>
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <p class="text-sm font-medium text-gray-700 truncate">Corporate Upbeat</p>
-                                        <p class="text-xs text-gray-400">Corporativo • 2:00</p>
+                                        <p class="text-sm font-medium text-gray-700 truncate">Enchanted</p>
+                                        <p class="text-xs text-gray-400">Valsa • Épico</p>
                                     </div>
                                     <button class="sample-preview-btn text-gray-400 hover:text-brand-600 p-1"
                                         title="Ouvir prévia">
@@ -1692,6 +1764,7 @@
 
     <!-- CRITICAL: Load these FIRST (before other modules depend on them) -->
     <script src="static/js/ai-prompts.js"></script>
+    <script src="static/js/api-client.js"></script>
     <script src="static/js/build-system.js"></script>
 
     <!-- Original Scripts -->
