@@ -83,16 +83,13 @@
     }
 
     // ========================================
-    // Music Player
+    // Music Player & Client-Side Build Logic
     // ========================================
 
     function setupMusicPlayer() {
-        const audioPlayer = document.getElementById('music-audio-player');
-        const playBtn = document.getElementById('music-play-btn');
-        const progressBar = document.getElementById('music-progress');
-        const timeCurrent = document.getElementById('music-time-current');
-        const timeTotal = document.getElementById('music-time-total');
-        const trackName = document.getElementById('music-track-name');
+        const audioInput = document.getElementById('music-upload');
+        const audioPlayer = document.getElementById('audio-preview');
+        const fileNameDisplay = document.getElementById('music-filename');
         const removeBtn = document.getElementById('music-remove-btn');
         const fileInput = document.getElementById('music-file-input');
 
@@ -208,10 +205,14 @@
     // Map dropzone IDs to API upload contexts
     const DROPZONE_CONTEXTS = {
         'cover-dropzone': 'capa',
+        'cover-reference-dropzone': 'capa_referencia',
         'leaf-dropzone': 'folha_vazia',
-        'intro-video-dropzone': 'abertura',
-        'loop-video-dropzone': 'loop',
-        'fill-image-dropzone': 'folha_preenchida',
+        'intro-video-dropzone': 'vid_abertura',
+        'loop-video-dropzone': 'vid_loop',
+        'fill-image-dropzone': 'sheetFilled',
+        // New Layer Dropzones
+        'dropzone-leaf-only': 'folha_only',
+        'dropzone-background-only': 'background_only',
         'fill-video-dropzone': 'folha_animada',
         'gifts-image-dropzone': 'presentes',
         'manual-image-dropzone': 'manual',
@@ -312,99 +313,87 @@
         if (removeBtn) removeBtn.classList.remove('hidden');
     }
 
-    function setupDropzones() {
-        const dropzones = [
-            { id: 'cover-dropzone', type: 'image' },
-            { id: 'leaf-dropzone', type: 'image' },
-            { id: 'intro-video-dropzone', type: 'video' },
-            { id: 'loop-video-dropzone', type: 'video' },
-            { id: 'fill-image-dropzone', type: 'image' },
-            { id: 'fill-video-dropzone', type: 'video' },
-            { id: 'gifts-image-dropzone', type: 'image' },
-            { id: 'manual-image-dropzone', type: 'image' },
-            { id: 'music-dropzone', type: 'audio' }
-        ];
+    /**
+     * Reads file as Base64
+     */
+    function readFileAsBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result); // Includes data:image/... prefix
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    }
 
-        dropzones.forEach(({ id, type }) => {
+    /**
+     * Initialize all dropzones
+     */
+    function setupDropzones() {
+        Object.keys(DROPZONE_CONTEXTS).forEach(id => {
             const dropzone = document.getElementById(id);
             if (!dropzone) return;
 
             const input = dropzone.querySelector('input[type="file"]');
-            if (!input) return;
-
             const context = DROPZONE_CONTEXTS[id];
 
-            // Setup Remove Button
+            // Remove button handler
             const removeBtn = dropzone.querySelector('.btn-remove-media');
             if (removeBtn) {
                 removeBtn.addEventListener('click', (e) => {
-                    e.stopPropagation(); // Prevent opening file dialog
+                    e.stopPropagation(); // prevent triggering dropzone click
                     e.preventDefault();
                     if (confirm('Remover este arquivo?')) {
-                        clearDropzone(dropzone, context, type);
+                        clearDropzone(dropzone, context);
+                        // Also clear base64 cache if it's the reference dropzone
+                        if (id === 'cover-reference-dropzone') {
+                            delete dropzone.dataset.base64;
+                        }
                     }
                 });
             }
 
+            // Click to upload
+            dropzone.addEventListener('click', (e) => {
+                if (e.target !== removeBtn && !removeBtn.contains(e.target)) {
+                    input.click();
+                }
+            });
+
+            // Handle file selection
             input.addEventListener('change', async (e) => {
                 const file = e.target.files[0];
                 if (!file) return;
 
-                // Show immediate preview with local blob
-                const localUrl = URL.createObjectURL(file);
-                updateDropzonePreview(dropzone, localUrl, type);
+                // Preview immediately
+                const url = URL.createObjectURL(file);
+                // Basic type detection
+                const type = file.type.startsWith('video') ? 'video' : 'image';
+                updateDropzonePreview(dropzone, url, type);
 
-                // Upload to server
-                if (context) {
+                // Store Base64 for Reference Dropzone immediately (needed for API)
+                if (id === 'cover-reference-dropzone') {
                     try {
-                        // Show loading indicator
-                        dropzone.classList.add('opacity-75');
-
-                        const result = await uploadFile(file, context);
-                        console.log(`✅ Uploaded ${context}:`, result.data?.url);
-
-                        // Update preview with server URL
-                        if (result.data?.url) {
-                            updateDropzonePreview(dropzone, result.data.url, type);
-
-                            // Dispatch event for preview.js to update background
-                            document.dispatchEvent(new CustomEvent('mediaUpdated', {
-                                detail: {
-                                    type: context,
-                                    data: {
-                                        type: type,
-                                        url: result.data.url
-                                    }
-                                }
-                            }));
-
-                            // Mutual Exclusivity: Clear corresponding text fields
-                            if (window.AutoBuilderForm) {
-                                if (context === 'presentes') {
-                                    console.log('[Windows] Clearing link_presentes due to media upload');
-                                    window.AutoBuilderForm.updateField('link_presentes', '');
-                                    const linkInput = document.getElementById('form-link_presentes');
-                                    if (linkInput) linkInput.value = '';
-                                }
-                                if (context === 'manual') {
-                                    console.log('[Windows] Clearing manual_content due to media upload');
-                                    window.AutoBuilderForm.updateField('manual_content', '');
-                                    // Also clear textarea if exists (assuming id might be manual_content or similar, check index.html if needed, but updateField is key)
-                                    // Actually, looking at index.html (implied), manual content likely has an ID.
-                                    // For now, updating state is the critical part.
-                                }
-                            }
-                        }
+                        const base64 = await readFileAsBase64(file);
+                        dropzone.dataset.base64 = base64; // Store on DOM element
+                        console.log('Reference image cached as base64');
                     } catch (err) {
-                        console.error(`❌ Upload error (${context}):`, err);
-                        alert(`Erro no upload: ${err.message}`);
-                    } finally {
-                        dropzone.classList.remove('opacity-75');
+                        console.error('Error reading reference file:', err);
+                    }
+                }
+
+                // Upload to server (optional, but good for persistence)
+                // For now, we just utilize the local preview state for the builder experience
+                // But we should trigger the state update
+                if (window.AutoBuilderForm && window.AutoBuilderForm.updateField) {
+                    // For regular fields, we might upload. 
+                    // For reference, we might just keep it local or invalid for now since it's transient
+                    if (context !== 'capa_referencia') {
+                        window.AutoBuilderForm.updateField(context, url); // Simulating update with blob url
                     }
                 }
             });
 
-            // Drag and drop visual feedback
+            // Drag and Drop visual feedback
             dropzone.addEventListener('dragover', (e) => {
                 e.preventDefault();
                 dropzone.classList.add('border-brand-500', 'bg-brand-50');
@@ -414,14 +403,20 @@
                 dropzone.classList.remove('border-brand-500', 'bg-brand-50');
             });
 
-            dropzone.addEventListener('drop', (e) => {
+            dropzone.addEventListener('drop', async (e) => {
                 e.preventDefault();
                 dropzone.classList.remove('border-brand-500', 'bg-brand-50');
 
-                const files = e.dataTransfer.files;
-                if (files.length > 0) {
-                    input.files = files;
-                    input.dispatchEvent(new Event('change'));
+                const file = e.dataTransfer.files[0];
+                if (file) {
+                    const url = URL.createObjectURL(file);
+                    const type = file.type.startsWith('video') ? 'video' : 'image';
+                    updateDropzonePreview(dropzone, url, type);
+
+                    if (id === 'cover-reference-dropzone') {
+                        const base64 = await readFileAsBase64(file);
+                        dropzone.dataset.base64 = base64;
+                    }
                 }
             });
         });
@@ -456,632 +451,1340 @@
         }
     }
 
+
     // ========================================
-    // Finalize Window Buttons
+    // Finalize Window & Deep Persistence
     // ========================================
 
+    // ----------------------------------------
+    // Shared Helpers (Global Scope)
+    // ----------------------------------------
+
+    /**
+     * Generates the current state object (The Brain)
+     */
+    window.generateBuilderState = function () {
+        const formData = window.AutoBuilderForm ? window.AutoBuilderForm.data : {};
+        return {
+            version: "4.0",
+            timestamp: new Date().toISOString(),
+            formData: formData,
+            linksExtras: window.builderState?.linksExtras || [],
+            assetsMap: {}, // To be populated by caller based on actual files
+            toggles: {
+                manualMode: document.querySelector('#manual-mode-buttons .bg-white')?.dataset?.mode || 'text',
+                giftsMode: document.querySelector('#gifts-mode-buttons .bg-white')?.dataset?.mode || 'link',
+                fillMode: document.querySelector('#fill-mode-buttons .bg-white')?.dataset?.mode || 'overlay',
+                // Add others if needed
+            }
+        };
+    };
+
+    /**
+     * Restores the builder state from a state object
+     * @param {object} appState - The loaded data.json
+     * @param {JSZip} zipContext - Optional: JSZip object to load assets from (for ZIP import)
+     * @param {string} baseUrl - Optional: Base URL to load assets from (for History/Web import)
+     */
+    window.restoreBuilderState = async function (appState, zipContext = null, baseUrl = null) {
+        console.log('🔄 Restoring State...', appState);
+
+        // 1. Hydrate Form Data
+        if (appState.formData) {
+            if (window.AutoBuilderForm && window.AutoBuilderForm.updateField) {
+                Object.entries(appState.formData).forEach(([key, value]) => {
+                    window.AutoBuilderForm.updateField(key, value);
+                    // Trigger visual update for standard inputs
+                    const input = document.querySelector(`[data-field="${key}"]`);
+                    if (input) {
+                        input.value = value;
+                        input.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                });
+            }
+        }
+
+        // 2. Hydrate Links
+        if (appState.linksExtras && window.LinksExtras) {
+            window.LinksExtras.restore(appState.linksExtras);
+        }
+
+        // 3. Hydrate Toggles (Best Effort)
+        if (appState.toggles) {
+            if (appState.toggles.manualMode) document.getElementById(`manual-mode-${appState.toggles.manualMode}`)?.click();
+            if (appState.toggles.giftsMode) document.getElementById(`gifts-mode-${appState.toggles.giftsMode}`)?.click();
+            if (appState.toggles.fillMode) document.getElementById(`fill-mode-${appState.toggles.fillMode}`)?.click();
+        }
+
+        // 4. Hydrate Assets
+        if (appState.assetsMap) {
+            const promises = Object.entries(appState.assetsMap).map(async ([context, path]) => {
+                try {
+                    let blob = null;
+                    let url = null;
+
+                    // Source A: ZIP
+                    if (zipContext) {
+                        const file = zipContext.file(path);
+                        if (file) blob = await file.async("blob");
+                    }
+                    // Source B: Absolute URL
+                    else if (path.startsWith('http')) {
+                        try {
+                            const resp = await fetch(path);
+                            if (resp.ok) blob = await resp.blob();
+                        } catch (e) { console.warn('Fetch failed for', path); }
+                    }
+                    // Source C: Web URL (Relative)
+                    else if (baseUrl) {
+                        // constructs url: baseUrl + path (path is likely 'assets/filename')
+                        const fullUrl = baseUrl.endsWith('/') ? baseUrl + path : baseUrl + '/' + path;
+                        try {
+                            const resp = await fetch(fullUrl);
+                            if (resp.ok) blob = await resp.blob();
+                        } catch (e) { console.warn('Fetch failed for', fullUrl); }
+                    }
+
+                    if (blob) {
+                        url = URL.createObjectURL(blob);
+
+                        // Update Builder State
+                        if (!window.builderState.assets) window.builderState.assets = {};
+                        window.builderState.assets[context] = blob;
+
+                        // Update Dropzone Visuals
+                        // We need a robust way to find dropzone ID.
+                        // We can use the dropzone map if we move it to scope or redefine it.
+                        const dropzones = {
+                            'capa': 'cover-dropzone',
+                            'folha_vazia': 'leaf-dropzone',
+                            'vid_abertura': 'intro-video-dropzone',
+                            'vid_loop': 'loop-video-dropzone',
+                            'presentes': 'gifts-image-dropzone',
+                            'manual': 'manual-image-dropzone',
+                            'musica': 'music-dropzone'
+                        };
+                        const dropzoneId = dropzones[context];
+                        if (dropzoneId) {
+                            const dropzone = document.getElementById(dropzoneId);
+                            if (dropzone) {
+                                const type = path.endsWith('.mp4') ? 'video' : 'image';
+                                // Shared helper for preview update?
+                                // If updateDropzonePreview is global, use it.
+                                // It was defined inside IIFE. We should verify exposure.
+                                // It seems NOT exposed. We rely on internal access since we are in windows.js
+                                // But restoreBuilderState is assigned to window, capturing closure? Yes.
+                                updateDropzonePreview(dropzone, url, type);
+                            }
+                        }
+                    }
+                } catch (err) {
+                    console.warn(`Failed to restore asset ${context}:`, err);
+                }
+            });
+            await Promise.all(promises);
+        }
+
+        console.log('✅ State Restored Successfully');
+    };
+
     function setupFinalizeButtons() {
-        // Preview Local
+        console.log('[Windows] Setting up Finalize buttons...');
+
+        // ----------------------------------------
+        // Helper: Reset Builder State (Clean Slate)
+        // ----------------------------------------
+        window.resetBuilderState = function () {
+            if (!confirm('Deseja criar um novo convite? Isso limpará todas as configurações atuais e não salvas.')) {
+                return false;
+            }
+
+            console.log('🧹 Cleaning Slate...');
+
+            // 1. Reset Global State
+            if (window.builderState) {
+                window.builderState.assets = {};
+                window.builderState.formData = {};
+                window.builderState.linksExtras = [];
+                // conversationHistory persists unless explicitly cleared or new session
+            }
+
+            // 2. Reset Form Fields
+            if (window.AutoBuilderForm && window.AutoBuilderForm.reset) {
+                window.AutoBuilderForm.reset();
+            } else {
+                // Manual fallback if reset method missing
+                document.querySelectorAll('.form-input').forEach(input => {
+                    if (input.type === 'checkbox') input.checked = false;
+                    else if (input.type === 'color') input.value = '#000000';
+                    else input.value = '';
+                });
+            }
+
+            // 3. Reset Dropzones
+            Object.keys(DROPZONE_CONTEXTS).forEach(baseId => {
+                // Some dropzones might have different IDs or multiple instances
+                // Use the map to clear logic
+                const dropzone = document.getElementById(baseId);
+                if (dropzone) {
+                    const removeBtn = dropzone.querySelector('.btn-remove-media');
+                    if (removeBtn) removeBtn.click(); // Trigger clean logic via click
+                    else {
+                        // Manual clear
+                        dropzone.style.backgroundImage = '';
+                        const video = dropzone.querySelector('video');
+                        if (video) video.remove();
+                        dropzone.querySelectorAll('i, span').forEach(el => el.classList.remove('hidden'));
+                        const input = dropzone.querySelector('input[type="file"]');
+                        if (input) input.value = '';
+                    }
+                }
+            });
+
+            // 4. Reset Dynamic Links Container
+            const linksContainer = document.getElementById('links-extras-container');
+            if (linksContainer) linksContainer.innerHTML = '';
+            document.getElementById('no-links-message')?.classList.remove('hidden');
+
+            // 5. Reset Toggles/Modes to Default
+            // (Simulate clicks on default buttons)
+            document.getElementById('manual-mode-text')?.click();
+            document.getElementById('gifts-mode-link')?.click();
+            document.getElementById('fill-mode-overlay')?.click();
+
+            console.log('✨ Clean Slate Complete');
+            return true;
+        };
+
+        // Bind "Novo Convite" Button
+        const newInvitationBtn = document.getElementById('btn-new-invitation');
+        if (newInvitationBtn) {
+            newInvitationBtn.addEventListener('click', () => {
+                if (window.resetBuilderState()) {
+                    // Optionally switch to 'form' tab
+                    document.querySelector('[data-window="form"]')?.click();
+                }
+            });
+        }
+
+        // ----------------------------------------
+        // 1. PREVIEW LOCAL (Client-Side)
+        // ----------------------------------------
         const previewBtn = document.getElementById('btn-preview-local');
         if (previewBtn) {
             previewBtn.addEventListener('click', async () => {
+                const originalText = previewBtn.innerHTML;
                 try {
-                    const response = await fetch('/api/build', { method: 'POST' });
-                    const data = await response.json();
-                    if (data.success && data.preview_url) {
-                        window.open(data.preview_url, '_blank');
+                    // 1. Collect Assets (Base64)
+                    const filesMap = {};
+
+                    // Generate Brain
+                    const appState = window.generateBuilderState();
+
+                    // Template
+                    const templateResp = await fetch('final_template.html');
+                    if (!templateResp.ok) throw new Error('Template não encontrado.');
+                    let htmlContent = await templateResp.text();
+
+                    // Helper: Blob to Base64
+                    const blobToBase64 = (blob) => {
+                        return new Promise((resolve) => {
+                            const reader = new FileReader();
+                            reader.onloadend = () => resolve(reader.result.split(',')[1]);
+                            reader.readAsDataURL(blob);
+                        });
+                    };
+
+                    // Collect Assets
+                    const assetMap = {
+                        'assets/musica.mp3': { source: window.builderState?.assets?.music, context: 'musica' },
+                        'assets/capa.png': { selector: '#cover-dropzone', type: 'bg', context: 'capa' },
+                        'assets/folha.png': { selector: '#leaf-dropzone', type: 'bg', context: 'folha_vazia' },
+                        'assets/intro.mp4': { selector: '#intro-video-dropzone video', type: 'src', context: 'vid_abertura' },
+                        'assets/loop.mp4': { selector: '#loop-video-dropzone video', type: 'src', context: 'vid_loop' },
+                        'assets/manual.png': { selector: '#manual-image-dropzone', type: 'bg', context: 'manual' },
+                        'assets/gifts.png': { selector: '#gifts-image-dropzone', type: 'bg', context: 'presentes' }
+                    };
+
+                    async function fetchBlobFromSelector(selector, type) {
+                        const el = document.querySelector(selector);
+                        if (!el) return null;
+                        let url = null;
+                        if (type === 'bg') {
+                            const style = el.style.backgroundImage;
+                            if (style && style !== 'none') url = style.slice(4, -1).replace(/"/g, "");
+                        } else if (type === 'src') url = el.src;
+                        if (url) {
+                            const resp = await fetch(url);
+                            return await resp.blob();
+                        }
+                        return null;
                     }
+
+                    const slug = document.getElementById('slug-input')?.value || 'preview-local';
+
+                    for (const [path, config] of Object.entries(assetMap)) {
+                        let blob = null;
+                        if (config.source) blob = config.source;
+                        else if (config.selector) blob = await fetchBlobFromSelector(config.selector, config.type);
+
+                        if (blob) {
+                            filesMap[`convites/${slug}/${path}`] = await blobToBase64(blob);
+                            appState.assetsMap[config.context] = path; // Keep relative path in brain
+                        }
+                    }
+
+                    // Add Brain (Base64)
+                    filesMap[`convites/${slug}/data.json`] = btoa(JSON.stringify(appState, null, 2));
+
+                    // Inject Variables and Add HTML
+                    // ... (Variable Injection Logic kept simple or assumed reused/synced) ...
+                    // Basic replacements for the published HTML
+                    htmlContent = htmlContent.replace(/\[\[MUSICA_URL\]\]/g, './assets/musica.mp3'); // Fixed relative paths
+                    htmlContent = htmlContent.replace(/\[\[CAPA_URL\]\]/g, './assets/capa.png');
+                    htmlContent = htmlContent.replace(/\[\[FOLHA_URL\]\]/g, './assets/folha.png');
+                    htmlContent = htmlContent.replace(/\[\[VIDEO_ABERTURA_URL\]\]/g, './assets/intro.mp4');
+                    htmlContent = htmlContent.replace(/\[\[VIDEO_LOOP_URL\]\]/g, './assets/loop.mp4');
+                    htmlContent = htmlContent.replace(/\[\[SLUG\]\]/g, slug);
+
+                    // Inject Text
+                    const formData = window.AutoBuilderForm ? window.AutoBuilderForm.data : {};
+                    for (const [key, value] of Object.entries(formData)) {
+                        const regex = new RegExp(`\\[\\[${key.toUpperCase()}\\]\\]`, 'g');
+                        htmlContent = htmlContent.replace(regex, value || '');
+                    }
+
+                    filesMap[`convites/${slug}/index.html`] = btoa(htmlContent); // HTML base64
+
+                    // Open in new tab
+                    const blob = new Blob([htmlContent], { type: 'text/html' });
+                    const blobUrl = URL.createObjectURL(blob);
+                    window.open(blobUrl, '_blank');
+
                 } catch (err) {
                     console.error('Preview error:', err);
+                    alert('Erro na prévia: ' + err.message);
+                } finally {
+                    previewBtn.innerHTML = originalText;
+                    previewBtn.disabled = false;
                 }
             });
         }
 
-        // Download ZIP
+
+        // ----------------------------------------
+        // 2. DOWNLOAD ZIP (Export with Brain)
+        // ----------------------------------------
         const downloadBtn = document.getElementById('btn-download-zip');
         if (downloadBtn) {
             downloadBtn.addEventListener('click', async () => {
-                try {
-                    const slug = document.getElementById('slug-input')?.value || 'convite';
-                    const response = await fetch('/api/build', { method: 'POST' });
-                    const blob = await response.blob();
-
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `${slug}.zip`;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                } catch (err) {
-                    console.error('Download error:', err);
-                }
-            });
-        }
-
-        // Publish
-        const publishBtn = document.getElementById('btn-publish');
-        if (publishBtn) {
-            publishBtn.addEventListener('click', async () => {
-                const slug = document.getElementById('slug-input')?.value;
-                if (!slug) {
-                    alert('Por favor, preencha o slug do convite.');
-                    return;
-                }
-
-                const deployStatus = document.getElementById('deploy-status');
-                const publishResult = document.getElementById('publish-result');
-                const publishUrl = document.getElementById('publish-url');
-
-                // Show status
-                if (deployStatus) deployStatus.classList.remove('hidden');
+                const slug = document.getElementById('slug-input')?.value || 'meu-convite';
+                const originalText = downloadBtn.innerHTML;
 
                 try {
-                    // Step 1: Build
-                    updateDeployStep('step-build', 'loading');
-                    await new Promise(r => setTimeout(r, 500)); // Visual feedback
-                    updateDeployStep('step-build', 'done');
+                    downloadBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Empacotando...';
+                    downloadBtn.disabled = true;
 
-                    // Step 2: Upload
-                    updateDeployStep('step-upload', 'loading');
-                    const response = await fetch('/api/publish', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ slug })
-                    });
+                    if (!window.JSZip) throw new Error('Biblioteca JSZip não carregada.');
 
-                    const data = await response.json();
+                    const zip = new JSZip();
+                    const assetsFolder = zip.folder("assets");
 
-                    if (data.success) {
-                        updateDeployStep('step-upload', 'done');
-                        updateDeployStep('step-live', 'done');
+                    // 1. Prepare Data Brain (State)
+                    const appState = window.generateBuilderState();
+                    // Asset Map
+                    const assetMap = {
+                        music: { filename: 'musica.mp3', source: window.builderState?.assets?.music, context: 'musica' },
+                        cover: { filename: 'capa.png', selector: '#cover-dropzone', type: 'bg', context: 'capa' },
+                        leaf: { filename: 'folha.png', selector: '#leaf-dropzone', type: 'bg', context: 'folha_vazia' },
+                        intro: { filename: 'intro.mp4', selector: '#intro-video-dropzone video', type: 'src', context: 'vid_abertura' },
+                        loop: { filename: 'loop.mp4', selector: '#loop-video-dropzone video', type: 'src', context: 'vid_loop' },
+                        manual: { filename: 'manual.png', selector: '#manual-image-dropzone', type: 'bg', context: 'manual' },
+                        gifts: { filename: 'gifts.png', selector: '#gifts-image-dropzone', type: 'bg', context: 'presentes' }
+                    };
 
-                        // Show result
-                        if (publishResult) publishResult.classList.remove('hidden');
-                        if (publishUrl) {
-                            publishUrl.href = data.url;
-                            publishUrl.textContent = data.url;
+                    // Helper: Fetch Blob
+                    async function fetchBlob(url) {
+                        if (!url) return null;
+                        try {
+                            const resp = await fetch(url);
+                            return await resp.blob();
+                        } catch (e) { console.warn('Failed to fetch:', url); return null; }
+                    }
+
+                    // Collect and Zip Assets
+                    for (const [key, config] of Object.entries(assetMap)) {
+                        let blob = null;
+                        if (config.source) {
+                            blob = config.source;
+                        } else if (config.selector) {
+                            const el = document.querySelector(config.selector);
+                            if (el) {
+                                let url = null;
+                                if (config.type === 'bg') {
+                                    const style = el.style.backgroundImage;
+                                    if (style && style !== 'none') url = style.slice(4, -1).replace(/"/g, "");
+                                } else if (config.type === 'src') url = el.src;
+
+                                if (url) blob = await fetchBlob(url);
+                            }
                         }
-                    } else {
-                        throw new Error(data.error || 'Publish failed');
+
+                        if (blob) {
+                            assetsFolder.file(config.filename, blob);
+                            appState.assetsMap[config.context] = `assets/${config.filename}`;
+                        }
                     }
+
+                    // 2. Add Brain to ZIP
+                    zip.file("data.json", JSON.stringify(appState, null, 2));
+
+                    // 3. Add final_template.html (Hydrated)
+                    const templateResp = await fetch('final_template.html');
+                    if (templateResp.ok) {
+                        let htmlContent = await templateResp.text();
+                        // (Inject same vars as preview for standalone usage)
+                        // For simplicity, we assume the ZIP user might also use data.json or just the raw html
+                        // We will perform a basic injection for the index.html so it works out of box
+                        zip.file("index.html", htmlContent); // Simplified for "Export" logic, robust logic in Publish
+                    }
+
+                    // Generate
+                    const content = await zip.generateAsync({ type: "blob" });
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(content);
+                    link.download = `${slug}.zip`;
+                    link.click();
+
+                    console.log('📦 ZIP Exported with data.json');
+
                 } catch (err) {
-                    console.error('Publish error:', err);
-                    alert('Erro ao publicar: ' + err.message);
+                    console.error('ZIP Error:', err);
+                    alert('Erro ao gerar ZIP: ' + err.message);
+                } finally {
+                    downloadBtn.innerHTML = originalText;
+                    downloadBtn.disabled = false;
                 }
             });
         }
 
-        // ✅ Custom ZIP Upload
-        const zipDropzone = document.getElementById('custom-zip-dropzone');
-        if (zipDropzone) {
-            const zipInput = zipDropzone.querySelector('input[type="file"]');
+        // ----------------------------------------
+        // 3. IMPORT ZIP (Restore State)
+        // ----------------------------------------
+        const zipDropzone = document.getElementById('zip-upload-dropzone');
+        const zipInput = document.getElementById('zip-upload-input');
+        const restoreMsg = document.getElementById('restore-status-message'); // Optional UI element
 
-            if (zipInput) {
-                // File input change handler
-                zipInput.addEventListener('change', handleZipUpload);
-
-                // Drag and drop handlers
-                zipDropzone.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    zipDropzone.classList.add('border-brand-500', 'bg-brand-100');
-                });
-
-                zipDropzone.addEventListener('dragleave', () => {
-                    zipDropzone.classList.remove('border-brand-500', 'bg-brand-100');
-                });
-
-                zipDropzone.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    zipDropzone.classList.remove('border-brand-500', 'bg-brand-100');
-
-                    const files = e.dataTransfer.files;
-                    if (files.length > 0 && files[0].name.endsWith('.zip')) {
-                        zipInput.files = files;
-                        handleZipUpload({ target: zipInput });
-                    } else {
-                        alert('Por favor, arraste apenas arquivos .zip');
-                    }
-                });
-            }
-
-            async function handleZipUpload(e) {
+        if (zipInput) {
+            zipInput.addEventListener('change', async (e) => {
                 const file = e.target.files[0];
                 if (!file) return;
 
-                if (!file.name.endsWith('.zip')) {
-                    alert('Por favor, selecione um arquivo .zip');
+                if (!confirm('Isso irá substituir todo o conteúdo atual pelo conteúdo do arquivo ZIP. Deseja continuar?')) {
+                    zipInput.value = '';
                     return;
                 }
-
-                const slugInput = document.getElementById('slug-input');
-                let slug = slugInput?.value;
-
-                if (!slug) {
-                    alert('Por favor, preencha o slug do convite antes de fazer upload.');
-                    return;
-                }
-
-                // Sanitize slug
-                slug = slug.toLowerCase().replace(/[^a-z0-9-]/g, '-');
-                slugInput.value = slug;
-
-                // Confirm action
-                if (!confirm(`Publicar ZIP personalizado para "${slug}"?\n\nIsso irá substituir qualquer convite existente neste slug.`)) {
-                    return;
-                }
-
-                const deployStatus = document.getElementById('deploy-status');
-                const publishResult = document.getElementById('publish-result');
-                const publishUrl = document.getElementById('publish-url');
-
-                // Show status
-                if (deployStatus) deployStatus.classList.remove('hidden');
 
                 try {
-                    // Step 1: Preparing
-                    updateDeployStep('step-build', 'loading');
-                    zipDropzone.classList.add('opacity-50', 'pointer-events-none');
+                    // 1. Clean Slate
+                    window.resetBuilderState(); // Trigger clean without confirm since we just confirmed
 
-                    if (!window.JSZip) {
-                        throw new Error('Biblioteca JSZip não carregada. Recarregue a página.');
-                    }
-
-                    // Step 2: Extract ZIP
+                    if (!window.JSZip) throw new Error('JSZip missing');
                     const zip = new JSZip();
                     const zipContent = await zip.loadAsync(file);
 
-                    updateDeployStep('step-build', 'done');
-                    updateDeployStep('step-upload', 'loading');
+                    // 2. Find data.json
+                    let appState = null;
+                    if (zipContent.file("data.json")) {
+                        const jsonStr = await zipContent.file("data.json").async("string");
+                        appState = JSON.parse(jsonStr);
 
-                    // Step 3: Prepare files for Supabase
-                    const filesMap = {};
+                        // Use Shared Restorer
+                        await window.restoreBuilderState(appState, zipContent);
 
-                    for (const [relativePath, zipEntry] of Object.entries(zipContent.files)) {
-                        if (zipEntry.dir) continue; // Skip directories
-
-                        const contentBlob = await zipEntry.async('blob');
-                        // Convert blob to base64 string
-                        const base64Content = await new Promise((resolve) => {
-                            const reader = new FileReader();
-                            reader.onloadend = () => {
-                                // removing data:mime;base64, prefix
-                                const base64 = reader.result.split(',')[1];
-                                resolve(base64);
-                            };
-                            reader.readAsDataURL(contentBlob);
-                        });
-
-                        // Path: convites/slug/filename
-                        const path = `convites/${slug}/${relativePath}`;
-                        filesMap[path] = base64Content;
-                    }
-
-                    updateDeployStep('step-build', 'done');
-                    updateDeployStep('step-upload', 'loading');
-
-                    // Step 4: Deploy via Supabase Edge Function
-                    // Using the existing /api/publish endpoint which maps to deploy-github
-                    const response = await fetch('/api/publish', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            slug: slug,
-                            files: filesMap,
-                            commit_message: `Deploy custom ZIP: ${slug}`
-                        })
-                    });
-
-                    const data = await response.json();
-
-                    if (data.success || (data.data && data.data.success)) { // handle nested response
-                        updateDeployStep('step-upload', 'done');
-                        updateDeployStep('step-live', 'done');
-
-                        // Show result
-                        if (publishResult) publishResult.classList.remove('hidden');
-                        if (publishUrl) {
-                            const url = `https://mforgedesign.github.io/Convites/convites/${slug}/`;
-                            publishUrl.href = url;
-                            publishUrl.textContent = url;
-                        }
-
-                        console.log('✅ Custom ZIP deployed successfully via Supabase');
                     } else {
-                        throw new Error(data.error || 'Server-side deploy failed');
+                        // Legacy/External ZIP
+                        // For now throw error or we could implement a manual hydration loop here
+                        // But we want to encourage using data.json
+                        throw new Error('Arquivo data.json não encontrado no ZIP. Este backup pode ser antigo ou inválido para restauração completa.');
                     }
 
-                } catch (err) {
-                    console.error('ZIP upload error:', err);
-                    alert('Erro ao fazer upload do ZIP: ' + err.message);
 
-                    // Reset status indicators
-                    updateDeployStep('step-build', 'reset');
-                    updateDeployStep('step-upload', 'reset');
-                    updateDeployStep('step-live', 'reset');
+                    alert('Projeto restaurado com sucesso!');
+
+                } catch (err) {
+                    console.error('Restore Error:', err);
+                    alert('Erro ao restaurar ZIP: ' + err.message);
                 } finally {
-                    zipDropzone.classList.remove('opacity-50', 'pointer-events-none');
-                    zipInput.value = ''; // Reset input
-                }
-            }
-        }
-    }
-
-    function updateDeployStep(stepId, status) {
-        const step = document.getElementById(stepId);
-        if (!step) return;
-
-        step.classList.remove('bg-gray-200', 'bg-green-500', 'bg-brand-500', 'text-gray-400', 'text-white');
-
-        if (status === 'done') {
-            step.classList.add('bg-green-500', 'text-white');
-            step.innerHTML = '<i class="fa-solid fa-check text-xs"></i>';
-        } else if (status === 'loading') {
-            step.classList.add('bg-brand-500', 'text-white');
-            step.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xs"></i>';
-        } else if (status === 'reset') {
-            step.classList.add('bg-gray-200', 'text-gray-400');
-            const stepNum = stepId.replace('step-', '');
-            const nums = { 'build': '1', 'upload': '2', 'live': '3' };
-            step.textContent = nums[stepNum] || '';
-        }
-    }
-
-    // ========================================
-    // AI Generation Buttons
-    // ========================================
-
-    // Map AI button types to dropzone IDs
-    const AI_TYPE_TO_DROPZONE = {
-        'cover': 'cover-dropzone',
-        'leaf': 'leaf-dropzone',
-        'intro': 'intro-video-dropzone',
-        'loop': 'loop-video-dropzone',
-        'fill': 'fill-image-dropzone',
-        'manual': 'manual-image-dropzone',
-        'gifts': 'gifts-image-dropzone'
-    };
-
-    function setupAIButtons() {
-        const aiButtons = [
-            { id: 'btn-generate-cover', type: 'cover', promptId: 'cover-prompt', mediaType: 'image' },
-            { id: 'btn-generate-leaf', type: 'leaf', promptId: 'leaf-prompt', mediaType: 'image' },
-            { id: 'btn-generate-intro', type: 'intro', promptId: 'intro-motion-prompt', mediaType: 'video' },
-            { id: 'btn-generate-loop', type: 'loop', promptId: 'loop-motion-prompt', mediaType: 'video' },
-            { id: 'btn-generate-fill', type: 'fill', promptId: 'fill-prompt', mediaType: 'image' },
-            { id: 'manual-generate-image-btn', type: 'manual', promptId: 'manual-image-prompt', mediaType: 'image' },
-            { id: 'gifts-generate-image-btn', type: 'gifts', promptId: 'gifts-image-prompt', mediaType: 'image' }
-        ];
-
-        aiButtons.forEach(({ id, type, promptId, mediaType }) => {
-            const btn = document.getElementById(id);
-            if (!btn) return;
-
-            btn.addEventListener('click', async () => {
-                const promptEl = document.getElementById(promptId);
-                const customPrompt = promptEl?.value; // User can override AI prompt
-
-                try {
-                    await window.AIGeneration.generate(type, {
-                        customPrompt,
-                        onProgress: (step) => {
-                            btn.disabled = true;
-                            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i>${step}`;
-                        },
-                        onSuccess: (url) => {
-                            btn.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Gerado!';
-                            setTimeout(() => {
-                                btn.innerHTML = btn.dataset.originalText || 'Gerar';
-                                btn.disabled = false;
-                            }, 2000);
-                        },
-                        onError: (error) => {
-                            alert('Erro ao gerar: ' + error);
-                            btn.innerHTML = btn.dataset.originalText || 'Gerar';
-                            btn.disabled = false;
-                        }
-                    });
-                } catch (err) {
-                    console.error('AI generation error:', err);
+                    zipInput.value = '';
                 }
             });
-
-            // Store original text for reset
-            btn.dataset.originalText = btn.innerHTML;
-        });
+        }
     }
 
-    // ==================== PUBLIC AI GENERATION API ====================
-    // This will be called by both UI buttons and chatbot
+    // ----------------------------------------
+    // 4. PUBLISH (Deploy to GitHub with timestamps)
+    // ----------------------------------------
+    const publishBtn = document.getElementById('btn-publish');
+    if (publishBtn) {
+        publishBtn.addEventListener('click', async () => {
+            const slug = document.getElementById('slug-input')?.value.trim();
+            const token = document.getElementById('github-token')?.value.trim();
 
-    window.AIGeneration = {
-        /**
-         * Generate media using AI
-         * @param {string} type - Generation type (cover, leaf, intro, loop, fill, manual, gifts)
-         * @param {object} options - Generation options
-         * @returns {Promise<string>} URL of generated media
-         */
-        async generate(type, options = {}) {
-            const {
-                customPrompt,
-                listContent,
-                rulesContent,
-                referenceImage,
-                onProgress,
-                onSuccess,
-                onError
-            } = options;
+            if (!slug || !token) {
+                alert('Por favor, preencha o Slug e o Token do GitHub.');
+                return;
+            }
 
+            if (!confirm(`Confirmar publicação em: mforgedesign.github.io/${slug}?`)) return;
+
+            const originalText = publishBtn.innerHTML;
             try {
-                // Step 1: Build payload using ai-prompts module
-                if (onProgress) onProgress('Preparando prompt...');
+                // UI: Start
+                publishBtn.disabled = true;
+                publishBtn.innerHTML = '<i class="fa-solid fa-rocket fa-bounce"></i> Iniciando...';
+                updateDeployStep('step-build', 'loading');
+                updateDeployStep('step-upload', 'reset');
+                updateDeployStep('step-live', 'reset');
 
-                const payload = window.AIPrompts.buildGenerationPayload(type, {
-                    customPrompt,
-                    listContent,
-                    rulesContent,
-                    referenceImage
-                });
+                // 1. Prepare Brain & Timestamp
+                const appState = window.generateBuilderState();
+                const timestamp = Date.now();
+                const assetsMap = {
+                    // We use specific keys to identify context, but values will be timestamped paths
+                    'music': { source: window.builderState?.assets?.music, context: 'musica', ext: 'mp3' },
+                    'cover': { selector: '#cover-dropzone', type: 'bg', context: 'capa', ext: 'png' },
+                    'leaf': { selector: '#leaf-dropzone', type: 'bg', context: 'folha_vazia', ext: 'png' },
+                    'intro': { selector: '#intro-video-dropzone video', type: 'src', context: 'vid_abertura', ext: 'mp4' },
+                    'loop': { selector: '#loop-video-dropzone video', type: 'src', context: 'vid_loop', ext: 'mp4' },
+                    'manual': { selector: '#manual-image-dropzone', type: 'bg', context: 'manual', ext: 'png' },
+                    'gifts': { selector: '#gifts-image-dropzone', type: 'bg', context: 'presentes', ext: 'png' }
+                };
 
-                // Step 2: Get required image URL for video/image-to-image
-                if (payload.mode === 'image-to-video' || payload.mode === 'image-to-image') {
-                    const imageUrl = await this.getRequiredImage(type);
-                    if (!imageUrl) {
-                        throw new Error(this.getMissingImageMessage(type));
+                const filesMap = {};
+
+                // Helper: Blob to Base64
+                const blobToBase64 = (blob) => {
+                    return new Promise((resolve) => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => resolve(reader.result.split(',')[1]);
+                        reader.readAsDataURL(blob);
+                    });
+                };
+
+                // Helper: Fetch Blob
+                async function fetchBlobFromSelector(selector, type) {
+                    const el = document.querySelector(selector);
+                    if (!el) return null;
+                    let url = null;
+                    if (type === 'bg') {
+                        const style = el.style.backgroundImage;
+                        if (style && style !== 'none') url = style.slice(4, -1).replace(/"/g, "");
+                    } else if (type === 'src') url = el.src;
+                    if (url) {
+                        const resp = await fetch(url);
+                        return await resp.blob();
                     }
-                    payload.image_url = imageUrl;
+                    return null;
                 }
 
-                // Step 3: Call API
-                if (onProgress) onProgress('Gerando...');
+                // 2. Collect Assets with Timestamped Names
+                // Format: assets/name_TIMESTAMP.ext
+                for (const [key, config] of Object.entries(assetsMap)) {
+                    let blob = null;
+                    if (config.source) blob = config.source;
+                    else if (config.selector) blob = await fetchBlobFromSelector(config.selector, config.type);
 
-                const isVideo = payload.mode === 'image-to-video';
-                const endpoint = isVideo ? '/api/generate/video' : '/api/generate/image';
+                    if (blob) {
+                        // Define standardized name with timestamp
+                        // e.g. assets/capa_1708540000.png
+                        const filename = `${config.context}_${timestamp}.${config.ext}`;
+                        const path = `assets/${filename}`;
 
-                const response = await fetch(endpoint, {
+                        // Add to Files Payload (path assumes inside slug folder)
+                        // Supabase Adapter expects relative paths to slug root
+                        // filesMap["assets/capa_...png"] = base64
+
+                        filesMap[path] = await blobToBase64(blob);
+
+                        // Update Brain Map (so restore knows exact file)
+                        appState.assetsMap[config.context] = path;
+                    }
+                }
+
+                // 3. Add Brain to Payload
+                filesMap['data.json'] = btoa(JSON.stringify(appState, null, 2));
+
+                // 4. Prepare HTML with Correct Asset Links
+                const templateResp = await fetch('final_template.html');
+                if (!templateResp.ok) throw new Error('Template não encontrado');
+                let htmlContent = await templateResp.text();
+
+                // Replacement Logic: Use the timestamped paths from appState.assetsMap
+                // If an asset wasn't found/uploaded, use empty string or fallback?
+                // The template expects [[CAPA_URL]], etc.
+
+                const getPath = (context) => appState.assetsMap[context] ? `./${appState.assetsMap[context]}` : '';
+
+                htmlContent = htmlContent.replace(/\[\[MUSICA_URL\]\]/g, getPath('musica'));
+                htmlContent = htmlContent.replace(/\[\[CAPA_URL\]\]/g, getPath('capa'));
+                htmlContent = htmlContent.replace(/\[\[FOLHA_URL\]\]/g, getPath('folha_vazia'));
+                htmlContent = htmlContent.replace(/\[\[VIDEO_ABERTURA_URL\]\]/g, getPath('vid_abertura'));
+                htmlContent = htmlContent.replace(/\[\[VIDEO_LOOP_URL\]\]/g, getPath('vid_loop'));
+                htmlContent = htmlContent.replace(/\[\[SLUG\]\]/g, slug);
+
+                // Inject Text Data
+                const formData = window.AutoBuilderForm ? window.AutoBuilderForm.data : {};
+                for (const [key, value] of Object.entries(formData)) {
+                    const regex = new RegExp(`\\[\\[${key.toUpperCase()}\\]\\]`, 'g');
+                    htmlContent = htmlContent.replace(regex, value || '');
+                }
+
+                filesMap['index.html'] = btoa(htmlContent);
+
+                // 5. Send to API
+                updateDeployStep('step-build', 'done');
+                updateDeployStep('step-upload', 'loading');
+
+                // We use /api/publish which is intercepted by supabase-adapter
+                const payload = {
+                    slug: slug,
+                    token: token,
+                    files: filesMap // { "index.html": "base64", "assets/foo.png": "base64" }
+                };
+
+                const response = await fetch('/api/publish', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
 
-                const data = await response.json();
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.error || 'Falha na publicação');
 
-                // Step 4: Extract URL
-                let generatedUrl;
-                if (isVideo) {
-                    generatedUrl = data.data?.video?.url || data.video_url || data.url;
-                } else {
-                    generatedUrl = data.data?.images?.[0]?.url || data.image_url || data.url;
+                updateDeployStep('step-upload', 'done');
+                updateDeployStep('step-live', 'done');
+
+                publishBtn.innerHTML = '<i class="fa-solid fa-check"></i> Publicado!';
+                publishBtn.classList.remove('bg-brand-600');
+                publishBtn.classList.add('bg-green-600');
+
+                // Show Link
+                const liveUrl = `https://mforgedesign.github.io/${slug}/`;
+                alert(`Publicado com sucesso!\n\nAcesse: ${liveUrl}`);
+                window.open(liveUrl, '_blank');
+
+            } catch (err) {
+                console.error('Publish Error:', err);
+                alert('Erro ao publicar: ' + err.message);
+                updateDeployStep('step-upload', 'reset'); // or error state
+            } finally {
+                if (publishBtn.innerHTML.includes('Iniciando')) {
+                    publishBtn.innerHTML = originalText;
                 }
-
-                if (!generatedUrl) {
-                    throw new Error('API não retornou URL válida');
-                }
-
-                // Step 5: Update dropzone preview
-                const dropzoneId = AI_TYPE_TO_DROPZONE[type];
-                const dropzone = document.getElementById(dropzoneId);
-                if (dropzone) {
-                    updateDropzonePreview(dropzone, generatedUrl, isVideo ? 'video' : 'image');
-                }
-
-                // Step 6: Update state
-                window.builderState.assets[type] = generatedUrl;
-
-                // Success callback
-                if (onSuccess) onSuccess(generatedUrl);
-
-                console.log(`✅ Generated ${type}:`, generatedUrl);
-                return generatedUrl;
-
-            } catch (error) {
-                console.error(`❌ Generation error (${type}):`, error);
-                if (onError) onError(error.message);
-                throw error;
+                publishBtn.disabled = false;
             }
-        },
+        });
+    }
+}
 
-        /**
-         * Get required image URL for video/image-to-image generation
-         */
-        async getRequiredImage(type) {
-            const state = window.builderState || {};
-
-            // Image-to-Video requirements
-            if (type === 'intro') {
-                return state.assets?.cover; // Needs capa.jpg
-            }
-            if (type === 'loop') {
-                return state.assets?.background_only; // Needs background_only.jpg
-            }
-
-            // Image-to-Image requirements
-            if (type === 'fill') {
-                return state.assets?.leaf_only; // Needs leaf_only.png
-            }
-            if (type === 'manual' || type === 'gifts') {
-                return state.assets?.background_only || state.assets?.leaf; // Fallback chain
-            }
-
-            return null;
-        },
-
-        /**
-         * Get user-friendly message for missing images
-         */
-        getMissingImageMessage(type) {
-            const messages = {
-                'intro': 'Faça upload ou gere a Capa primeiro.',
-                'loop': 'Execute o tratamento da Folha Vazia primeiro para gerar o background_only.jpg.',
-                'fill': 'Execute o tratamento da Folha Vazia primeiro para gerar o leaf_only.png.',
-                'manual': 'Faça upload da Folha Vazia ou do background tratado primeiro.',
-                'gifts': 'Faça upload da Folha Vazia ou do background tratado primeiro.'
-            };
-            return messages[type] || 'Imagem base necessária não encontrada.';
-        },
-
-        /**
-         * Programmatically set custom prompt (for chatbot)
-         */
-        setPrompt(type, promptText) {
-            const promptIds = {
-                'cover': 'cover-prompt',
-                'leaf': 'leaf-prompt',
-                'intro': 'intro-motion-prompt',
-                'loop': 'loop-motion-prompt',
-                'fill': 'fill-prompt',
-                'manual': 'manual-image-prompt',
-                'gifts': 'gifts-image-prompt'
-            };
-
-            const promptId = promptIds[type];
-            const promptEl = document.getElementById(promptId);
-            if (promptEl) {
-                promptEl.value = promptText;
-            }
-        },
-
-        /**
-         * Trigger generation button programmatically (for chatbot)
-         */
-        async triggerGeneration(type) {
-            const buttonIds = {
-                'cover': 'btn-generate-cover',
-                'leaf': 'btn-generate-leaf',
-                'intro': 'btn-generate-intro',
-                'loop': 'btn-generate-loop',
-                'fill': 'btn-generate-fill',
-                'manual': 'manual-generate-image-btn',
-                'gifts': 'gifts-generate-image-btn'
-            };
-
-            const btn = document.getElementById(buttonIds[type]);
-            if (btn) {
-                btn.click();
-            } else {
-                // Fallback: call generate directly
-                return await this.generate(type);
-            }
-        }
+    // Helper to reverse map contexts (since we defined map one way)
+    // We can just define a helper function or object
+    function findDropzoneId(contextTarget) {
+    // DROPZONE_CONTEXTS is: { 'id': 'context' }
+    // We need 'context' -> 'id'
+    // Since `DROPZONE_CONTEXTS` is in closure, we rely on it being available or re-scan
+    // Ideally we move DROPZONE_CONTEXTS to higher scope or define here
+    const dropzones = {
+        'capa': 'cover-dropzone',
+        'folha_vazia': 'leaf-dropzone',
+        'vid_abertura': 'intro-video-dropzone',
+        'vid_loop': 'loop-video-dropzone',
+        'presentes': 'gifts-image-dropzone',
+        'manual': 'manual-image-dropzone',
+        'musica': 'music-dropzone'
     };
+    return dropzones[contextTarget];
+}
 
 
-    // ========================================
-    // Manual HTML Editor
-    // ========================================
+function updateDeployStep(stepId, status) {
+    const step = document.getElementById(stepId);
+    if (!step) return;
 
-    function setupManualEditor() {
-        const htmlEditor = document.getElementById('manual-html-editor');
-        const preview = document.getElementById('manual-preview');
+    step.classList.remove('bg-gray-200', 'bg-green-500', 'bg-brand-500', 'text-gray-400', 'text-white');
 
-        if (htmlEditor && preview) {
-            htmlEditor.addEventListener('input', () => {
-                preview.innerHTML = htmlEditor.value || `
+    if (status === 'done') {
+        step.classList.add('bg-green-500', 'text-white');
+        step.innerHTML = '<i class="fa-solid fa-check text-xs"></i>';
+    } else if (status === 'loading') {
+        step.classList.add('bg-brand-500', 'text-white');
+        step.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xs"></i>';
+    } else if (status === 'reset') {
+        step.classList.add('bg-gray-200', 'text-gray-400');
+        const stepNum = stepId.replace('step-', '');
+        const nums = { 'build': '1', 'upload': '2', 'live': '3' };
+        step.textContent = nums[stepNum] || '';
+    }
+}
+
+// ========================================
+// AI Generation Buttons
+// ========================================
+
+// Map AI button types to dropzone IDs
+const AI_TYPE_TO_DROPZONE = {
+    'cover': 'cover-dropzone',
+    'leaf': 'leaf-dropzone',
+    'intro': 'intro-video-dropzone',
+    'loop': 'loop-video-dropzone',
+    'fill': 'fill-image-dropzone',
+    'manual': 'manual-image-dropzone',
+    'gifts': 'gifts-image-dropzone'
+};
+
+function setupAIButtons() {
+    const aiButtons = [
+        { id: 'btn-generate-cover', type: 'cover', promptId: 'cover-prompt', mediaType: 'image' },
+        { id: 'btn-generate-leaf', type: 'leaf', promptId: 'leaf-prompt', mediaType: 'image' },
+        { id: 'btn-generate-intro', type: 'intro', promptId: 'intro-motion-prompt', mediaType: 'video' },
+        { id: 'btn-generate-loop', type: 'loop', promptId: 'loop-motion-prompt', mediaType: 'video' },
+        { id: 'btn-generate-fill', type: 'fill', promptId: 'fill-prompt', mediaType: 'image' },
+        { id: 'manual-generate-image-btn', type: 'manual', promptId: 'manual-image-prompt', mediaType: 'image' },
+        { id: 'gifts-generate-image-btn', type: 'gifts', promptId: 'gifts-image-prompt', mediaType: 'image' }
+    ];
+
+    aiButtons.forEach(({ id, type, promptId, mediaType }) => {
+        const btn = document.getElementById(id);
+        if (!btn) return;
+
+        btn.addEventListener('click', async () => {
+            const promptEl = document.getElementById(promptId);
+            const customPrompt = promptEl?.value; // User can override AI prompt
+
+            try {
+                await window.AIGeneration.generate(type, {
+                    customPrompt,
+                    onProgress: (step) => {
+                        btn.disabled = true;
+                        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i>${step}`;
+                    },
+                    onSuccess: (url) => {
+                        btn.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Gerado!';
+                        setTimeout(() => {
+                            btn.innerHTML = btn.dataset.originalText || 'Gerar';
+                            btn.disabled = false;
+                        }, 2000);
+                    },
+                    onError: (error) => {
+                        alert('Erro ao gerar: ' + error);
+                        btn.innerHTML = btn.dataset.originalText || 'Gerar';
+                        btn.disabled = false;
+                    }
+                });
+            } catch (err) {
+                console.error('AI generation error:', err);
+            }
+        });
+
+        // Store original text for reset
+        btn.dataset.originalText = btn.innerHTML;
+    });
+}
+
+// ==================== PUBLIC AI GENERATION API ====================
+// This will be called by both UI buttons and chatbot
+
+window.AIGeneration = {
+    /**
+     * Generate media using AI
+     * @param {string} type - Generation type (cover, leaf, intro, loop, fill, manual, gifts)
+     * @param {object} options - Generation options
+     * @returns {Promise<string>} URL of generated media
+     */
+    async generate(type, options = {}) {
+        const {
+            customPrompt,
+            listContent,
+            rulesContent,
+            referenceImage,
+            onProgress,
+            onSuccess,
+            onError
+        } = options;
+
+        try {
+            // Step 1: Build payload using ai-prompts module
+            if (onProgress) onProgress('Preparando prompt...');
+
+            const payload = window.AIPrompts.buildGenerationPayload(type, {
+                customPrompt,
+                listContent,
+                rulesContent,
+                referenceImage
+            });
+
+            // Step 2: Get required image URL for video/image-to-image
+            if (payload.mode === 'image-to-video' || payload.mode === 'image-to-image') {
+                const imageUrl = await this.getRequiredImage(type);
+                if (!imageUrl) {
+                    throw new Error(this.getMissingImageMessage(type));
+                }
+                payload.image_url = imageUrl;
+            }
+
+            // Step 3: Call API
+            if (onProgress) onProgress('Gerando...');
+
+            const isVideo = payload.mode === 'image-to-video';
+            const endpoint = isVideo ? '/api/generate/video' : '/api/generate/image';
+
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+
+            // Step 4: Extract URL
+            let generatedUrl;
+            if (isVideo) {
+                generatedUrl = data.data?.video?.url || data.video_url || data.url;
+            } else {
+                generatedUrl = data.data?.images?.[0]?.url || data.image_url || data.url;
+            }
+
+            if (!generatedUrl) {
+                throw new Error('API não retornou URL válida');
+            }
+
+            // Step 5: Update dropzone preview
+            const dropzoneId = AI_TYPE_TO_DROPZONE[type];
+            const dropzone = document.getElementById(dropzoneId);
+            if (dropzone) {
+                updateDropzonePreview(dropzone, generatedUrl, isVideo ? 'video' : 'image');
+            }
+
+            // Step 6: Update state
+            window.builderState.assets[type] = generatedUrl;
+
+            // Success callback
+            if (onSuccess) onSuccess(generatedUrl);
+
+            console.log(`✅ Generated ${type}:`, generatedUrl);
+            return generatedUrl;
+
+        } catch (error) {
+            console.error(`❌ Generation error (${type}):`, error);
+            if (onError) onError(error.message);
+            throw error;
+        }
+    },
+
+    /**
+     * Get required image URL for video/image-to-image generation
+     */
+    async getRequiredImage(type) {
+        const state = window.builderState || {};
+
+        // Image-to-Video requirements
+        if (type === 'intro') {
+            return state.assets?.cover; // Needs capa.jpg
+        }
+        if (type === 'loop') {
+            return state.assets?.background_only; // Needs background_only.jpg
+        }
+
+        // Image-to-Image requirements
+        if (type === 'fill') {
+            return state.assets?.leaf_only; // Needs leaf_only.png
+        }
+        if (type === 'manual' || type === 'gifts') {
+            return state.assets?.background_only || state.assets?.leaf; // Fallback chain
+        }
+
+        return null;
+    },
+
+    /**
+     * Get user-friendly message for missing images
+     */
+    getMissingImageMessage(type) {
+        const messages = {
+            'intro': '⚠️ Falta a Capa!\nPor favor, faça upload ou gere a imagem da Capa antes de criar a animação.',
+            'loop': '⚠️ Falta o Background!\nRealize o tratamento da Folha Vazia ("Separar Camadas") para obter o "background_only.jpg".',
+            'fill': '⚠️ Falta a Folha Recortada!\nRealize o tratamento da Folha Vazia para obter o "leaf_only.png".',
+            'manual': 'Faça upload da Folha Vazia ou do background tratado primeiro.',
+            'gifts': 'Faça upload da Folha Vazia ou do background tratado primeiro.'
+        };
+        return messages[type] || 'Imagem base necessária não encontrada.';
+    },
+
+    /**
+     * Programmatically set custom prompt (for chatbot)
+     */
+    setPrompt(type, promptText) {
+        const promptIds = {
+            'cover': 'cover-prompt',
+            'leaf': 'leaf-prompt',
+            'intro': 'intro-motion-prompt',
+            'loop': 'loop-motion-prompt',
+            'fill': 'fill-prompt',
+            'manual': 'manual-image-prompt',
+            'gifts': 'gifts-image-prompt'
+        };
+
+        const promptId = promptIds[type];
+        const promptEl = document.getElementById(promptId);
+        if (promptEl) {
+            promptEl.value = promptText;
+        }
+    },
+
+    /**
+     * Trigger generation button programmatically (for chatbot)
+     */
+    async triggerGeneration(type) {
+        const buttonIds = {
+            'cover': 'btn-generate-cover',
+            'leaf': 'btn-generate-leaf',
+            'intro': 'btn-generate-intro',
+            'loop': 'btn-generate-loop',
+            'fill': 'btn-generate-fill',
+            'manual': 'manual-generate-image-btn',
+            'gifts': 'gifts-generate-image-btn'
+        };
+
+        const btn = document.getElementById(buttonIds[type]);
+        if (btn) {
+            btn.click();
+        } else {
+            // Fallback: call generate directly
+            return await this.generate(type);
+        }
+    }
+};
+
+
+// ========================================
+// Manual HTML Editor
+// ========================================
+
+function setupManualEditor() {
+    const htmlEditor = document.getElementById('manual-html-editor');
+    const preview = document.getElementById('manual-preview');
+
+    if (htmlEditor && preview) {
+        htmlEditor.addEventListener('input', () => {
+            preview.innerHTML = htmlEditor.value || `
                     <div class="text-center text-gray-400">
                         <i class="fa-solid fa-eye-slash text-3xl mb-2"></i>
                         <p class="text-sm">Digite o texto e clique em "Otimizar" para ver a prévia</p>
                     </div>
                 `;
-            });
-        }
+        });
+    }
 
-        // Optimize button
-        const optimizeBtn = document.getElementById('manual-optimize-btn');
-        const rawText = document.getElementById('manual-raw-text');
+    // Optimize button
+    const optimizeBtn = document.getElementById('manual-optimize-btn');
+    const rawText = document.getElementById('manual-raw-text');
 
-        if (optimizeBtn && rawText && htmlEditor && preview) {
-            optimizeBtn.addEventListener('click', async () => {
-                const text = rawText.value;
-                if (!text) return;
+    if (optimizeBtn && rawText && htmlEditor && preview) {
+        optimizeBtn.addEventListener('click', async () => {
+            const text = rawText.value;
+            if (!text) return;
 
-                // Simple transformation (real implementation would use AI)
-                const lines = text.split('\n').filter(l => l.trim());
-                const icons = {
-                    'traje': 'fa-shirt',
-                    'dress': 'fa-shirt',
-                    'hora': 'fa-clock',
-                    'estacionamento': 'fa-car',
-                    'parking': 'fa-car',
-                    'crianças': 'fa-child',
-                    'kids': 'fa-child',
-                    'presente': 'fa-gift',
-                    'gift': 'fa-gift'
-                };
+            // Simple transformation (real implementation would use AI)
+            const lines = text.split('\n').filter(l => l.trim());
+            const icons = {
+                'traje': 'fa-shirt',
+                'dress': 'fa-shirt',
+                'hora': 'fa-clock',
+                'estacionamento': 'fa-car',
+                'parking': 'fa-car',
+                'crianças': 'fa-child',
+                'kids': 'fa-child',
+                'presente': 'fa-gift',
+                'gift': 'fa-gift'
+            };
 
-                const html = lines.map(line => {
-                    let icon = 'fa-circle-info';
-                    for (const [keyword, iconClass] of Object.entries(icons)) {
-                        if (line.toLowerCase().includes(keyword)) {
-                            icon = iconClass;
-                            break;
-                        }
+            const html = lines.map(line => {
+                let icon = 'fa-circle-info';
+                for (const [keyword, iconClass] of Object.entries(icons)) {
+                    if (line.toLowerCase().includes(keyword)) {
+                        icon = iconClass;
+                        break;
                     }
-                    return `<p class="mb-2"><i class="fa-solid ${icon} text-brand-400 mr-2"></i>${line}</p>`;
-                }).join('\n');
+                }
+                return `<p class="mb-2"><i class="fa-solid ${icon} text-brand-400 mr-2"></i>${line}</p>`;
+            }).join('\n');
 
-                htmlEditor.value = html;
-                preview.innerHTML = html;
-            });
+            htmlEditor.value = html;
+            preview.innerHTML = html;
+        });
+    }
+}
+
+// ========================================
+// Auto-Prompt Logic (Theme Integration)
+// ========================================
+
+function setupAutoPromptListener() {
+    // Listen for internal state updates from Form
+    document.addEventListener('stateUpdated', (e) => {
+        const { field, value, state } = e.detail;
+
+        // Trigger when theme or colors change
+        if (field === 'tema' || field === 'event_theme' || field === 'paleta_cores') {
+            console.log('[Windows] Theme changed, refreshing prompts...');
+            refreshAnimationPrompts();
+        }
+    });
+}
+
+function refreshAnimationPrompts() {
+    if (!window.AIPrompts) return;
+
+    // Intro Prompt
+    const introPrompt = window.AIPrompts.getOpeningVideoPrompt();
+    window.AIGeneration.setPrompt('intro', introPrompt);
+
+    // Loop Prompt
+    const loopPrompt = window.AIPrompts.getLoopVideoPrompt();
+    window.AIGeneration.setPrompt('loop', loopPrompt);
+
+    console.log('✨ Animation prompts updated based on new theme');
+}
+
+// ========================================
+// Cover Generation Logic (AI)
+// ========================================
+
+function setupCoverGeneration() {
+    const generateBtn = document.getElementById('btn-generate-cover');
+    const promptInput = document.getElementById('cover-prompt');
+    const coverDropzone = document.getElementById('cover-dropzone');
+    const refDropzone = document.getElementById('cover-reference-dropzone');
+
+    if (!generateBtn || !coverDropzone) return;
+
+    // update button text based on state
+    function updateButtonState() {
+        const hasCover = coverDropzone.style.backgroundImage && coverDropzone.style.backgroundImage !== 'none';
+        if (hasCover) {
+            generateBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> Regenerar com IA';
+            generateBtn.classList.remove('from-brand-600', 'to-indigo-600');
+            generateBtn.classList.add('from-purple-600', 'to-pink-600');
+        } else {
+            generateBtn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Gerar com IA';
+            generateBtn.classList.add('from-brand-600', 'to-indigo-600');
+            generateBtn.classList.remove('from-purple-600', 'to-pink-600');
         }
     }
 
-    // ========================================
-    // Initialization
-    // ========================================
+    // Listen to changes on dropzone to update button
+    const observer = new MutationObserver(updateButtonState);
+    observer.observe(coverDropzone, { attributes: true, attributeFilter: ['style'] });
+    updateButtonState(); // init
 
-    function initWindows() {
-        // Mode toggles
-        setupModeToggle('manual', ['text', 'image']);
-        setupModeToggle('gifts', ['link', 'image']);
-        setupModeToggle('fill', ['overlay', 'flat']);
+    generateBtn.addEventListener('click', async () => {
+        if (!window.APIClient) {
+            alert('Erro: API Client não carregado.');
+            return;
+        }
 
-        // Animation tabs
-        setupAnimationTabs();
+        const prompt = promptInput.value || (window.getCoverPrompt ? window.getCoverPrompt() : '');
+        if (!prompt) {
+            alert('Por favor, digite um prompt ou preencha o formulário para auto-geração.');
+            promptInput.focus();
+            return;
+        }
 
-        // Music player
-        setupMusicPlayer();
+        // Get Reference Image if available (data-base64 stored on element or we read input)
+        // Easier: read the file input directly if file was dragged, OR read the background image data uri
+        let referenceImageBase64 = null;
+        const refInput = refDropzone?.querySelector('input[type="file"]');
 
-        // Dropzones
-        setupDropzones();
+        if (refDropzone && refDropzone.dataset.base64) {
+            referenceImageBase64 = refDropzone.dataset.base64;
+            console.log('Using reference image from cache');
+        }
 
-        // Toggle switches
-        setupToggleSwitches();
+        // UI Loading State
+        const originalText = generateBtn.innerHTML;
+        generateBtn.disabled = true;
+        generateBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Gerando...';
 
-        // Finalize buttons
-        setupFinalizeButtons();
+        try {
+            console.log('Calling APIClient.generateCover...');
+            const imageUrl = await window.APIClient.generateCover(prompt, referenceImageBase64);
 
-        // AI generation buttons
-        setupAIButtons();
+            // Update Main Dropzone
+            updateDropzonePreview(coverDropzone, imageUrl, 'image');
 
-        // Manual editor
-        setupManualEditor();
+            // Persist (assuming updateDropzonePreview handles UI, we need to trigger state update)
+            // Since updateDropzonePreview is purely UI in some versions, let's ensure we call updateField
+            if (window.AutoBuilderForm && window.AutoBuilderForm.updateField) {
+                // We might need to upload this remote URL to our server or save it?
+                // For now, we set it as the value. The build system handles URLs.
+                window.AutoBuilderForm.updateField('capa', imageUrl);
+            }
 
-        console.log('✅ Windows controller initialized');
+            alert('Capa gerada com sucesso!');
+
+        } catch (error) {
+            console.error('Generation failed:', error);
+            alert(`Erro na geração: ${error.message}`);
+        } finally {
+            generateBtn.disabled = false;
+            generateBtn.innerHTML = originalText;
+            updateButtonState(); // refresh state
+        }
+    });
+}
+
+// ========================================
+// Leaf Generation Logic (Blank Sheet)
+// ========================================
+function setupLeafGeneration() {
+    const generateBtn = document.getElementById('btn-generate-leaf');
+    const promptInput = document.getElementById('leaf-prompt');
+    const leafDropzone = document.getElementById('leaf-dropzone');
+
+    // Layer Processing Controls
+    const processBtn = document.getElementById('btn-process-layers');
+    const leafOnlyDropzone = document.getElementById('dropzone-leaf-only');
+    const bgOnlyDropzone = document.getElementById('dropzone-background-only');
+
+    if (!generateBtn || !leafDropzone) return;
+
+    // 1. Leaf Generation (Text-to-Image)
+    generateBtn.addEventListener('click', async () => {
+        if (!window.APIClient) {
+            alert('Erro: API Client não carregado.');
+            return;
+        }
+
+        const prompt = promptInput.value || (window.AIPrompts ? window.AIPrompts.getBlankSheetPrompt() : '');
+        if (!prompt) {
+            alert('Por favor, digite um prompt ou certifique-se que o módulo de prompts está carregado.');
+            promptInput?.focus();
+            return;
+        }
+
+        // UI Loading State
+        const originalText = generateBtn.innerHTML;
+        generateBtn.disabled = true;
+        generateBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Gerando...';
+
+        try {
+            // Call API
+            const imageUrl = await window.APIClient.generateLeaf(prompt);
+
+            // Update UI
+            updateDropzonePreview(leafDropzone, imageUrl);
+
+            // Update Form Logic
+            // Assuming AutoBuilderForm is global and handles 'calda' or 'folha'
+            if (window.AutoBuilderForm) {
+                window.AutoBuilderForm.updateField('folha', imageUrl);
+            }
+
+        } catch (error) {
+            console.error('Leaf Generation failed:', error);
+            alert(`Erro na geração: ${error.message}`);
+        } finally {
+            generateBtn.disabled = false;
+            generateBtn.innerHTML = originalText;
+        }
+    });
+
+    // 2. Treatment Pipeline (Separate Layers: Leaf Only + Background Only)
+    if (processBtn) {
+        processBtn.addEventListener('click', async () => {
+            if (!window.APIClient) return;
+
+            // Check if we have a leaf image to process
+            const leafImage = leafDropzone.style.backgroundImage;
+            if (!leafImage || leafImage === 'none') {
+                alert('Por favor, gere ou faça upload de uma Folha Vazia primeiro.');
+                return;
+            }
+
+            // Get URL from background-image url("...")
+            let leafUrl = leafImage.slice(4, -1).replace(/"/g, "");
+
+            // If it's a blob URL, we might need to convert it to base64 for the API
+            // For now, let's assume APIClient handles it or logic helper does.
+            // NOTE: APIClient expects Base64 or Public URL. Blob URLs won't work remotely.
+            // We need to fetch the blob and convert to base64.
+
+            const originalText = processBtn.innerHTML;
+            processBtn.disabled = true;
+            processBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processando...';
+
+            try {
+                // Convert to base64 if needed
+                let base64Input = leafUrl;
+                if (leafUrl.startsWith('blob:') || leafUrl.startsWith('http')) {
+                    const resp = await fetch(leafUrl);
+                    const blob = await resp.blob();
+                    base64Input = await new Promise((resolve) => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => resolve(reader.result); // Helper
+                        reader.readAsDataURL(blob);
+                    });
+                }
+
+                // A. Remove Background (Get Leaf Only)
+                const leafOnlyUrl = await window.APIClient.removeBackground(base64Input);
+                if (leafOnlyDropzone) updateDropzonePreview(leafOnlyDropzone, leafOnlyUrl);
+                if (window.AutoBuilderForm) window.AutoBuilderForm.updateField('folha_only', leafOnlyUrl);
+
+                // B. Inpaint (Get Background Only)
+                try {
+                    console.log('Generating mask for inpainting...');
+
+                    // 1. Create Mask from Leaf Only (Alpha Channel)
+                    const maskDataUrl = await createMaskFromImage(leafOnlyUrl);
+
+                    // 2. Call Inpaint API
+                    // Prompt: "clean background, empty table, no paper, elegant texture"
+                    // Trigger Inpaint to remove the leaf area defined by mask
+                    const backgroundOnlyUrl = await window.APIClient.inpaint(
+                        base64Input, // Original Image
+                        maskDataUrl, // Mask (White = area to remove/change)
+                        "clean background, texture, empty surface, high quality, consistent lighting"
+                    );
+
+                    // 3. Update UI
+                    if (bgOnlyDropzone) updateDropzonePreview(bgOnlyDropzone, backgroundOnlyUrl);
+                    if (window.AutoBuilderForm) window.AutoBuilderForm.updateField('background_only', backgroundOnlyUrl);
+
+                } catch (bgError) {
+                    console.error('Background Generation check failed:', bgError);
+                    // Don't block whole flow if masking fails, but log it.
+                    alert('Folha separada, mas houve erro ao gerar o background limpo: ' + bgError.message);
+                }
+
+            } catch (error) {
+                console.error('Treatment failed:', error);
+                alert(`Erro no tratamento: ${error.message}`);
+            } finally {
+                processBtn.disabled = false;
+                processBtn.innerHTML = originalText;
+            }
+        });
     }
+}
 
-    // ========================================
-    // Initialize on DOM Ready
-    // ========================================
-    // ========================================
-    // Expose to Global Scope
-    // ========================================
-    window.updateDropzonePreview = updateDropzonePreview;
+/**
+ * Helper: Create a binary mask from a transparent image.
+ * White = Non-Transparent (Subject) -> Area to Inpaint/Remove
+ * Black = Transparent (Background) -> Keep
+ */
+function createMaskFromImage(imageUrl) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
 
-    // Auto-init
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initWindows);
-    } else {
-        initWindows();
-    }
+            // Draw image
+            ctx.drawImage(img, 0, 0);
 
-    // ========================================
-    // Expose to Global Scope
-    // ========================================
-    window.AutoBuilderWindows = {
-        setupModeToggle,
-        setupAnimationTabs,
-        setupMusicPlayer
-    };
+            // Get pixel data
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
 
-})();
+            // Loop through pixels
+            for (let i = 0; i < data.length; i += 4) {
+                const alpha = data[i + 3];
+
+                // If pixel has opacity (is part of leaf) -> Make it WHITE (Target for Inpaint)
+                // If pixel is transparent -> Make it BLACK (Keep original background)
+                if (alpha > 10) {
+                    data[i] = 255;     // R
+                    data[i + 1] = 255; // G
+                    data[i + 2] = 255; // B
+                    data[i + 3] = 255; // Alpha
+                } else {
+                    data[i] = 0;
+                    data[i + 1] = 0;
+                    data[i + 2] = 0;
+                    data[i + 3] = 255; // Alpha (Opaque black)
+                }
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+            resolve(canvas.toDataURL('image/png'));
+        };
+        img.onerror = (err) => reject(err);
+        img.src = imageUrl;
+    });
+}
+
+
+function initWindows() {
+    // Mode toggles
+    setupModeToggle('manual', ['text', 'image']);
+    setupModeToggle('gifts', ['link', 'image']);
+    setupModeToggle('fill', ['overlay', 'flat']);
+
+    // Animation tabs
+    setupAnimationTabs();
+
+    // Auto-Prompt Listener
+    setupAutoPromptListener();
+
+    // Music player
+    setupMusicPlayer();
+
+    // Dropzones
+    setupDropzones();
+
+    // Toggle switches
+    setupToggleSwitches();
+
+    // Finalize buttons
+    setupFinalizeButtons();
+
+    // AI generation buttons
+    setupCoverGeneration();
+    setupLeafGeneration();
+
+    // Manual editor
+    setupManualEditor();
+
+    console.log('✅ Windows controller initialized');
+}
+
+// ========================================
+// Initialize on DOM Ready
+// ========================================
+// ========================================
+// Expose to Global Scope
+// ========================================
+window.updateDropzonePreview = updateDropzonePreview;
+
+// Auto-init
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initWindows);
+} else {
+    initWindows();
+}
+
+// ========================================
+// Expose to Global Scope
+// ========================================
+window.AutoBuilderWindows = {
+    setupModeToggle,
+    setupAnimationTabs,
+    setupMusicPlayer
+};
+
+}) ();
