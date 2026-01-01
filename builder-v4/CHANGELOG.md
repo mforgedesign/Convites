@@ -652,3 +652,15 @@ Registro de todas as modificações do projeto, conforme as diretrizes das globa
 * `static/js/windows.js`:
     * Fix `setupMusicPlayer` to correctly define DOM elements (`playBtn`, `progressBar`, etc.) mapped to `index.html` IDs.
     * Rationale: Fixed regression where Music Player controls were undefined and non-functional.
+
+## [2026-01-01 19:10] - Fix Mode Toggles (Gifts, Manual, Fill)
+
+### Arquivos Modificados:
+* `windows.js`:
+    * Added error logging to `setupModeToggle` to diagnose missing elements.
+    * Added `e.preventDefault()` to toggle click handlers to prevent potential form submission conflicts.
+    * Added logic to update `dataset.mode` on the container for state persistence.
+* `index.html`:
+    * Added IDs to mode toggle containers (`#gifts-mode-buttons`, `#manual-mode-buttons`, `#fill-mode-buttons`) to support state persistence logic.
+    * Added `data-mode` attributes to all mode toggle buttons to ensure correct initial state capturing.
+    * Rationale: Users reported inability to switch modes. This fix standardizes the toggle structure and enables robust state saving.
