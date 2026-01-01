@@ -70,10 +70,15 @@
 
                 // Update global state first
                 if (window.builderState) {
-                    window.builderState.formData = { ...savedState.formData };
+                    // Filter out timer to force default state on reload
+                    const { timer_contagem, ...rest } = savedState.formData;
+                    window.builderState.formData = { ...rest };
                 }
 
                 Object.entries(savedState.formData).forEach(([key, value]) => {
+                    // Skip restoring timer toggle to enforce default hidden state
+                    if (key === 'timer_contagem') return;
+
                     const input = document.querySelector(`[data-field="${key}"], [name="${key}"], #form-${key}`);
                     if (input) {
                         if (input.type === 'checkbox') {
