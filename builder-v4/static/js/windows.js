@@ -22,12 +22,26 @@
      */
     function setupModeToggle(prefix, modes) {
         modes.forEach(mode => {
-            const btn = document.getElementById(`${prefix}-mode-${mode}`);
-            const content = document.getElementById(`${prefix}-${mode}-mode`);
+            const btnKey = `${prefix}-mode-${mode}`;
+            const contentKey = `${prefix}-${mode}-mode`;
+            const btn = document.getElementById(btnKey);
+            const content = document.getElementById(contentKey);
 
-            if (!btn || !content) return;
+            if (!btn) {
+                console.warn(`[AutoBuilder] Mode Toggle Button not found: #${btnKey}`);
+                return;
+            }
+            if (!content) {
+                console.warn(`[AutoBuilder] Mode Toggle Content not found: #${contentKey}`);
+                return;
+            }
 
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', (e) => {
+                // Prevent default in case it's inside a form or treated as submit
+                e.preventDefault();
+
+                console.log(`[AutoBuilder] Switch mode: ${prefix} -> ${mode}`);
+
                 // Deactivate all buttons
                 modes.forEach(m => {
                     const otherBtn = document.getElementById(`${prefix}-mode-${m}`);
@@ -36,6 +50,9 @@
                     if (otherBtn) {
                         otherBtn.classList.remove('bg-white', 'shadow-sm', 'text-brand-600');
                         otherBtn.classList.add('text-gray-500');
+                        // Reset dataset mode for state generator
+                        const container = otherBtn.closest('.flex');
+                        if (container && container.id) container.dataset.mode = ''; // cleanup
                     }
                     if (otherContent) {
                         otherContent.classList.add('hidden');
@@ -46,6 +63,13 @@
                 btn.classList.remove('text-gray-500');
                 btn.classList.add('bg-white', 'shadow-sm', 'text-brand-600');
                 content.classList.remove('hidden');
+
+                // Update container dataset for state persistence
+                const container = btn.closest('.flex');
+                if (container) {
+                    // We don't have an ID on the container usually, but we can set dataset
+                    container.dataset.mode = mode;
+                }
             });
         });
     }
