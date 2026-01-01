@@ -13,10 +13,12 @@
     // ========================================
 
     // Native buttons only appear if their respective links are filled
+    // Native buttons only appear if their respective links/media are filled
     const NATIVE_BUTTON_MAP = {
         link_google_maps: { id: 'local', label: 'Local', icon: 'fa-solid fa-location-dot' },
         numero_whatsapp: { id: 'confirmar', label: 'Confirmar', icon: 'fa-brands fa-whatsapp' },
-        link_presentes: { id: 'presentes', label: 'Presentes', icon: 'fa-solid fa-gift' }
+        link_presentes: { id: 'presentes', label: 'Presentes', icon: 'fa-solid fa-gift' },
+        manual: { id: 'manual', label: 'Manual', icon: 'fa-solid fa-book-open' }
     };
 
     // Default gradient when no media is available
@@ -34,9 +36,11 @@
         numero_whatsapp: '',
         link_presentes: '',
         // Media fields - Priority: folha_animada/folha_preenchida > folha_vazia > gradient
-        media_folha_animada: null,   // { type: 'video', url: '...' }
-        media_folha_preenchida: null, // { type: 'image', url: '...' }
-        media_folha_vazia: null       // { type: 'image', url: '...' }
+        media_folha_animada: null,
+        media_folha_preenchida: null,
+        media_folha_vazia: null,
+        media_presentes: null,
+        media_manual: null
     };
 
     // ========================================
@@ -74,7 +78,6 @@
 
     /**
      * Renders all buttons (native + extras) in the preview.
-     * Native buttons only appear if their respective links are configured.
      */
     function renderButtons() {
         const container = document.querySelector('#preview-buttons > div');
@@ -90,12 +93,29 @@
 
         let buttonCount = 0;
 
-        // Add native buttons ONLY if their links are filled
-        for (const [field, btnConfig] of Object.entries(NATIVE_BUTTON_MAP)) {
-            const linkValue = currentState[field];
-            if (linkValue && linkValue.trim()) {
+        // Helper to check if a button should show
+        const shouldShow = (key) => {
+            if (key === 'link_google_maps') return !!currentState.link_google_maps;
+            if (key === 'numero_whatsapp') return !!currentState.numero_whatsapp;
+
+            // Presentes: Show if link exists OR image exists
+            if (key === 'link_presentes') {
+                return !!currentState.link_presentes || (currentState.media_presentes && currentState.media_presentes.url);
+            }
+
+            // Manual: Show if manual image exists (add text check later if needed)
+            if (key === 'manual') {
+                return currentState.media_manual && currentState.media_manual.url;
+            }
+
+            return false;
+        };
+
+        // Add native buttons
+        for (const [key, config] of Object.entries(NATIVE_BUTTON_MAP)) {
+            if (shouldShow(key)) {
                 container.appendChild(createButtonElement({
-                    ...btnConfig,
+                    ...config,
                     type: 'native'
                 }, color));
                 buttonCount++;
@@ -103,8 +123,7 @@
         }
 
         // Add extra links
-        const extras = currentState.links_extras || [];
-        extras.forEach(link => {
+        (currentState.links_extras || []).forEach(link => {
             if (link.label && link.label.trim()) {
                 container.appendChild(createButtonElement({
                     id: 'extra-' + (link.id || Math.random()),
@@ -121,8 +140,6 @@
         if (buttonsWrapper) {
             buttonsWrapper.style.display = buttonCount > 0 ? 'flex' : 'none';
         }
-
-        console.log('[Preview] Rendered', buttonCount, 'buttons');
     }
 
     /**
@@ -167,9 +184,15 @@
      */
     function updateTimerVisibility(visible) {
         const timer = document.getElementById('preview-timer');
+        const mobileTimer = document.getElementById('mobile-preview-timer');
+
         if (timer) {
             timer.style.display = visible ? 'flex' : 'none';
         }
+        if (mobileTimer) {
+            mobileTimer.style.display = visible ? 'flex' : 'none';
+        }
+
         currentState.timer_contagem = visible;
     }
 
@@ -308,7 +331,7 @@
                         cor_botoes: state.cor_botoes || '#4f46e5',
                         sombra_gradiente: state.sombra_gradiente || '#000000',
                         posicao_botoes: state.posicao_botoes || 50,
-                        timer_contagem: state.timer_contagem !== false,
+                        timer_contagem: !!state.timer_contagem,
                         links_extras: state.links_extras || [],
                         link_google_maps: state.link_google_maps || '',
                         numero_whatsapp: state.numero_whatsapp || '',
