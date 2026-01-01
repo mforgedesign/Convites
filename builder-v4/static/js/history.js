@@ -113,9 +113,10 @@
                     return;
                 }
 
-                const [slug, filename] = item.path.split('/');
+                const parts = item.path.split('/');
+                const slug = parts[0];
 
-                // If we haven't seen this folder yet (maybe it wasn't listed as tree first)
+                // If we haven't seen this folder yet
                 if (!invitationsMap.has(slug) && !slug.startsWith('.') && slug !== 'builder') {
                     invitationsMap.set(slug, {
                         slug: slug,
@@ -129,12 +130,22 @@
                     inv.files.push(item);
 
                     // Check for cover image
-                    const lowerName = filename.toLowerCase();
-                    if ((lowerName.includes('capa') || lowerName.includes('cover')) &&
-                        (lowerName.endsWith('.jpg') || lowerName.endsWith('.jpeg') ||
-                            lowerName.endsWith('.png') || lowerName.endsWith('.webp'))) {
-                        // Construct raw URL directly
-                        inv.coverUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/${item.path}`;
+                    const lowerPath = item.path.toLowerCase();
+
+                    // Must be a valid image
+                    if (/\.(jpg|jpeg|png|webp)$/i.test(lowerPath)) {
+
+                        // Check if "capa" or "cover" is in the path (excluding the slug itself)
+                        // This handles:
+                        // - slug/capa.jpg
+                        // - slug/capa/image.jpg
+                        // - slug/assets/cover.png
+                        const pathInsideSlug = parts.slice(1).join('/').toLowerCase();
+
+                        if (pathInsideSlug.includes('capa') || pathInsideSlug.includes('cover')) {
+                            // Construct raw URL directly
+                            inv.coverUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/${item.path}`;
+                        }
                     }
                 }
             });
