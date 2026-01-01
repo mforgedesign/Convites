@@ -10,17 +10,23 @@
   "buttonsOffset": 0,
   "buttonSize": 1,
   "phrase": "",
-  "music": "Photograph - Ed Sheeran",
+  "music": "Photograph - Ed Sheeran (Official Lyric Video)",
   "location": "Salão de Festas - Clube Social - PORTO ATIBAIA",
   "mapsLink": "https://maps.app.goo.gl/5imL7oM51RDnbsFy5",
   "giftsLink": "",
   "giftSuggestions": "",
   "giftMode": "none",
   "giftImageUrl": null,
-  "extraLinks": [],
+  "extraLinks": [
+    {
+      "link": "https://docs.google.com/forms/d/e/1FAIpQLSczmQcEqFOytR-GbLx-GKXqx2TQAGlOaQr1_DxVan3xL0NyKg/viewform?usp=publish-editor",
+      "name": "Sugerir Música",
+      "icon": "fa-solid fa-music"
+    }
+  ],
   "manual": "Se divertir muito!\nChegue no horário: Sua presença pontual é muito importante para nós.\n Confirme sua presença: Por favor, confirme presença pelo menos 15 dias antes do evento.\n Divirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.\n Não vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.",
   "manualName": "Manual do Convidado",
-  "whatsapp": "5511996426055",
+  "whatsapp": "5511956761771",
   "confirmLink": "",
   "processedManualText": "<div>\n    <h3><i class=\"fa-solid fa-smile\"></i> Regras Importantes:</h3>\n    <ul>\n        <li><i class=\"fa-solid fa-clock\"></i> Se divertir muito!</li>\n        <li><i class=\"fa-solid fa-calendar-check\"></i> Chegue no horário: Sua presença pontual é muito importante para nós.</li>\n        <li><i class=\"fa-solid fa-check-circle\"></i> Confirme sua presença: Por favor, confirme presença pelo menos 15 dias antes do evento.</li>\n        <li><i class=\"fa-solid fa-party-horn\"></i> Divirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.</li>\n        <li><i class=\"fa-solid fa-heart\"></i> Não vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.</li>\n    </ul>\n</div>",
   "manualMode": "text",
