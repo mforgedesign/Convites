@@ -310,6 +310,17 @@
                         // Update preview with server URL
                         if (result.data?.url) {
                             updateDropzonePreview(dropzone, result.data.url, type);
+
+                            // Dispatch event for preview.js to update background
+                            document.dispatchEvent(new CustomEvent('mediaUpdated', {
+                                detail: {
+                                    type: context,
+                                    data: {
+                                        type: type,
+                                        url: result.data.url
+                                    }
+                                }
+                            }));
                         }
                     } catch (err) {
                         console.error(`❌ Upload error (${context}):`, err);
