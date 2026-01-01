@@ -250,16 +250,49 @@
                 // Handle Preview Button
                 if (previewBtn) {
                     e.stopPropagation();
-                    // Simple preview implementation
                     const currentIcon = previewBtn.querySelector('i');
 
-                    // Stop any potential currently playing preview (naive approach)
-                    //Ideally we track the current preview audio
+                    // Track current preview audio globally
+                    if (!window._currentPreviewAudio) {
+                        window._currentPreviewAudio = null;
+                        window._currentPreviewBtn = null;
+                    }
 
+                    // If clicking the same button that's currently playing, toggle pause
+                    if (window._currentPreviewBtn === previewBtn && window._currentPreviewAudio) {
+                        if (window._currentPreviewAudio.paused) {
+                            window._currentPreviewAudio.play();
+                            currentIcon.classList.remove('fa-play');
+                            currentIcon.classList.add('fa-pause');
+                        } else {
+                            window._currentPreviewAudio.pause();
+                            currentIcon.classList.remove('fa-pause');
+                            currentIcon.classList.add('fa-play');
+                        }
+                        return;
+                    }
+
+                    // Stop any currently playing preview
+                    if (window._currentPreviewAudio) {
+                        window._currentPreviewAudio.pause();
+                        window._currentPreviewAudio = null;
+                        // Reset previous button icon
+                        if (window._currentPreviewBtn) {
+                            const prevIcon = window._currentPreviewBtn.querySelector('i');
+                            if (prevIcon) {
+                                prevIcon.classList.remove('fa-pause');
+                                prevIcon.classList.add('fa-play');
+                            }
+                        }
+                    }
+
+                    // Create and play new audio
                     const tempAudio = new Audio(sampleUrl);
+                    window._currentPreviewAudio = tempAudio;
+                    window._currentPreviewBtn = previewBtn;
                     tempAudio.play();
 
-                    // Toggle Icon (Visual only for now, assumes short samples)
+                    // Update icon
                     if (currentIcon) {
                         currentIcon.classList.remove('fa-play');
                         currentIcon.classList.add('fa-pause');
@@ -270,6 +303,8 @@
                             currentIcon.classList.remove('fa-pause');
                             currentIcon.classList.add('fa-play');
                         }
+                        window._currentPreviewAudio = null;
+                        window._currentPreviewBtn = null;
                     };
                 }
             });
