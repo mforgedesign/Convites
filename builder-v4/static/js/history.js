@@ -91,33 +91,49 @@
             const data = await response.json();
             const tree = data.tree;
 
+            // Fetch ignored paths config
+            let ignoredPaths = ['builder', 'static', 'assets', 'builder-v4', 'home', 'v3-1']; // Defaults
+            try {
+                const configResponse = await fetch('builder-config.json');
+                if (configResponse.ok) {
+                    const config = await configResponse.json();
+                    if (config.ignorePaths && Array.isArray(config.ignorePaths)) {
+                        ignoredPaths = config.ignorePaths;
+                    }
+                }
+            } catch (e) {
+                console.warn('[History] Could not load builder-config.json, using defaults.', e);
+            }
+
+            // Normalize ignored paths for case-insensitive comparison
+            const ignoredSet = new Set(ignoredPaths.map(p => p.toLowerCase()));
+
             // Process tree to find invitations
             // directory structure: slug/file.ext
             const invitationsMap = new Map();
 
             tree.forEach(item => {
-                // Skip root files, hidden folders, and 'builder' folder
-                if (!item.path.includes('/') || item.path.startsWith('.') || item.path.startsWith('builder/')) {
-                    // Check if it's a root folder (potential invitation)
-                    if (item.type === 'tree' && !item.path.includes('/') &&
-                        !item.path.startsWith('.') && item.path !== 'builder') {
-                        // Initialize group
-                        if (!invitationsMap.has(item.path)) {
-                            invitationsMap.set(item.path, {
-                                slug: item.path,
-                                coverUrl: null,
-                                files: []
-                            });
-                        }
-                    }
+                const pathLower = item.path.toLowerCase();
+
+                // Skip if matches ignored path (partial or full match check strategy)
+                // Strategy: exact match on root folder name
+                const rootFolder = item.path.split('/')[0].toLowerCase();
+
+                if (ignoredSet.has(rootFolder) || pathLower.startsWith('.')) {
                     return;
+                }
+
+                // Skip root files that are not directories
+                if (!item.path.includes('/')) {
+                    if (item.type !== 'tree') return; // Skip files in root
                 }
 
                 const parts = item.path.split('/');
                 const slug = parts[0];
 
                 // If we haven't seen this folder yet
-                if (!invitationsMap.has(slug) && !slug.startsWith('.') && slug !== 'builder') {
+                // Extra safety: re-check against ignore list (redundant but safe)
+                if (!invitationsMap.has(slug) && !slug.startsWith('.') && !ignoredSet.has(slug.toLowerCase())) {
                     invitationsMap.set(slug, {
                         slug: slug,
                         coverUrl: null,
