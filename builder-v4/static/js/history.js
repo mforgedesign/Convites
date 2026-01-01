@@ -57,7 +57,7 @@
     }
 
     /**
-     * Load invitations from GitHub - SEQUENTIAL LAZY LOADING
+     * Load invitations from GitHub - OPTIMIZED (Single Request)
      */
     async function loadInvitations() {
         if (isLoading) return;
@@ -67,11 +67,12 @@
         showState('loading');
 
         try {
-            console.log('[History] Fetching invitations from GitHub...');
+            console.log('[History] Fetching invitations tree from GitHub...');
 
-            // Get list of folders in root directory
+            // Fetch entire repository tree in ONE request (recursive=2)
+            // This avoids N+1 requests that hit API rate limits (403 error)
             const response = await fetch(
-                `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/`,
+                `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/git/trees/main?recursive=2`,
                 {
                     headers: {
                         'Accept': 'application/vnd.github.v3+json'
@@ -80,47 +81,94 @@
             );
 
             if (!response.ok) {
+                // Handle rate limit specifically
+                if (response.status === 403) {
+                    throw new Error('Limite de acesso ao GitHub atingido. Tente novamente em alguns minutos.');
+                }
                 throw new Error(`GitHub API error: ${response.status}`);
             }
 
-            const contents = await response.json();
+            const data = await response.json();
+            const tree = data.tree;
 
-            // Filter for directories (potential invitations)
-            const folders = contents.filter(item =>
-                item.type === 'dir' &&
-                !item.name.startsWith('.') &&
-                !item.name.startsWith('builder') &&
-                item.name !== '404.html' &&
-                item.name !== 'README.md'
-            );
+            // Process tree to find invitations
+            // directory structure: slug/file.ext
+            const invitationsMap = new Map();
 
-            if (folders.length === 0) {
+            tree.forEach(item => {
+                // Skip root files, hidden folders, and 'builder' folder
+                if (!item.path.includes('/') || item.path.startsWith('.') || item.path.startsWith('builder/')) {
+                    // Check if it's a root folder (potential invitation)
+                    if (item.type === 'tree' && !item.path.includes('/') &&
+                        !item.path.startsWith('.') && item.path !== 'builder') {
+                        // Initialize group
+                        if (!invitationsMap.has(item.path)) {
+                            invitationsMap.set(item.path, {
+                                slug: item.path,
+                                coverUrl: null,
+                                files: []
+                            });
+                        }
+                    }
+                    return;
+                }
+
+                const [slug, filename] = item.path.split('/');
+
+                // If we haven't seen this folder yet (maybe it wasn't listed as tree first)
+                if (!invitationsMap.has(slug) && !slug.startsWith('.') && slug !== 'builder') {
+                    invitationsMap.set(slug, {
+                        slug: slug,
+                        coverUrl: null,
+                        files: []
+                    });
+                }
+
+                if (invitationsMap.has(slug)) {
+                    const inv = invitationsMap.get(slug);
+                    inv.files.push(item);
+
+                    // Check for cover image
+                    const lowerName = filename.toLowerCase();
+                    if ((lowerName.includes('capa') || lowerName.includes('cover')) &&
+                        (lowerName.endsWith('.jpg') || lowerName.endsWith('.jpeg') ||
+                            lowerName.endsWith('.png') || lowerName.endsWith('.webp'))) {
+                        // Construct raw URL directly
+                        inv.coverUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/${item.path}`;
+                    }
+                }
+            });
+
+            // Convert to array and sort
+            invitations = Array.from(invitationsMap.values())
+                .filter(inv => inv.slug !== '404.html' && inv.slug !== 'assets' && inv.slug !== 'static')
+                .map(inv => ({
+                    slug: inv.slug,
+                    coverUrl: inv.coverUrl,
+                    liveUrl: `${GITHUB_PAGES_BASE}${inv.slug}/`,
+                    repoUrl: `${GITHUB_REPO_BASE}${inv.slug}`,
+                    timestamp: Date.now() // We don't get individual timestamps in tree view, using now
+                }));
+
+            // Sort alphabetical for now (tree doesn't give dates)
+            invitations.sort((a, b) => a.slug.localeCompare(b.slug));
+
+            if (invitations.length === 0) {
                 showState('empty');
                 isLoading = false;
                 return;
             }
 
-            // Sort folders by name (newest first)
-            folders.sort((a, b) => b.name.localeCompare(a.name));
+            console.log(`[History] Found ${invitations.length} invitations via Tree API`);
 
-            // Show cards container BEFORE loading starts
+            // Show cards container
             showState('cards');
-            invitations = [];
 
-            // SEQUENTIAL LAZY LOADING: Load and render ONE AT A TIME
-            console.log(`[History] Starting sequential load of ${folders.length} invitations...`);
+            // Render all
+            invitations.forEach(invitation => {
+                renderCard(invitation);
+            });
 
-            for (let i = 0; i < folders.length; i++) {
-                // Load this invitation
-                await loadInvitationDetails(folders[i]);
-
-                // Small delay between requests (rate limiting + smoother UX)
-                if (i < folders.length - 1) {
-                    await new Promise(resolve => setTimeout(resolve, 300));
-                }
-            }
-
-            console.log(`[History] Completed loading ${invitations.length} invitations`);
             isLoading = false;
 
         } catch (error) {
@@ -131,57 +179,10 @@
     }
 
     /**
-     * Load details for a single invitation and render immediately
+     * Load details for a single invitation - DEPRECATED (Merged into loadInvitations)
      */
     async function loadInvitationDetails(folder) {
-        try {
-            const slug = folder.name;
-
-            console.log(`[History] Loading ${slug}...`);
-
-            // Try to find cover image
-            const filesResponse = await fetch(
-                `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${slug}`,
-                {
-                    headers: {
-                        'Accept': 'application/vnd.github.v3+json'
-                    }
-                }
-            );
-
-            if (!filesResponse.ok) {
-                console.warn(`[History] Could not load files for ${slug}`);
-                return;
-            }
-
-            const files = await filesResponse.json();
-
-            // Find capa image - flexible matching
-            const capaFile = files.find(f => {
-                const name = f.name.toLowerCase();
-                return (name.includes('capa') || name.includes('cover')) &&
-                    (name.endsWith('.jpg') || name.endsWith('.jpeg') ||
-                        name.endsWith('.png') || name.endsWith('.webp'));
-            });
-
-            const invitation = {
-                slug,
-                coverUrl: capaFile ? capaFile.download_url : null,
-                liveUrl: `${GITHUB_PAGES_BASE}${slug}/`,
-                repoUrl: `${GITHUB_REPO_BASE}${slug}`,
-                timestamp: folder.sha
-            };
-
-            invitations.push(invitation);
-
-            // RENDER IMMEDIATELY (this is the key!)
-            renderCard(invitation);
-
-            console.log(`[History] ✓ Rendered ${slug}`);
-
-        } catch (error) {
-            console.error(`[History] Error loading ${folder.name}:`, error);
-        }
+        // No longer needed with Tree API
     }
 
     /**
