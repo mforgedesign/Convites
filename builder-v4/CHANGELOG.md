@@ -664,3 +664,10 @@ Registro de todas as modificações do projeto, conforme as diretrizes das globa
     * Added IDs to mode toggle containers (`#gifts-mode-buttons`, `#manual-mode-buttons`, `#fill-mode-buttons`) to support state persistence logic.
     * Added `data-mode` attributes to all mode toggle buttons to ensure correct initial state capturing.
     * Rationale: Users reported inability to switch modes. This fix standardizes the toggle structure and enables robust state saving.
+
+## [2026-01-01 19:25] - Fix Critical Syntax Error (IIFE Break)
+
+### Arquivos Modificados:
+* `windows.js`:
+    * **CRITICAL FIX**: Removed stray closing brace `}` at line 1167 that was prematurely terminating the IIFE.
+    * Rationale: This syntax error caused the entire `windows.js` to fail silently, breaking ALL interactivity (mode toggles, music player, dropzones, finalize buttons, etc.). No console errors were shown because the script failed to parse entirely.
