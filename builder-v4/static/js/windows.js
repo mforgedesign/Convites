@@ -1222,8 +1222,13 @@
                     }
                 }
 
+                // Helper: UTF-8 safe Base64 encoding
+                function utf8_to_b64(str) {
+                    return window.btoa(unescape(encodeURIComponent(str)));
+                }
+
                 // 3. Add Brain to Payload
-                filesMap['data.json'] = btoa(JSON.stringify(appState, null, 2));
+                filesMap['data.json'] = utf8_to_b64(JSON.stringify(appState, null, 2));
 
                 // 4. Prepare HTML with Correct Asset Links
                 const templateResp = await fetch('final_template.html');
@@ -1250,7 +1255,7 @@
                     htmlContent = htmlContent.replace(regex, value || '');
                 }
 
-                filesMap['index.html'] = btoa(htmlContent);
+                filesMap['index.html'] = utf8_to_b64(htmlContent);
 
                 // 5. Send to API
                 updateDeployStep('step-build', 'done');
