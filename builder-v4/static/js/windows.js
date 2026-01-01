@@ -87,9 +87,12 @@
     // ========================================
 
     function setupMusicPlayer() {
-        const audioInput = document.getElementById('music-upload');
-        const audioPlayer = document.getElementById('audio-preview');
-        const fileNameDisplay = document.getElementById('music-filename');
+        const audioPlayer = document.getElementById('music-audio-player');
+        const trackName = document.getElementById('music-track-name');
+        const playBtn = document.getElementById('music-play-btn');
+        const progressBar = document.getElementById('music-progress');
+        const timeCurrent = document.getElementById('music-time-current');
+        const timeTotal = document.getElementById('music-time-total');
         const removeBtn = document.getElementById('music-remove-btn');
         const fileInput = document.getElementById('music-file-input');
 
@@ -170,32 +173,83 @@
             });
         }
 
-        // Sample selection
-        document.querySelectorAll('.sample-select-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const item = btn.closest('.sample-item');
-                const sampleName = item?.dataset.name;
-                const sampleFile = item?.dataset.sample;
+        // Sample selection (Using Delegation for robustness)
+        const samplesList = document.getElementById('music-samples-list');
+        if (samplesList) {
+            samplesList.addEventListener('click', async (e) => {
+                const selectBtn = e.target.closest('.sample-select-btn');
+                const previewBtn = e.target.closest('.sample-preview-btn');
+                const item = e.target.closest('.sample-item');
 
-                if (sampleName && trackName) {
-                    trackName.textContent = sampleName;
-                    // In real implementation, would load actual sample file
-                    // For now, just update the UI
-                    playBtn.disabled = false;
-                    if (removeBtn) removeBtn.classList.remove('hidden');
+                if (!item) return;
+
+                const sampleUrl = item.dataset.sample;
+                const sampleName = item.dataset.name;
+
+                // Handle Use Button
+                if (selectBtn) {
+                    e.stopPropagation();
+
+                    if (trackName) trackName.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Carregando...`;
+                    playBtn.disabled = true;
+
+                    try {
+                        // Fetch the sample as a blob
+                        const resp = await fetch(sampleUrl);
+                        const blob = await resp.blob();
+
+                        // Update State
+                        if (!window.builderState) window.builderState = {};
+                        if (!window.builderState.assets) window.builderState.assets = {};
+                        window.builderState.assets.music = blob;
+
+                        // Update Player
+                        const objectUrl = URL.createObjectURL(blob);
+                        audioPlayer.src = objectUrl;
+                        audioPlayer.load();
+
+                        // Update UI
+                        if (trackName) trackName.textContent = sampleName;
+                        playBtn.disabled = false;
+                        if (removeBtn) removeBtn.classList.remove('hidden');
+
+                        // Visual Feedback
+                        document.querySelectorAll('.sample-item').forEach(i => i.classList.remove('ring-2', 'ring-brand-500', 'bg-brand-50'));
+                        item.classList.add('ring-2', 'ring-brand-500', 'bg-brand-50');
+
+                    } catch (err) {
+                        console.error('Error loading sample:', err);
+                        if (trackName) trackName.textContent = 'Erro ao carregar';
+                    }
+                }
+
+                // Handle Preview Button
+                if (previewBtn) {
+                    e.stopPropagation();
+                    // Simple preview implementation
+                    const currentIcon = previewBtn.querySelector('i');
+
+                    // Stop any potential currently playing preview (naive approach)
+                    //Ideally we track the current preview audio
+
+                    const tempAudio = new Audio(sampleUrl);
+                    tempAudio.play();
+
+                    // Toggle Icon (Visual only for now, assumes short samples)
+                    if (currentIcon) {
+                        currentIcon.classList.remove('fa-play');
+                        currentIcon.classList.add('fa-pause');
+                    }
+
+                    tempAudio.onended = () => {
+                        if (currentIcon) {
+                            currentIcon.classList.remove('fa-pause');
+                            currentIcon.classList.add('fa-play');
+                        }
+                    };
                 }
             });
-        });
-
-        // Sample preview
-        document.querySelectorAll('.sample-preview-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                // In real implementation, would play sample preview
-                console.log('Preview sample:', btn.closest('.sample-item')?.dataset.sample);
-            });
-        });
+        }
     }
 
     // ========================================
