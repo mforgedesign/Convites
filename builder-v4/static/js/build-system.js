@@ -1,6 +1,8 @@
 /**
- * AutoBuilder v4 - Build System
+ * AutoBuilder v4 - Build System (CORRECTED VERSION)
  * Complete implementation for generating publishable invitations
+ * ✅ All template variables aligned with final_template.html
+ * ✅ MenuConfig structure matches template expectations
  */
 
 (function () {
@@ -38,7 +40,7 @@
         // 5. Generate data.json
         const dataJSON = generateDataJSON();
 
-        // 6. Generate menuConfig
+        // 6. Generate menuConfig (✅ CORRECTED: now returns array, not object)
         const menuConfig = generateMenuConfig();
 
         // 7. Substitute variables in template
@@ -63,7 +65,7 @@
         const formData = state.formData || {};
 
         // Minimum requirements
-        if (!formData.event_name) {
+        if (!formData.event_name && !formData.nome) {
             return { valid: false, error: 'Nome do evento é obrigatório' };
         }
 
@@ -81,7 +83,6 @@
         try {
             const response = await fetch('final_template.html');
             if (!response.ok) {
-                // Fallback to minimal template
                 return getMinimalTemplate();
             }
             return await response.text();
@@ -196,95 +197,107 @@
     }
 
     /**
-     * Generate menuConfig for interactive buttons
+     * ✅ CORRECTED: Generate menuConfig as ARRAY (not object)
+     * Template expects: menuConfig = [{titulo, icone, link, id, ...}, ...]
      */
     function generateMenuConfig() {
         const state = window.builderState || {};
         const formData = state.formData || {};
 
-        const config = {
-            buttons: []
-        };
+        const config = []; // ✅ Array, not {buttons: []}
 
         // Google Maps
-        if (formData.google_maps_link) {
-            config.buttons.push({
-                name: 'Como Chegar',
-                icon: 'fa-map-marker-alt',
-                action: 'link',
-                url: formData.google_maps_link
+        const mapsLink = formData.link_google_maps || formData.google_maps_link;
+        if (mapsLink) {
+            config.push({
+                titulo: 'Como Chegar',  // ✅ Changed from "name"
+                icone: 'fa-solid fa-map-marker-alt',  // ✅ Changed from "icon"
+                link: mapsLink,  // ✅ Changed from "url"
+                id: 'maps'
             });
         }
 
-        // Gifts
-        if (formData.gifts_link) {
-            config.buttons.push({
-                name: 'Lista de Presentes',
-                icon: 'fa-gift',
-                action: 'link',
-                url: formData.gifts_link
+        // Gifts (Link mode)
+        const giftsLink = formData.link_presentes || formData.gifts_link;
+        if (giftsLink) {
+            config.push({
+                titulo: 'Lista de Presentes',
+                icone: 'fa-solid fa-gift',
+                link: giftsLink,
+                id: 'gifts'
             });
-        } else if (state.assets?.gifts) {
-            config.buttons.push({
-                name: 'Sugestões de Presentes',
-                icon: 'fa-gift',
-                action: 'popup-image',
-                target: 'gifts'
+        }
+        // Gifts (Image mode)
+        else if (state.assets?.gifts) {
+            config.push({
+                titulo: 'Sugestões de Presentes',
+                icone: 'fa-solid fa-gift',
+                link: '#',
+                id: 'gifts',
+                isGiftImage: true  // ✅ Template checks this
             });
         }
 
-        // Manual
-        if (formData.manual_text) {
-            config.buttons.push({
-                name: 'Manual do Convidado',
-                icon: 'fa-book-open',
-                action: 'popup-html',
-                content: formData.manual_html || formData.manual_text
+        // Manual (Text mode)
+        if (formData.manual_html || formData.manual_text) {
+            config.push({
+                titulo: 'Manual do Convidado',
+                icone: 'fa-solid fa-book-open',
+                link: '#',
+                id: 'manual',
+                manualText: formData.manual_html || formData.manual_text  // ✅ Template uses this
             });
-        } else if (state.assets?.manual) {
-            config.buttons.push({
-                name: 'Manual do Convidado',
-                icon: 'fa-book-open',
-                action: 'popup-image',
-                target: 'manual'
+        }
+        // Manual (Image mode)
+        else if (state.assets?.manual) {
+            config.push({
+                titulo: 'Manual do Convidado',
+                icone: 'fa-solid fa-book-open',
+                link: '#',
+                id: 'manual',
+                isManualImage: true  // ✅ Template checks this
             });
         }
 
-        // RSVP
-        if (formData.whatsapp_number) {
-            config.buttons.push({
-                name: 'Confirmar Presença',
-                icon: 'fa-check',
-                action: 'popup-whatsapp',
-                number: formData.whatsapp_number,
-                allowCompanion: formData.allow_companion || false
+        // RSVP (WhatsApp)
+        const whatsappNumber = formData.numero_whatsapp || formData.whatsapp_number;
+        if (whatsappNumber) {
+            // ✅ Clean number and format WhatsApp URL
+            const cleanNumber = whatsappNumber.replace(/\D/g, '');
+            config.push({
+                titulo: 'Confirmar Presença',
+                icone: 'fa-solid fa-check',
+                link: `https://wa.me/${cleanNumber}`,  // ✅ Proper WhatsApp link
+                id: 'rsvp'
             });
-        } else if (formData.confirmation_link) {
-            config.buttons.push({
-                name: 'Confirmar Presença',
-                icon: 'fa-check',
-                action: 'link',
-                url: formData.confirmation_link
+        }
+        // RSVP (External link)
+        else if (formData.link_confirmacao || formData.confirmation_link) {
+            config.push({
+                titulo: 'Confirmar Presença',
+                icone: 'fa-solid fa-check',
+                link: formData.link_confirmacao || formData.confirmation_link,
+                id: 'rsvp'
             });
         }
 
         // Extra Links
         if (state.extraLinks && state.extraLinks.length > 0) {
-            state.extraLinks.forEach(link => {
-                config.buttons.push({
-                    name: link.button_name,
-                    icon: link.icon_code || 'fa-link',
-                    action: 'link',
-                    url: link.url
+            state.extraLinks.forEach(extraLink => {
+                config.push({
+                    titulo: extraLink.button_name || extraLink.label,
+                    icone: extraLink.icon_code || extraLink.icon || 'fa-solid fa-link',
+                    link: extraLink.url,
+                    id: `custom_${extraLink.order_index || config.length}`
                 });
             });
         }
 
-        return config;
+        return config;  // ✅ Returns array directly
     }
 
     /**
-     * Substitute all [[VARIABLES]] in template
+     * ✅ CORRECTED: Substitute all [[VARIABLES]] with proper field mappings
      */
     function substituteVariables(template, assets, menuConfig, cacheBustId) {
         const state = window.builderState || {};
@@ -292,49 +305,56 @@
 
         let html = template;
 
-        // Asset paths
+        // Asset paths mapping
         const assetPaths = {};
         for (const [path, blob] of Object.entries(assets)) {
-            const key = path.split('/')[0]; // capa, folha, etc.
+            const key = path.split('/')[0];
             assetPaths[key] = path;
         }
 
-        // Replace variables
-        html = html.replace(/\[\[TITLE\]\]/g, formData.event_name || 'Convite Digital');
-        html = html.replace(/\[\[EVENT_NAME\]\]/g, formData.event_name || '');
-        html = html.replace(/\[\[EVENT_DATE\]\]/g, formData.event_date || '');
-        html = html.replace(/\[\[EVENT_TIME\]\]/g, formData.event_time || '');
-        html = html.replace(/\[\[EVENT_LOCATION\]\]/g, formData.event_location || '');
-        html = html.replace(/\[\[EVENT_THEME\]\]/g, formData.event_theme || '');
+        // ✅ 1. OG_TITLE (for OpenGraph meta tag)
+        const ogTitle = formData.event_name || formData.nome || 'Convite Digital';
+        html = html.replace(/\[\[OG_TITLE\]\]/g, ogTitle);
 
-        // Assets
-        html = html.replace(/\[\[COVER_SRC\]\]/g, assetPaths.capa || '');
-        html = html.replace(/\[\[SHEET_SRC\]\]/g, assetPaths.folha || '');
-        html = html.replace(/\[\[OPENING_SRC\]\]/g, assetPaths.abertura || '');
-        html = html.replace(/\[\[LOOP_SRC\]\]/g, assetPaths.loop || '');
-        html = html.replace(/\[\[MUSIC_SRC\]\]/g, assetPaths.musica || '');
+        // ✅ 2. CAPA_FILENAME (basename only, NOT full path)
+        const capaBasename = assetPaths.capa?.split('/').pop() || 'capa.jpg';
+        html = html.replace(/\[\[CAPA_FILENAME\]\]/g, capaBasename);
 
-        // Menu Config
+        // ✅ 3. SHADOW_COLOR (sombra_gradiente)
+        html = html.replace(/\[\[SHADOW_COLOR\]\]/g,
+            formData.sombra_gradiente || formData.shadow_gradient_color || '#000000');
+
+        // ✅ 4. BUTTONS_OFFSET (position from bottom)
+        html = html.replace(/\[\[BUTTONS_OFFSET\]\]/g,
+            formData.posicao_botoes || formData.button_position || '50');
+
+        // ✅ 5. BUTTON_SIZE (convert string to float)
+        const sizeMap = { 'pequeno': 0.8, 'medio': 1.0, 'grande': 1.2 };
+        const buttonSize = sizeMap[formData.tamanho_botoes] || sizeMap[formData.button_size] || 1.0;
+        html = html.replace(/\[\[BUTTON_SIZE\]\]/g, buttonSize);
+
+        // ✅ 6. TIMER_HIDE_CLASS (show if enabled, hide if disabled)
+        const timerEnabled = formData.timer_contagem || formData.countdown_timer;
+        const timerClass = timerEnabled ? '' : 'hidden';
+        html = html.replace(/\[\[TIMER_HIDE_CLASS\]\]/g, timerClass);
+
+        // ✅ 7. COMPANION_HIDE_CLASS (FIXED LOGIC: show if enabled)
+        const companionEnabled = formData.permitir_acompanhante || formData.allow_companion;
+        const companionClass = companionEnabled ? '' : 'hidden';
+        html = html.replace(/\[\[COMPANION_HIDE_CLASS\]\]/g, companionClass);
+
+        // ✅ 8. EVENT_DATETIME (combine date + time for countdown)
+        const eventDate = formData.event_date || formData.data || '';
+        const eventTime = formData.event_time || formData.hora || '00:00';
+        const eventDatetime = eventDate && eventTime ? `${eventDate}T${eventTime}:00` : '';
+        html = html.replace(/\[\[EVENT_DATETIME\]\]/g, eventDatetime);
+
+        // ✅ 9. MENU_CONFIG (inject as JSON array, not object)
         html = html.replace(/\[\[MENU_CONFIG\]\]/g, JSON.stringify(menuConfig));
 
-        // Watermark
+        // 10. Watermark
         const watermarkClass = state.buildConfig?.watermarkEnabled !== false ? 'visivel' : 'oculto';
         html = html.replace(/\[\[WATERMARK_CLASS\]\]/g, watermarkClass);
-
-        // Button styling
-        html = html.replace(/\[\[BUTTON_COLOR\]\]/g, formData.button_color || '#6366f1');
-        html = html.replace(/\[\[BUTTON_SIZE\]\]/g, formData.button_size || 'medium');
-        html = html.replace(/\[\[BUTTON_POSITION\]\]/g, formData.button_position || '20');
-        html = html.replace(/\[\[SHADOW_COLOR\]\]/g, formData.shadow_gradient_color || 'rgba(0,0,0,0.7)');
-
-        // Countdown timer
-        if (formData.countdown_timer && formData.event_date) {
-            html = html.replace(/\[\[COUNTDOWN_ENABLED\]\]/g, 'true');
-            html = html.replace(/\[\[COUNTDOWN_TARGET\]\]/g, `${formData.event_date}T${formData.event_time || '00:00'}:00`);
-        } else {
-            html = html.replace(/\[\[COUNTDOWN_ENABLED\]\]/g, 'false');
-            html = html.replace(/\[\[COUNTDOWN_TARGET\]\]/g, '');
-        }
 
         return html;
     }
@@ -348,7 +368,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[[TITLE]]</title>
+    <title>[[OG_TITLE]]</title>
+    <meta property="og:title" content="[[OG_TITLE]]">
+    <meta property="og:image" content="capa/[[CAPA_FILENAME]]">
     <style>
         body {
             margin: 0;
@@ -391,20 +413,21 @@
 </head>
 <body>
     <div class="container">
-        <h1>[[EVENT_NAME]]</h1>
-        <p>[[EVENT_DATE]] às [[EVENT_TIME]]</p>
-        <img src="[[COVER_SRC]]" alt="Capa do Convite">
+        <h1>Convite Digital</h1>
+        <img src="capa/[[CAPA_FILENAME]]" alt="Capa do Convite">
         <div class="buttons" id="menu"></div>
     </div>
     <script>
         const menuConfig = [[MENU_CONFIG]];
         const menuEl = document.getElementById('menu');
-        menuConfig.buttons.forEach(btn => {
+        menuConfig.forEach(btn => {
             const button = document.createElement('button');
-            button.textContent = btn.name;
+            button.textContent = btn.titulo;
             button.onclick = () => {
-                if (btn.action === 'link') {
-                    window.open(btn.url, '_blank');
+                if (btn.link && btn.link !== '#') {
+                    window.open(btn.link, '_blank');
+                } else if (btn.manualText) {
+                    alert(btn.manualText);
                 }
             };
             menuEl.appendChild(button);
@@ -521,6 +544,6 @@
         buildAndPublish
     };
 
-    console.log('[Build System] Loaded');
+    console.log('[Build System] Loaded ✅');
 
 })();
