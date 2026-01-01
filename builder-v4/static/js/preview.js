@@ -7,6 +7,7 @@
 
 (function () {
     'use strict';
+    console.log('[Preview] V4.0.3 Loaded - ' + new Date().toLocaleTimeString());
 
     // ========================================
     // Native Button Definitions (conditional)
