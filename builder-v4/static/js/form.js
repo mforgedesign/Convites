@@ -133,6 +133,18 @@
             value = input.value;
         }
 
+        // MIRRORING: Update other inputs with same data-field
+        const mirrors = document.querySelectorAll(`[data-field="${fieldName}"]`);
+        mirrors.forEach(mirror => {
+            if (mirror !== input) {
+                if (mirror.type === 'checkbox') {
+                    mirror.checked = value;
+                } else {
+                    mirror.value = value;
+                }
+            }
+        });
+
         // For text inputs, use debounce
         if (input.type === 'text' || input.type === 'tel' || input.type === 'url' || input.tagName === 'TEXTAREA') {
             clearTimeout(debounceTimer);
@@ -142,6 +154,16 @@
         } else {
             // Immediate update for selects, colors, checkboxes, dates, etc.
             updateField(fieldName, value);
+        }
+
+        // Mutual Exclusivity Logic
+        if (fieldName === 'link_presentes' && value) {
+            console.log('[Form] Clearing media_presentes due to link input');
+            updateField('media_presentes', null);
+        }
+        if (fieldName === 'manual_content' && value && value.length > 0) {
+            console.log('[Form] Clearing media_manual due to text input');
+            updateField('media_manual', null);
         }
     }
 
@@ -248,6 +270,14 @@
             .catch(err => console.warn('[Form] Could not load initial state:', err));
 
         console.log('[Form] Initialized with', inputs.length, 'tracked inputs');
+
+        // Listen for persistence updates
+        document.addEventListener('stateUpdated', (e) => {
+            if (e.detail.source === 'persistence' && e.detail.data && e.detail.data.formData) {
+                console.log('[Form] Restoring state from persistence...');
+                populateForm(e.detail.data.formData);
+            }
+        });
     }
 
     // ========================================
