@@ -73,6 +73,12 @@
             return { valid: false, error: 'Capa é obrigatória' };
         }
 
+        // New Logic: Loop OR Filled Sheet is required
+        // If neither exists, we have no background.
+        if ((!state.assets.loop) && (!state.assets.folha_preenchida)) {
+            return { valid: false, error: 'É necessário um Vídeo de Background (Loop) OU uma Folha Preenchida.' };
+        }
+
         return { valid: true };
     }
 
@@ -103,7 +109,7 @@
         const assetMap = {
             cover: 'capa/capa',
             sheet: 'folha/folha',
-            sheetFilled: 'folha/folha_preenchida',
+            folha_preenchida: 'folha/folha_preenchida',
             opening: 'abertura/abertura',
             loop: 'loop/loop',
             music: 'musica/musica',
@@ -319,6 +325,46 @@
         // ✅ 2. CAPA_FILENAME (basename only, NOT full path)
         const capaBasename = assetPaths.capa?.split('/').pop() || 'capa.jpg';
         html = html.replace(/\[\[CAPA_FILENAME\]\]/g, capaBasename);
+
+        // ✅ 2.1. FILLED_SHEET_FILENAME (for static overlay)
+        // Note: template uses src="folha/folha_preenchida.png" as base. 
+        // We need to replace that WHOLE string if we want to be safe, 
+        // OR simply replace the filename if we use a token. 
+        // The template currently has hardcoded src="folha/folha_preenchida.png".
+        // Strategy: We will replace "folha/folha_preenchida.png" with the actual path.
+        if (assetPaths.folha_preenchida) { // key matches 'sheetFilled' -> 'folha/folha_preenchida...'
+            // Wait, collectAssets key uses the folder name as key in assetPaths logic below:
+            // const key = path.split('/')[0]; -> 'folha'
+            // This is ambiguous because 'sheet' and 'sheetFilled' both go to 'folha/' folder.
+
+            // Let's look at assetPaths logic again.
+            // It iterates assets. keys are 'folha/folha_v123.jpg'
+            // assetPaths['folha'] will be overwritten if multiple files exist in same folder!
+            // FIXED LOGIC below.
+        }
+
+        // RE-IMPLEMENTING ASSET PATH FINDING for robust replacement
+        const findAssetPath = (folder, partialName) => {
+            return Object.keys(assets).find(p => p.startsWith(folder + '/') && p.includes(partialName));
+        };
+
+        const sheetFilledPath = findAssetPath('folha', 'folha_preenchida');
+        if (sheetFilledPath) {
+            html = html.replace('folha/folha_preenchida.png', sheetFilledPath);
+        } else {
+            // Keep default or handle? Onerror handles it.
+        }
+
+        const loopPath = findAssetPath('loop', 'loop');
+        if (loopPath) {
+            html = html.replace('loop/loop.mp4', loopPath);
+        }
+
+        // OPENING VIDEO
+        const openingPath = findAssetPath('abertura', 'abertura');
+        if (openingPath) {
+            html = html.replace('abertura/abertura.mp4', openingPath);
+        }
 
         // ✅ 3. SHADOW_COLOR (sombra_gradiente)
         html = html.replace(/\[\[SHADOW_COLOR\]\]/g,
