@@ -533,6 +533,14 @@
                         window.AutoBuilderForm.updateField(context, url); // Simulating update with blob url
                     }
                 }
+
+                // Dispatch mediaUpdated event for preview buttons (Presentes, Manual, etc.)
+                document.dispatchEvent(new CustomEvent('mediaUpdated', {
+                    detail: {
+                        type: context,
+                        data: { url, file, blob: file }
+                    }
+                }));
             });
 
             // Drag and Drop visual feedback
@@ -559,6 +567,14 @@
                         const base64 = await readFileAsBase64(file);
                         dropzone.dataset.base64 = base64;
                     }
+
+                    // Dispatch mediaUpdated event for preview buttons
+                    document.dispatchEvent(new CustomEvent('mediaUpdated', {
+                        detail: {
+                            type: context,
+                            data: { url, file, blob: file }
+                        }
+                    }));
                 }
             });
         });
