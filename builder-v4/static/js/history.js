@@ -38,7 +38,12 @@
         // Setup refresh button
         const refreshBtn = document.getElementById('btn-refresh-history');
         if (refreshBtn) {
-            refreshBtn.addEventListener('click', () => loadInvitations());
+            refreshBtn.addEventListener('click', () => {
+                // Clear existing cards
+                gridEl.innerHTML = '';
+                invitations = [];
+                loadInvitations();
+            });
         }
 
         // Load when window becomes visible
@@ -52,7 +57,7 @@
     }
 
     /**
-     * Load invitations from GitHub
+     * Load invitations from GitHub - SEQUENTIAL LAZY LOADING
      */
     async function loadInvitations() {
         if (isLoading) return;
@@ -81,7 +86,6 @@
             const contents = await response.json();
 
             // Filter for directories (potential invitations)
-            // Exclude special folders like builder-v4, .github, etc
             const folders = contents.filter(item =>
                 item.type === 'dir' &&
                 !item.name.startsWith('.') &&
@@ -96,29 +100,27 @@
                 return;
             }
 
-            // Load invitation details sequentially (newest first)
-            invitations = [];
-
-            // Sort folders by name (assuming slug format)
+            // Sort folders by name (newest first)
             folders.sort((a, b) => b.name.localeCompare(a.name));
 
-            // Load first batch (3-5 most recent)
-            const batchSize = 5;
-            for (let i = 0; i < Math.min(batchSize, folders.length); i++) {
-                await loadInvitationDetails(folders[i]);
-            }
-
-            // Load remaining in background
-            if (folders.length > batchSize) {
-                setTimeout(async () => {
-                    for (let i = batchSize; i < folders.length; i++) {
-                        await loadInvitationDetails(folders[i]);
-                        await new Promise(resolve => setTimeout(resolve, 200)); // Rate limiting
-                    }
-                }, 1000);
-            }
-
+            // Show cards container BEFORE loading starts
             showState('cards');
+            invitations = [];
+
+            // SEQUENTIAL LAZY LOADING: Load and render ONE AT A TIME
+            console.log(`[History] Starting sequential load of ${folders.length} invitations...`);
+
+            for (let i = 0; i < folders.length; i++) {
+                // Load this invitation
+                await loadInvitationDetails(folders[i]);
+
+                // Small delay between requests (rate limiting + smoother UX)
+                if (i < folders.length - 1) {
+                    await new Promise(resolve => setTimeout(resolve, 300));
+                }
+            }
+
+            console.log(`[History] Completed loading ${invitations.length} invitations`);
             isLoading = false;
 
         } catch (error) {
@@ -129,11 +131,13 @@
     }
 
     /**
-     * Load details for a single invitation
+     * Load details for a single invitation and render immediately
      */
     async function loadInvitationDetails(folder) {
         try {
             const slug = folder.name;
+
+            console.log(`[History] Loading ${slug}...`);
 
             // Try to find cover image
             const filesResponse = await fetch(
@@ -163,11 +167,15 @@
                 coverUrl: capaFile ? capaFile.download_url : null,
                 liveUrl: `${GITHUB_PAGES_BASE}${slug}/`,
                 repoUrl: `${GITHUB_REPO_BASE}${slug}`,
-                timestamp: folder.sha // Use SHA as rough timestamp
+                timestamp: folder.sha
             };
 
             invitations.push(invitation);
+
+            // RENDER IMMEDIATELY (this is the key!)
             renderCard(invitation);
+
+            console.log(`[History] ✓ Rendered ${slug}`);
 
         } catch (error) {
             console.error(`[History] Error loading ${folder.name}:`, error);
@@ -175,11 +183,11 @@
     }
 
     /**
-     * Render invitation card
+     * Render invitation card with animation
      */
     function renderCard(invitation) {
         const card = document.createElement('div');
-        card.className = 'bg-white rounded-lg border border-saas-border shadow-sm overflow-hidden hover:shadow-md transition';
+        card.className = 'bg-white rounded-lg border border-saas-border shadow-sm overflow-hidden hover:shadow-md transition opacity-0';
 
         card.innerHTML = `
             <!-- Cover Thumbnail -->
@@ -224,6 +232,12 @@
         `;
 
         gridEl.appendChild(card);
+
+        // Fade in animation
+        requestAnimationFrame(() => {
+            card.style.transition = 'opacity 0.3s ease-in-out';
+            card.style.opacity = '1';
+        });
     }
 
     /**
