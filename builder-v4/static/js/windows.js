@@ -635,89 +635,212 @@
 
             btn.addEventListener('click', async () => {
                 const promptEl = document.getElementById(promptId);
-                const prompt = promptEl?.value;
-
-                if (!prompt) {
-                    alert('Por favor, preencha o prompt.');
-                    return;
-                }
-
-                // Show loading state
-                const originalText = btn.innerHTML;
-                btn.disabled = true;
-                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Gerando...';
+                const customPrompt = promptEl?.value; // User can override AI prompt
 
                 try {
-                    const isVideo = mediaType === 'video';
-                    const endpoint = isVideo ? '/api/generate/video' : '/api/generate/image';
-
-                    // For video, we need an image_url (from cover or leaf)
-                    let requestBody = { prompt };
-
-                    if (isVideo) {
-                        // Try to get image URL from state or indicate we need one
-                        const stateResponse = await fetch('/api/state');
-                        const stateData = await stateResponse.json();
-
-                        const imageUrl = type === 'intro'
-                            ? stateData.builder_state?.capa_imagem?.url
-                            : stateData.builder_state?.folha_imagem?.url;
-
-                        if (!imageUrl) {
-                            throw new Error(`Faça upload da ${type === 'intro' ? 'Capa' : 'Folha Vazia'} primeiro.`);
-                        }
-
-                        requestBody.image_url = imageUrl;
-                    }
-
-                    const response = await fetch(endpoint, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(requestBody)
-                    });
-
-                    const data = await response.json();
-
-                    if (data.status === 'ok') {
-                        // Extract URL from response
-                        let generatedUrl;
-                        if (isVideo) {
-                            generatedUrl = data.data?.video?.url;
-                        } else {
-                            generatedUrl = data.data?.images?.[0]?.url;
-                        }
-
-                        if (generatedUrl) {
-                            console.log(`✅ Generated ${type}:`, generatedUrl);
-
-                            // Update corresponding dropzone
-                            const dropzoneId = AI_TYPE_TO_DROPZONE[type];
-                            const dropzone = document.getElementById(dropzoneId);
-                            if (dropzone) {
-                                updateDropzonePreview(dropzone, generatedUrl, mediaType);
-                            }
-
-                            // Show success feedback
+                    await window.AIGeneration.generate(type, {
+                        customPrompt,
+                        onProgress: (step) => {
+                            btn.disabled = true;
+                            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i>${step}`;
+                        },
+                        onSuccess: (url) => {
                             btn.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Gerado!';
                             setTimeout(() => {
-                                btn.innerHTML = originalText;
+                                btn.innerHTML = btn.dataset.originalText || 'Gerar';
+                                btn.disabled = false;
                             }, 2000);
-                        } else {
-                            throw new Error('URL não retornada pela API');
+                        },
+                        onError: (error) => {
+                            alert('Erro ao gerar: ' + error);
+                            btn.innerHTML = btn.dataset.originalText || 'Gerar';
+                            btn.disabled = false;
                         }
-                    } else {
-                        throw new Error(data.message || 'Falha na geração');
-                    }
+                    });
                 } catch (err) {
                     console.error('AI generation error:', err);
-                    alert('Erro ao gerar: ' + err.message);
-                    btn.innerHTML = originalText;
-                } finally {
-                    btn.disabled = false;
                 }
             });
+
+            // Store original text for reset
+            btn.dataset.originalText = btn.innerHTML;
         });
     }
+
+    // ==================== PUBLIC AI GENERATION API ====================
+    // This will be called by both UI buttons and chatbot
+
+    window.AIGeneration = {
+        /**
+         * Generate media using AI
+         * @param {string} type - Generation type (cover, leaf, intro, loop, fill, manual, gifts)
+         * @param {object} options - Generation options
+         * @returns {Promise<string>} URL of generated media
+         */
+        async generate(type, options = {}) {
+            const {
+                customPrompt,
+                listContent,
+                rulesContent,
+                referenceImage,
+                onProgress,
+                onSuccess,
+                onError
+            } = options;
+
+            try {
+                // Step 1: Build payload using ai-prompts module
+                if (onProgress) onProgress('Preparando prompt...');
+
+                const payload = window.AIPrompts.buildGenerationPayload(type, {
+                    customPrompt,
+                    listContent,
+                    rulesContent,
+                    referenceImage
+                });
+
+                // Step 2: Get required image URL for video/image-to-image
+                if (payload.mode === 'image-to-video' || payload.mode === 'image-to-image') {
+                    const imageUrl = await this.getRequiredImage(type);
+                    if (!imageUrl) {
+                        throw new Error(this.getMissingImageMessage(type));
+                    }
+                    payload.image_url = imageUrl;
+                }
+
+                // Step 3: Call API
+                if (onProgress) onProgress('Gerando...');
+
+                const isVideo = payload.mode === 'image-to-video';
+                const endpoint = isVideo ? '/api/generate/video' : '/api/generate/image';
+
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                // Step 4: Extract URL
+                let generatedUrl;
+                if (isVideo) {
+                    generatedUrl = data.data?.video?.url || data.video_url || data.url;
+                } else {
+                    generatedUrl = data.data?.images?.[0]?.url || data.image_url || data.url;
+                }
+
+                if (!generatedUrl) {
+                    throw new Error('API não retornou URL válida');
+                }
+
+                // Step 5: Update dropzone preview
+                const dropzoneId = AI_TYPE_TO_DROPZONE[type];
+                const dropzone = document.getElementById(dropzoneId);
+                if (dropzone) {
+                    updateDropzonePreview(dropzone, generatedUrl, isVideo ? 'video' : 'image');
+                }
+
+                // Step 6: Update state
+                window.builderState.assets[type] = generatedUrl;
+
+                // Success callback
+                if (onSuccess) onSuccess(generatedUrl);
+
+                console.log(`✅ Generated ${type}:`, generatedUrl);
+                return generatedUrl;
+
+            } catch (error) {
+                console.error(`❌ Generation error (${type}):`, error);
+                if (onError) onError(error.message);
+                throw error;
+            }
+        },
+
+        /**
+         * Get required image URL for video/image-to-image generation
+         */
+        async getRequiredImage(type) {
+            const state = window.builderState || {};
+
+            // Image-to-Video requirements
+            if (type === 'intro') {
+                return state.assets?.cover; // Needs capa.jpg
+            }
+            if (type === 'loop') {
+                return state.assets?.background_only; // Needs background_only.jpg
+            }
+
+            // Image-to-Image requirements
+            if (type === 'fill') {
+                return state.assets?.leaf_only; // Needs leaf_only.png
+            }
+            if (type === 'manual' || type === 'gifts') {
+                return state.assets?.background_only || state.assets?.leaf; // Fallback chain
+            }
+
+            return null;
+        },
+
+        /**
+         * Get user-friendly message for missing images
+         */
+        getMissingImageMessage(type) {
+            const messages = {
+                'intro': 'Faça upload ou gere a Capa primeiro.',
+                'loop': 'Execute o tratamento da Folha Vazia primeiro para gerar o background_only.jpg.',
+                'fill': 'Execute o tratamento da Folha Vazia primeiro para gerar o leaf_only.png.',
+                'manual': 'Faça upload da Folha Vazia ou do background tratado primeiro.',
+                'gifts': 'Faça upload da Folha Vazia ou do background tratado primeiro.'
+            };
+            return messages[type] || 'Imagem base necessária não encontrada.';
+        },
+
+        /**
+         * Programmatically set custom prompt (for chatbot)
+         */
+        setPrompt(type, promptText) {
+            const promptIds = {
+                'cover': 'cover-prompt',
+                'leaf': 'leaf-prompt',
+                'intro': 'intro-motion-prompt',
+                'loop': 'loop-motion-prompt',
+                'fill': 'fill-prompt',
+                'manual': 'manual-image-prompt',
+                'gifts': 'gifts-image-prompt'
+            };
+
+            const promptId = promptIds[type];
+            const promptEl = document.getElementById(promptId);
+            if (promptEl) {
+                promptEl.value = promptText;
+            }
+        },
+
+        /**
+         * Trigger generation button programmatically (for chatbot)
+         */
+        async triggerGeneration(type) {
+            const buttonIds = {
+                'cover': 'btn-generate-cover',
+                'leaf': 'btn-generate-leaf',
+                'intro': 'btn-generate-intro',
+                'loop': 'btn-generate-loop',
+                'fill': 'btn-generate-fill',
+                'manual': 'manual-generate-image-btn',
+                'gifts': 'gifts-generate-image-btn'
+            };
+
+            const btn = document.getElementById(buttonIds[type]);
+            if (btn) {
+                btn.click();
+            } else {
+                // Fallback: call generate directly
+                return await this.generate(type);
+            }
+        }
+    };
+
 
     // ========================================
     // Manual HTML Editor
