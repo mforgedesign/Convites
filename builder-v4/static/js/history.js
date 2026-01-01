@@ -428,8 +428,8 @@
             // Show success and navigate
             alert(`✅ Convite "${slug}" importado com sucesso!\n\nVocê pode agora editar e republicar.`);
 
-            if (window.Navigation && typeof window.Navigation.navigateTo === 'function') {
-                window.Navigation.navigateTo('form');
+            if (window.AutoBuilderNav && typeof window.AutoBuilderNav.navigateTo === 'function') {
+                window.AutoBuilderNav.showWindow('form');
             }
 
             console.log('[History] Import completed successfully');
