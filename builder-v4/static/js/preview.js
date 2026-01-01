@@ -27,14 +27,14 @@
     // Current state
     let currentState = {
         cor_botoes: '#4f46e5',
-        sombra_gradiente: '#000000',
         posicao_botoes: 50,
-        timer_contagem: true,
+        timer_contagem: false,
         links_extras: [],
         // Native link fields
         link_google_maps: '',
         numero_whatsapp: '',
         link_presentes: '',
+        manual_content: '',
         // Media fields - Priority: folha_animada/folha_preenchida > folha_vazia > gradient
         media_folha_animada: null,
         media_folha_preenchida: null,
@@ -80,7 +80,7 @@
      * Renders all buttons (native + extras) in the preview.
      */
     function renderButtons() {
-        const container = document.querySelector('#preview-buttons > div');
+        const container = document.querySelector('#mobile-preview-buttons > div');
         if (!container) {
             console.warn('[Preview] Button container not found');
             return;
@@ -137,7 +137,7 @@
         });
 
         // Hide/show the entire button container based on content
-        const buttonsWrapper = document.getElementById('preview-buttons');
+        const buttonsWrapper = document.getElementById('mobile-preview-buttons');
         if (buttonsWrapper) {
             buttonsWrapper.style.display = buttonCount > 0 ? 'flex' : 'none';
         }
@@ -148,7 +148,7 @@
      * @param {string} color - New hex color
      */
     function updateButtonColors(color) {
-        const buttons = document.querySelectorAll('#preview-buttons .rounded-full');
+        const buttons = document.querySelectorAll('#mobile-preview-buttons .rounded-full');
         buttons.forEach(btn => {
             btn.style.backgroundColor = color;
         });
@@ -172,7 +172,7 @@
      * @param {number} value - Offset in pixels
      */
     function updateButtonPosition(value) {
-        const container = document.getElementById('preview-buttons');
+        const container = document.getElementById('mobile-preview-buttons');
         if (container) {
             container.style.bottom = value + 'px';
         }
@@ -204,7 +204,7 @@
      * 3. Default gradient
      */
     function updateBackground() {
-        const previewContent = document.getElementById('preview-content');
+        const previewContent = document.getElementById('mobile-preview-content');
         if (!previewContent) {
             console.warn('[Preview] Preview content element not found');
             return;
@@ -260,6 +260,11 @@
             const { field, value } = e.detail;
 
             // Update internal state
+            // The original instruction was to add manual_content to Object.assign in initPreview,
+            // but the provided code snippet for the change was for setupEventListeners.
+            // Assuming the intent was to ensure manual_content updates correctly here.
+            // The provided snippet had a syntax error with `if` followed by `case`.
+            // Reverting to the original structure but ensuring manual_content is handled.
             currentState[field] = value;
 
             switch (field) {
@@ -337,6 +342,7 @@
                         link_google_maps: state.link_google_maps || '',
                         numero_whatsapp: state.numero_whatsapp || '',
                         link_presentes: state.link_presentes || '',
+                        manual_content: state.manual_content || '',
                         // Media fields
                         media_folha_animada: state.media_folha_animada || null,
                         media_folha_preenchida: state.media_folha_preenchida || null,
