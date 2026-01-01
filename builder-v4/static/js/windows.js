@@ -562,58 +562,62 @@
                     updateDeployStep('step-build', 'done');
                     updateDeployStep('step-upload', 'loading');
 
-                    // Step 3: Upload files
-                    const uploadPromises = [];
-                    const totalFiles = Object.keys(zipContent.files).length;
-                    let uploadedCount = 0;
-
-                    // Helper for progress
-                    const updateProgress = () => {
-                        uploadedCount++;
-                        console.log(`[ZIP] Upload progress: ${uploadedCount}/${totalFiles}`);
-                    };
+                    // Step 3: Prepare files for Supabase
+                    const filesMap = {};
 
                     for (const [relativePath, zipEntry] of Object.entries(zipContent.files)) {
                         if (zipEntry.dir) continue; // Skip directories
 
-                        const content = await zipEntry.async('blob');
-                        // Use the existing window.uploadFile or reimplement basic GitHub upload
-                        // If window.uploadFile expects specific context, we might need a lower-level function
-                        // Assuming we need to upload to `convites/{slug}/{path}`
+                        const contentBlob = await zipEntry.async('blob');
+                        // Convert blob to base64 string
+                        const base64Content = await new Promise((resolve) => {
+                            const reader = new FileReader();
+                            reader.onloadend = () => {
+                                // removing data:mime;base64, prefix
+                                const base64 = reader.result.split(',')[1];
+                                resolve(base64);
+                            };
+                            reader.readAsDataURL(contentBlob);
+                        });
 
-                        // We need a direct GitHub upload here because uploadFile is designed for media assets
-                        // Let's use the adapter directly if available or fetch
-
-                        // Re-using the adapter logic from history.js roughly
+                        // Path: convites/slug/filename
                         const path = `convites/${slug}/${relativePath}`;
+                        filesMap[path] = base64Content;
+                    }
 
-                        if (window.githubAdapter) {
-                            uploadPromises.push(
-                                window.githubAdapter.uploadFile(path, content, `Deploy custom zip: ${relativePath}`)
-                                    .then(updateProgress)
-                            );
-                        } else {
-                            console.warn('GitHub Adapter not found, trying fallback');
-                            // Fallback if adapter isn't exposed (it should be if we follow patterns)
-                            // For now, let's assume we expose it or use a raw fetch mock if we can't
-                            throw new Error('GitHub Adapter não disponível. Contate o suporte.');
+                    updateDeployStep('step-build', 'done');
+                    updateDeployStep('step-upload', 'loading');
+
+                    // Step 4: Deploy via Supabase Edge Function
+                    // Using the existing /api/publish endpoint which maps to deploy-github
+                    const response = await fetch('/api/publish', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            slug: slug,
+                            files: filesMap,
+                            commit_message: `Deploy custom ZIP: ${slug}`
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success || (data.data && data.data.success)) { // handle nested response
+                        updateDeployStep('step-upload', 'done');
+                        updateDeployStep('step-live', 'done');
+
+                        // Show result
+                        if (publishResult) publishResult.classList.remove('hidden');
+                        if (publishUrl) {
+                            const url = `https://mforgedesign.github.io/Convites/convites/${slug}/`;
+                            publishUrl.href = url;
+                            publishUrl.textContent = url;
                         }
+
+                        console.log('✅ Custom ZIP deployed successfully via Supabase');
+                    } else {
+                        throw new Error(data.error || 'Server-side deploy failed');
                     }
-
-                    await Promise.all(uploadPromises);
-
-                    updateDeployStep('step-upload', 'done');
-                    updateDeployStep('step-live', 'done');
-
-                    // Show result
-                    if (publishResult) publishResult.classList.remove('hidden');
-                    if (publishUrl) {
-                        const url = `https://mforgedesign.github.io/Convites/convites/${slug}/`;
-                        publishUrl.href = url;
-                        publishUrl.textContent = url;
-                    }
-
-                    console.log('✅ Custom ZIP deployed successfully');
 
                 } catch (err) {
                     console.error('ZIP upload error:', err);
