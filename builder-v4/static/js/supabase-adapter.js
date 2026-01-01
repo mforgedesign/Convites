@@ -86,6 +86,9 @@
             else if (url === '/api/publish') {
                 return await handlePublishAPI(body);
             }
+            else if (url === '/api/deploy-custom-zip') {
+                return await handleDeployCustomZipAPI(body);
+            }
             else if (url === '/api/history') {
                 return await handleHistoryAPI();
             }
@@ -309,6 +312,22 @@
                 slug: body.slug,
                 files: body.files || {},
                 commit_message: `Deploy ${body.slug} via AutoBuilder v4`
+            }
+        });
+
+        if (error) throw error;
+        return createResponse(data);
+    }
+
+    /**
+     * /api/deploy-custom-zip - Deploy a custom ZIP file
+     */
+    async function handleDeployCustomZipAPI(body) {
+        const { data, error } = await supabase.functions.invoke('deploy-github-zip', {
+            body: {
+                slug: body.slug,
+                zipBase64: body.zipBase64,
+                commit_message: `Deploy custom ZIP to ${body.slug} via AutoBuilder v4`
             }
         });
 
