@@ -471,6 +471,7 @@
      * Initialize all dropzones
      */
     function setupDropzones() {
+        console.log('[Dropzones] Initializing...');
         Object.keys(DROPZONE_CONTEXTS).forEach(id => {
             const dropzone = document.getElementById(id);
             if (!dropzone) return;
@@ -547,6 +548,7 @@
             dropzone.addEventListener('dragover', (e) => {
                 e.preventDefault();
                 dropzone.classList.add('border-brand-500', 'bg-brand-50');
+                // console.log('[Dropzones] Dragover:', id); // Too spammy
             });
 
             dropzone.addEventListener('dragleave', () => {
@@ -555,6 +557,7 @@
 
             dropzone.addEventListener('drop', async (e) => {
                 e.preventDefault();
+                console.log('[Dropzones] Drop event on:', id);
                 dropzone.classList.remove('border-brand-500', 'bg-brand-50');
 
                 const file = e.dataTransfer.files[0];
