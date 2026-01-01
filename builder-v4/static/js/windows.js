@@ -351,7 +351,7 @@
         'leaf-dropzone': 'folha_vazia',
         'intro-video-dropzone': 'vid_abertura',
         'loop-video-dropzone': 'vid_loop',
-        'fill-image-dropzone': 'sheetFilled',
+        'fill-image-dropzone': 'folha_preenchida',
         // New Layer Dropzones
         'dropzone-leaf-only': 'folha_only',
         'dropzone-background-only': 'background_only',
@@ -716,6 +716,7 @@
                         const dropzones = {
                             'capa': 'cover-dropzone',
                             'folha_vazia': 'leaf-dropzone',
+                            'folha_preenchida': 'fill-image-dropzone',
                             'vid_abertura': 'intro-video-dropzone',
                             'vid_loop': 'loop-video-dropzone',
                             'presentes': 'gifts-image-dropzone',
