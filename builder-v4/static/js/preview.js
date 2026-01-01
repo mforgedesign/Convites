@@ -103,9 +103,10 @@
                 return !!currentState.link_presentes || (currentState.media_presentes && currentState.media_presentes.url);
             }
 
-            // Manual: Show if manual image exists (add text check later if needed)
+            // Manual: Show if manual image exists OR content text exists
             if (key === 'manual') {
-                return currentState.media_manual && currentState.media_manual.url;
+                return (currentState.media_manual && currentState.media_manual.url) ||
+                    (currentState.manual_content && currentState.manual_content.length > 5);
             }
 
             return false;
