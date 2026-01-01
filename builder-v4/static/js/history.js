@@ -156,11 +156,13 @@
 
             const files = await filesResponse.json();
 
-            // Find capa image (may have cache-busted filename)
-            const capaFile = files.find(f =>
-                f.name.toLowerCase().startsWith('capa') &&
-                (f.name.endsWith('.jpg') || f.name.endsWith('.png') || f.name.endsWith('.webp'))
-            );
+            // Find capa image - flexible matching
+            const capaFile = files.find(f => {
+                const name = f.name.toLowerCase();
+                return (name.includes('capa') || name.includes('cover')) &&
+                    (name.endsWith('.jpg') || name.endsWith('.jpeg') ||
+                        name.endsWith('.png') || name.endsWith('.webp'));
+            });
 
             const invitation = {
                 slug,
