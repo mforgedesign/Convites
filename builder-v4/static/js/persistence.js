@@ -63,36 +63,16 @@
             console.log('[Persistence] Found saved state from:', new Date(savedState.timestamp).toLocaleString());
 
             // 1. Restore Form Data
-            if (savedState.formData && window.FormManager) {
-                // We'll iterate fields and trigger updates
-                // This mimics what history.js import does
-                console.log('[Persistence] Restoring form data...');
+            if (savedState.formData) {
+                console.log('[Persistence] Broadcasting restored state...');
 
-                // Update global state first
-                if (window.builderState) {
-                    // Filter out timer to force default state on reload
-                    const { timer_contagem, ...rest } = savedState.formData;
-                    window.builderState.formData = { ...rest };
-                }
-
-                Object.entries(savedState.formData).forEach(([key, value]) => {
-                    // Skip restoring timer toggle to enforce default hidden state
-                    if (key === 'timer_contagem') return;
-
-                    const input = document.querySelector(`[data-field="${key}"], [name="${key}"], #form-${key}`);
-                    if (input) {
-                        if (input.type === 'checkbox') {
-                            input.checked = !!value;
-                        } else if (input.type === 'color') {
-                            input.value = value || '#000000';
-                        } else {
-                            input.value = value || '';
-                        }
-                        // Trigger change to update previews
-                        input.dispatchEvent(new Event('change', { bubbles: true }));
-                        input.dispatchEvent(new Event('input', { bubbles: true }));
+                // Dispatch event which form.js and preview.js will catch
+                document.dispatchEvent(new CustomEvent('stateUpdated', {
+                    detail: {
+                        source: 'persistence',
+                        data: savedState
                     }
-                });
+                }));
             }
 
             // 2. Restore Assets (Dropzones)
