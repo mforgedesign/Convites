@@ -729,15 +729,39 @@
                             'musica': 'music-dropzone'
                         };
                         const dropzoneId = dropzones[context];
-                        if (dropzoneId) {
+
+                        if (context === 'musica') {
+                            // Specialized Music Handling
+                            const player = document.getElementById('music-preview-player');
+                            const nameDisplay = document.getElementById('music-file-name');
+                            const dropzone = document.getElementById('music-dropzone');
+
+                            if (player) {
+                                player.src = url;
+                                player.load(); // Important to load resource
+                            }
+                            if (nameDisplay) {
+                                // Extract name from path if possible, or use generic
+                                const filename = path.split('/').pop() || 'Música Importada.mp3';
+                                nameDisplay.textContent = filename;
+                                nameDisplay.classList.remove('hidden');
+                            }
+                            if (dropzone) {
+                                dropzone.querySelectorAll('i, span').forEach(el => el.classList.add('hidden'));
+                                // Ensure remove button is visible
+                                const removeBtn = dropzone.querySelector('.btn-remove-media');
+                                if (removeBtn) removeBtn.classList.remove('hidden');
+                            }
+
+                            // Also update the global player instance if available
+                            if (window._mainAudioPlayer) {
+                                window._mainAudioPlayer.src = url;
+                            }
+
+                        } else if (dropzoneId) {
                             const dropzone = document.getElementById(dropzoneId);
                             if (dropzone) {
                                 const type = path.endsWith('.mp4') ? 'video' : 'image';
-                                // Shared helper for preview update?
-                                // If updateDropzonePreview is global, use it.
-                                // It was defined inside IIFE. We should verify exposure.
-                                // It seems NOT exposed. We rely on internal access since we are in windows.js
-                                // But restoreBuilderState is assigned to window, capturing closure? Yes.
                                 updateDropzonePreview(dropzone, url, type);
                             }
                         }
