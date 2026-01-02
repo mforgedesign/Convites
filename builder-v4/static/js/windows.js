@@ -758,8 +758,15 @@
         // ----------------------------------------
         // Helper: Reset Builder State (Clean Slate)
         // ----------------------------------------
-        window.resetBuilderState = function () {
-            if (!confirm('Deseja criar um novo convite? Isso limpará todas as configurações atuais e não salvas.')) {
+        // ----------------------------------------
+        // Helper: Reset Builder State (Clean Slate)
+        // ----------------------------------------
+        /**
+         * Resets the builder state (Clean Slate)
+         * @param {boolean} silent - If true, skips confirmation dialog and alerts
+         */
+        window.resetBuilderState = function (silent = false) {
+            if (!silent && !confirm('Deseja criar um novo convite? Isso limpará todas as configurações atuais e não salvas.')) {
                 return false;
             }
 
@@ -785,22 +792,17 @@
                 });
             }
 
-            // 3. Reset Dropzones
+            // 3. Reset Dropzones (SILENTLY)
             Object.keys(DROPZONE_CONTEXTS).forEach(baseId => {
-                // Some dropzones might have different IDs or multiple instances
-                // Use the map to clear logic
                 const dropzone = document.getElementById(baseId);
+                const context = DROPZONE_CONTEXTS[baseId];
                 if (dropzone) {
-                    const removeBtn = dropzone.querySelector('.btn-remove-media');
-                    if (removeBtn) removeBtn.click(); // Trigger clean logic via click
-                    else {
-                        // Manual clear
-                        dropzone.style.backgroundImage = '';
-                        const video = dropzone.querySelector('video');
-                        if (video) video.remove();
-                        dropzone.querySelectorAll('i, span').forEach(el => el.classList.remove('hidden'));
-                        const input = dropzone.querySelector('input[type="file"]');
-                        if (input) input.value = '';
+                    // Call clearDropzone directly to bypass button click confirmation
+                    clearDropzone(dropzone, context);
+
+                    // Specific cleanup for reference dropzone
+                    if (baseId === 'cover-reference-dropzone') {
+                        delete dropzone.dataset.base64;
                     }
                 }
             });
@@ -817,6 +819,11 @@
             document.getElementById('fill-mode-overlay')?.click();
 
             console.log('✨ Clean Slate Complete');
+
+            if (!silent) {
+                // Optional internal feedback if needed, but keeping it minimal as requested
+            }
+
             return true;
         };
 
@@ -824,7 +831,8 @@
         const newInvitationBtn = document.getElementById('btn-new-invitation');
         if (newInvitationBtn) {
             newInvitationBtn.addEventListener('click', () => {
-                if (window.resetBuilderState()) {
+                // We let resetBuilderState handle the confirmation (silent=false default)
+                if (window.resetBuilderState(false)) {
                     // Optionally switch to 'form' tab
                     document.querySelector('[data-window="form"]')?.click();
                 }
@@ -1093,8 +1101,8 @@
                 }
 
                 try {
-                    // 1. Clean Slate
-                    window.resetBuilderState(); // Trigger clean without confirm since we just confirmed
+                    // 1. Clean Slate (Silent because we already confirmed above)
+                    window.resetBuilderState(true);
 
                     if (!window.JSZip) throw new Error('JSZip missing');
                     const zip = new JSZip();
