@@ -10,12 +10,12 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 
-    <title>[[OG_TITLE]]</title>
+    <title>Convite - Lorena | Debutante</title>
 
     <!-- Open Graph for WhatsApp/Social Preview -->
-    <meta property="og:title" content="[[OG_TITLE]]">
+    <meta property="og:title" content="Convite - Lorena | Debutante">
     <meta property="og:description" content="Clique para ver o convite interativo!">
-    <meta property="og:image" content="capa/[[CAPA_FILENAME]]">
+    <meta property="og:image" content="capa/capa_1767312475.jpg?v=1767312475">
     <meta property="og:type" content="website">
 
     <!-- Envelope Favicon -->
@@ -97,6 +97,17 @@
             text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
         }
     </style>
+
+            <style>
+                :root {
+                    --button-color: #7c5a8c;
+                }
+                .custom-button-bg {
+                    background-color: var(--button-color) !important;
+                }
+                
+            </style>
+            
 </head>
 
 <body class="w-full h-[100dvh] flex justify-center items-center">
@@ -104,120 +115,22 @@
     <div id="mainContainer"
         class="relative w-full max-w-[480px] h-full bg-black shadow-2xl overflow-hidden transition-all duration-300">
 
-        <!-- Background Video (Loop) - Layer 1 -->
         <video id="videoLoop" class="camada z-10 invisivel" playsinline loop muted>
-            <source src="loop/loop.mp4" type="video/mp4">
+            <source src="loop/loop_1767312475.mp4?v=1767312475" type="video/mp4">
         </video>
 
-        <!-- Initial Interaction Overlay (Cover) - Layer 3 -->
-        <div id="overlayInicial"
-            class="absolute inset-0 z-50 flex flex-col items-center justify-center cursor-pointer bg-black"
-            style="background-image: url('capa/[[CAPA_FILENAME]]'); background-size: cover; background-position: center;">
-
-            <!-- Dark Overlay for better text visibility -->
-            <div class="absolute inset-0 bg-black/30"></div>
-
-            <div class="z-10 flex flex-col items-center animate-pulse">
-                <i class="fa-solid fa-hand-pointer text-white text-5xl mb-4 drop-shadow-lg animar-clique"></i>
-                <span class="text-white font-bold text-lg tracking-widest uppercase drop-shadow-md texto-capa">
-                    Clique para Interagir
-                </span>
-            </div>
-        </div>
-
-        <script>
-            // ==================================================================
-            // 0. INTERAÇÃO INICIAL (CLIQUE)
-            // ==================================================================
-            const overlayInicial = document.getElementById('overlayInicial');
-            const videoAbertura = document.getElementById('videoAbertura');
-            const videoLoop = document.getElementById('videoLoop');
-            const audio = document.getElementById('musicaFundo');
-            const btnMute = document.getElementById('btnMute');
-            const btnPular = document.getElementById('btnPular'); // Defined later, but hoisted
-
-            // State
-            let iniciado = false;
-            let transicaoFeita = false;
-            let estaMutado = false;
-
-            overlayInicial.addEventListener('click', async () => {
-                if (iniciado) return;
-                iniciado = true;
-
-                // 1. Hide Overlay
-                overlayInicial.style.opacity = '0';
-                setTimeout(() => overlayInicial.remove(), 800);
-
-                // 2. Play Audio & Video
-                try {
-                    await audio.play();
-                    await videoAbertura.play();
-
-                    // Show Mute Button
-                    btnMute.classList.remove('invisivel');
-
-                    // Show Skip Button (if video is long > 3s)
-                    if (videoAbertura.duration > 3) {
-                        // Will be handled by btnPular logic below
-                        const btn = document.getElementById('btnPular');
-                        if (btn) btn.classList.remove('invisivel');
-                    }
-                } catch (err) {
-                    console.error("Autoplay prevention:", err);
-                }
-            });
-        </script>
-
-        <!-- Static Overlay (Filled Sheet) - Layer 2 (Optional fallback) -->
-        <img id="folhaPreenchida" src="folha/folha_preenchida.png" class="camada z-15 invisivel"
-            onerror="this.style.display='none'">
-
         <video id="videoAbertura" class="camada z-20" playsinline muted>
-            <source src="abertura/abertura.mp4" type="video/mp4">
+            <source src="abertura/abertura_1767312475.mp4?v=1767312475" type="video/mp4">
         </video>
 
         <audio id="musicaFundo" loop preload="auto">
-            <source src="musica/musica.mp3" type="audio/mp3">
+            <source src="musica/musica_1767312475.mp3?v=1767312475" type="audio/mp3">
         </audio>
 
         <button id="btnMute"
             class="absolute top-4 left-4 z-40 text-white bg-black/50 rounded-full w-10 h-10 flex items-center justify-center invisivel transition-all hover:bg-black/70">
             <i class="fa-solid fa-volume-high" id="iconMute"></i>
         </button>
-        <!-- [skip] -->
-        // ==================================================================
-        // 5. LÓGICA DE TRANSIÇÃO PARA O LOOP
-        // ==================================================================
-
-        function irParaLoop() {
-        if (transicaoFeita) return;
-        transicaoFeita = true;
-
-        // Esconde botão pular
-        btnPular.classList.add('invisivel');
-
-        // Revela Video Loop E/OU Imagem Estática (Folha Preenchida)
-        videoLoop.classList.remove('invisivel');
-
-        // Se existir imagem de folha preenchida (não oculta pelo onerror), revela também
-        const imgStatic = document.getElementById('folhaPreenchida');
-        if (imgStatic && imgStatic.style.display !== 'none') {
-        imgStatic.classList.remove('invisivel');
-        }
-
-        videoAbertura.classList.add('invisivel');
-        containerBotoes.classList.remove('invisivel');
-        containerShadow.classList.remove('invisivel');
-
-        // Mostra o timer apenas se não estiver hidden (timer ativado)
-        if (countdownContainer && !countdownContainer.classList.contains('hidden')) {
-        countdownContainer.classList.remove('invisivel');
-        }
-
-        // Pausa o vídeo de abertura após a transição visual
-        setTimeout(function () { videoAbertura.pause(); }, 800);
-        }
 
         <button id="btnPular"
             class="absolute top-4 right-4 z-40 bg-white/20 backdrop-blur-sm border border-white/40 text-white px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-wider invisivel hover:bg-white/30 transition-all">
@@ -226,7 +139,7 @@
 
         <!-- Timer Countdown -->
         <div id="countdownContainer"
-            class="absolute top-[34px] left-0 w-full z-40 flex flex-col items-center justify-center invisivel transition-opacity duration-1000 texto-sombra pointer-events-none [[TIMER_HIDE_CLASS]]">
+            class="absolute top-[34px] left-0 w-full z-40 flex flex-col items-center justify-center invisivel transition-opacity duration-1000 texto-sombra pointer-events-none ">
             <h2 class="text-white text-[10px] sm:text-xs uppercase tracking-[0.2em] mb-2 font-semibold opacity-90">
                 Contagem Regressiva</h2>
             <div class="flex gap-3 sm:gap-4 text-white">
@@ -252,20 +165,20 @@
         <!-- Gradiente de fundo fixo (não se move) -->
         <div id="containerShadow"
             class="absolute bottom-0 left-0 w-full z-30 pb-10 px-2 pt-20 invisivel transition-opacity duration-1000"
-            style="background: linear-gradient(to top, [[SHADOW_COLOR]]E6, [[SHADOW_COLOR]]66, transparent);">
+            style="background: linear-gradient(to top, #000000E6, #00000066, transparent);">
         </div>
 
         <!-- Container dos botões (se move com offset) -->
         <div id="containerBotoes"
             class="absolute left-0 w-full z-40 pb-10 px-2 invisivel transition-opacity duration-1000 flex justify-center"
-            style="bottom: [[BUTTONS_OFFSET]]px;">
+            style="bottom: 0px;">
             <div id="gridBotoes" class="flex flex-row flex-nowrap justify-evenly gap-1 w-full max-w-[480px]">
             </div>
         </div>
 
         <div id="capaInicial"
             class="absolute inset-0 z-50 bg-cover bg-center flex flex-col items-center justify-center cursor-pointer transition-opacity duration-700"
-            style="background-image: url('capa/capa.jpg');">
+            style="background-image: url('capa/capa_1767312475.jpg?v=1767312475');">
             <div class="absolute inset-0 bg-black/20"></div>
 
             <div id="dicaInteractionContainer" class="relative z-10 flex flex-col items-center gap-4 animate-pulse">
@@ -285,7 +198,7 @@
             class="relative w-full max-w-[400px] h-[80%] rounded-xl shadow-2xl overflow-hidden flex flex-col border border-white/20">
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="loop/folha_vazia.jpg" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="loop/folha_vazia_1767312475.jpg?v=1767312475" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/60"></div>
             </div>
 
@@ -339,7 +252,7 @@
 
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="loop/folha_vazia.jpg" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="loop/folha_vazia_1767312475.jpg?v=1767312475" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/70"></div>
             </div>
 
@@ -369,7 +282,7 @@
                         placeholder="(DDD) 99999-9999">
                 </div>
 
-                <div id="container-acompanhantes" class="[[COMPANION_HIDE_CLASS]]">
+                <div id="container-acompanhantes" class="">
                     <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Total de Acompanhantes</label>
                     <div class="flex items-center gap-3">
                         <button id="btn-dec-acomp"
@@ -383,7 +296,7 @@
                         anfitrião.</p>
                 </div>
 
-                <div class="flex items-center gap-2 mt-2 [[COMPANION_HIDE_CLASS]]">
+                <div class="flex items-center gap-2 mt-2 ">
                     <input type="checkbox" id="check-no-acomp"
                         class="w-4 h-4 rounded bg-black/40 border-stone-500 text-green-500 focus:ring-green-500 focus:ring-offset-0">
                     <label for="check-no-acomp"
@@ -401,11 +314,29 @@
 
     <script>
         // ==================================================================
-        // 1. CONFIGURAÇÃO DOS BOTÕES (Injetado pelo AutoBuilder)
+        // 1. CONFIGURAÇÃO DOS BOTÕES (Edite Aqui!)
         // ==================================================================
-        const menuConfig = [[MENU_CONFIG]];
+        const menuConfig = [
+    {
+        "id": "manual",
+        "titulo": "Manual do Convidado",
+        "icone": "fa-solid fa-book",
+        "link": "#",
+        "manualText": "<div>\n    <h3><i class=\"fa-solid fa-smile\"></i> Regras Importantes:</h3>\n    <ul>\n        <li><i class=\"fa-solid fa-clock\"></i> Se divertir muito!</li>\n        <li><i class=\"fa-solid fa-calendar-check\"></i> Chegue no horário: Sua presença pontual é muito importante para nós.</li>\n        <li><i class=\"fa-solid fa-check-circle\"></i> Confirme sua presença: Por favor, confirme presença pelo menos 15 dias antes do evento.</li>\n        <li><i class=\"fa-solid fa-party-horn\"></i> Divirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.</li>\n        <li><i class=\"fa-solid fa-heart\"></i> Não vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.</li>\n    </ul>\n</div>"
+    },
+    {
+        "titulo": "Como Chegar",
+        "icone": "fa-solid fa-location-dot",
+        "link": "https://maps.app.goo.gl/5imL7oM51RDnbsFy5"
+    },
+    {
+        "titulo": "Confirmar Presença",
+        "icone": "fa-regular fa-circle-check",
+        "link": "5511956761771"
+    }
+];
         // Injected by AutoBuilder
-        const buttonSize = parseFloat('[[BUTTON_SIZE]]') || 1.0;
+        const buttonSize = parseFloat('1') || 1.0;
 
         // ==================================================================
         // 2. REFERÊNCIAS DO DOM
@@ -533,7 +464,7 @@
         });
 
         // Injected State for Logic
-        const companionHideClass = "[[COMPANION_HIDE_CLASS]]";
+        const companionHideClass = "";
 
         window.abrirRSVP = function (e, link) {
             e.preventDefault();
@@ -794,7 +725,7 @@
         // TIMER DE CONTAGEM REGRESSIVA
         // ==================================================================
         function atualizarCronometro() {
-            const dataAlvo = new Date('[[EVENT_DATETIME]]');
+            const dataAlvo = new Date('2026-01-24T19:00:00');
             const agora = new Date();
 
             let diferenca = dataAlvo - agora;
