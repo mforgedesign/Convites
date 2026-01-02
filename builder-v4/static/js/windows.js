@@ -2165,6 +2165,127 @@
     }
 
 
+    /**
+     * Setup Process Buttons (Generate Leaf, Treatment)
+     */
+    function setupProcessButtons() {
+        const generateBtn = document.getElementById('btn-generate-leaf');
+        const processBtn = document.getElementById('btn-process-complete');
+        const promptInput = document.getElementById('leaf-prompt');
+
+        const leafDropzone = document.getElementById('dropzone-folha');
+        const leafOnlyDropzone = document.getElementById('dropzone-folha-only');
+        const bgOnlyDropzone = document.getElementById('dropzone-background-only');
+
+        // 1. Generate Leaf
+        if (generateBtn) {
+            generateBtn.addEventListener('click', async () => {
+                if (!window.APIClient) {
+                    alert('Erro: API Client não carregado.');
+                    return;
+                }
+
+                const prompt = promptInput.value || (window.AIPrompts ? window.AIPrompts.getBlankSheetPrompt() : '');
+                if (!prompt) {
+                    alert('Por favor, digite um prompt ou certifique-se que o módulo de prompts está carregado.');
+                    promptInput?.focus();
+                    return;
+                }
+
+                // UI Loading State
+                const originalText = generateBtn.innerHTML;
+                generateBtn.disabled = true;
+                generateBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Gerando...';
+
+                try {
+                    // Call API
+                    const imageUrl = await window.APIClient.generateLeaf(prompt);
+
+                    // Update UI
+                    updateDropzonePreview(leafDropzone, imageUrl);
+
+                    // Update Form Logic
+                    if (window.AutoBuilderForm) {
+                        window.AutoBuilderForm.updateField('folha', imageUrl);
+                    }
+
+                } catch (error) {
+                    console.error('Leaf Generation failed:', error);
+                    alert(`Erro na geração: ${error.message}`);
+                } finally {
+                    generateBtn.disabled = false;
+                    generateBtn.innerHTML = originalText;
+                }
+            });
+        }
+
+        // 2. Treatment Pipeline
+        if (processBtn) {
+            processBtn.addEventListener('click', async () => {
+                if (!window.APIClient) return;
+
+                // Check if we have a leaf image to process
+                const leafImage = leafDropzone.style.backgroundImage;
+                if (!leafImage || leafImage === 'none') {
+                    alert('Por favor, gere ou faça upload de uma Folha Vazia primeiro.');
+                    return;
+                }
+
+                // Get URL from background-image url("...")
+                let leafUrl = leafImage.slice(4, -1).replace(/"/g, "");
+
+                const originalText = processBtn.innerHTML;
+                processBtn.disabled = true;
+                processBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processando...';
+
+                try {
+                    // Convert to base64 if needed
+                    let base64Input = leafUrl;
+                    if (leafUrl.startsWith('blob:') || leafUrl.startsWith('http')) {
+                        const resp = await fetch(leafUrl);
+                        const blob = await resp.blob();
+                        base64Input = await new Promise((resolve) => {
+                            const reader = new FileReader();
+                            reader.onloadend = () => resolve(reader.result); // Helper
+                            reader.readAsDataURL(blob);
+                        });
+                    }
+
+                    // A. Remove Background (Get Leaf Only)
+                    const leafOnlyUrl = await window.APIClient.removeBackground(base64Input);
+                    if (leafOnlyDropzone) updateDropzonePreview(leafOnlyDropzone, leafOnlyUrl);
+                    if (window.AutoBuilderForm) window.AutoBuilderForm.updateField('folha_only', leafOnlyUrl);
+
+                    // B. Inpaint (Get Background Only)
+                    try {
+                        const maskDataUrl = await createMaskFromImage(leafOnlyUrl);
+
+                        const backgroundOnlyUrl = await window.APIClient.inpaint(
+                            base64Input, // Original Image
+                            maskDataUrl, // Mask
+                            "clean background, texture, empty surface, high quality, consistent lighting"
+                        );
+
+                        if (bgOnlyDropzone) updateDropzonePreview(bgOnlyDropzone, backgroundOnlyUrl);
+                        if (window.AutoBuilderForm) window.AutoBuilderForm.updateField('background_only', backgroundOnlyUrl);
+
+                    } catch (bgError) {
+                        console.error('Background Generation check failed:', bgError);
+                        alert('Folha separada, mas houve erro ao gerar o background limpo: ' + bgError.message);
+                    }
+
+                } catch (error) {
+                    console.error('Treatment failed:', error);
+                    alert(`Erro no tratamento: ${error.message}`);
+                } finally {
+                    processBtn.disabled = false;
+                    processBtn.innerHTML = originalText;
+                }
+            });
+        }
+    }
+
+
     async function initWindows() {
         console.log('[Windows] Initializing...');
 
