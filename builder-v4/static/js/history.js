@@ -338,20 +338,22 @@
 
             if (dataFile) {
                 try {
-                    const dataResponse = await fetch(dataFile.download_url);
-                    if (dataResponse.ok) {
-                        const json = await dataResponse.json();
-                        // Check if it's the new Brain structure
-                        if (json.formData) {
-                            appState = json;
-                        } else {
-                            // Legacy: json is just formData
-                            appState.formData = json;
+                    const response = await fetch(dataFile.download_url);
+                    if (response.ok) {
+                        appState = await response.json();
+
+                        // Fix for LinksExtras: Ensure it's an array
+                        if (appState.linksExtras && !Array.isArray(appState.linksExtras)) {
+                            appState.linksExtras = [];
                         }
                         console.log('[History] Loaded state:', appState);
+                    } else {
+                        console.warn('[History] data.json not found (Old version?)');
+                        // alert("Aviso: Dados estruturados (data.json) não encontrados. Importando apenas assets visuais.");
                     }
                 } catch (e) {
                     console.error('Error parsing data.json', e);
+                    alert("Erro ao ler dados do convite (data.json inválido).");
                 }
             }
 
