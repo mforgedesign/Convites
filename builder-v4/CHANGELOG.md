@@ -220,6 +220,11 @@ Registro de todas as modificações do projeto, conforme as diretrizes das globa
     *   **FIX CRÍTICO 1**: Corrigido `SyntaxError` (bloco catch duplicado) que quebrava o carregamento do script (Drag-and-Drop não funcionava).
     *   **FIX CRÍTICO 2**: Restaurada função `setupProcessButtons` que havia sumido, causando `ReferenceError`.
     *   **FIX CRÍTICO 3**: Movida declaração de `const formData` para o topo do escopo em `setupPublish` para corrigir erro `Cannot access 'formData' before initialization`.
+    *   **FEAT**: `pollDeployStatus` agora faz requisições HTTP reais (`HEAD`) com cache-buster e timeout de 2min.
+*   `final_template.html`:
+    *   **FIX CRÍTICO DE PATHS**: Substituídos caminhos hardcoded (`loop/`, `abertura/`, `musica/`) por placeholders dinâmicos (`[[VIDEO_LOOP_URL]]`, `[[CAPA_URL]]`, etc.) compatíveis com o novo deploy.
+    *   **FIX CAPA**: Removido overlay redundante (`overlayInicial`) para usar apenas `capaInicial` com a URL correta.
+    *   **FIX IMAGENS**: Atualizadas imagens de Manual e Presentes para usar URLs dinâmicas.
 
 ## [01/01/2026 - 20:45] - Publicação & Fixes de Encodificaçãol.ai)
 
