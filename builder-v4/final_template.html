@@ -109,6 +109,66 @@
             <source src="loop/loop.mp4" type="video/mp4">
         </video>
 
+        <!-- Initial Interaction Overlay (Cover) - Layer 3 -->
+        <div id="overlayInicial"
+            class="absolute inset-0 z-50 flex flex-col items-center justify-center cursor-pointer bg-black"
+            style="background-image: url('capa/[[CAPA_FILENAME]]'); background-size: cover; background-position: center;">
+
+            <!-- Dark Overlay for better text visibility -->
+            <div class="absolute inset-0 bg-black/30"></div>
+
+            <div class="z-10 flex flex-col items-center animate-pulse">
+                <i class="fa-solid fa-hand-pointer text-white text-5xl mb-4 drop-shadow-lg animar-clique"></i>
+                <span class="text-white font-bold text-lg tracking-widest uppercase drop-shadow-md texto-capa">
+                    Clique para Interagir
+                </span>
+            </div>
+        </div>
+
+        <script>
+            // ==================================================================
+            // 0. INTERAÇÃO INICIAL (CLIQUE)
+            // ==================================================================
+            const overlayInicial = document.getElementById('overlayInicial');
+            const videoAbertura = document.getElementById('videoAbertura');
+            const videoLoop = document.getElementById('videoLoop');
+            const audio = document.getElementById('musicaFundo');
+            const btnMute = document.getElementById('btnMute');
+            const btnPular = document.getElementById('btnPular'); // Defined later, but hoisted
+
+            // State
+            let iniciado = false;
+            let transicaoFeita = false;
+            let estaMutado = false;
+
+            overlayInicial.addEventListener('click', async () => {
+                if (iniciado) return;
+                iniciado = true;
+
+                // 1. Hide Overlay
+                overlayInicial.style.opacity = '0';
+                setTimeout(() => overlayInicial.remove(), 800);
+
+                // 2. Play Audio & Video
+                try {
+                    await audio.play();
+                    await videoAbertura.play();
+
+                    // Show Mute Button
+                    btnMute.classList.remove('invisivel');
+
+                    // Show Skip Button (if video is long > 3s)
+                    if (videoAbertura.duration > 3) {
+                        // Will be handled by btnPular logic below
+                        const btn = document.getElementById('btnPular');
+                        if (btn) btn.classList.remove('invisivel');
+                    }
+                } catch (err) {
+                    console.error("Autoplay prevention:", err);
+                }
+            });
+        </script>
+
         <!-- Static Overlay (Filled Sheet) - Layer 2 (Optional fallback) -->
         <img id="folhaPreenchida" src="folha/folha_preenchida.png" class="camada z-15 invisivel"
             onerror="this.style.display='none'">
