@@ -1424,42 +1424,55 @@
     async function pollDeployStatus(slug, liveUrl) {
         const checkBtn = document.getElementById('btn-publish');
         let attempts = 0;
-        const maxAttempts = 24; // 24 * 5s = 120 seconds (2 minutes)
+        const maxAttempts = 24; // 120 seconds
 
         updateDeployStep('step-live', 'loading');
         checkBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Aguardando GitHub...';
-
-        // Show the new Modal
         showDeployModal();
 
+        // Get a verification asset (Cover is best)
+        const assetPath = window.builderState?.assetsMap?.capa;
+        // fallback to index.html with cache buster if no asset (but asset is safer for CORS)
+        // actually image check only works for images.
+        // liveUrl is dir. assetPath is 'assets/foo.png' relative.
+
+        let checkUrl = liveUrl;
+        if (assetPath) {
+            checkUrl = liveUrl + assetPath;
+        }
+
         return new Promise((resolve, reject) => {
-            const interval = setInterval(async () => {
+            const interval = setInterval(() => {
                 attempts++;
                 const timestamp = Date.now();
 
-                try {
-                    // Update Status text to show activity
-                    if (attempts === 1) updateDeployModalStatus('pending', 'waiting for build to start...');
-                    else if (attempts % 2 === 0) updateDeployModalStatus('pending', 'building pages...');
-                    else updateDeployModalStatus('pending', 'deploying assets...');
+                // UI Feedback
+                if (attempts === 1) updateDeployModalStatus('pending', 'waiting for build...');
+                else if (attempts % 2 === 0) updateDeployModalStatus('pending', 'building pages...');
+                else updateDeployModalStatus('pending', 'deploying assets...');
 
-                    // Perform HEAD request to check availability
-                    // Add cache buster to ensure we don't get a cached 404
-                    const checkUrl = `${liveUrl}?t=${timestamp}`;
+                // 1. Timeout Check (MUST be first)
+                if (attempts >= maxAttempts) {
+                    clearInterval(interval);
+                    console.warn('Deployment check timeout');
 
-                    /* 
-                       Note: A simple HEAD request might return 200 even for an old version if cached strongly by GitHub CDN.
-                       However, since we bumped the query version in index.html (in previous steps), 
-                       fetching the HEAD itself checks if the page exists.
-                       Better check: fetch 'data.json' or a known new asset to be 100% sure.
-                       But for "availability", fetching the root with a new param is decent.
-                    */
-                    const response = await fetch(checkUrl, {
-                        method: 'HEAD',
-                        cache: 'no-store'
-                    });
+                    // Assume success but warn
+                    updateDeployStep('step-live', 'done');
+                    checkBtn.innerHTML = '<i class="fa-solid fa-check"></i> Publicado?';
+                    checkBtn.classList.remove('bg-brand-600');
+                    checkBtn.classList.add('bg-yellow-600');
 
-                    if (response.ok) {
+                    updateDeployModalStatus('success', 'deployment likely finished');
+                    showDeploySuccess(liveUrl);
+                    resolve();
+                    return;
+                }
+
+                // 2. Verification Logic (CORS Safe)
+                if (assetPath) {
+                    // IMAGE STRATEGY (Bypasses CORS)
+                    const img = new Image();
+                    img.onload = () => {
                         clearInterval(interval);
 
                         updateDeployStep('step-live', 'done');
@@ -1470,31 +1483,24 @@
                         updateDeployModalStatus('success', 'published');
                         showDeploySuccess(liveUrl);
                         resolve();
-                        return;
-                    }
-
-                    // Timeout check
-                    if (attempts >= maxAttempts) {
-                        clearInterval(interval);
-                        console.warn('Deployment status check timed out, but proceeding.');
-                        // Treat as success but warn user? Or just show the link.
-                        // Ideally we timeout but still show the link.
-
-                        updateDeployStep('step-live', 'done');
-                        checkBtn.innerHTML = '<i class="fa-solid fa-check"></i> Publicado?';
-                        checkBtn.classList.remove('bg-brand-600');
-                        checkBtn.classList.add('bg-yellow-600');
-
-                        updateDeployModalStatus('success', 'deployment likely finished (timeout)');
-                        showDeploySuccess(liveUrl);
-                        resolve();
-                    }
-
-                } catch (e) {
-                    console.warn('Status check failed (network/cors):', e);
-                    // Network error (offline?) or CORS if GitHub blocks HEAD (usually allows)
+                    };
+                    img.onerror = () => {
+                        // Still 404, waiting...
+                    };
+                    img.src = `${checkUrl}?t=${timestamp}`;
+                } else {
+                    // FALLBACK: Fetch (Might fail CORS on localhost)
+                    fetch(`${liveUrl}?t=${timestamp}`, { method: 'HEAD', mode: 'no-cors' })
+                        .then(resp => {
+                            // Opaque response (type='opaque') usually comes from no-cors.
+                            // We can't know if it's 200 or 404 easily. 
+                            // But usually 404s might still return opaque.
+                            // This path is flaky. We rely on timeout if no asset.
+                        })
+                        .catch(() => { });
                 }
-            }, 5000); // Check every 5 seconds
+
+            }, 5000);
         });
     }
 
