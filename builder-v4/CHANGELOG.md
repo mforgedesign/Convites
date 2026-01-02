@@ -226,6 +226,10 @@ Registro de todas as modificações do projeto, conforme as diretrizes das globa
     *   **FIX CAPA**: Removido overlay redundante (`overlayInicial`) para usar apenas `capaInicial` com a URL correta.
     *   **FIX IMAGENS**: Atualizadas imagens de Manual e Presentes para usar URLs dinâmicas.
 
+*   `windows.js`:
+    *   **FIX IMPORTAÇÃO SILENCIOSA**: Refatorado `restoreBuilderState` para usar `populateForm` em vez de iterar updates individuais. Isso preveniu o "spam de notificações" e crashes causados por centenas de requisições simultâneas durante a importação do GitHub.
+
+
 ## [01/01/2026 - 20:45] - Publicação & Fixes de Encodificaçãol.ai)
 
 ### Arquivos Criados:
