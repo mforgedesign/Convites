@@ -651,17 +651,19 @@
         console.log('🔄 Restoring State...', appState);
 
         // 1. Hydrate Form Data
+        // 1. Hydrate Form Data (Silent & Batched)
         if (appState.formData) {
-            if (window.AutoBuilderForm && window.AutoBuilderForm.updateField) {
-                Object.entries(appState.formData).forEach(([key, value]) => {
-                    window.AutoBuilderForm.updateField(key, value);
-                    // Trigger visual update for standard inputs
-                    const input = document.querySelector(`[data-field="${key}"]`);
-                    if (input) {
-                        input.value = value;
-                        input.dispatchEvent(new Event('change', { bubbles: true }));
+            if (window.AutoBuilderForm && window.AutoBuilderForm.populateForm) {
+                // Use populateForm to update UI without triggering events/API calls
+                window.AutoBuilderForm.populateForm(appState.formData);
+
+                // Dispatch a SINGLE update event to sync persistence/preview
+                document.dispatchEvent(new CustomEvent('stateUpdated', {
+                    detail: {
+                        source: 'restore',
+                        data: appState
                     }
-                });
+                }));
             }
         }
 
