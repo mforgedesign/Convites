@@ -1247,6 +1247,8 @@
                 htmlContent = htmlContent.replace(/\[\[FOLHA_URL\]\]/g, getPath('folha_vazia'));
                 htmlContent = htmlContent.replace(/\[\[VIDEO_ABERTURA_URL\]\]/g, getPath('vid_abertura'));
                 htmlContent = htmlContent.replace(/\[\[VIDEO_LOOP_URL\]\]/g, getPath('vid_loop'));
+                htmlContent = htmlContent.replace(/\[\[MANUAL_URL\]\]/g, getPath('manual'));
+                htmlContent = htmlContent.replace(/\[\[PRESENTS_URL\]\]/g, getPath('gifts'));
                 htmlContent = htmlContent.replace(/\[\[SLUG\]\]/g, slug);
 
                 // Inject Computed Data
