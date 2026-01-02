@@ -1,11 +1,13 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-01T23:49:16.861Z",
+  "timestamp": "2026-01-02T00:06:52.534Z",
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1767311356861.mp3",
-    "manual": "assets/manual_1767311356861.png",
-    "presentes": "assets/presentes_1767311356861.png"
+    "musica": "assets/musica_1767312412535.mp3",
+    "capa": "assets/capa_1767312412535.png",
+    "vid_abertura": "assets/vid_abertura_1767312412535.mp4",
+    "manual": "assets/manual_1767312412535.png",
+    "presentes": "assets/presentes_1767312412535.png"
   },
   "toggles": {
     "manualMode": "image",
