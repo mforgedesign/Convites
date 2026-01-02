@@ -1159,6 +1159,7 @@
 
                 // 1. Prepare Brain & Timestamp
                 const appState = window.generateBuilderState();
+                const formData = (window.AutoBuilderForm && window.AutoBuilderForm.data) || {}; // Moved up
                 const timestamp = Date.now();
                 const assetsMap = {
                     // We use specific keys to identify context, but values will be timestamped paths
@@ -1262,7 +1263,7 @@
                 htmlContent = htmlContent.replace(/\[\[TIMER_HIDE_CLASS\]\]/g, formData.data_evento ? '' : 'hidden');
 
                 // Inject Text Data
-                const formData = (window.AutoBuilderForm && window.AutoBuilderForm.data) || {};
+                // formData already declared at top of scope
                 for (const [key, value] of Object.entries(formData)) {
                     const regex = new RegExp(`\\[\\[${key.toUpperCase()}\\]\\]`, 'g');
                     htmlContent = htmlContent.replace(regex, value || '');
