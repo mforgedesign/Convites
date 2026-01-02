@@ -1310,7 +1310,7 @@
 
             } catch (err) {
                 console.error('Publish Error:', err);
-                alert('Erro ao publicar: ' + err.message);
+                showDeployError(err.message);
                 updateDeployStep('step-upload', 'reset'); // or error state
             } finally {
                 if (publishBtn.innerHTML.includes('Iniciando') || publishBtn.innerHTML.includes('Aguardando')) {
@@ -1321,39 +1321,84 @@
         });
     }
 
+    // ==========================================
+    // DEPLOYMENT UI HELPERS
+    // ==========================================
+
+    function showDeployModal() {
+        const modal = document.getElementById('deploy-status-modal');
+        const successBox = document.getElementById('deploy-success-box');
+        const statusContainer = document.getElementById('deploy-status-container');
+
+        // Reset UI
+        successBox.classList.add('hidden');
+        statusContainer.className = 'border border-yellow-500/20 bg-yellow-500/5 rounded-lg p-3 flex items-center gap-3 transition-colors';
+        statusContainer.innerHTML = `<i id="deploy-status-icon" class="fa-solid fa-clock text-yellow-500"></i>
+                                     <span id="deploy-status-text" class="text-yellow-500 font-medium text-sm">Status: pending</span>`;
+
+        modal.classList.remove('hidden');
+    }
+
+    function updateDeployModalStatus(status, message) {
+        const statusText = document.getElementById('deploy-status-text');
+        const statusIcon = document.getElementById('deploy-status-icon');
+        const statusContainer = document.getElementById('deploy-status-container');
+
+        if (status === 'success') {
+            statusContainer.className = 'border border-green-500/20 bg-green-500/5 rounded-lg p-3 flex items-center gap-3 transition-colors';
+            statusIcon.className = 'fa-solid fa-check-circle text-green-500';
+            statusText.className = 'text-green-500 font-medium text-sm';
+            statusText.innerText = `Status: ${message}`;
+        } else if (status === 'error') {
+            statusContainer.className = 'border border-red-500/20 bg-red-500/5 rounded-lg p-3 flex items-center gap-3 transition-colors';
+            statusIcon.className = 'fa-solid fa-triangle-exclamation text-red-500';
+            statusText.className = 'text-red-500 font-medium text-sm';
+            statusText.innerText = `Erro: ${message}`;
+        } else {
+            statusText.innerText = `Status: ${message}`;
+        }
+    }
+
+    function showDeploySuccess(url) {
+        const successBox = document.getElementById('deploy-success-box');
+        const finalLink = document.getElementById('deploy-final-link');
+        const openLink = document.getElementById('deploy-open-link');
+
+        successBox.classList.remove('hidden');
+        finalLink.value = url;
+        openLink.href = url;
+
+        updateDeployModalStatus('success', 'published');
+    }
+
+    function showDeployError(msg) {
+        updateDeployModalStatus('error', msg);
+        alert('Erro ao publicar: ' + msg); // Keep alert as fallback/urgent
+    }
+
     /**
      * Poll GitHub Actions status until success or timeout
      */
     async function pollDeployStatus(slug, liveUrl) {
         const checkBtn = document.getElementById('btn-publish');
         let attempts = 0;
-        const maxAttempts = 30; // 30 * 4s = 2 minutes
 
         updateDeployStep('step-live', 'loading');
         checkBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Aguardando GitHub...';
+
+        // Show the new Modal
+        showDeployModal();
 
         return new Promise((resolve, reject) => {
             const interval = setInterval(async () => {
                 attempts++;
                 try {
-                    // Check local build-system-status (simulated) or use a real callback if available
-                    // Since we don't have a direct API to check Pages status without Auth,
-                    // we will check if the URL is reachable (HEAD request)
-
-                    /* 
-                       Note: A true GitHub Actions status check requires an authenticated proxy.
-                       Here we will try to fetch the live URL. If it returns 200/404 (but different from previous), it's a sign.
-                       However, caching makes this hard.
-                       
-                       Simplification: We will wait a fixed time (e.g. 15s) then just assume success for UX, 
-                       UNLESS we implement the specific Action Status API via existing Edge Function.
-                       
-                       Let's rely on a timed "optimistic" success for now, as implemented in v3,
-                       or better: check our own specific deployed file.
-                    */
+                    // Update Status text to show activity
+                    if (attempts % 2 === 0) updateDeployModalStatus('pending', 'building pages...');
+                    else updateDeployModalStatus('pending', 'deploying...');
 
                     // For now, let's keep the UX responsive
-                    if (attempts > 5) { // Wait ~20 seconds
+                    if (attempts > 4) { // Wait ~16 seconds (slightly faster)
                         clearInterval(interval);
 
                         updateDeployStep('step-live', 'done');
@@ -1361,9 +1406,8 @@
                         checkBtn.classList.remove('bg-brand-600');
                         checkBtn.classList.add('bg-green-600');
 
-                        // Show Link
-                        alert(`Publicado com sucesso!\n\nSeu convite estará no ar em instantes.\n\nAcesse: ${liveUrl}`);
-                        window.open(liveUrl, '_blank');
+                        // Show Success in Modal
+                        showDeploySuccess(liveUrl);
                         resolve();
                     }
 
