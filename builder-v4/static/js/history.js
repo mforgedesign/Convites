@@ -477,15 +477,18 @@
             updateStatus('Finalizando...');
 
             // Trigger state update event
+            // Trigger state update event
             document.dispatchEvent(new CustomEvent('stateUpdated', {
-                detail: { source: 'import', data: importedData }
+                detail: { source: 'import', data: appState }
             }));
 
-            // Remove loading
-            document.body.removeChild(loadingMsg);
+            // Remove loading safely
+            if (loadingMsg && loadingMsg.parentNode) {
+                loadingMsg.parentNode.removeChild(loadingMsg);
+            }
 
-            // Show success and navigate
-            alert(`✅ Convite "${slug}" importado com sucesso!\n\nVocê pode agora editar e republicar.`);
+            // Show success (silent toast preferable, but for now just logging as per silent request)
+            // alert(`✅ Convite "${slug}" importado com sucesso!\n\nVocê pode agora editar e republicar.`);
 
             if (window.AutoBuilderNav && typeof window.AutoBuilderNav.showWindow === 'function') {
                 window.AutoBuilderNav.showWindow('form');
@@ -496,9 +499,11 @@
         } catch (error) {
             console.error('[History] Import error:', error);
 
-            // Remove loading if exists
-            const loadingMsg = document.querySelector('.fixed.inset-0.bg-black\\/50');
-            if (loadingMsg) document.body.removeChild(loadingMsg);
+            // Remove loading safely
+            const loadingMsgCheck = document.querySelector('.fixed.inset-0.bg-black\\/50');
+            if (loadingMsgCheck && loadingMsgCheck.parentNode) {
+                loadingMsgCheck.parentNode.removeChild(loadingMsgCheck);
+            }
 
             alert(`❌ Erro ao importar convite:\n\n${error.message}\n\nVerifique o console para mais detalhes.`);
         }
