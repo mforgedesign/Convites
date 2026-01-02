@@ -1301,10 +1301,6 @@
                 // alert(`Publicado com sucesso!\n\nAcesse: ${liveUrl}`); // Moved to polling success
                 // window.open(liveUrl, '_blank');
 
-            } catch (err) {
-                console.error('Publish Error:', err);
-                alert('Erro ao publicar: ' + err.message);
-                updateDeployStep('step-upload', 'reset'); // or error state
                 // 6. Poll for Deployment Status
                 await pollDeployStatus(slug, liveUrl);
 
@@ -2169,7 +2165,17 @@
     }
 
 
-    function initWindows() {
+    async function initWindows() {
+        console.log('[Windows] Initializing...');
+
+        try {
+            setupDropzones();
+            console.log('[Windows] Dropzones setup complete.');
+        } catch (err) {
+            console.error('[Windows] Failed to setup dropzones:', err);
+        }
+
+        setupProcessButtons();
         // Mode toggles
         setupModeToggle('manual', ['text', 'image']);
         setupModeToggle('gifts', ['link', 'image']);
