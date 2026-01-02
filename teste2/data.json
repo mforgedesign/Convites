@@ -1,0 +1,17 @@
+{
+  "version": "4.0",
+  "timestamp": "2026-01-02T00:33:06.995Z",
+  "linksExtras": [],
+  "assetsMap": {
+    "musica": "assets/musica_1767313986995.mp3",
+    "capa": "assets/capa_1767313986995.png",
+    "vid_abertura": "assets/vid_abertura_1767313986995.mp4",
+    "manual": "assets/manual_1767313986995.png",
+    "presentes": "assets/presentes_1767313986995.png"
+  },
+  "toggles": {
+    "manualMode": "image",
+    "giftsMode": "image",
+    "fillMode": "overlay"
+  }
+}
