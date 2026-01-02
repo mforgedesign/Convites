@@ -626,11 +626,20 @@
      */
     window.generateBuilderState = function () {
         const formData = window.AutoBuilderForm ? window.AutoBuilderForm.data : {};
+
+        // Fetch fresh links from DOM/Manager if available, fallback to state
+        let linksExtras = [];
+        if (window.AutoBuilderLinksExtras && window.AutoBuilderLinksExtras.getLinksFromDOM) {
+            linksExtras = window.AutoBuilderLinksExtras.getLinksFromDOM();
+        } else {
+            linksExtras = window.builderState?.linksExtras || [];
+        }
+
         return {
             version: "4.0",
             timestamp: new Date().toISOString(),
             formData: formData,
-            linksExtras: window.builderState?.linksExtras || [],
+            linksExtras: linksExtras,
             assetsMap: {}, // To be populated by caller based on actual files
             toggles: {
                 manualMode: document.querySelector('#manual-mode-buttons .bg-white')?.dataset?.mode || 'text',
