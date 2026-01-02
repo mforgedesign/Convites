@@ -417,6 +417,7 @@
             const assetContexts = {
                 'capa': ['capa'],
                 'folha_vazia': ['folha', 'sheet'],
+                'folha_preenchida': ['preenchida', 'filled'], // Added fallback
                 'vid_abertura': ['intro', 'abertura', 'opening'],
                 'vid_loop': ['loop', 'background'],
                 'musica': ['musica', 'music'],
