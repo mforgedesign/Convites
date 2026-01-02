@@ -1379,6 +1379,7 @@
     async function pollDeployStatus(slug, liveUrl) {
         const checkBtn = document.getElementById('btn-publish');
         let attempts = 0;
+        const maxAttempts = 24; // 24 * 5s = 120 seconds (2 minutes)
 
         updateDeployStep('step-live', 'loading');
         checkBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Aguardando GitHub...';
@@ -1389,13 +1390,31 @@
         return new Promise((resolve, reject) => {
             const interval = setInterval(async () => {
                 attempts++;
+                const timestamp = Date.now();
+
                 try {
                     // Update Status text to show activity
-                    if (attempts % 2 === 0) updateDeployModalStatus('pending', 'building pages...');
-                    else updateDeployModalStatus('pending', 'deploying...');
+                    if (attempts === 1) updateDeployModalStatus('pending', 'waiting for build to start...');
+                    else if (attempts % 2 === 0) updateDeployModalStatus('pending', 'building pages...');
+                    else updateDeployModalStatus('pending', 'deploying assets...');
 
-                    // For now, let's keep the UX responsive
-                    if (attempts > 4) { // Wait ~16 seconds (slightly faster)
+                    // Perform HEAD request to check availability
+                    // Add cache buster to ensure we don't get a cached 404
+                    const checkUrl = `${liveUrl}?t=${timestamp}`;
+
+                    /* 
+                       Note: A simple HEAD request might return 200 even for an old version if cached strongly by GitHub CDN.
+                       However, since we bumped the query version in index.html (in previous steps), 
+                       fetching the HEAD itself checks if the page exists.
+                       Better check: fetch 'data.json' or a known new asset to be 100% sure.
+                       But for "availability", fetching the root with a new param is decent.
+                    */
+                    const response = await fetch(checkUrl, {
+                        method: 'HEAD',
+                        cache: 'no-store'
+                    });
+
+                    if (response.ok) {
                         clearInterval(interval);
 
                         updateDeployStep('step-live', 'done');
@@ -1403,15 +1422,34 @@
                         checkBtn.classList.remove('bg-brand-600');
                         checkBtn.classList.add('bg-green-600');
 
-                        // Show Success in Modal
+                        updateDeployModalStatus('success', 'published');
+                        showDeploySuccess(liveUrl);
+                        resolve();
+                        return;
+                    }
+
+                    // Timeout check
+                    if (attempts >= maxAttempts) {
+                        clearInterval(interval);
+                        console.warn('Deployment status check timed out, but proceeding.');
+                        // Treat as success but warn user? Or just show the link.
+                        // Ideally we timeout but still show the link.
+
+                        updateDeployStep('step-live', 'done');
+                        checkBtn.innerHTML = '<i class="fa-solid fa-check"></i> Publicado?';
+                        checkBtn.classList.remove('bg-brand-600');
+                        checkBtn.classList.add('bg-yellow-600');
+
+                        updateDeployModalStatus('success', 'deployment likely finished (timeout)');
                         showDeploySuccess(liveUrl);
                         resolve();
                     }
 
                 } catch (e) {
-                    console.warn('Status check failed', e);
+                    console.warn('Status check failed (network/cors):', e);
+                    // Network error (offline?) or CORS if GitHub blocks HEAD (usually allows)
                 }
-            }, 4000);
+            }, 5000); // Check every 5 seconds
         });
     }
 
