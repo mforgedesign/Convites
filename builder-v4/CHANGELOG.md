@@ -209,7 +209,19 @@ Registro de todas as modificações do projeto, conforme as diretrizes das globa
 
 ---
 
-## [2025-12-30 15:16] - Integração APIs de IA (Fal.ai)
+## [01/01/2026 - 21:30] - Premium Deployment UI & Stabilization
+### Arquivos Modificados:
+*   `index.html`:
+    *   Added `#deploy-status-modal`: Nova interface de status de publicação (modal escuro com passos em tempo real).
+    *   Updated script versions to `v=4.0.8` para forçar atualização de cache.
+*   `static/js/windows.js`:
+    *   Added `pollDeployStatus`, `showDeployModal`, `updateDeployModalStatus`: Lógica para gerenciar o novo modal de status.
+    *   Refatoração `setupPublish`: Removidos `alert()` nativos em favor da nova UI.
+    *   **FIX CRÍTICO 1**: Corrigido `SyntaxError` (bloco catch duplicado) que quebrava o carregamento do script (Drag-and-Drop não funcionava).
+    *   **FIX CRÍTICO 2**: Restaurada função `setupProcessButtons` que havia sumido, causando `ReferenceError`.
+    *   **FIX CRÍTICO 3**: Movida declaração de `const formData` para o topo do escopo em `setupPublish` para corrigir erro `Cannot access 'formData' before initialization`.
+
+## [01/01/2026 - 20:45] - Publicação & Fixes de Encodificaçãol.ai)
 
 ### Arquivos Criados:
 * `utils/ai_wrapper.py`:
