@@ -5,20 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Prevent browser caching - always fetch fresh content -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 
     <title>Convite - Lorena | Debutante</title>
 
-    <!-- Open Graph for WhatsApp/Social Preview -->
     <meta property="og:title" content="Convite - Lorena | Debutante">
     <meta property="og:description" content="Clique para ver o convite interativo!">
-    <meta property="og:image" content="capa/capa_1767266067.jpg?v=1767266067">
+    <meta property="og:image" content="capa/capa_1767708111.jpg?v=1767708111">
     <meta property="og:type" content="website">
 
-    <!-- Envelope Favicon -->
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💌</text></svg>">
 
@@ -116,15 +113,15 @@
         class="relative w-full max-w-[480px] h-full bg-black shadow-2xl overflow-hidden transition-all duration-300">
 
         <video id="videoLoop" class="camada z-10 invisivel" playsinline loop muted>
-            <source src="loop/loop_1767266067.mp4?v=1767266067" type="video/mp4">
+            <source src="loop/loop_1767708111.mp4?v=1767708111" type="video/mp4">
         </video>
 
         <video id="videoAbertura" class="camada z-20" playsinline muted>
-            <source src="abertura/abertura_1767266067.mp4?v=1767266067" type="video/mp4">
+            <source src="abertura/abertura_1767708111.mp4?v=1767708111" type="video/mp4">
         </video>
 
         <audio id="musicaFundo" loop preload="auto">
-            <source src="musica/musica_1767266067.mp3?v=1767266067" type="audio/mp3">
+            <source src="musica/musica_1767708111.mp3?v=1767708111" type="audio/mp3">
         </audio>
 
         <button id="btnMute"
@@ -137,7 +134,6 @@
             Pular
         </button>
 
-        <!-- Timer Countdown -->
         <div id="countdownContainer"
             class="absolute top-[34px] left-0 w-full z-40 flex flex-col items-center justify-center invisivel transition-opacity duration-1000 texto-sombra pointer-events-none ">
             <h2 class="text-white text-[10px] sm:text-xs uppercase tracking-[0.2em] mb-2 font-semibold opacity-90">
@@ -162,13 +158,11 @@
             </div>
         </div>
 
-        <!-- Gradiente de fundo fixo (não se move) -->
         <div id="containerShadow"
             class="absolute bottom-0 left-0 w-full z-30 pb-10 px-2 pt-20 invisivel transition-opacity duration-1000"
             style="background: linear-gradient(to top, #000000E6, #00000066, transparent);">
         </div>
 
-        <!-- Container dos botões (se move com offset) -->
         <div id="containerBotoes"
             class="absolute left-0 w-full z-40 pb-10 px-2 invisivel transition-opacity duration-1000 flex justify-center"
             style="bottom: 0px;">
@@ -178,7 +172,7 @@
 
         <div id="capaInicial"
             class="absolute inset-0 z-50 bg-cover bg-center flex flex-col items-center justify-center cursor-pointer transition-opacity duration-700"
-            style="background-image: url('capa/capa_1767266067.jpg?v=1767266067');">
+            style="background-image: url('capa/capa_1767708111.jpg?v=1767708111');">
             <div class="absolute inset-0 bg-black/20"></div>
 
             <div id="dicaInteractionContainer" class="relative z-10 flex flex-col items-center gap-4 animate-pulse">
@@ -191,18 +185,15 @@
 
     </div>
 
-    <!-- Popup Manual do Convidado -->
     <div id="popupManual"
         class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm invisivel">
         <div
             class="relative w-full max-w-[400px] h-[80%] rounded-xl shadow-2xl overflow-hidden flex flex-col border border-white/20">
-            <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="loop/folha_vazia_1767266067.jpg?v=1767266067" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="loop/folha_vazia_1767708111.jpg?v=1767708111" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/60"></div>
             </div>
 
-            <!-- Header -->
             <div class="relative z-10 flex justify-between items-center p-4 border-b border-white/10">
                 <h2 id="manualTitle" class="text-xl font-bold text-white">Manual do Convidado</h2>
                 <button id="btnCloseManual" class="text-white hover:text-gray-300 transition-colors">
@@ -210,16 +201,13 @@
                 </button>
             </div>
 
-            <!-- Content -->
             <div class="relative z-10 p-6 overflow-y-auto custom-scrollbar text-white text-center space-y-6">
                 <div id="manualContent" class="text-sm leading-relaxed text-left">
-                    <!-- Conteúdo do manual será inserido aqui -->
-                </div>
+                    </div>
             </div>
         </div>
     </div>
 
-    <!-- Popup Imagem de Presentes -->
     <div id="popupPresentes"
         class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm invisivel">
         <div class="relative max-w-[90vw] max-h-[90vh] rounded-xl shadow-2xl overflow-hidden">
@@ -232,7 +220,6 @@
         </div>
     </div>
 
-    <!-- Popup Imagem do Manual -->
     <div id="popupManualImage"
         class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm invisivel">
         <div class="relative max-w-[90vw] max-h-[90vh] rounded-xl shadow-2xl overflow-hidden">
@@ -244,19 +231,16 @@
         </div>
     </div>
 
-    <!-- Popup Confirmação RSVP -->
     <div id="popupRSVP"
         class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm invisivel">
         <div
             class="relative w-full max-w-[350px] rounded-xl shadow-2xl overflow-hidden border border-white/20 m-4 flex flex-col">
 
-            <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="loop/folha_vazia_1767266067.jpg?v=1767266067" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="loop/folha_vazia_1767708111.jpg?v=1767708111" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/70"></div>
             </div>
 
-            <!-- Header -->
             <div
                 class="relative z-10 flex justify-between items-center p-4 border-b border-white/10 bg-black/30 backdrop-blur-sm">
                 <h2 class="text-lg font-bold text-white"><i class="fa-brands fa-whatsapp text-green-500 mr-2"></i>
@@ -266,7 +250,6 @@
                 </button>
             </div>
 
-            <!-- Form -->
             <div class="relative z-10 p-6 space-y-4">
                 <div>
                     <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Seu Nome Completo *</label>
@@ -282,26 +265,19 @@
                         placeholder="(DDD) 99999-9999">
                 </div>
 
-                <div id="container-acompanhantes" class="">
-                    <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Total de Acompanhantes</label>
-                    <div class="flex items-center gap-3">
-                        <button id="btn-dec-acomp"
-                            class="w-10 h-10 bg-stone-700/80 rounded text-white font-bold hover:bg-stone-600 transition-colors backdrop-blur-sm">-</button>
-                        <span id="txt-acomp-count"
-                            class="text-white font-bold text-xl w-8 text-center drop-shadow-md">0</span>
-                        <button id="btn-inc-acomp"
-                            class="w-10 h-10 bg-stone-700/80 rounded text-white font-bold hover:bg-stone-600 transition-colors backdrop-blur-sm">+</button>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-stone-300 text-[10px] font-bold mb-1 uppercase">Modelo do Carro</label>
+                        <input type="text" id="rsvp-carro"
+                            class="w-full bg-black/40 border border-stone-500/50 rounded p-2 text-white text-xs focus:border-green-500 focus:outline-none placeholder-stone-500 truncate backdrop-blur-sm"
+                            placeholder="Ex: Corolla">
                     </div>
-                    <p class="text-[10px] text-stone-400 mt-1 drop-shadow">* Apenas acompanhantes autorizados pelo
-                        anfitrião.</p>
-                </div>
-
-                <div class="flex items-center gap-2 mt-2 ">
-                    <input type="checkbox" id="check-no-acomp"
-                        class="w-4 h-4 rounded bg-black/40 border-stone-500 text-green-500 focus:ring-green-500 focus:ring-offset-0">
-                    <label for="check-no-acomp"
-                        class="text-stone-200 text-xs cursor-pointer select-none drop-shadow">Vou sozinho(a) / Sem
-                        acompanhantes</label>
+                    <div>
+                        <label class="block text-stone-300 text-[10px] font-bold mb-1 uppercase">Placa do Carro</label>
+                        <input type="text" id="rsvp-placa"
+                            class="w-full bg-black/40 border border-stone-500/50 rounded p-2 text-white text-xs focus:border-green-500 focus:outline-none placeholder-stone-500 truncate backdrop-blur-sm"
+                            placeholder="ABC-1234">
+                    </div>
                 </div>
 
                 <button id="btn-confirm-rsvp"
@@ -314,7 +290,7 @@
 
     <script>
         // ==================================================================
-        // 1. CONFIGURAÇÃO DOS BOTÕES (Edite Aqui!)
+        // 1. CONFIGURAÇÃO DOS BOTÕES
         // ==================================================================
         const menuConfig = [
     {
@@ -333,14 +309,8 @@
         "titulo": "Confirmar Presença",
         "icone": "fa-regular fa-circle-check",
         "link": "5511956761771"
-    },
-    {
-        "titulo": "Sugerir Música",
-        "icone": "fa-solid fa-music",
-        "link": "https://docs.google.com/forms/d/e/1FAIpQLSczmQcEqFOytR-GbLx-GKXqx2TQAGlOaQr1_DxVan3xL0NyKg/viewform?usp=publish-editor"
     }
 ];
-        // Injected by AutoBuilder
         const buttonSize = parseFloat('1') || 1.0;
 
         // ==================================================================
@@ -357,7 +327,6 @@
         const containerShadow = document.getElementById('containerShadow');
         const gridBotoes = document.getElementById('gridBotoes');
 
-        // Popup Refs
         const popupManual = document.getElementById('popupManual');
         const btnCloseManual = document.getElementById('btnCloseManual');
         const manualContent = document.getElementById('manualContent');
@@ -365,26 +334,23 @@
         const popupPresentes = document.getElementById('popupPresentes');
         const btnClosePresentes = document.getElementById('btnClosePresentes');
 
-        // Popup RSVP Refs
         const popupRSVP = document.getElementById('popupRSVP');
         const btnCloseRSVP = document.getElementById('btnCloseRSVP');
         const inputName = document.getElementById('rsvp-name');
         const inputPhone = document.getElementById('rsvp-phone');
-        const txtAcompCount = document.getElementById('txt-acomp-count');
-        const checkNoAcomp = document.getElementById('check-no-acomp');
+        const inputCarro = document.getElementById('rsvp-carro');
+        const inputPlaca = document.getElementById('rsvp-placa');
         const btnConfirmRSVP = document.getElementById('btn-confirm-rsvp');
+        
         let currentRSVPNumber = "";
-        let acompCount = 0;
-
         let transicaoFeita = false;
         let estaMutado = false;
         let iniciouInteracao = false;
 
-        // Timer Ref
         const countdownContainer = document.getElementById('countdownContainer');
 
         // ==================================================================
-        // 7. LÓGICA DO POPUP MANUAL (DEFINIDO ANTES PARA USAR NO LOOP)
+        // 7. LÓGICA DOS POPUPS
         // ==================================================================
         window.abrirManual = function (e) {
             e.preventDefault();
@@ -395,16 +361,6 @@
             popupManual.classList.add('invisivel');
         });
 
-        // Fechar ao clicar fora
-        popupManual.addEventListener('click', (e) => {
-            if (e.target === popupManual) {
-                popupManual.classList.add('invisivel');
-            }
-        });
-
-        // ==================================================================
-        // 8. LÓGICA DO POPUP PRESENTES (DEFINIDO ANTES PARA USAR NO LOOP)
-        // ==================================================================
         window.abrirPresentes = function (e) {
             e.preventDefault();
             popupPresentes.classList.remove('invisivel');
@@ -414,15 +370,6 @@
             popupPresentes.classList.add('invisivel');
         });
 
-        popupPresentes.addEventListener('click', (e) => {
-            if (e.target === popupPresentes) {
-                popupPresentes.classList.add('invisivel');
-            }
-        });
-
-        // ==================================================================
-        // 8.5. LÓGICA DO POPUP IMAGEM MANUAL
-        // ==================================================================
         const popupManualImage = document.getElementById('popupManualImage');
         const btnCloseManualImage = document.getElementById('btnCloseManualImage');
 
@@ -437,111 +384,48 @@
             });
         }
 
-        if (popupManualImage) {
-            popupManualImage.addEventListener('click', (e) => {
-                if (e.target === popupManualImage) {
-                    popupManualImage.classList.add('invisivel');
-                }
-            });
-        }
-
         // ==================================================================
-        // 9. LÓGICA DO POPUP RSVP (CONFIRMAÇÃO)
+        // 9. LÓGICA DO POPUP RSVP (REDEFINIDA PARA VEÍCULOS)
         // ==================================================================
-
-        // Counter Logic
-        document.getElementById('btn-dec-acomp').addEventListener('click', () => {
-            if (acompCount > 0) { acompCount--; txtAcompCount.textContent = acompCount; }
-        });
-        document.getElementById('btn-inc-acomp').addEventListener('click', () => {
-            acompCount++; txtAcompCount.textContent = acompCount;
-        });
-
-        // Checkbox Logic
-        checkNoAcomp.addEventListener('change', (e) => {
-            const container = document.getElementById('container-acompanhantes');
-            if (e.target.checked) {
-                container.classList.add('hidden');
-                acompCount = 0;
-            } else {
-                container.classList.remove('hidden');
-            }
-        });
-
-        // Injected State for Logic
-        const companionHideClass = "";
-
         window.abrirRSVP = function (e, link) {
             e.preventDefault();
 
-            // 1. Detect if it is a phone number or URL
             const isWhatsappLink = link.includes("wa.me") || link.includes("whatsapp.com");
             const isExternalUrl = link.startsWith("http") && !isWhatsappLink;
 
-            // If it looks like a URL but NOT a whatsapp URL, open it directly
             if (isExternalUrl) {
                 window.open(link, '_blank');
                 return;
             }
 
-            // It is a phone (either raw digits or wa.me link)
-            // Extract just digits
             currentRSVPNumber = link.replace(/\D/g, '');
 
             // Reset Form
             inputName.value = "";
             inputPhone.value = "";
-            acompCount = 0;
-            txtAcompCount.textContent = "0";
-            checkNoAcomp.checked = false;
-
-            // Visibility Logic: Respect Global Settings
-            const containerAcomp = document.getElementById('container-acompanhantes');
-            const checkContainer = document.getElementById('check-no-acomp').parentElement;
-
-            if (companionHideClass.trim() === 'hidden') {
-                // Feature Disabled globally
-                containerAcomp.classList.add('hidden');
-                checkContainer.classList.add('hidden');
-            } else {
-                // Feature Enabled
-                containerAcomp.classList.remove('hidden');
-                checkContainer.classList.remove('hidden');
-            }
+            inputCarro.value = "";
+            inputPlaca.value = "";
 
             popupRSVP.classList.remove('invisivel');
         }
 
-        // Close Logic
         btnCloseRSVP.addEventListener('click', () => popupRSVP.classList.add('invisivel'));
-        popupRSVP.addEventListener('click', (e) => {
-            if (e.target === popupRSVP) popupRSVP.classList.add('invisivel');
-        });
 
-        // Send Logic
         btnConfirmRSVP.addEventListener('click', () => {
             const name = inputName.value.trim();
             const phone = inputPhone.value.trim();
+            const carro = inputCarro.value.trim();
+            const placa = inputPlaca.value.trim();
 
             if (!name || !phone) {
-                alert("Por favor, preencha Nome e WhatsApp.");
+                alert("Por favor, preencha pelo menos Nome e WhatsApp.");
                 return;
             }
 
             let message = `Olá! Gostaria de confirmar minha presença.\n\n*Nome:* ${name}\n*Telefone:* ${phone}`;
-
-            // Only include companion info if feature is enabled
-            if (companionHideClass.trim() !== 'hidden') {
-                if (!checkNoAcomp.checked) {
-                    if (acompCount > 0) {
-                        message += `\n*Acompanhantes:* ${acompCount}`;
-                    } else {
-                        message += `\n*Acompanhantes:* Nenhum`;
-                    }
-                } else {
-                    message += `\n*Acompanhantes:* Nenhum (Vou sozinho)`;
-                }
-            }
+            
+            if (carro) message += `\n*Veículo:* ${carro}`;
+            if (placa) message += `\n*Placa:* ${placa}`;
 
             const waUrl = `https://wa.me/${currentRSVPNumber}?text=${encodeURIComponent(message)}`;
             window.open(waUrl, '_blank');
@@ -554,42 +438,31 @@
         // ==================================================================
         menuConfig.forEach(btn => {
             if (btn.link && (btn.link.trim() !== "" || btn.isGiftImage || btn.isManualImage)) {
-
                 const isGiftImage = btn.isGiftImage === true;
                 const isManualImage = btn.isManualImage === true;
 
-                // Create elements
                 const anchor = document.createElement('a');
                 anchor.className = "group flex flex-col items-center gap-1 focus:outline-none min-w-[50px] max-w-[80px] cursor-pointer";
-                anchor.target = "_blank";
-
-                // Logic for href/click
-                // Check for Confirmation Logic
+                
                 const isRSVP = btn.titulo.toLowerCase().includes("confirmar") || btn.titulo.toLowerCase().includes("presença");
 
                 if (btn.id === 'manual' && isManualImage) {
-                    // Manual with Image mode: open image popup
                     anchor.href = "#";
-                    anchor.target = "";
                     anchor.addEventListener('click', abrirManualImage);
                 } else if (btn.id === 'manual') {
-                    // Manual with Text mode: open text popup
                     anchor.href = "#";
-                    anchor.target = "";
                     anchor.addEventListener('click', abrirManual);
                 } else if (isGiftImage) {
                     anchor.href = "#";
-                    anchor.target = "";
                     anchor.addEventListener('click', abrirPresentes);
                 } else if (isRSVP) {
-                    // Smart RSVP Logic
                     anchor.href = "#";
                     anchor.addEventListener('click', (e) => abrirRSVP(e, btn.link));
                 } else {
                     anchor.href = btn.link;
+                    anchor.target = "_blank";
                 }
 
-                // Calculate sizes
                 const basePx = 48;
                 const sizePx = basePx * buttonSize;
                 const baseIconRem = 1.125;
@@ -609,8 +482,6 @@
 
                 gridBotoes.appendChild(anchor);
 
-                // Se for manual, injeta o conteúdo se disponível
-                // Se for manual, injeta o conteúdo se disponível
                 if (btn.id === 'manual' && btn.manualText) {
                     manualContent.innerHTML = btn.manualText;
                 }
@@ -618,130 +489,72 @@
         });
 
         // ==================================================================
-        // 4. LÓGICA DE INÍCIO - INICIA AMBOS OS VÍDEOS NO MESMO GESTO
+        // 4. LÓGICA DE INÍCIO E VÍDEOS
         // ==================================================================
-
         capa.addEventListener('click', function () {
             if (iniciouInteracao) return;
             iniciouInteracao = true;
-
-            // Esconde a capa
             capa.classList.add('invisivel');
 
-            // Inicia a música (loop infinito)
             if (audio) {
                 audio.volume = 0.5;
-                audio.currentTime = 0;
-                // Force reload to bypass weird caching glitches
                 audio.load();
-
-                var playPromise = audio.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(_ => {
-                        console.log("Audio started playing successfully");
-                    })
-                        .catch(error => {
-                            console.error("Audio playback failed:", error);
-                            // Retry once on interaction
-                            setTimeout(() => audio.play(), 500);
-                        });
-                }
+                audio.play().catch(e => console.log("Erro audio:", e));
             }
 
-            // SOLUÇÃO iOS: Inicia AMBOS os vídeos no mesmo gesto do usuário
-            // O loop fica tocando na camada de trás, invisível por enquanto
             if (videoLoop) {
-                videoLoop.muted = true;
-                videoLoop.play().catch(function (e) { console.error("Loop play failed:", e); });
+                videoLoop.play().catch(e => console.log("Erro loop:", e));
             }
 
-            // Vídeo de abertura na camada da frente
             if (videoAbertura) {
-                videoAbertura.currentTime = 0;
-                videoAbertura.play().catch(function (e) { console.error("Intro play failed:", e); });
+                videoAbertura.play().catch(e => console.log("Erro abertura:", e));
             }
 
-            // Mostra controles
             btnPular.classList.remove('invisivel');
             btnMute.classList.remove('invisivel');
         });
 
-        // ==================================================================
-        // 5. LÓGICA DE TRANSIÇÃO PARA O LOOP
-        // ==================================================================
-
         function irParaLoop() {
             if (transicaoFeita) return;
             transicaoFeita = true;
-
-            // Esconde botão pular
             btnPular.classList.add('invisivel');
-
-            // O loop já está tocando na camada de trás desde o início
-            // Apenas revelamos ele escondendo a abertura (crossfade)
             videoLoop.classList.remove('invisivel');
             videoAbertura.classList.add('invisivel');
             containerBotoes.classList.remove('invisivel');
             containerShadow.classList.remove('invisivel');
 
-            // Mostra o timer apenas se não estiver hidden (timer ativado)
             if (countdownContainer && !countdownContainer.classList.contains('hidden')) {
                 countdownContainer.classList.remove('invisivel');
             }
-
-            // Pausa o vídeo de abertura após a transição visual
-            setTimeout(function () { videoAbertura.pause(); }, 800);
+            setTimeout(() => videoAbertura.pause(), 800);
         }
 
-        // Gatilho 1: Quando o vídeo termina
         videoAbertura.onended = irParaLoop;
-
-        // Gatilho 2: Pouco antes do vídeo terminar (transição suave)
         videoAbertura.ontimeupdate = function () {
-            if (videoAbertura.duration > 0 &&
-                videoAbertura.currentTime >= videoAbertura.duration - 0.5) {
+            if (videoAbertura.duration > 0 && videoAbertura.currentTime >= videoAbertura.duration - 0.5) {
                 irParaLoop();
             }
         };
-
-        // Gatilho 3: Botão pular
         btnPular.onclick = irParaLoop;
 
-        // ==================================================================
-        // 6. CONTROLE DE MUTE
-        // ==================================================================
         btnMute.addEventListener('click', () => {
             estaMutado = !estaMutado;
-            if (estaMutado) {
-                audio.muted = true;
-                videoAbertura.muted = true;
-                videoLoop.muted = true;
-                iconMute.className = "fa-solid fa-volume-xmark";
-                btnMute.classList.add("bg-red-500/50");
-            } else {
-                audio.muted = false;
-                if (!transicaoFeita) videoAbertura.muted = false;
-                iconMute.className = "fa-solid fa-volume-high";
-                btnMute.classList.remove("bg-red-500/50");
-            }
+            audio.muted = estaMutado;
+            videoAbertura.muted = estaMutado;
+            videoLoop.muted = estaMutado;
+            iconMute.className = estaMutado ? "fa-solid fa-volume-xmark" : "fa-solid fa-volume-high";
+            btnMute.classList.toggle("bg-red-500/50", estaMutado);
         });
 
         // ==================================================================
-        // TIMER DE CONTAGEM REGRESSIVA
+        // TIMER
         // ==================================================================
         function atualizarCronometro() {
             const dataAlvo = new Date('2026-01-24T19:00:00');
             const agora = new Date();
-
             let diferenca = dataAlvo - agora;
 
-            if (diferenca <= 0 || isNaN(dataAlvo.getTime())) {
-                document.getElementById('contadorMeses').innerText = "00";
-                document.getElementById('contadorDias').innerText = "00";
-                document.getElementById('contadorHoras').innerText = "00";
-                document.getElementById('contadorMinutos').innerText = "00";
-                return;
-            }
+            if (diferenca <= 0 || isNaN(dataAlvo.getTime())) return;
 
             let anos = dataAlvo.getFullYear() - agora.getFullYear();
             let meses = dataAlvo.getMonth() - agora.getMonth();
@@ -767,12 +580,8 @@
             document.getElementById('contadorMinutos').innerText = fmt(minutos);
         }
 
-        // Inicia e atualiza a cada segundo
         atualizarCronometro();
         setInterval(atualizarCronometro, 1000);
-
-
     </script>
 </body>
-
 </html>
