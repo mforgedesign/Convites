@@ -121,7 +121,7 @@
         </video>
 
         <audio id="musicaFundo" loop preload="auto">
-            <source src="musica/musica_17677081111.mp3?v=17677081111" type="audio/mp3">
+            <source src="musica/musica_176770811113.mp3?v=176770811113" type="audio/mp3">
         </audio>
 
         <button id="btnMute"
@@ -293,24 +293,29 @@
         // 1. CONFIGURAÇÃO DOS BOTÕES
         // ==================================================================
         const menuConfig = [
-    {
-        "id": "manual",
-        "titulo": "Manual do Convidado",
-        "icone": "fa-solid fa-book",
-        "link": "#",
-        "manualText": "<div>\n    <h3><i class=\"fa-solid fa-smile\"></i> Regras Importantes:</h3>\n    <ul>\n        <li><i class=\"fa-solid fa-clock\"></i> Se divertir muito!</li>\n        <li><i class=\"fa-solid fa-calendar-check\"></i> Chegue no horário: Sua presença pontual é muito importante para nós.</li>\n        <li><i class=\"fa-solid fa-check-circle\"></i> Confirme sua presença: Por favor, confirme presença pelo menos 15 dias antes do evento.</li>\n        <li><i class=\"fa-solid fa-party-horn\"></i> Divirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.</li>\n        <li><i class=\"fa-solid fa-heart\"></i> Não vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.</li>\n    </ul>\n</div>"
-    },
-    {
-        "titulo": "Como Chegar",
-        "icone": "fa-solid fa-location-dot",
-        "link": "https://maps.app.goo.gl/5imL7oM51RDnbsFy5"
-    },
-    {
-        "titulo": "Confirmar Presença",
-        "icone": "fa-regular fa-circle-check",
-        "link": "5511956761771"
-    }
-];
+            {
+                "id": "manual",
+                "titulo": "Manual do Convidado",
+                "icone": "fa-solid fa-book",
+                "link": "#",
+                "manualText": "<div>\n    <h3><i class=\"fa-solid fa-smile\"></i> Regras Importantes:</h3>\n    <ul>\n        <li><i class=\"fa-solid fa-clock\"></i> Se divertir muito!</li>\n        <li><i class=\"fa-solid fa-calendar-check\"></i> Chegue no horário: Sua presença pontual é muito importante para nós.</li>\n        <li><i class=\"fa-solid fa-check-circle\"></i> Confirme sua presença: Por favor, confirme presença pelo menos 15 dias antes do evento.</li>\n        <li><i class=\"fa-solid fa-party-horn\"></i> Divirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.</li>\n        <li><i class=\"fa-solid fa-heart\"></i> Não vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.</li>\n    </ul>\n</div>"
+            },
+            {
+                "titulo": "Como Chegar",
+                "icone": "fa-solid fa-location-dot",
+                "link": "https://maps.app.goo.gl/5imL7oM51RDnbsFy5"
+            },
+            {
+                "titulo": "Confirmar Presença",
+                "icone": "fa-regular fa-circle-check",
+                "link": "5511956761771"
+            },
+            {
+                "titulo": "Sugerir Música",
+                "icone": "fa-solid fa-music",
+                "link": "https://docs.google.com/forms/d/e/1FAIpQLSczmQcEqFOytR-GbLx-GKXqx2TQAGlOaQr1_DxVan3xL0NyKg/viewform?usp=header"
+            }
+        ];
         const buttonSize = parseFloat('1') || 1.0;
 
         // ==================================================================
@@ -584,4 +589,5 @@
         setInterval(atualizarCronometro, 1000);
     </script>
 </body>
+
 </html>
