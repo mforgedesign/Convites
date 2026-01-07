@@ -17,13 +17,7 @@
   "giftSuggestions": "",
   "giftMode": "none",
   "giftImageUrl": null,
-  "extraLinks": [
-    {
-      "link": "https://docs.google.com/forms/d/e/1FAIpQLSczmQcEqFOytR-GbLx-GKXqx2TQAGlOaQr1_DxVan3xL0NyKg/viewform?usp=publish-editor",
-      "name": "Sugerir Música",
-      "icon": "fa-solid fa-music"
-    }
-  ],
+  "extraLinks": [],
   "manual": "Se divertir muito!\nChegue no horário: Sua presença pontual é muito importante para nós.\n Confirme sua presença: Por favor, confirme presença pelo menos 15 dias antes do evento.\n Divirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.\n Não vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.",
   "manualName": "Manual do Convidado",
   "whatsapp": "5511956761771",
@@ -32,7 +26,7 @@
   "manualMode": "text",
   "manualImageUrl": null,
   "shadowColor": "#000000",
-  "slug": "ConviteLorena15Anos",
+  "slug": "teste2",
   "showTimer": true,
   "allowCompanion": true,
   "interactHint": true
