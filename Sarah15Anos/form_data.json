@@ -17,18 +17,12 @@
   "giftSuggestions": "",
   "giftMode": "link",
   "giftImageUrl": null,
-  "extraLinks": [
-    {
-      "link": "https://cool-cascaron-8d76f3.netlify.app/",
-      "name": "Galeria",
-      "icon": "fa-solid fa-image"
-    }
-  ],
-  "manual": " Chegue no horário: Sua presença pontual é muito importante para nós.\n Confirme sua presença: Por favor, confirme presença pelo menos 15 dias antes do evento.\n Divirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.\n Não vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.\n\nDress Code: Evitar cor rosa (exclusivo para a debutante)",
+  "extraLinks": [],
+  "manual": "Chegue no horário\nSua presença pontual é muito importante para nós.\n\n Confirme sua presença\nPor favor, confirme presença pelo menos 15 dias antes do evento.\n\n Divirta-se bastante!\nEstamos ansiosos para celebrar este momento especial com você.\n\n Não vá embora sem me dar um abraço e comer um pedaço do bolo\nQueremos compartilhar cada instante com você.\n\n Dress Code\nEvitar cor rosa (exclusivo para a debutante)",
   "manualName": "Manual do Convidado",
   "whatsapp": "5511914876703",
   "confirmLink": "",
-  "processedManualText": "<div>\n    <h3><i class=\"fa-solid fa-clock\"></i> Chegue no horário:</h3>\n    <p>Sua presença pontual é muito importante para nós.</p>\n    \n    <h3><i class=\"fa-solid fa-check-circle\"></i> Confirme sua presença:</h3>\n    <p>Por favor, confirme presença pelo menos 15 dias antes do evento.</p>\n    \n    <h3><i class=\"fa-solid fa-smile\"></i> Divirta-se bastante!</h3>\n    <p>Estamos ansiosos para celebrar este momento especial com você.</p>\n    \n    <h3><i class=\"fa-solid fa-users\"></i> Não vá embora sem me dar um abraço e comer um pedaço do bolo:</h3>\n    <p>Queremos compartilhar cada instante com você.</p>\n    \n    <h3><i class=\"fa-solid fa-tshirt\"></i> Dress Code:</h3>\n    <p>Evitar cor rosa (exclusivo para a debutante)</p>\n</div>",
+  "processedManualText": "<div>\n    <h3><i class=\"fa-solid fa-clock\"></i> Chegue no horário</h3>\n    <p>Sua presença pontual é muito importante para nós.</p>\n\n    <h3><i class=\"fa-solid fa-check\"></i> Confirme sua presença</h3>\n    <p>Por favor, confirme presença pelo menos 15 dias antes do evento.</p>\n\n    <h3><i class=\"fa-solid fa-smile\"></i> Divirta-se bastante!</h3>\n    <p>Estamos ansiosos para celebrar este momento especial com você.</p>\n\n    <h3><i class=\"fa-solid fa-heart\"></i> Não vá embora sem me dar um abraço e comer um pedaço do bolo</h3>\n    <p>Queremos compartilhar cada instante com você.</p>\n\n    <h3><i class=\"fa-solid fa-tshirt\"></i> Dress Code</h3>\n    <p>Evitar cor rosa (exclusivo para a debutante)</p>\n</div>",
   "manualMode": "text",
   "manualImageUrl": null,
   "shadowColor": "#000000",
