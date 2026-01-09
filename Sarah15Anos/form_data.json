@@ -17,7 +17,13 @@
   "giftSuggestions": "",
   "giftMode": "link",
   "giftImageUrl": null,
-  "extraLinks": [],
+  "extraLinks": [
+    {
+      "link": "https://cool-cascaron-8d76f3.netlify.app/",
+      "name": "Galeria de Fotos",
+      "icon": "fa-solid fa-image"
+    }
+  ],
   "manual": "Chegue no horário\nSua presença pontual é muito importante para nós.\n\n Confirme sua presença\nPor favor, confirme presença pelo menos 15 dias antes do evento.\n\n Divirta-se bastante!\nEstamos ansiosos para celebrar este momento especial com você.\n\n Não vá embora sem me dar um abraço e comer um pedaço do bolo\nQueremos compartilhar cada instante com você.\n\n Dress Code\nEvitar cor rosa (exclusivo para a debutante)",
   "manualName": "Manual do Convidado",
   "whatsapp": "5511914876703",
