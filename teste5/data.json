@@ -1,0 +1,25 @@
+{
+  "version": "4.0",
+  "timestamp": "2026-01-12T19:10:45.785Z",
+  "formData": {},
+  "linksExtras": [
+    {
+      "id": 0,
+      "label": "Teste",
+      "url": "https://builder.mforge.com.br/v4/",
+      "icon": "fa-solid fa-link"
+    }
+  ],
+  "assetsMap": {
+    "capa": "assets/capa_1768245045785.png",
+    "folha_preenchida": "assets/folha_preenchida_1768245045785.png",
+    "vid_abertura": "assets/vid_abertura_1768245045785.mp4",
+    "manual": "assets/manual_1768245045785.png",
+    "presentes": "assets/presentes_1768245045785.png"
+  },
+  "toggles": {
+    "manualMode": "text",
+    "giftsMode": "link",
+    "fillMode": "overlay"
+  }
+}
