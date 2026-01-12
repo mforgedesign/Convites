@@ -1,26 +1,40 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-12T21:48:46.471Z",
-  "formData": {},
+  "timestamp": "2026-01-12T22:01:41.216Z",
+  "formData": {
+    "capa": null,
+    "capa_referencia": null,
+    "folha_vazia": null,
+    "vid_abertura": null,
+    "vid_loop": null,
+    "folha_preenchida": null,
+    "folha_only": null,
+    "background_only": null,
+    "folha_animada": null,
+    "presentes": null,
+    "manual": null,
+    "musica": null
+  },
   "linksExtras": [
     {
       "id": 0,
-      "label": "Teste",
-      "url": "https://builder.mforge.com.br/v4/",
+      "label": "Testando",
+      "url": "https://maps.app.goo.gl/4oZKT4yTWAK7Etrx5",
       "icon": "fa-solid fa-link"
     }
   ],
   "assetsMap": {
-    "musica": "assets/musica_1768254526471.mp3",
-    "capa": "assets/capa_1768254526471.png",
-    "folha_preenchida": "assets/folha_preenchida_1768254526471.png",
-    "vid_abertura": "assets/vid_abertura_1768254526471.mp4",
-    "manual": "assets/manual_1768254526471.png",
-    "presentes": "assets/presentes_1768254526471.png"
+    "musica": "assets/musica_1768255301216.mp3",
+    "capa": "assets/capa_1768255301216.png",
+    "folha_vazia": "assets/folha_vazia_1768255301216.png",
+    "folha_preenchida": "assets/folha_preenchida_1768255301216.png",
+    "vid_abertura": "assets/vid_abertura_1768255301216.mp4",
+    "manual": "assets/manual_1768255301216.png",
+    "presentes": "assets/presentes_1768255301216.png"
   },
   "toggles": {
-    "manualMode": "text",
-    "giftsMode": "link",
+    "manualMode": "image",
+    "giftsMode": "image",
     "fillMode": "overlay"
   }
 }
