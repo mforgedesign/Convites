@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-13T13:11:42.222Z",
+  "timestamp": "2026-01-13T13:23:27.280Z",
   "formData": {},
   "linksExtras": [
     {
@@ -11,12 +11,12 @@
     }
   ],
   "assetsMap": {
-    "musica": "assets/musica_1768309902222.mp3",
-    "capa": "assets/capa_1768309902222.png",
-    "folha_preenchida": "assets/folha_preenchida_1768309902222.png",
-    "vid_abertura": "assets/vid_abertura_1768309902222.mp4",
-    "manual": "assets/manual_1768309902222.png",
-    "presentes": "assets/presentes_1768309902222.png"
+    "musica": "assets/musica_1768310607280.mp3",
+    "capa": "assets/capa_1768310607280.png",
+    "folha_preenchida": "assets/folha_preenchida_1768310607280.png",
+    "vid_abertura": "assets/vid_abertura_1768310607280.mp4",
+    "manual": "assets/manual_1768310607280.png",
+    "presentes": "assets/presentes_1768310607280.png"
   },
   "toggles": {
     "manualMode": "text",
