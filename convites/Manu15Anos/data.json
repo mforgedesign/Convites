@@ -1,8 +1,7 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-15T23:07:41.930Z",
+  "timestamp": "2026-01-15T23:17:46.965Z",
   "formData": {
-    "musica": "blob:https://builder.mforge.com.br/3b884c55-e272-4a8a-bb51-ed8ffac1f109",
     "nome": "Manu",
     "tipo_evento": "Aniversário",
     "tipo_evento_custom": "",
@@ -39,8 +38,10 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768518461930.mp3",
-    "capa": "assets/capa_1768518461930.png"
+    "musica": "assets/musica_1768519066966.mp3",
+    "capa": "assets/capa_1768519066966.png",
+    "fundo_tela": "assets/fundo_tela_1768519066966.png",
+    "vid_abertura": "assets/vid_abertura_1768519066966.mp4"
   },
   "toggles": {
     "manualMode": "text",
