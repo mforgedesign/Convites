@@ -165,9 +165,9 @@
         </div>
 
         <div id="containerBotoes"
-            class="absolute left-0 w-full z-40 pb-10 px-2 invisivel transition-opacity duration-1000 flex justify-center"
+            class="absolute left-0 w-full z-40 pb-10 px-4 invisivel transition-opacity duration-1000 flex justify-center"
             style="bottom: 100px;">
-            <div id="gridBotoes" class="flex flex-row flex-nowrap justify-center gap-4 w-full max-w-[480px]">
+            <div id="gridBotoes" class="grid grid-cols-4 w-full max-w-[480px] place-items-center">
             </div>
         </div>
 
@@ -557,7 +557,8 @@
 
                 // Create elements
                 const anchor = document.createElement('a');
-                anchor.className = "group flex flex-col items-center gap-1 focus:outline-none min-w-[50px] max-w-[80px] cursor-pointer";
+                // Alterado: removido max-w-80px, adicionado w-full para preencher a célula do grid
+                anchor.className = "group flex flex-col items-center gap-1 focus:outline-none w-full cursor-pointer";
                 anchor.target = "_blank";
 
                 // Logic for href/click
@@ -599,7 +600,7 @@
                             <i class="${btn.icone}" style="font-size: ${iconRem}rem;"></i>
                         </div>
                     </div>
-                    <span class="text-[10px] uppercase font-bold text-white tracking-wide text-center leading-tight drop-shadow-md">
+                    <span class="text-[10px] uppercase font-bold text-white tracking-wide text-center leading-tight drop-shadow-md w-full break-words">
                         ${btn.titulo}
                     </span>
                     `;
