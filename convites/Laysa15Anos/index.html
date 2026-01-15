@@ -10,12 +10,12 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 
-    <title>Convite | Laysa</title>
+    <title>Convite Digital</title>
 
     <!-- Open Graph for WhatsApp/Social Preview -->
-    <meta property="og:title" content="Convite | Laysa">
+    <meta property="og:title" content="Convite Digital">
     <meta property="og:description" content="Clique para ver o convite interativo!">
-    <meta property="og:image" content="capa/capa_1768490998559.png">
+    <meta property="og:image" content="capa/capa_1768491766153.png">
     <meta property="og:type" content="website">
 
     <!-- Envelope Favicon -->
@@ -97,7 +97,7 @@
             text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
         }
     </style>
-<style>:root { --button-color: #ee9bab; } .custom-button-bg { background-color: var(--button-color) !important; }</style></head>
+<style>:root { --button-color: #000000; } .custom-button-bg { background-color: var(--button-color) !important; }</style></head>
 
 <body class="w-full h-[100dvh] flex justify-center items-center">
 
@@ -110,15 +110,15 @@
         </video>
 
         <!-- Static Overlay (Filled Sheet) - Layer 2 (Optional fallback) -->
-        <img id="folhaPreenchida" src="./assets/folha_preenchida_1768490998559.png" class="camada z-15 invisivel"
+        <img id="folhaPreenchida" src="./assets/folha_preenchida_1768491766153.png" class="camada z-15 invisivel"
             onerror="this.style.display='none'">
 
         <video id="videoAbertura" class="camada z-20" playsinline muted>
-            <source src="./assets/vid_abertura_1768490998559.mp4" type="video/mp4">
+            <source src="./assets/vid_abertura_1768491766153.mp4" type="video/mp4">
         </video>
 
         <audio id="musicaFundo" loop preload="auto">
-            <source src="./assets/musica_1768490998559.mp3" type="audio/mp3">
+            <source src="./assets/musica_1768491766153.mp3" type="audio/mp3">
         </audio>
 
         <button id="btnMute"
@@ -174,7 +174,7 @@
 
         <div id="capaInicial"
             class="absolute inset-0 z-50 bg-cover bg-center flex flex-col items-center justify-center cursor-pointer transition-opacity duration-700"
-            style="background-image: url('./assets/capa_1768490998559.png');">
+            style="background-image: url('./assets/capa_1768491766153.png');">
             <div class="absolute inset-0 bg-black/20"></div>
 
             <div id="dicaInteractionContainer" class="relative z-10 flex flex-col items-center gap-4 animate-pulse">
@@ -205,7 +205,7 @@
             class="relative w-full max-w-[400px] h-[80%] rounded-xl shadow-2xl overflow-hidden flex flex-col border border-white/20">
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="./assets/folha_vazia_1768490998559.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="./assets/folha_vazia_1768491766153.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/60"></div>
             </div>
 
@@ -234,7 +234,7 @@
                 class="absolute top-3 right-3 z-10 bg-black/50 text-white hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center transition-colors border border-white/20">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <img id="imagemPresentes" src="./assets/presentes_1768490998559.png" class="max-w-full max-h-[85vh] object-contain rounded-lg">
+            <img id="imagemPresentes" src="./assets/presentes_1768491766153.png" class="max-w-full max-h-[85vh] object-contain rounded-lg">
         </div>
     </div>
 
@@ -258,7 +258,7 @@
 
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="./assets/folha_vazia_1768490998559.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="./assets/folha_vazia_1768491766153.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/70"></div>
             </div>
 
@@ -322,7 +322,7 @@
         // ==================================================================
         // 1. CONFIGURAÇÃO DOS BOTÕES (Injetado pelo AutoBuilder)
         // ==================================================================
-        const menuConfig = [{"id":"gifts","titulo":"Presentes","icone":"fa-solid fa-gift","link":"#","isGiftImage":true},{"id":"location","titulo":"Localização","icone":"fa-solid fa-location-dot","link":"https://maps.app.goo.gl/HDNoA4riZ67LfYvA8"},{"id":"rsvp","titulo":"Confirmar Presença","icone":"fa-solid fa-check","link":"https://docs.google.com/forms/d/e/1FAIpQLSeYCWN7y_3B91dORtYy29sljjpCOVkNWOZRzAXmZDdTWczHOw/viewform?usp=publish-editor"},{"id":"manual","titulo":"Manual","icone":"fa-solid fa-book-open","link":"#","manualText":"<p class=\"mb-2\">\n    <i class=\"fa-solid fa-clock text-brand-400 mr-2\"></i>\n    <strong>Horário:</strong> A festa iniciará pontualmente às 19h30 e durará até 00h00. Chegue com 30 min de antecedência.\n</p>\n\n<p class=\"mb-2\">\n    <i class=\"fa-solid fa-shirt text-brand-400 mr-2\"></i>\n    <strong>Dress code:</strong> Traje fino (Esporte Fino ou Passeio Completo).\n</p>\n\n<p class=\"mb-2\">\n    <i class=\"fa-solid fa-calendar-check text-brand-400 mr-2\"></i>\n    <strong>Confirmação:</strong> Sua presença é essencial! Por favor, confirme até dia  25/03/26.\n</p>"}];
+        const menuConfig = [{"id":"gifts","titulo":"Presentes","icone":"fa-solid fa-gift","link":"#","isGiftImage":true},{"id":"location","titulo":"Localização","icone":"fa-solid fa-location-dot","link":"https://maps.app.goo.gl/HDNoA4riZ67LfYvA8"},{"id":"rsvp","titulo":"Confirmar Presença","icone":"fa-solid fa-check","link":"https://docs.google.com/forms/d/e/1FAIpQLSeYCWN7y_3B91dORtYy29sljjpCOVkNWOZRzAXmZDdTWczHOw/viewform?usp=publish-editor"},{"id":"manual","titulo":"Manual","icone":"fa-solid fa-book-open","link":"#","manualText":"<p class=\"mb-2\">\n    <i class=\"fa-solid fa-clock text-brand-400 mr-2\"></i>\n    <strong>Horário:</strong> A cerimônia iniciará pontualmente às [Inserir Hora]. Chegue com 30 min de antecedência.\n</p>\n\n<p class=\"mb-2\">\n    <i class=\"fa-solid fa-shirt text-brand-400 mr-2\"></i>\n    <strong>Dress code:</strong> Traje fino (Esporte Fino ou Passeio Completo).\n</p>\n\n<p class=\"mb-2\">\n    <i class=\"fa-solid fa-calendar-check text-brand-400 mr-2\"></i>\n    <strong>Confirmação:</strong> Sua presença é essencial! Por favor, confirme até dia [Data].\n</p>"}];
         // Injected by AutoBuilder
         const buttonSize = parseFloat('1.0') || 1.0;
 
@@ -535,11 +535,22 @@
         // ==================================================================
         // 3. GERAR BOTÕES DINAMICAMENTE
         // ==================================================================
+        // ==================================================================
+        // 3. GERAR BOTÕES DINAMICAMENTE
+        // ==================================================================
+        console.log("[AutoBuilder] Rendering Buttons:", menuConfig);
         menuConfig.forEach(btn => {
-            if (btn.link && (btn.link.trim() !== "" || btn.isGiftImage || btn.isManualImage)) {
+            // Robust check: Ensure link exists OR it's a special image button
+            // Treat '#' as a valid link
+            const hasLink = btn.link !== undefined && btn.link !== null && String(btn.link).trim() !== "";
+
+            if (hasLink || btn.isGiftImage || btn.isManualImage) {
 
                 const isGiftImage = btn.isGiftImage === true;
                 const isManualImage = btn.isManualImage === true;
+                const isManualText = btn.id === 'manual' && !isManualImage;
+
+                console.log(`[AutoBuilder] Rendering Button: ${btn.id}`);
 
                 // Create elements
                 const anchor = document.createElement('a');
@@ -547,22 +558,22 @@
                 anchor.target = "_blank";
 
                 // Logic for href/click
-                // Check for Confirmation Logic
                 const isRSVP = btn.titulo.toLowerCase().includes("confirmar") || btn.titulo.toLowerCase().includes("presença");
 
-                if (btn.id === 'manual' && isManualImage) {
-                    // Manual with Image mode: open image popup
+                if (btn.id === 'manual') {
+                    // Manual Handler (Image or Text)
                     anchor.href = "#";
-                    anchor.target = "";
-                    anchor.addEventListener('click', abrirManualImage);
-                } else if (btn.id === 'manual') {
-                    // Manual with Text mode: open text popup
-                    anchor.href = "#";
-                    anchor.target = "";
-                    anchor.addEventListener('click', abrirManual);
+                    // Remove target blank for internal actions
+                    anchor.removeAttribute('target');
+
+                    if (isManualImage) {
+                        anchor.addEventListener('click', abrirManualImage);
+                    } else {
+                        anchor.addEventListener('click', abrirManual);
+                    }
                 } else if (isGiftImage) {
                     anchor.href = "#";
-                    anchor.target = "";
+                    anchor.removeAttribute('target');
                     anchor.addEventListener('click', abrirPresentes);
                 } else if (isRSVP) {
                     // Smart RSVP Logic
@@ -581,7 +592,7 @@
                 anchor.innerHTML = `
                     <div class="rounded-full border border-stone-300 p-[2px] transition-transform duration-300 group-hover:scale-105 group-active:scale-95">
                         <div class="rounded-full custom-button-bg text-white flex items-center justify-center shadow-lg group-hover:bg-stone-700 transition-colors"
-                             style="width: ${sizePx}px; height: ${sizePx}px; background-color: #ee9bab;">
+                             style="width: ${sizePx}px; height: ${sizePx}px; background-color: #000000;">
                             <i class="${btn.icone}" style="font-size: ${iconRem}rem;"></i>
                         </div>
                     </div>
@@ -593,10 +604,16 @@
                 gridBotoes.appendChild(anchor);
 
                 // Se for manual, injeta o conteúdo se disponível
-                // Se for manual, injeta o conteúdo se disponível
                 if (btn.id === 'manual' && btn.manualText) {
-                    manualContent.innerHTML = btn.manualText;
+                    // Safety check for manualContent element
+                    if (manualContent) {
+                        manualContent.innerHTML = btn.manualText;
+                    } else {
+                        console.warn("[AutoBuilder] manualContent element missing!");
+                    }
                 }
+            } else {
+                console.log(`[AutoBuilder] Skipping Button ${btn.titulo} - No Valid Link/Mode`, btn);
             }
         });
 
