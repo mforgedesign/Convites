@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-16T21:42:53.131Z",
+  "timestamp": "2026-01-16T21:45:48.402Z",
   "formData": {
     "nome": "",
     "tipo_evento": "",
@@ -14,7 +14,7 @@
     "frase_convite": "",
     "cor_botoes": "#53339e",
     "sombra_gradiente": "#000000",
-    "posicao_botoes": "100",
+    "posicao_botoes": "8",
     "tamanho_botoes": "medio",
     "link_google_maps": "https://maps.app.goo.gl/dYc5ix3qFtbnsyUr9",
     "link_presentes": "",
@@ -38,11 +38,11 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "capa": "assets/capa_1768599773132.png",
-    "folha_vazia": "assets/folha_vazia_1768599773132.png",
-    "fundo_tela": "assets/fundo_tela_1768599773132.mp4",
-    "vid_abertura": "assets/vid_abertura_1768599773132.mp4",
-    "presentes": "assets/presentes_1768599773132.png"
+    "capa": "assets/capa_1768599948402.png",
+    "folha_vazia": "assets/folha_vazia_1768599948402.png",
+    "fundo_tela": "assets/fundo_tela_1768599948402.mp4",
+    "vid_abertura": "assets/vid_abertura_1768599948402.mp4",
+    "presentes": "assets/presentes_1768599948402.png"
   },
   "toggles": {
     "manualMode": "text",
