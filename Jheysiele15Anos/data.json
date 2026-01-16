@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-16T20:42:04.769Z",
+  "timestamp": "2026-01-16T22:12:45.006Z",
   "formData": {
     "nome": "Jheysiele kauanne",
     "tipo_evento": "Aniversário",
@@ -35,6 +35,7 @@
     "music_name": "",
     "slug": "Jheysiele15Anos",
     "watermark_enabled": true,
+    "musica": null,
     "capa": null,
     "capa_referencia": null,
     "folha_vazia": null,
@@ -43,17 +44,16 @@
     "folha_only": null,
     "background_only": null,
     "presentes": null,
-    "manual": null,
-    "musica": null
+    "manual": null
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768596124769.mp3",
-    "capa": "assets/capa_1768596124769.png",
-    "folha_vazia": "assets/folha_vazia_1768596124769.png",
-    "fundo_tela": "assets/fundo_tela_1768596124769.dat",
-    "vid_abertura": "assets/vid_abertura_1768596124769.mp4",
-    "presentes": "assets/presentes_1768596124769.png"
+    "musica": "assets/musica_1768601565006.mp3",
+    "capa": "assets/capa_1768601565006.png",
+    "folha_vazia": "assets/folha_vazia_1768601565006.png",
+    "fundo_tela": "assets/fundo_tela_1768601565006.dat",
+    "vid_abertura": "assets/vid_abertura_1768601565006.mp4",
+    "presentes": "assets/presentes_1768601565006.png"
   },
   "toggles": {
     "manualMode": "text",
