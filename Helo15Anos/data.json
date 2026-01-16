@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-16T18:28:44.842Z",
+  "timestamp": "2026-01-16T18:32:28.965Z",
   "formData": {
     "nome": "Helo",
     "tipo_evento": "Aniversário",
@@ -14,7 +14,7 @@
     "frase_convite": "",
     "cor_botoes": "#d0841b",
     "sombra_gradiente": "#000000",
-    "posicao_botoes": "100",
+    "posicao_botoes": "68",
     "tamanho_botoes": "medio",
     "link_google_maps": "https://maps.app.goo.gl/E6NLxobvczFDhhRv5",
     "link_presentes": "",
@@ -45,11 +45,11 @@
     }
   ],
   "assetsMap": {
-    "musica": "assets/musica_1768588124842.mp3",
-    "capa": "assets/capa_1768588124842.png",
-    "folha_vazia": "assets/folha_vazia_1768588124842.png",
-    "fundo_tela": "assets/fundo_tela_1768588124842.png",
-    "vid_abertura": "assets/vid_abertura_1768588124842.mp4"
+    "musica": "assets/musica_1768588348965.mp3",
+    "capa": "assets/capa_1768588348965.png",
+    "folha_vazia": "assets/folha_vazia_1768588348965.png",
+    "fundo_tela": "assets/fundo_tela_1768588348965.png",
+    "vid_abertura": "assets/vid_abertura_1768588348965.mp4"
   },
   "toggles": {
     "manualMode": "text",
