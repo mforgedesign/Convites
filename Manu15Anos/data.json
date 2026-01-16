@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-16T00:28:06.965Z",
+  "timestamp": "2026-01-16T00:37:57.401Z",
   "formData": {
     "nome": "Manu",
     "tipo_evento": "Aniversário",
@@ -19,8 +19,8 @@
     "link_google_maps": "https://maps.app.goo.gl/Nyw7Z9kci6XgkyXJ6",
     "link_presentes": "",
     "manual_content": "<p><i class=\"fa-solid fa-sparkles\"></i> Preparamos cada detalhe com muito carinho para celebrar este momento único e sua presença é o que tornará tudo inesquecível.</p><p><i class=\"fa-solid fa-user-tie\"></i> <strong>Dress Code:</strong> Esporte Fino.<br>Sugerimos um traje elegante e confortável para aproveitarmos a festa do início ao fim.</p><p><i class=\"fa-solid fa-palette\"></i> <strong>Um Toque Especial:</strong> Pedimos a gentileza de reservarem a cor <strong>azul</strong> para o uso exclusivo da nossa aniversariante.</p><p><i class=\"fa-solid fa-calendar-check\"></i> <strong>R.S.V.P:</strong> Para nos ajudarem com a organização, por favor, confirmem sua presença até o dia <strong>10/03</strong>.</p><p><i class=\"fa-solid fa-clock\"></i> <strong>Pontualidade:</strong> Cada minuto desta celebração foi planejado para ser vivido com vocês. Contamos com sua pontualidade para não perder nenhum brinde!</p>",
-    "numero_whatsapp": "5511943408617",
-    "link_confirmacao": "",
+    "numero_whatsapp": "",
+    "link_confirmacao": "https://docs.google.com/forms/d/e/1FAIpQLScOLPIEN8TpIPDaWjH9ei2iaRxuLhJyzDY1kuMgXjWrqfmSwA/viewform?usp=publish-editor",
     "permitir_acompanhante": false,
     "timer_contagem": false,
     "cover_prompt": "",
@@ -38,10 +38,10 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768523286965.mp3",
-    "capa": "assets/capa_1768523286965.png",
-    "fundo_tela": "assets/fundo_tela_1768523286965.png",
-    "vid_abertura": "assets/vid_abertura_1768523286965.mp4"
+    "musica": "assets/musica_1768523877401.mp3",
+    "capa": "assets/capa_1768523877401.png",
+    "fundo_tela": "assets/fundo_tela_1768523877401.png",
+    "vid_abertura": "assets/vid_abertura_1768523877401.mp4"
   },
   "toggles": {
     "manualMode": "text",
