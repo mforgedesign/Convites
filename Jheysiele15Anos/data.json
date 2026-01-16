@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-16T22:17:01.639Z",
+  "timestamp": "2026-01-16T22:17:54.142Z",
   "formData": {
     "nome": "Jheysiele kauanne",
     "tipo_evento": "Aniversário",
@@ -34,26 +34,16 @@
     "manual_raw_content": " (Não altere nada dessa vez, apenas coloque os ícones)\nManual de Convidados\nSeja bem-vindo! Estamos muito felizes em tê-lo conosco neste momento especial. Aqui estão algumas informações importantes para que você possa aproveitar ao máximo a celebração:\n\n Confirmação de Presença\nPor favor, confirme sua presença pelo menos 15 dias antes do evento. Sua participação é muito importante para nós!\n\n Chegada Pontual\nChegue no horário! Sua presença pontual é essencial para que possamos iniciar a celebração juntos.\n\n Divirta-se!\nEstamos ansiosos para celebrar este momento especial com você. Aproveite cada instante!\n\n Não Vá Embora Sem Nos Abraçar\nQueremos compartilhar cada instante com você. Não se esqueça de nos dar um abraço e comer um pedaço do bolo!",
     "music_name": "",
     "slug": "Jheysiele15Anos",
-    "watermark_enabled": true,
-    "musica": null,
-    "capa": null,
-    "capa_referencia": null,
-    "folha_vazia": null,
-    "vid_abertura": null,
-    "fundo_tela": null,
-    "folha_only": null,
-    "background_only": null,
-    "presentes": null,
-    "manual": null
+    "watermark_enabled": true
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768601821639.mp3",
-    "capa": "assets/capa_1768601821639.png",
-    "folha_vazia": "assets/folha_vazia_1768601821639.png",
-    "fundo_tela": "assets/fundo_tela_1768601821639.mp4",
-    "vid_abertura": "assets/vid_abertura_1768601821639.mp4",
-    "presentes": "assets/presentes_1768601821639.png"
+    "musica": "assets/musica_1768601874143.mp3",
+    "capa": "assets/capa_1768601874143.png",
+    "folha_vazia": "assets/folha_vazia_1768601874143.png",
+    "fundo_tela": "assets/fundo_tela_1768601874143.mp4",
+    "vid_abertura": "assets/vid_abertura_1768601874143.mp4",
+    "presentes": "assets/presentes_1768601874143.png"
   },
   "toggles": {
     "manualMode": "text",
