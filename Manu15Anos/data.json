@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-15T23:59:08.070Z",
+  "timestamp": "2026-01-16T00:16:24.465Z",
   "formData": {
     "nome": "Manu",
     "tipo_evento": "Aniversário",
@@ -38,10 +38,10 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768521548070.mp3",
-    "capa": "assets/capa_1768521548070.png",
-    "fundo_tela": "assets/fundo_tela_1768521548070.png",
-    "vid_abertura": "assets/vid_abertura_1768521548070.mp4"
+    "musica": "assets/musica_1768522584465.mp3",
+    "capa": "assets/capa_1768522584465.png",
+    "fundo_tela": "assets/fundo_tela_1768522584465.png",
+    "vid_abertura": "assets/vid_abertura_1768522584465.mp4"
   },
   "toggles": {
     "manualMode": "text",

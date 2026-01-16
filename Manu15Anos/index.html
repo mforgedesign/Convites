@@ -15,7 +15,7 @@
     <!-- Open Graph for WhatsApp/Social Preview -->
     <meta property="og:title" content="Manu | Aniversário 15 Anos">
     <meta property="og:description" content="Clique para ver o convite interativo!">
-    <meta property="og:image" content="capa/capa_1768521548070.png">
+    <meta property="og:image" content="capa/capa_1768522584465.png">
     <meta property="og:type" content="website">
 
     <!-- Envelope Favicon -->
@@ -106,19 +106,19 @@
 
         <!-- Background (Unified) - Layer 1 -->
         <!-- Can be image or video - determined by file extension -->
-        <img id="fundoTelaImg" src="assets/fundo_tela_1768521548070.png" class="camada z-10 invisivel"
+        <img id="fundoTelaImg" src="assets/fundo_tela_1768522584465.png" class="camada z-10 invisivel"
             onerror="this.style.display='none'">
         <video id="fundoTelaVideo" class="camada z-10 invisivel" playsinline loop muted
             onerror="this.style.display='none'">
-            <source src="assets/fundo_tela_1768521548070.png" type="video/mp4">
+            <source src="assets/fundo_tela_1768522584465.png" type="video/mp4">
         </video>
 
         <video id="videoAbertura" class="camada z-20" playsinline muted>
-            <source src="assets/vid_abertura_1768521548070.mp4" type="video/mp4">
+            <source src="assets/vid_abertura_1768522584465.mp4" type="video/mp4">
         </video>
 
         <audio id="musicaFundo" loop preload="auto">
-            <source src="assets/musica_1768521548070.mp3" type="audio/mp3">
+            <source src="assets/musica_1768522584465.mp3" type="audio/mp3">
         </audio>
 
         <button id="btnMute"
@@ -174,7 +174,7 @@
 
         <div id="capaInicial"
             class="absolute inset-0 z-50 bg-cover bg-center flex flex-col items-center justify-center cursor-pointer transition-opacity duration-700"
-            style="background-image: url('assets/capa_1768521548070.png');">
+            style="background-image: url('assets/capa_1768522584465.png');">
             <div class="absolute inset-0 bg-black/20"></div>
 
             <div id="dicaInteractionContainer" class="relative z-10 flex flex-col items-center gap-4 animate-pulse">
@@ -322,7 +322,7 @@
         // ==================================================================
         // 1. CONFIGURAÇÃO DOS BOTÕES (Injetado pelo AutoBuilder)
         // ==================================================================
-        const menuConfig = [{"id":"location","titulo":"Localização","icone":"fa-solid fa-location-dot","link":"https://maps.app.goo.gl/Nyw7Z9kci6XgkyXJ6"},{"id":"rsvp","titulo":"Confirmar Presença","icone":"fa-brands fa-whatsapp","link":"https://wa.me/5511943408617"},{"id":"manual","titulo":"Manual","icone":"fa-solid fa-book-open","link":"#","manualText":"<p><i class=\"fa-solid fa-sparkles\"></i> Preparamos cada detalhe com muito carinho para celebrar este momento único e sua presença é o que tornará tudo inesquecível.</p><p><i class=\"fa-solid fa-user-tie\"></i> <strong>Dress Code:</strong> Esporte Fino.<br>Sugerimos um traje elegante e confortável para aproveitarmos a festa do início ao fim.</p><p><i class=\"fa-solid fa-palette\"></i> <strong>Um Toque Especial:</strong> Pedimos a gentileza de reservarem a cor <strong>azul</strong> para o uso exclusivo da nossa aniversariante.</p><p><i class=\"fa-solid fa-calendar-check\"></i> <strong>R.S.V.P:</strong> Para nos ajudarem com a organização, por favor, confirmem sua presença até o dia <strong>10/03</strong>.</p><p><i class=\"fa-solid fa-clock\"></i> <strong>Pontualidade:</strong> Cada minuto desta celebração foi planejado para ser vivido com vocês. Contamos com sua pontualidade para não perder nenhum brinde!</p>"}];
+        const menuConfig = [{"id":"location","titulo":"Localização","icone":"fa-solid fa-location-dot","link":"https://maps.app.goo.gl/Nyw7Z9kci6XgkyXJ6"},{"id":"manual","titulo":"Manual","icone":"fa-solid fa-book-open","link":"#","manualText":"<p><i class=\"fa-solid fa-sparkles\"></i> Preparamos cada detalhe com muito carinho para celebrar este momento único e sua presença é o que tornará tudo inesquecível.</p><p><i class=\"fa-solid fa-user-tie\"></i> <strong>Dress Code:</strong> Esporte Fino.<br>Sugerimos um traje elegante e confortável para aproveitarmos a festa do início ao fim.</p><p><i class=\"fa-solid fa-palette\"></i> <strong>Um Toque Especial:</strong> Pedimos a gentileza de reservarem a cor <strong>azul</strong> para o uso exclusivo da nossa aniversariante.</p><p><i class=\"fa-solid fa-calendar-check\"></i> <strong>R.S.V.P:</strong> Para nos ajudarem com a organização, por favor, confirmem sua presença até o dia <strong>10/03</strong>.</p><p><i class=\"fa-solid fa-clock\"></i> <strong>Pontualidade:</strong> Cada minuto desta celebração foi planejado para ser vivido com vocês. Contamos com sua pontualidade para não perder nenhum brinde!</p>"},{"id":"rsvp","titulo":"Confirmar Presença","icone":"fa-brands fa-whatsapp","link":"https://wa.me/5511943408617"}];
         // Injected by AutoBuilder
         const buttonSize = parseFloat('1.0') || 1.0;
 
@@ -558,7 +558,7 @@
         if (btnCount <= 4) {
             // V4.1: Use Flexbox for better centering spacing when few buttons exist
             // Avoids the "stretched out" look of grid-flow-col which made buttons too far apart
-            gridClasses = "flex flex-row justify-center w-full max-w-[480px] items-center transition-all duration-300 gap-6";
+            gridClasses = "flex flex-row justify-center w-full max-w-[480px] items-center transition-all duration-300 gap-3";
         } else {
             // Use Grid for 5+ to guarantee equal distribution/squeezing
             gridClasses = "grid grid-flow-col auto-cols-fr w-full max-w-[480px] place-items-center transition-all duration-300";
