@@ -1,17 +1,7 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-16T19:21:42.724Z",
+  "timestamp": "2026-01-16T20:52:50.745Z",
   "formData": {
-    "capa": null,
-    "capa_referencia": null,
-    "folha_vazia": null,
-    "vid_abertura": null,
-    "fundo_tela": null,
-    "folha_only": null,
-    "background_only": null,
-    "presentes": null,
-    "manual": null,
-    "musica": null,
     "nome": "Helo",
     "tipo_evento": "Aniversário",
     "tipo_evento_custom": "",
@@ -46,13 +36,20 @@
     "slug": "Helo15Anos",
     "watermark_enabled": false
   },
-  "linksExtras": [],
+  "linksExtras": [
+    {
+      "id": 0,
+      "label": "Galeria de Fotos",
+      "url": "https://comforting-caramel-ee0dbf.netlify.app/",
+      "icon": "fa-solid fa-camera"
+    }
+  ],
   "assetsMap": {
-    "musica": "assets/musica_1768591302724.mp3",
-    "capa": "assets/capa_1768591302724.png",
-    "folha_vazia": "assets/folha_vazia_1768591302724.png",
-    "fundo_tela": "assets/fundo_tela_1768591302724.png",
-    "vid_abertura": "assets/vid_abertura_1768591302724.mp4"
+    "musica": "assets/musica_1768596770745.mp3",
+    "capa": "assets/capa_1768596770745.png",
+    "folha_vazia": "assets/folha_vazia_1768596770745.png",
+    "fundo_tela": "assets/fundo_tela_1768596770745.png",
+    "vid_abertura": "assets/vid_abertura_1768596770745.mp4"
   },
   "toggles": {
     "manualMode": "text",
