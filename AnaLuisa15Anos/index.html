@@ -15,7 +15,7 @@
     <!-- Open Graph for WhatsApp/Social Preview -->
     <meta property="og:title" content="Convite | Evento">
     <meta property="og:description" content="Clique para ver o convite interativo!">
-    <meta property="og:image" content="capa/capa_1768602887463.png">
+    <meta property="og:image" content="capa/capa_1768607700181.png">
     <meta property="og:type" content="website">
 
     <!-- Envelope Favicon -->
@@ -106,19 +106,19 @@
 
         <!-- Background (Unified) - Layer 1 -->
         <!-- Can be image or video - determined by file extension -->
-        <img id="fundoTelaImg" src="assets/fundo_tela_1768602887463.mp4" class="camada z-10 invisivel"
+        <img id="fundoTelaImg" src="assets/fundo_tela_1768607700181.dat" class="camada z-10 invisivel"
             onerror="this.style.display='none'">
         <video id="fundoTelaVideo" class="camada z-10 invisivel" playsinline loop muted
             onerror="this.style.display='none'">
-            <source src="assets/fundo_tela_1768602887463.mp4" type="video/mp4">
+            <source src="assets/fundo_tela_1768607700181.dat" type="video/mp4">
         </video>
 
         <video id="videoAbertura" class="camada z-20" playsinline muted>
-            <source src="assets/vid_abertura_1768602887463.mp4" type="video/mp4">
+            <source src="assets/vid_abertura_1768607700181.mp4" type="video/mp4">
         </video>
 
         <audio id="musicaFundo" loop preload="auto">
-            <source src="assets/musica_1768602887463.mp3" type="audio/mp3">
+            <source src="assets/musica_1768607700181.mp3" type="audio/mp3">
         </audio>
 
         <button id="btnMute"
@@ -174,7 +174,7 @@
 
         <div id="capaInicial"
             class="absolute inset-0 z-50 bg-cover bg-center flex flex-col items-center justify-center cursor-pointer transition-opacity duration-700"
-            style="background-image: url('assets/capa_1768602887463.png');">
+            style="background-image: url('assets/capa_1768607700181.png');">
             <div class="absolute inset-0 bg-black/20"></div>
 
             <div id="dicaInteractionContainer" class="relative z-10 flex flex-col items-center gap-4 animate-pulse">
@@ -187,7 +187,7 @@
 
         <!-- Marca d'água de Pagamento Pendente -->
         <div id="watermark"
-            class="absolute inset-0 z-[100] flex items-center justify-center pointer-events-none ">
+            class="absolute inset-0 z-[100] flex items-center justify-center pointer-events-none hidden">
             <div class="transform -rotate-45 pointer-events-none select-none opacity-80">
                 <h1 class="text-4xl sm:text-6xl font-black uppercase tracking-widest text-center whitespace-nowrap"
                     style="-webkit-text-stroke: 1px rgba(0,0,0,0.3); color: rgba(255,255,255,0.25);">
@@ -205,7 +205,7 @@
             class="relative w-full max-w-[400px] h-[80%] rounded-xl shadow-2xl overflow-hidden flex flex-col border border-white/20">
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="assets/folha_vazia_1768602887463.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="assets/folha_vazia_1768607700181.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/60"></div>
             </div>
 
@@ -234,7 +234,7 @@
                 class="absolute top-3 right-3 z-10 bg-black/50 text-white hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center transition-colors border border-white/20">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <img id="imagemPresentes" src="assets/presentes_1768602887463.png" class="max-w-full max-h-[85vh] object-contain rounded-lg">
+            <img id="imagemPresentes" src="assets/presentes_1768607700181.png" class="max-w-full max-h-[85vh] object-contain rounded-lg">
         </div>
     </div>
 
@@ -258,7 +258,7 @@
 
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="assets/folha_vazia_1768602887463.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="assets/folha_vazia_1768607700181.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/70"></div>
             </div>
 
@@ -322,7 +322,7 @@
         // ==================================================================
         // 1. CONFIGURAÇÃO DOS BOTÕES (Injetado pelo AutoBuilder)
         // ==================================================================
-        const menuConfig = [{"id":"location","titulo":"Localização","icone":"fa-solid fa-location-dot","link":"https://maps.app.goo.gl/dYc5ix3qFtbnsyUr9"},{"id":"gifts","titulo":"Presentes","icone":"fa-solid fa-gift","link":"#","isGiftImage":true},{"id":"rsvp","titulo":"Confirmar Presença","icone":"fa-solid fa-check","link":"https://docs.google.com/forms/d/e/1FAIpQLScZU3DFStVCfBuF4luZ9uR-yTjQ-4awlcgrS7UIBCezpNSvJQ/viewform?usp=publish-editor"},{"id":"manual","titulo":"Manual","icone":"fa-solid fa-book-open","link":"#","manualText":"<p><i class=\"fa-solid fa-clock\"></i> <strong>Chegue no horário:</strong> Sua presença pontual é muito importante para nós.</p>\n\n<p><i class=\"fa-solid fa-calendar-check\"></i> <strong>Confirmação de Presença:</strong> Por favor, confirme presença pelo menos 15 dias antes do evento.</p>\n\n<p><i class=\"fa-solid fa-heart\"></i> <strong>Participe da cerimônia:</strong> A cerimônia é um dos momentos mais significativo pra nós e vai ficar marcado pra sempre na memória da aniversariante, por isso respeite esse momento e se emocione junto ☺️</p>\n\n<p><i class=\"fa-solid fa-glass-cheers\"></i> <strong>Divirta-se bastante!</strong> Estamos ansiosos para celebrar este momento especial com você.</p>\n\n<p><i class=\"fa-solid fa-camera-retro\"></i> <strong>Sinta-se a vontade pra registrar momentos especiais:</strong> Se postar nas redes sociais, marque a hashtag:<br><strong>#15daAnalu</strong></p>\n\n<p><i class=\"fa-solid fa-gift\"></i> Sua presença já é um presente, mas caso deseje presentear, siga as orientações da <strong>lista de presentes</strong>.</p>\n\n<p><i class=\"fa-solid fa-cake-candles\"></i> <strong>Despedida:</strong> Não vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.</p>"}];
+        const menuConfig = [{"id":"location","titulo":"Localização","icone":"fa-solid fa-location-dot","link":"https://maps.app.goo.gl/dYc5ix3qFtbnsyUr9"},{"id":"manual","titulo":"Manual","icone":"fa-solid fa-book-open","link":"#","manualText":"<p><i class=\"fa-solid fa-clock\"></i> <strong>Chegue no horário:</strong> Sua presença pontual é muito importante para nós.</p>\n\n<p><i class=\"fa-solid fa-calendar-check\"></i> <strong>Confirmação de Presença:</strong> Por favor, confirme presença pelo menos 15 dias antes do evento.</p>\n\n<p><i class=\"fa-solid fa-heart\"></i> <strong>Participe da cerimônia:</strong> A cerimônia é um dos momentos mais significativo pra nós e vai ficar marcado pra sempre na memória da aniversariante, por isso respeite esse momento e se emocione junto ☺️</p>\n\n<p><i class=\"fa-solid fa-glass-cheers\"></i> <strong>Divirta-se bastante!</strong> Estamos ansiosos para celebrar este momento especial com você.</p>\n\n<p><i class=\"fa-solid fa-camera-retro\"></i> <strong>Sinta-se a vontade pra registrar momentos especiais:</strong> Se postar nas redes sociais, marque a hashtag:<br><strong>#15daAnalu</strong></p>\n\n<p><i class=\"fa-solid fa-gift\"></i> Sua presença já é um presente, mas caso deseje presentear, siga as orientações da <strong>lista de presentes</strong>.</p>\n\n<p><i class=\"fa-solid fa-cake-candles\"></i> <strong>Despedida:</strong> Não vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.</p>"},{"id":"rsvp","titulo":"Confirmar Presença","icone":"fa-solid fa-check","link":"https://docs.google.com/forms/d/e/1FAIpQLScZU3DFStVCfBuF4luZ9uR-yTjQ-4awlcgrS7UIBCezpNSvJQ/viewform?usp=publish-editor"},{"id":"gifts","titulo":"Presentes","icone":"fa-solid fa-gift","link":"#","isGiftImage":true}];
         // Injected by AutoBuilder
         const buttonSize = parseFloat('1.0') || 1.0;
 
