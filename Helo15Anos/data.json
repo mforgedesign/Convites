@@ -1,9 +1,7 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-16T18:28:03.377Z",
+  "timestamp": "2026-01-16T18:28:44.842Z",
   "formData": {
-    "folha_vazia": null,
-    "musica": "blob:https://builder.mforge.com.br/b66f2430-3a97-4d07-bc0c-23073beb435d",
     "nome": "Helo",
     "tipo_evento": "Aniversário",
     "tipo_evento_custom": "",
@@ -19,7 +17,7 @@
     "posicao_botoes": "100",
     "tamanho_botoes": "medio",
     "link_google_maps": "https://maps.app.goo.gl/E6NLxobvczFDhhRv5",
-    "link_presentes": "https://www.canva.com/design/DAG75Wje2K4/xbCiiFTIiglPHwq00rSYYA/view?utm_content=DAG75Wje2K4&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h6b54370beb",
+    "link_presentes": "",
     "manual_content": "<div style='font-family: serif; line-height: 1.6;'><h3><i class='fa-solid fa-star'></i> Guia para Aproveitarmos Juntos</h3><p><i class='fa-solid fa-envelope-open-text'></i> <strong>Um Momento Exclusivo:</strong> Este convite foi preparado com muito carinho especificamente para você. Por ser um evento íntimo, pedimos a gentileza de não compartilhá-lo com outras pessoas.</p><p><i class='fa-solid fa-utensils'></i> <strong>Saboreie Cada Instante:</strong> Desfrute do buffet e não deixe de experimentar nossas delícias. A vida fica mais doce com uma passadinha na mesa de sobremesas!</p><p><i class='fa-solid fa-camera-retro'></i> <strong>Registre sua Alegria:</strong> Adoramos selfies! Registre cada sorriso, mas pedimos que abra caminho para nossos fotógrafos oficiais para que nenhum detalhe da cerimônia seja perdido.</p><p><i class='fa-solid fa-cake-candles'></i> <strong>A Doce Espera:</strong> O momento do bolo é um dos mais especiais da nossa celebração. Fique conosco para compartilhar essa tradição!</p><p><i class='fa-solid fa-leaf'></i> <strong>Beleza Compartilhada:</strong> Nossa decoração foi pensada para encantar a todos durante toda a festa. Por favor, deixe que ela permaneça no salão para embelezar nossas fotos e memórias.</p><p><i class='fa-solid fa-face-smile-wink'></i> <strong>Um Abraço Essencial:</strong> Sua presença é o nosso maior presente. Antes de partir, não esqueça de nos presentear com aquele abraço apertado e cheio de carinho!</p><br><p><i class='fa-solid fa-user-tie'></i> <strong>Dress Code:</strong> Traje Esporte Fino</p></div>",
     "numero_whatsapp": "5511958438309",
     "link_confirmacao": "",
@@ -47,11 +45,11 @@
     }
   ],
   "assetsMap": {
-    "musica": "assets/musica_1768588083377.mp3",
-    "capa": "assets/capa_1768588083377.png",
-    "folha_vazia": "assets/folha_vazia_1768588083377.png",
-    "fundo_tela": "assets/fundo_tela_1768588083377.png",
-    "vid_abertura": "assets/vid_abertura_1768588083377.mp4"
+    "musica": "assets/musica_1768588124842.mp3",
+    "capa": "assets/capa_1768588124842.png",
+    "folha_vazia": "assets/folha_vazia_1768588124842.png",
+    "fundo_tela": "assets/fundo_tela_1768588124842.png",
+    "vid_abertura": "assets/vid_abertura_1768588124842.mp4"
   },
   "toggles": {
     "manualMode": "text",
