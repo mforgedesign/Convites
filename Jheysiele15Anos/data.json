@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-16T22:34:39.604Z",
+  "timestamp": "2026-01-16T22:37:28.005Z",
   "formData": {
     "nome": "Jheysiele kauanne",
     "tipo_evento": "Aniversário",
@@ -39,12 +39,12 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768602879604.mp3",
-    "capa": "assets/capa_1768602879604.png",
-    "folha_vazia": "assets/folha_vazia_1768602879604.png",
-    "fundo_tela": "assets/fundo_tela_1768602879604.mp4",
-    "vid_abertura": "assets/vid_abertura_1768602879604.mp4",
-    "presentes": "assets/presentes_1768602879604.png"
+    "musica": "assets/musica_1768603048005.mp3",
+    "capa": "assets/capa_1768603048005.png",
+    "folha_vazia": "assets/folha_vazia_1768603048005.png",
+    "fundo_tela": "assets/fundo_tela_1768603048005.mp4",
+    "vid_abertura": "assets/vid_abertura_1768603048005.mp4",
+    "presentes": "assets/presentes_1768603048005.png"
   },
   "toggles": {
     "manualMode": "text",
