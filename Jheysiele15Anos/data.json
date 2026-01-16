@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-16T20:39:10.304Z",
+  "timestamp": "2026-01-16T20:42:04.769Z",
   "formData": {
     "nome": "Jheysiele kauanne",
     "tipo_evento": "Aniversário",
@@ -14,7 +14,7 @@
     "frase_convite": "",
     "cor_botoes": "#f08eb1",
     "sombra_gradiente": "#000000",
-    "posicao_botoes": "24",
+    "posicao_botoes": "9",
     "tamanho_botoes": "medio",
     "link_google_maps": "https://maps.app.goo.gl/TT6NV59HGEDL6FPg6",
     "link_presentes": "",
@@ -34,16 +34,26 @@
     "manual_raw_content": " (Não altere nada dessa vez, apenas coloque os ícones)\nManual de Convidados\nSeja bem-vindo! Estamos muito felizes em tê-lo conosco neste momento especial. Aqui estão algumas informações importantes para que você possa aproveitar ao máximo a celebração:\n\n Confirmação de Presença\nPor favor, confirme sua presença pelo menos 15 dias antes do evento. Sua participação é muito importante para nós!\n\n Chegada Pontual\nChegue no horário! Sua presença pontual é essencial para que possamos iniciar a celebração juntos.\n\n Divirta-se!\nEstamos ansiosos para celebrar este momento especial com você. Aproveite cada instante!\n\n Não Vá Embora Sem Nos Abraçar\nQueremos compartilhar cada instante com você. Não se esqueça de nos dar um abraço e comer um pedaço do bolo!",
     "music_name": "",
     "slug": "Jheysiele15Anos",
-    "watermark_enabled": true
+    "watermark_enabled": true,
+    "capa": null,
+    "capa_referencia": null,
+    "folha_vazia": null,
+    "vid_abertura": null,
+    "fundo_tela": null,
+    "folha_only": null,
+    "background_only": null,
+    "presentes": null,
+    "manual": null,
+    "musica": null
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768595950304.mp3",
-    "capa": "assets/capa_1768595950304.png",
-    "folha_vazia": "assets/folha_vazia_1768595950304.png",
-    "fundo_tela": "assets/fundo_tela_1768595950304.mp4",
-    "vid_abertura": "assets/vid_abertura_1768595950304.mp4",
-    "presentes": "assets/presentes_1768595950304.png"
+    "musica": "assets/musica_1768596124769.mp3",
+    "capa": "assets/capa_1768596124769.png",
+    "folha_vazia": "assets/folha_vazia_1768596124769.png",
+    "fundo_tela": "assets/fundo_tela_1768596124769.dat",
+    "vid_abertura": "assets/vid_abertura_1768596124769.mp4",
+    "presentes": "assets/presentes_1768596124769.png"
   },
   "toggles": {
     "manualMode": "text",
