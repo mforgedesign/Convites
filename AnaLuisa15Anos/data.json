@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-16T21:45:48.402Z",
+  "timestamp": "2026-01-16T21:52:07.779Z",
   "formData": {
     "nome": "",
     "tipo_evento": "",
@@ -32,17 +32,19 @@
     "sugestoes_presentes": "",
     "gifts_image_prompt": "",
     "manual_raw_content": "(Dessa vez não altere nada, só acrescente os ícones font awesome) Chegue no horário: Sua presença pontual é muito importante para nós.\n\n Confirmação de Presença\nPor favor, confirme presença pelo menos 15 dias antes do evento.\n\nParticipe da cerimônia \nA cerimônia é um dos momentos mais significativo pra nós e vai ficar marcado pra sempre na memória da aniversariante,por isso respeite esse momento e se emocione junto ☺️\n\nDivirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.\n\nSinta-se a vontade pra registrar momentos especiais \nSe postar nas redes sociais, marque a hashtag:\n#15daAnalu\n\nSua presença já é um presente, mas caso deseje presentear, siga as orientações da lista de presentes \n\n Despedida\nNão vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.",
-    "music_name": "",
+    "music_name": "ssstik.io_1768600053560.mp3",
     "slug": "AnaLuisa15Anos",
-    "watermark_enabled": true
+    "watermark_enabled": true,
+    "musica": "blob:https://builder.mforge.com.br/b2a41542-cd7f-4a0a-bd84-ef5575c75db8"
   },
   "linksExtras": [],
   "assetsMap": {
-    "capa": "assets/capa_1768599948402.png",
-    "folha_vazia": "assets/folha_vazia_1768599948402.png",
-    "fundo_tela": "assets/fundo_tela_1768599948402.mp4",
-    "vid_abertura": "assets/vid_abertura_1768599948402.mp4",
-    "presentes": "assets/presentes_1768599948402.png"
+    "musica": "assets/musica_1768600327779.mp3",
+    "capa": "assets/capa_1768600327779.png",
+    "folha_vazia": "assets/folha_vazia_1768600327779.png",
+    "fundo_tela": "assets/fundo_tela_1768600327779.mp4",
+    "vid_abertura": "assets/vid_abertura_1768600327779.mp4",
+    "presentes": "assets/presentes_1768600327779.png"
   },
   "toggles": {
     "manualMode": "text",
