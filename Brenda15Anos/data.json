@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-16T22:01:46.212Z",
+  "timestamp": "2026-01-17T12:53:58.898Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -26,7 +26,7 @@
     "sombra_gradiente": "#000000",
     "posicao_botoes": "12",
     "tamanho_botoes": "",
-    "link_google_maps": "https://maps.app.goo.gl/3cpWR33AZRDiYUdM7",
+    "link_google_maps": "https://maps.app.goo.gl/HdSu1HfaxyA5yr6K8",
     "link_presentes": "",
     "manual_content": "",
     "numero_whatsapp": "5581987883593",
@@ -48,11 +48,11 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768600906212.mp3",
-    "capa": "assets/capa_1768600906212.png",
-    "fundo_tela": "assets/fundo_tela_1768600906212.mp4",
-    "vid_abertura": "assets/vid_abertura_1768600906212.mp4",
-    "presentes": "assets/presentes_1768600906212.png"
+    "musica": "assets/musica_1768654438898.mp3",
+    "capa": "assets/capa_1768654438898.png",
+    "fundo_tela": "assets/fundo_tela_1768654438898.dat",
+    "vid_abertura": "assets/vid_abertura_1768654438898.mp4",
+    "presentes": "assets/presentes_1768654438898.png"
   },
   "toggles": {
     "manualMode": "text",
