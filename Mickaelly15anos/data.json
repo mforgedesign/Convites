@@ -1,0 +1,50 @@
+{
+  "version": "4.0",
+  "timestamp": "2026-01-17T17:23:31.562Z",
+  "formData": {
+    "nome": "Mickaelly",
+    "tipo_evento": "Aniversário",
+    "tipo_evento_custom": "",
+    "data": "2026-04-12",
+    "hora": "14:00",
+    "idade": "15",
+    "tema_evento": "Jardim encantado",
+    "local_evento": "Salão Espaço esperança R monteiro Lobato 1515, jardim rio negro Itaquaquecetuba 08591.652",
+    "paleta_cores": " Rosa e Dourado",
+    "frase_convite": "",
+    "cor_botoes": "#e576e1",
+    "sombra_gradiente": "#000000",
+    "posicao_botoes": "22",
+    "tamanho_botoes": "medio",
+    "link_google_maps": "https://maps.app.goo.gl/7tc4x33mYn563NWHA",
+    "link_presentes": "",
+    "manual_content": "",
+    "numero_whatsapp": " 11969779324",
+    "link_confirmacao": "",
+    "permitir_acompanhante": false,
+    "timer_contagem": true,
+    "cover_prompt": "",
+    "leaf_prompt": "",
+    "animate_background": false,
+    "intro_motion_prompt": "The animation begins with a focus on the closed envelope. As the wax seal gracefully detaches and falls, the envelope's flap uplifts slowly. From its interior, a spectacular eruption of glittering sparkles and smoke, shimmering dust, and glowing light trails emerges, cascading outward in a mesmerizing display. These vibrant particles swirl dynamically, increasing in density and brightness around the envelope. The radiant light and swirling glitter intensify, rapidly expanding to fill the entire scene. CRITICAL: The Color of glow, light and smoke need to be the same of the image color pallete. The overwhelming brilliance transitions the frame to a solid, blinding white screen in the very final frame, achieved through a dramatic zoom-in effect.",
+    "loop_motion_prompt": "The animation displays smooth, looping movements of the shimmering effect based on the provided image. Dramatic sparkles and shining smokes flying in the background, cinematic lighting with volumetric effects (divine rays) filters through shimmering particles, creating a magical atmosphere with highlights. Rendered in a photorealistic and hyper-detailed style, the animation flows perfectly with a cinematic approach, captivating the viewer's attention with its fluid movement and mesmerizing 4K quality. IMPORTANT: Static Camera / No Camera Movement, only environmental motion.",
+    "fill_prompt": "",
+    "sugestoes_presentes": "",
+    "gifts_image_prompt": "",
+    "manual_raw_content": "e isso ai tmj",
+    "music_name": "Christina Perri - A Thousand Years [Official Music Video].mp3",
+    "slug": "Mickaelly15anos",
+    "watermark_enabled": false
+  },
+  "linksExtras": [],
+  "assetsMap": {
+    "musica": "assets/musica_1768670611562.mp3",
+    "capa": "assets/capa_1768670611562.png",
+    "folha_vazia": "assets/folha_vazia_1768670611562.png",
+    "presentes": "assets/presentes_1768670611562.png"
+  },
+  "toggles": {
+    "manualMode": "text",
+    "giftsMode": "image"
+  }
+}
