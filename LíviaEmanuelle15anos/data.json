@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-17T21:40:58.806Z",
+  "timestamp": "2026-01-17T21:46:43.931Z",
   "formData": {
     "capa": "blob:https://builder.mforge.com.br/b4b48c7c-956f-47b4-a55a-7833ece298d8",
     "capa_referencia": null,
@@ -24,7 +24,7 @@
     "frase_convite": "Caro e gentil leitor…\nPrimeiro baile desta temporada está deveras animado.\nSra Silva apresentando o diamante da temporada com baile de máscara",
     "cor_botoes": "#be2727",
     "sombra_gradiente": "#000000",
-    "posicao_botoes": "100",
+    "posicao_botoes": "3",
     "tamanho_botoes": "",
     "link_google_maps": "https://maps.app.goo.gl/dKvkkfoAaxwFe5i49",
     "link_presentes": "",
@@ -48,11 +48,11 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768686058807.mp3",
-    "capa": "assets/capa_1768686058807.png",
-    "folha_vazia": "assets/folha_vazia_1768686058807.png",
-    "fundo_tela": "assets/fundo_tela_1768686058807.mp4",
-    "vid_abertura": "assets/vid_abertura_1768686058807.mp4"
+    "musica": "assets/musica_1768686403931.mp3",
+    "capa": "assets/capa_1768686403931.png",
+    "folha_vazia": "assets/folha_vazia_1768686403931.png",
+    "fundo_tela": "assets/fundo_tela_1768686403931.mp4",
+    "vid_abertura": "assets/vid_abertura_1768686403931.mp4"
   },
   "toggles": {
     "manualMode": "text",
