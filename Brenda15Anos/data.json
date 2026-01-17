@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-17T13:00:45.075Z",
+  "timestamp": "2026-01-17T13:27:13.289Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -46,13 +46,20 @@
     "slug": "Brenda15Anos",
     "watermark_enabled": true
   },
-  "linksExtras": [],
+  "linksExtras": [
+    {
+      "id": 0,
+      "label": "Minha História",
+      "url": "https://symphonious-elf-245667.netlify.app/",
+      "icon": "fa-solid fa-heart"
+    }
+  ],
   "assetsMap": {
-    "musica": "assets/musica_1768654845075.mp3",
-    "capa": "assets/capa_1768654845075.png",
-    "fundo_tela": "assets/fundo_tela_1768654845075.dat",
-    "vid_abertura": "assets/vid_abertura_1768654845075.mp4",
-    "presentes": "assets/presentes_1768654845075.png"
+    "musica": "assets/musica_1768656433289.mp3",
+    "capa": "assets/capa_1768656433289.png",
+    "fundo_tela": "assets/fundo_tela_1768656433289.dat",
+    "vid_abertura": "assets/vid_abertura_1768656433289.mp4",
+    "presentes": "assets/presentes_1768656433289.png"
   },
   "toggles": {
     "manualMode": "text",
