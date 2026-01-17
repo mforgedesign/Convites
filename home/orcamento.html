@@ -1419,53 +1419,61 @@
             // Video 1
             const video1 = document.getElementById('video1');
             const video1Container = document.getElementById('video1Container');
-            video1.addEventListener('loadeddata', () => {
-                video1Container.classList.add('hidden');
-                video1.classList.remove('hidden');
-                video1.play().catch(() => { });
-            });
-            video1.addEventListener('click', () => openVideoModal(video1.querySelector('source').src));
+            if (video1 && video1Container) {
+                video1.addEventListener('loadeddata', () => {
+                    video1Container.classList.add('hidden');
+                    video1.classList.remove('hidden');
+                    video1.play().catch(() => { });
+                });
+                video1.addEventListener('click', () => openVideoModal(video1.querySelector('source')?.src));
+            }
 
             // Video 2
             const video2 = document.getElementById('video2');
             const video2Container = document.getElementById('video2Container');
-            video2.addEventListener('loadeddata', () => {
-                video2Container.classList.add('hidden');
-                video2.classList.remove('hidden');
-                video2.play().catch(() => { });
-            });
-            video2.addEventListener('click', () => openVideoModal(video2.querySelector('source').src));
+            if (video2 && video2Container) {
+                video2.addEventListener('loadeddata', () => {
+                    video2Container.classList.add('hidden');
+                    video2.classList.remove('hidden');
+                    video2.play().catch(() => { });
+                });
+                video2.addEventListener('click', () => openVideoModal(video2.querySelector('source')?.src));
+            }
 
             // Video 3
             const video3 = document.getElementById('video3');
             const video3Container = document.getElementById('video3Container');
-            video3.addEventListener('loadeddata', () => {
-                video3Container.classList.add('hidden');
-                video3.classList.remove('hidden');
-                video3.play().catch(() => { });
-            });
-            video3.addEventListener('click', () => openVideoModal(video3.querySelector('source').src));
+            if (video3 && video3Container) {
+                video3.addEventListener('loadeddata', () => {
+                    video3Container.classList.add('hidden');
+                    video3.classList.remove('hidden');
+                    video3.play().catch(() => { });
+                });
+                video3.addEventListener('click', () => openVideoModal(video3.querySelector('source')?.src));
+            }
 
             // Image 1 (Save The Date)
             const img1 = document.getElementById('img1');
             const img1Container = document.getElementById('img1Container');
-            img1.addEventListener('load', () => {
-                img1Container.classList.add('hidden');
-                img1.classList.remove('hidden');
-            });
-            img1.addEventListener('error', () => {
-                img1Container.classList.add('hidden');
-                img1.classList.remove('hidden');
-            });
-            // Force check if already loaded
-            if (img1.complete) {
-                img1Container.classList.add('hidden');
-                img1.classList.remove('hidden');
+            if (img1 && img1Container) {
+                img1.addEventListener('load', () => {
+                    img1Container.classList.add('hidden');
+                    img1.classList.remove('hidden');
+                });
+                img1.addEventListener('error', () => {
+                    img1Container.classList.add('hidden');
+                    img1.classList.remove('hidden');
+                });
+                // Force check if already loaded
+                if (img1.complete) {
+                    img1Container.classList.add('hidden');
+                    img1.classList.remove('hidden');
+                }
+                img1.addEventListener('click', () => {
+                    // For images, just open in new tab
+                    window.open(img1.src, '_blank');
+                });
             }
-            img1.addEventListener('click', () => {
-                // For images, just open in new tab
-                window.open(img1.src, '_blank');
-            });
         }
 
         function openVideoModal(src) {
