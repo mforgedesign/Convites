@@ -1829,10 +1829,31 @@ _Orcamento feito pelo site_`;
             saveFormData();
         };
 
+        // Check if model requires "abertura longa" and auto-select it
+        function checkAutoSelectAberturaLonga() {
+            const autoSelect = localStorage.getItem('autoSelectAberturaLonga');
+            if (autoSelect === 'true') {
+                const aberturaLongaCard = document.querySelector('.option-card[data-option="aberturalonga"]');
+                if (aberturaLongaCard && !aberturaLongaCard.classList.contains('selected')) {
+                    // Auto-select the card (this also selects "abertura" due to dependency logic)
+                    aberturaLongaCard.classList.add('selected');
+
+                    // Make sure "abertura" is also selected (dependency)
+                    const aberturaCard = document.querySelector('.option-card[data-option="abertura"]');
+                    if (aberturaCard) aberturaCard.classList.add('selected');
+
+                    updateTotal();
+                }
+                // Remove the flag so it only applies once
+                localStorage.removeItem('autoSelectAberturaLonga');
+            }
+        }
+
         // Initialize
         loadSelectedModel();
         initVideos();
         loadFormData(); // Load saved data first
+        checkAutoSelectAberturaLonga(); // Auto-select abertura longa if needed
         updateTotal();
         setupAutoSave();
     </script>
