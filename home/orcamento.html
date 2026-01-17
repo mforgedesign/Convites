@@ -83,6 +83,182 @@
             display: block;
         }
 
+        /* Mini cards grid refined */
+        .mini-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .mini-cards-grid {
+                gap: 1rem;
+            }
+        }
+
+        .mini-option-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 0.5rem 0.3rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 140px;
+        }
+
+        .mini-option-card:hover {
+            border-color: rgba(201, 85, 124, 0.3);
+        }
+
+        .mini-option-card.selected {
+            border-color: #c9557c;
+            background: rgba(201, 85, 124, 0.1);
+        }
+
+        .mini-option-card .mini-checkbox {
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0.3rem;
+            right: 0.3rem;
+            z-index: 10;
+        }
+
+        .mini-option-card.selected .mini-checkbox {
+            background: #c9557c;
+            border-color: #c9557c;
+        }
+
+        .mini-option-card .mini-checkbox svg {
+            display: none;
+            width: 8px;
+            height: 8px;
+            color: white;
+        }
+
+        .mini-option-card.selected .mini-checkbox svg {
+            display: block;
+        }
+
+        .mini-option-card h4 {
+            font-size: 10px;
+            line-height: 1.1;
+            margin-bottom: 0.15rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        .mini-thumb,
+        .mini-thumb-placeholder {
+            width: 100%;
+            aspect-ratio: 9/16;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 0.4rem;
+            background: linear-gradient(135deg, rgba(201, 85, 124, 0.1), rgba(201, 85, 124, 0.05));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .mini-thumb-placeholder svg {
+            width: 50%;
+            height: 50%;
+        }
+
+        .mini-price {
+            font-size: 9px;
+            font-weight: bold;
+            display: block;
+        }
+
+        .mini-option-card button {
+            display: block;
+            width: 90%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            padding: 3px 2px;
+            border-radius: 5px;
+            font-size: 8px;
+            margin-top: 5px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: clip;
+        }
+
+        .mini-option-card button:hover {
+            background: rgba(201, 85, 124, 0.2);
+            border-color: rgba(201, 85, 124, 0.4);
+            color: white;
+        }
+
+        /* Info Modal Content Support */
+        .modal-media-container {
+            width: 60%;
+            margin: 0 auto 1rem auto;
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-media-container img,
+        .modal-media-container video {
+            width: 100%;
+            display: block;
+        }
+
+        .modal-link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            font-weight: 500;
+            margin-top: 0.75rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .modal-link-btn:hover {
+            background: rgba(201, 85, 124, 0.2);
+            border-color: rgba(201, 85, 124, 0.4);
+        }
+
+        #infoModal .glass-panel {
+            max-width: 320px;
+            padding: 1.25rem;
+        }
+
+        #infoModalTitle {
+            font-size: 1.1rem;
+        }
+
+        #infoModalContent {
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
         .checkbox-indicator {
             width: 24px;
             height: 24px;
@@ -434,8 +610,8 @@
                             </video>
                         </div>
                         <div class="flex-1">
-                            <div class="flex items-start justify-between mb-2">
-                                <h3 class="font-semibold text-base md:text-xl">Abertura Envelope e Folha com Botões</h3>
+                            <div class="flex items-start justify-between mb-1">
+                                <h3 class="font-semibold text-sm md:text-base">Abertura Envelope + Folha com Botões</h3>
                                 <div class="checkbox-indicator">
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
@@ -443,252 +619,146 @@
                                     </svg>
                                 </div>
                             </div>
-                            <span class="price-tag text-sm md:text-base">R$ 60,00</span>
-                            <p class="text-sm md:text-base text-gray-400 mt-3">Envelope 3D que abre com animação
-                                elegante, folha com todas as informações do evento.</p>
-                            <p class="text-xs md:text-sm text-green-400 mt-2 font-medium">✅ Incluso: Música, Botões
-                                Interativos, Local no Mapa, Confirmação via WhatsApp, Manual do Convidado e Sugestão de
-                                Presentes.</p>
+                            <span class="price-tag text-xs md:text-sm">R$ 60,00</span>
+                            <p class="text-xs text-gray-400 mt-2">Envelope 3D com animação elegante e folha com todas as
+                                informações.</p>
+                            <p class="text-[10px] md:text-xs text-green-400 mt-1 font-medium">✅ Incluso: Música, Botões,
+                                Mapa, Confirmação, Manual e Sugestões.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Option 2: Save The Date -->
-                <div class="option-card" data-option="savethedate" data-price="25">
-                    <div class="flex gap-4">
-                        <div class="flex-shrink-0">
-                            <p class="text-[10px] text-gray-500 text-center mb-1 italic">Isto é apenas um exemplo</p>
-                            <div class="video-loading aspect-[9/16] w-[120px] md:w-[150px] rounded-xl flex items-center justify-center"
-                                id="img1Container">
-                                <span class="text-xs text-gray-500">Carregando...</span>
-                            </div>
-                            <img id="img1" class="video-preview hidden" src="assets/demo/savethedate.jpg"
-                                alt="Save The Date exemplo"
-                                onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 400%22%3E%3Crect fill=%22%231a1a2e%22 width=%22300%22 height=%22400%22/%3E%3Ctext fill=%22%23d4af37%22 x=%22150%22 y=%22200%22 text-anchor=%22middle%22 font-size=%2216%22%3ESave The Date%3C/text%3E%3C/svg%3E'; this.parentElement.classList.remove('video-loading'); this.classList.remove('hidden');">
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex items-start justify-between mb-2">
-                                <h3 class="font-semibold text-base md:text-xl">Save The Date (Apenas Imagem)</h3>
-                                <div class="checkbox-indicator">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                                            d="M5 13l4 4L19 7" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <span class="price-tag text-sm md:text-base">R$ 25,00</span>
-                            <p class="text-sm md:text-base text-gray-400 mt-3">Aviso prévio enviado dias antes do
-                                convite oficial para que seus convidados reservem a data. Imagem estática elegante,
-                                perfeita para enviar nas redes sociais e WhatsApp.</p>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Option 3: Abertura Longa -->
-                <div class="option-card" data-option="aberturalonga" data-price="15">
-                    <div class="flex gap-4">
-                        <div class="flex-shrink-0">
-                            <p class="text-[10px] text-gray-500 text-center mb-1 italic">Isto é apenas um exemplo</p>
-                            <div class="video-loading aspect-[9/16] w-[120px] md:w-[150px] rounded-xl"
-                                id="video2Container">
-                                <span class="text-xs text-gray-500">Carregando...</span>
-                            </div>
-                            <video id="video2" class="video-preview hidden" loop muted playsinline preload="metadata">
-                                <source
-                                    src="Links e capas/Imagens e videos para tela de orçamento/Vídeo da opção Abertura longa com frases e uma foto + R$20/abertura_longa.mp4"
-                                    type="video/mp4">
-                            </video>
+                <!-- Mini Cards Grid - Opções Adicionais -->
+                <h3 class="text-sm font-medium text-gray-400 mt-8 mb-4">Opções Adicionais:</h3>
+                <div class="mini-cards-grid" id="miniOptionsContainer">
+                    <!-- Save The Date -->
+                    <div class="mini-option-card relative" data-option="savethedate" data-price="25">
+                        <div class="mini-checkbox">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
                         </div>
-                        <div class="flex-1">
-                            <div class="flex items-start justify-between mb-2">
-                                <h3 class="font-semibold text-base md:text-xl">Abertura Longa com Frases e Foto</h3>
-                                <div class="checkbox-indicator">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                                            d="M5 13l4 4L19 7" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <span class="price-tag text-sm md:text-base">+ R$ 15,00</span>
-                            <p class="text-sm md:text-base text-gray-400 mt-3">Sequência de frases emocionantes com foto
-                                do
-                                aniversariante/casal antes da abertura principal.</p>
-                            <p class="text-xs md:text-sm text-accent-light mt-2 italic">💡 Caso queira incluir fotos,
-                                mas não
-                                esteja com elas preparadas agora, você pode concluir seu convite hoje e enviar as fotos
-                                outro dia!</p>
-                        </div>
+                        <img src="assets/demo/savethedate.jpg" alt="Save The Date" class="mini-thumb"
+                            onerror="this.style.display='none'">
+                        <h4 class="font-semibold">Save The Date</h4>
+                        <span class="mini-price text-accent">R$ 25</span>
+                        <button onclick="event.stopPropagation(); toggleDescription(this)">Como funciona?</button>
                     </div>
-                </div>
 
-                <!-- Option NEW: Sugestão de Presentes (FREE) -->
-                <div class="option-card" data-option="sugestaopresentes" data-price="0">
-                    <div class="flex gap-4">
-                        <div class="flex-shrink-0">
-                            <p class="text-[10px] text-gray-500 text-center mb-1 italic">Isto é apenas um exemplo</p>
-                            <img src="assets/Exemplo_Sugestoes_de_Presentes.jpg" alt="Exemplo Sugestão de Presentes"
-                                class="w-[120px] md:w-[150px] rounded-xl object-cover aspect-[9/16]"
-                                onerror="this.parentElement.innerHTML='<div class=\'w-[120px] md:w-[150px] h-[213px] md:h-[267px] rounded-xl bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center\'><svg class=\'w-12 h-12 text-accent/50\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7\'/></svg></div>'">
+                    <!-- Abertura Longa -->
+                    <div class="mini-option-card relative" data-option="aberturalonga" data-price="15">
+                        <div class="mini-checkbox">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
                         </div>
-                        <div class="flex-1">
-                            <div class="flex items-start justify-between mb-2">
-                                <h3 class="font-semibold text-base md:text-xl">Sugestão de Presentes</h3>
-                                <div class="checkbox-indicator">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                                            d="M5 13l4 4L19 7" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <span
-                                class="price-tag text-sm md:text-base bg-green-500/20 border-green-500/30 text-green-400">GRÁTIS</span>
-                            <p class="text-sm md:text-base text-gray-400 mt-3">Informações simples de presentes
-                                sugeridos para os convidados. Exemplo:</p>
-                            <p class="text-xs md:text-sm text-accent-light mt-2 italic">"Calçados 39, Joias pratas e
-                                dourado, Perfume Lili, Maquiagem, Pix: 11939047235"</p>
-                        </div>
+                        <video class="mini-thumb" muted loop playsinline autoplay>
+                            <source
+                                src="Links e capas/Imagens e videos para tela de orçamento/Vídeo da opção Abertura longa com frases e uma foto + R$20/abertura_longa.mp4"
+                                type="video/mp4">
+                        </video>
+                        <h4 class="font-semibold">Abertura Longa</h4>
+                        <span class="mini-price text-accent">+ R$ 15</span>
+                        <button onclick="event.stopPropagation(); toggleDescription(this)">Como funciona?</button>
                     </div>
-                </div>
 
-                <!-- Option 4: Lista de Presentes -->
-                <div class="option-card" data-option="listapresentes" data-price="10">
-                    <div class="flex gap-4">
-                        <div class="flex-shrink-0">
-                            <p class="text-[10px] text-gray-500 text-center mb-1 italic">Isto é apenas um exemplo</p>
-                            <div class="video-loading aspect-[9/16] w-[120px] md:w-[150px] rounded-xl"
-                                id="video3Container">
-                                <span class="text-xs text-gray-500">Carregando...</span>
-                            </div>
-                            <video id="video3" class="video-preview hidden" loop muted playsinline preload="metadata">
-                                <source
-                                    src="Links e capas/Imagens e videos para tela de orçamento/Vídeo da opção de Lista de Presentes personalizada + R$20/Video_lista_presentes_demo.mp4"
-                                    type="video/mp4">
-                            </video>
+                    <!-- Sugestão de Presentes -->
+                    <div class="mini-option-card relative" data-option="sugestaopresentes" data-price="0">
+                        <div class="mini-checkbox">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
                         </div>
-                        <div class="flex-1">
-                            <div class="flex items-start justify-between mb-2">
-                                <h3 class="font-semibold text-base md:text-xl">Lista de Presentes Inteligente</h3>
-                                <div class="checkbox-indicator">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                                            d="M5 13l4 4L19 7" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <span class="price-tag text-sm md:text-base">+ R$ 10,00</span>
-                            <p class="text-sm md:text-base text-gray-400 mt-3">Site exclusivo com itens, valores e chave
-                                Pix para
-                                pagamento direto. Você também pode fazer de forma gratuita:</p>
-                            <div class="flex flex-wrap gap-2 mt-3">
-                                <a href="https://listas.extra.com.br/" target="_blank" onclick="event.stopPropagation()"
-                                    class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-medium rounded-full transition-all">
-                                    🛒 Extra
-                                </a>
-                                <a href="https://www.querodecasamento.com.br/criar-lista/criar" target="_blank"
-                                    onclick="event.stopPropagation()"
-                                    class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-full transition-all">
-                                    📍 Magalu
-                                </a>
-                            </div>
-                            <p class="text-xs text-gray-500 mt-2">Ou posso criar uma <a
-                                    href="https://www.canva.com/design/DAG7ln8xZW8/F8dANttjxtFMqf_Jc1vM6w/view"
-                                    target="_blank" onclick="event.stopPropagation()"
-                                    class="text-accent hover:underline">Sugestão de Presentes
-                                    gratuita</a>.</p>
-                        </div>
+                        <img src="assets/Exemplo_Sugestoes_de_Presentes.jpg" alt="Sugestão de Presentes"
+                            class="mini-thumb" onerror="this.style.display='none'">
+                        <h4 class="font-semibold">Sugestão Pres.</h4>
+                        <span class="mini-price text-green-400">GRÁTIS</span>
+                        <button onclick="event.stopPropagation(); toggleDescription(this)">Como funciona?</button>
                     </div>
-                </div>
 
-                <!-- Option 5: Galeria de Fotos -->
-                <div class="option-card" data-option="galeria" data-price="10">
-                    <div class="flex gap-4 items-center">
-                        <div
-                            class="flex-shrink-0 w-[120px] md:w-[150px] aspect-[9/16] bg-gradient-to-br from-accent/20 to-accent/5 rounded-xl flex items-center justify-center">
-                            <svg class="w-12 h-12 text-accent/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <!-- Lista de Presentes -->
+                    <div class="mini-option-card relative" data-option="listapresentes" data-price="10">
+                        <div class="mini-checkbox">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <video class="mini-thumb" muted loop playsinline autoplay>
+                            <source
+                                src="Links e capas/Imagens e videos para tela de orçamento/Vídeo da opção de Lista de Presentes personalizada + R$20/Video_lista_presentes_demo.mp4"
+                                type="video/mp4">
+                        </video>
+                        <h4 class="font-semibold">Lista Presentes</h4>
+                        <span class="mini-price text-accent">+ R$ 10</span>
+                        <button onclick="event.stopPropagation(); toggleDescription(this)">Como funciona?</button>
+                    </div>
+
+                    <!-- Galeria de Fotos -->
+                    <div class="mini-option-card relative" data-option="galeria" data-price="10">
+                        <div class="mini-checkbox">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <div class="mini-thumb-placeholder">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                                     d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                         </div>
-                        <div class="flex-1">
-                            <div class="flex items-start justify-between mb-2">
-                                <h3 class="font-semibold text-base md:text-xl">Galeria de Fotos</h3>
-                                <div class="checkbox-indicator">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                                            d="M5 13l4 4L19 7" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <span class="price-tag text-sm md:text-base">+ R$ 10,00</span>
-                            <p class="text-sm md:text-base text-gray-400 mt-3">Galeria com até 15 fotos que seus
-                                convidados podem
-                                navegar dentro do convite. Perfeita para mostrar a história do casal ou fotos do
-                                aniversariante.</p>
-                        </div>
+                        <h4 class="font-semibold">Galeria Fotos</h4>
+                        <span class="mini-price text-accent">+ R$ 10</span>
+                        <button onclick="event.stopPropagation(); toggleDescription(this)">Como funciona?</button>
                     </div>
-                </div>
 
-                <!-- Option NEW: Confirmação direto pelo WhatsApp (FREE) -->
-                <div class="option-card" data-option="confirmacaowhatsapp" data-price="0">
-                    <div class="flex gap-4 items-center">
-                        <div
-                            class="flex-shrink-0 w-[120px] md:w-[150px] aspect-[9/16] bg-gradient-to-br from-green-500/20 to-green-500/5 rounded-xl flex items-center justify-center">
-                            <svg class="w-12 h-12 text-green-500/70" viewBox="0 0 24 24" fill="currentColor">
+                    <!-- Confirmação WhatsApp -->
+                    <div class="mini-option-card relative" data-option="confirmacaowhatsapp" data-price="0">
+                        <div class="mini-checkbox">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <div class="mini-thumb-placeholder bg-gradient-to-br from-green-500/20 to-green-500/5">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
                                 <path
                                     d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
                             </svg>
                         </div>
-                        <div class="flex-1">
-                            <div class="flex items-start justify-between mb-2">
-                                <h3 class="font-semibold text-base md:text-xl">Confirmação pelo WhatsApp</h3>
-                                <div class="checkbox-indicator">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                                            d="M5 13l4 4L19 7" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <span
-                                class="price-tag text-sm md:text-base bg-green-500/20 border-green-500/30 text-green-400">GRÁTIS</span>
-                            <p class="text-sm md:text-base text-gray-400 mt-3">Os convidados clicam no botão para
-                                confirmar e são redirecionados automaticamente para o WhatsApp que você informar abaixo,
-                                com uma mensagem pronta confirmando a presença.</p>
-                        </div>
+                        <h4 class="font-semibold">Conf. WhatsApp</h4>
+                        <span class="mini-price text-green-400">GRÁTIS</span>
+                        <button onclick="event.stopPropagation(); toggleDescription(this)">Como funciona?</button>
                     </div>
-                </div>
 
-                <!-- Option 6: Confirmação de Presença -->
-                <div class="option-card" data-option="confirmacao" data-price="5">
-                    <div class="flex gap-4 items-center">
-                        <div
-                            class="flex-shrink-0 w-[120px] md:w-[150px] aspect-[9/16] bg-gradient-to-br from-green-500/20 to-green-500/5 rounded-xl flex items-center justify-center">
-                            <svg class="w-12 h-12 text-green-500/50" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
+                    <!-- Formulário Confirmação -->
+                    <div class="mini-option-card relative" data-option="confirmacao" data-price="5">
+                        <div class="mini-checkbox">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <div class="mini-thumb-placeholder bg-gradient-to-br from-green-500/20 to-green-500/5">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                             </svg>
                         </div>
-                        <div class="flex-1">
-                            <div class="flex items-start justify-between mb-2">
-                                <h3 class="font-semibold text-base md:text-xl">Formulário de Confirmação de Presença
-                                </h3>
-                                <div class="checkbox-indicator">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                                            d="M5 13l4 4L19 7" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <span class="price-tag text-sm md:text-base">R$ 5,00</span>
-                            <p class="text-sm md:text-base text-gray-400 mt-3">Planilha que organiza em tempo real todas
-                                as
-                                confirmações de forma automática, para facilitar seu controle e organização da festa.
-                            </p>
-                        </div>
+                        <h4 class="font-semibold">Form. Confirma.</h4>
+                        <span class="mini-price text-accent">R$ 5</span>
+                        <button onclick="event.stopPropagation(); toggleDescription(this)">Como funciona?</button>
                     </div>
                 </div>
             </div>
         </section>
+
+
 
 
 
@@ -814,30 +884,30 @@
         <!-- Action Buttons -->
         <section class="space-y-4">
             <button onclick="sendToWhatsApp()"
-                class="btn-primary btn-whatsapp w-full flex items-center justify-center gap-3 text-lg">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                class="btn-primary btn-whatsapp w-full flex items-center justify-center gap-3 text-sm md:text-lg whitespace-nowrap">
+                <svg class="w-5 h-5 md:w-6 md:h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
                     <path
                         d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
                 </svg>
                 Confirmar Orçamento no WhatsApp
             </button>
 
-            <button onclick="openPaymentModal()" class="btn-primary w-full text-lg">
-                💳 Pagamento do Sinal (R$ 20,00)
+            <button onclick="openPaymentModal()" class="btn-primary w-full text-sm md:text-lg whitespace-nowrap">
+                💳 Pagar Sinal (R$ 20)
             </button>
 
             <a href="https://wa.me/5511939047235?text=Olá! Tenho uma dúvida sobre os convites..." target="_blank"
-                class="btn-secondary w-full flex items-center justify-center gap-2 text-center">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                class="btn-secondary w-full flex items-center justify-center gap-2 text-center text-sm md:text-base whitespace-nowrap">
+                <svg class="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                Tirar Dúvida com Atendente
+                Tirar Dúvida
             </a>
 
             <button onclick="clearAllData()"
-                class="w-full text-sm text-gray-500 hover:text-red-400 py-2 mt-4 transition-colors">
-                🗑️ Excluir Dados e Recomeçar
+                class="w-full text-sm text-gray-500 hover:text-red-400 py-2 mt-4 transition-colors whitespace-nowrap">
+                🗑️ Excluir Dados
             </button>
         </section>
     </main>
@@ -854,7 +924,34 @@
                     <path
                         d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
                 </svg>
-                Enviar
+                <span class="text-xs leading-tight text-center">Confirmar<br>Orçamento</span>
+            </button>
+        </div>
+    </div>
+
+
+    <!-- Info Modal -->
+    <div id="infoModal" class="fixed inset-0 z-[100] hidden items-center justify-center px-4">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeInfoModal()"></div>
+        <div class="relative w-full max-w-sm glass-panel p-6 border-accent/20 animate-fade-in shadow-2xl">
+            <div class="flex justify-between items-start mb-4">
+                <h3 id="infoModalTitle" class="text-xl font-bold gradient-text">Como funciona?</h3>
+                <button onclick="closeInfoModal()" class="text-gray-400 hover:text-white p-1">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div id="infoModalMedia" class="modal-media-container hidden">
+                <!-- Media injected via JS -->
+            </div>
+            <div id="infoModalContent" class="text-gray-300 text-sm leading-relaxed space-y-3">
+                <!-- Content injected via JS -->
+            </div>
+            <button onclick="closeInfoModal()"
+                class="w-full mt-6 py-3 bg-white/5 hover:bg-white/10 rounded-xl font-semibold border border-white/10 transition-all text-sm">
+                Entendido
             </button>
         </div>
     </div>
@@ -872,11 +969,20 @@
         </div>
     </div>
 
-    <!-- Payment Modal -->
-    <div id="paymentModal" class="modal-overlay payment-modal" onclick="closeModal(event)">
-        <div class="modal-content glass-panel rounded-2xl p-6 md:p-8 max-w-md w-full" onclick="event.stopPropagation()">
+    <!-- Unified Payment Modal -->
+    <div id="paymentModal" class="modal-overlay" onclick="closePaymentModal(event)">
+        <div class="modal-content glass-panel rounded-2xl p-6 md:p-8 max-w-md w-full mx-4"
+            onclick="event.stopPropagation()">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-xl font-bold">Pagamento do Sinal</h3>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center bg-accent/20">
+                        <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold">Pagamento do Sinal</h3>
+                </div>
                 <button onclick="closePaymentModal()" class="text-gray-400 hover:text-white">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -885,93 +991,67 @@
                 </button>
             </div>
 
-            <p class="text-gray-400 mb-6">Você pode pagar apenas R$ 20 agora, e o restante quando receber seu convite
-                finalizado e aprovado.</p>
+            <div class="space-y-4 text-gray-300 text-sm leading-relaxed mb-6">
+                <p>Para garantir seu pedido e iniciarmos a produção, pedimos um sinal de apenas <b>R$ 20,00</b>.</p>
+                <p>O restante do valor (R$ <span id="paymentRemaining">40,00</span>) você paga somente após receber o
+                    convite pronto, testar e aprovar tudo!</p>
+            </div>
 
-            <div class="space-y-4 mb-6">
-                <a href="#" class="block glass-panel p-4 rounded-xl hover:border-accent/50 transition-all text-center"
-                    onclick="copyPix()">
-                    <div class="text-2xl mb-2">📱</div>
-                    <div class="font-semibold">Pix</div>
-                    <div class="text-sm text-gray-400">Clique para copiar a chave</div>
-                </a>
+            <div class="space-y-3 mb-6">
+                <!-- Pix Option -->
+                <button onclick="copyPix()"
+                    class="w-full glass-panel p-4 rounded-xl hover:border-accent/50 transition-all text-left flex items-center justify-between group">
+                    <div class="flex items-center gap-3">
+                        <div class="text-2xl">📱</div>
+                        <div>
+                            <div class="font-semibold text-white">Pagar com Pix</div>
+                            <div class="text-[10px] text-gray-400">mforgedesign@gmail.com</div>
+                        </div>
+                    </div>
+                    <div class="text-accent text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                        Copiar Chave</div>
+                </button>
 
+                <!-- Mercado Pago Option -->
                 <a href="https://link.mercadopago.com.br/jlgrafica" target="_blank"
-                    class="block glass-panel p-4 rounded-xl hover:border-accent/50 transition-all text-center"
-                    onclick="paymentInitiated = true; fbq('track', 'InitiateCheckout', {content_name: 'Mercado Pago Link', content_category: 'Payment', currency: 'BRL'})">
-                    <div class="text-2xl mb-2">💳</div>
-                    <div class="font-semibold">Cartão de Crédito/Débito</div>
-                    <div class="text-sm text-gray-400">Via Mercado Pago</div>
+                    onclick="paymentInitiated = true; fbq('track', 'InitiateCheckout', {content_name: 'Mercado Pago', currency: 'BRL', value: 20})"
+                    class="w-full glass-panel p-4 rounded-xl hover:border-accent/50 transition-all text-left flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="text-2xl">💳</div>
+                        <div>
+                            <div class="font-semibold text-white">Cartão de Crédito</div>
+                            <div class="text-[10px] text-gray-400">Parcele via Mercado Pago</div>
+                        </div>
+                    </div>
+                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
                 </a>
-            </div>
 
-            <div class="glass-panel p-4 rounded-xl">
-                <p class="text-sm text-accent-light text-center">
-                    📤 Após o pagamento, encaminhe o comprovante para o nosso WhatsApp!
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Custom Alert Modal -->
-    <div id="customAlertModal" class="modal-overlay" onclick="closeCustomAlert(event)" style="display: none;">
-        <div class="modal-content glass-panel rounded-2xl p-6 md:p-8 max-w-md w-full mx-4"
-            onclick="event.stopPropagation()">
-            <div class="flex items-center gap-3 mb-4">
-                <div id="alertIcon" class="w-12 h-12 rounded-full flex items-center justify-center bg-accent/20">
-                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                    </svg>
-                </div>
-                <h3 id="alertTitle" class="text-lg font-bold text-white">Aviso</h3>
-            </div>
-            <p id="alertMessage" class="text-gray-300 mb-6 whitespace-pre-line"></p>
-            <button onclick="closeCustomAlert()" class="w-full btn-primary py-3 rounded-xl font-semibold">
-                Entendi
-            </button>
-        </div>
-    </div>
-
-    <!-- Payment Confirmation Modal -->
-    <div id="paymentConfirmModal" class="modal-overlay" onclick="closePaymentConfirmModal(event)"
-        style="display: none;">
-        <div class="modal-content glass-panel rounded-2xl p-6 md:p-8 max-w-md w-full mx-4"
-            onclick="event.stopPropagation()">
-            <div class="flex items-center gap-3 mb-4">
-                <div class="w-12 h-12 rounded-full flex items-center justify-center bg-accent/20">
-                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </div>
-                <h3 class="text-lg font-bold text-white">Pagamento Pendente</h3>
-            </div>
-            <p class="text-gray-300 mb-6">Voce ainda nao realizou o pagamento do sinal. Para garantir seu pedido,
-                recomendamos fazer o pagamento antes de enviar o orcamento.</p>
-            <div class="space-y-3">
-                <button onclick="closePaymentConfirmModal(); openPaymentModal();"
-                    class="w-full btn-primary py-3 rounded-xl font-semibold">
-                    Concluir Pagamento
-                </button>
-                <button onclick="closePaymentConfirmModal(); proceedToWhatsApp();"
-                    class="w-full btn-secondary py-3 rounded-xl font-semibold border border-gray-600">
-                    Enviar Orcamento Mesmo Assim
+                <!-- Send Quote Anyway -->
+                <button onclick="finalProceedToWhatsApp()"
+                    class="w-full py-3 text-xs text-gray-500 hover:text-white transition-colors">
+                    Enviar orçamento sem pagar agora
                 </button>
             </div>
+
+            <div class="bg-green-500/10 border border-green-500/20 p-4 rounded-xl">
+                <div class="flex gap-3">
+                    <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                    </svg>
+                    <div class="text-[11px] text-green-500 leading-tight">
+                        Fez o pagamento? <br>
+                        <a href="https://wa.me/5511939047235?text=Ola! Aqui esta o meu comprovante de pagamento do sinal."
+                            target="_blank" class="underline font-bold">Clique aqui para enviar o comprovante no
+                            WhatsApp</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- WhatsApp Float (for page) -->
-    <div class="whatsapp-float">
-        <a href="https://wa.me/5511939047235" target="_blank" class="whatsapp-btn"
-            onclick="fbq('track', 'Contact', {content_name: 'WhatsApp Float Button', content_category: 'Quote Page'})">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-                <path
-                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-            </svg>
-        </a>
-    </div>
 
     <script>
         // Option prices
@@ -987,6 +1067,85 @@
         };
 
         let cronometroEnabled = false;
+
+        const optionDescriptions = {
+            'savethedate': {
+                title: 'Save The Date (Apenas Imagem)',
+                content: 'Aviso prévio enviado dias antes do convite oficial para que seus convidados reservem a data. Imagem estática elegante, perfeita para enviar nas redes sociais e WhatsApp.',
+                mediaType: 'image',
+                mediaSrc: 'assets/demo/savethedate.jpg'
+            },
+            'aberturalonga': {
+                title: 'Abertura Longa com Frases e Foto',
+                content: 'Sequência de frases emocionantes com foto do aniversariante/casal antes da abertura principal.<br><br>💡 Caso queira incluir fotos, mas não esteja com elas preparadas agora, você pode concluir seu convite hoje e enviar as fotos outro dia!',
+                mediaType: 'video',
+                mediaSrc: 'Links e capas/Imagens e videos para tela de orçamento/Vídeo da opção Abertura longa com frases e uma foto + R$20/abertura_longa.mp4'
+            },
+            'sugestaopresentes': {
+                title: 'Sugestão de Presentes',
+                content: 'Informações simples de presentes sugeridos para os convidados. Exemplo:<br><br><i>"Calçados 39, Joias pratas e dourado, Perfume Lili, Maquiagem, Pix: 11939047235"</i>',
+                mediaType: 'image',
+                mediaSrc: 'assets/Exemplo_Sugestoes_de_Presentes.jpg'
+            },
+            'listapresentes': {
+                title: 'Lista de Presentes Inteligente',
+                content: 'Site exclusivo com itens, valores e chave Pix para pagamento direto. Você também pode fazer de forma gratuita nestas plataformas:<br><br><a href="https://listas.extra.com.br/" target="_blank" class="modal-link-btn">🛒 Criar Lista no Extra</a><a href="https://www.querodecasamento.com.br" target="_blank" class="modal-link-btn">📍 Criar Lista no Magalu</a>',
+                mediaType: 'video',
+                mediaSrc: 'Links e capas/Imagens e videos para tela de orçamento/Vídeo da opção de Lista de Presentes personalizada + R$20/Video_lista_presentes_demo.mp4'
+            },
+            'galeria': {
+                title: 'Galeria de Fotos',
+                content: 'Galeria com até 15 fotos que seus convidados podem navegar dentro do convite. Perfeita para mostrar a história do casal ou fotos do aniversariante.'
+            },
+            'confirmacaowhatsapp': {
+                title: 'Confirmação pelo WhatsApp',
+                content: 'Os convidados clicam no botão para confirmar e são redirecionados automaticamente para o WhatsApp que você informar abaixo, com uma mensagem pronta confirmando a presença.'
+            },
+            'confirmacao': {
+                title: 'Formulário de Confirmação de Presença',
+                content: 'Planilha que organiza em tempo real todas as confirmações de forma automática, para facilitar seu controle e organização da festa.<br><br><i>Ou posso criar uma Sugestão de Presentes gratuita.</i>'
+            }
+        };
+
+        function toggleDescription(btn) {
+            const card = btn.closest('.mini-option-card');
+            const option = card.dataset.option;
+            const data = optionDescriptions[option];
+
+            if (data) {
+                document.getElementById('infoModalTitle').innerHTML = data.title;
+                document.getElementById('infoModalContent').innerHTML = data.content;
+
+                const mediaContainer = document.getElementById('infoModalMedia');
+                mediaContainer.innerHTML = '';
+
+                if (data.mediaSrc) {
+                    mediaContainer.classList.remove('hidden');
+                    if (data.mediaType === 'video') {
+                        mediaContainer.innerHTML = `<video muted loop playsinline autoplay style="width:100%; border-radius:8px">
+                            <source src="${data.mediaSrc}" type="video/mp4">
+                        </video>`;
+                    } else {
+                        mediaContainer.innerHTML = `<img src="${data.mediaSrc}" style="width:100%; border-radius:8px">`;
+                    }
+                } else {
+                    mediaContainer.classList.add('hidden');
+                }
+
+                const modal = document.getElementById('infoModal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeInfoModal() {
+            const modal = document.getElementById('infoModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+
+
 
         // Custom Alert Modal Functions
         function showCustomAlert(message, title = 'Aviso', type = 'warning') {
@@ -1121,14 +1280,51 @@
             });
         });
 
-        // Calculate and update total
+        // Initialize mini-option cards with same dependency logic
+        document.querySelectorAll('.mini-option-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') return; // Don't toggle on button clicks
+
+                const option = card.dataset.option;
+                const aberturaCard = document.querySelector('.option-card[data-option="abertura"]');
+
+                // Check for mutual exclusivity
+                if (mutuallyExclusive[option]) {
+                    const oppositeOption = mutuallyExclusive[option];
+                    const oppositeCard = document.querySelector(`.mini-option-card[data-option="${oppositeOption}"]`);
+
+                    // If we're selecting this option and the opposite is selected
+                    if (!card.classList.contains('selected') && oppositeCard && oppositeCard.classList.contains('selected')) {
+                        oppositeCard.classList.remove('selected');
+                        const oppositeName = optionPrices[oppositeOption] ? optionPrices[oppositeOption].name : oppositeOption;
+                        showCustomAlert(`"${oppositeName}" foi desmarcada automaticamente.`, 'Opção Desmarcada', 'warning');
+                    }
+                }
+
+                // If clicking on a dependent option
+                if (dependentOptions.includes(option)) {
+                    // Toggle this option
+                    card.classList.toggle('selected');
+
+                    // If we just selected this option, ensure abertura is also selected
+                    if (card.classList.contains('selected') && aberturaCard) {
+                        aberturaCard.classList.add('selected');
+                    }
+                } else {
+                    card.classList.toggle('selected');
+                }
+
+                updateTotal();
+            });
+        });
+
+        // Calculate and update total (including both option-card and mini-option-card)
         function updateTotal() {
             let total = 0;
-            document.querySelectorAll('.option-card.selected').forEach(card => {
+            document.querySelectorAll('.option-card.selected, .mini-option-card.selected').forEach(card => {
                 total += parseInt(card.dataset.price);
             });
             document.getElementById('totalPrice').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
-
             // Toggle WhatsApp confirmacao field visibility based on confirmacao option
             const confirmacaoSelected = document.querySelector('.option-card[data-option="confirmacao"].selected');
             const whatsappContainer = document.getElementById('whatsappConfirmacaoContainer');
@@ -1268,39 +1464,32 @@
         }
 
         function openPaymentModal() {
-            document.getElementById('paymentModal').classList.add('active');
-        }
+            const modal = document.getElementById('paymentModal');
+            const total = window.pendingQuoteTotal || 0;
+            const remaining = Math.max(0, total - 20);
 
-        function closePaymentModal() {
-            document.getElementById('paymentModal').classList.remove('active');
-        }
-
-        function closeModal(e) {
-            if (e.target.classList.contains('modal-overlay')) {
-                closeVideoModal();
-                closePaymentModal();
+            const remainingEl = document.getElementById('paymentRemaining');
+            if (remainingEl) {
+                remainingEl.textContent = remaining.toFixed(2).replace('.', ',');
             }
+
+            modal.style.display = 'flex';
         }
 
-        // Payment confirmation modal functions
-        function showPaymentConfirmModal() {
-            document.getElementById('paymentConfirmModal').style.display = 'flex';
-        }
-
-        function closePaymentConfirmModal(e) {
+        function closePaymentModal(e) {
             if (e && e.target !== e.currentTarget) return;
-            document.getElementById('paymentConfirmModal').style.display = 'none';
+            document.getElementById('paymentModal').style.display = 'none';
         }
 
         function copyPix() {
             const pixKey = 'mforgedesign@gmail.com';
             navigator.clipboard.writeText(pixKey).then(() => {
                 paymentInitiated = true;
-                fbq('track', 'InitiateCheckout', { content_name: 'Pix Key Copy', content_category: 'Payment', currency: 'BRL' });
+                fbq('track', 'InitiateCheckout', { content_name: 'Pix Key Copy', content_category: 'Payment', currency: 'BRL', value: 20 });
                 showCustomAlert('Chave Pix copiada!\n\nCole no seu aplicativo de banco.', 'Sucesso', 'success');
             }).catch(() => {
                 paymentInitiated = true;
-                fbq('track', 'InitiateCheckout', { content_name: 'Pix Key Copy', content_category: 'Payment', currency: 'BRL' });
+                fbq('track', 'InitiateCheckout', { content_name: 'Pix Key Copy', content_category: 'Payment', currency: 'BRL', value: 20 });
                 showCustomAlert('Chave Pix: ' + pixKey, 'Copie a Chave', 'warning');
             });
         }
@@ -1446,13 +1635,12 @@ _Orcamento feito pelo site_`;
             window.pendingQuoteMessage = message;
             window.pendingQuoteTotal = total;
 
-            // Check if payment was initiated
-            if (!paymentInitiated) {
-                showPaymentConfirmModal();
-                return;
-            }
+            // In the new flow, we always show the payment modal when they confirm
+            openPaymentModal();
+        }
 
-            // If payment was initiated, proceed to WhatsApp
+        function finalProceedToWhatsApp() {
+            closePaymentModal();
             proceedToWhatsApp();
         }
 
