@@ -138,14 +138,14 @@
 
         .whatsapp-float {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
+            bottom: 16px;
+            right: 16px;
             z-index: 1000;
         }
 
         .whatsapp-btn {
-            width: 60px;
-            height: 60px;
+            width: 48px;
+            height: 48px;
             background: linear-gradient(135deg, #25d366, #128c7e);
             border-radius: 50%;
             display: flex;
@@ -156,6 +156,28 @@
             animation: pulse-green 2s infinite;
         }
 
+        .whatsapp-btn svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        @media (min-width: 768px) {
+            .whatsapp-float {
+                bottom: 24px;
+                right: 24px;
+            }
+
+            .whatsapp-btn {
+                width: 60px;
+                height: 60px;
+            }
+
+            .whatsapp-btn svg {
+                width: 28px;
+                height: 28px;
+            }
+        }
+
         .whatsapp-btn:hover {
             transform: scale(1.1);
             box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
@@ -163,27 +185,35 @@
 
         .speech-bubble {
             position: absolute;
-            bottom: 75px;
+            bottom: 55px;
             right: 0;
             background: white;
             color: #333;
-            padding: 12px 16px;
-            border-radius: 12px;
-            font-size: 14px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 11px;
             font-weight: 500;
             white-space: nowrap;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            animation: float 3s ease-in-out infinite;
+            animation: bubble-fade 5s ease-in-out infinite;
+        }
+
+        @media (min-width: 768px) {
+            .speech-bubble {
+                bottom: 75px;
+                padding: 12px 16px;
+                font-size: 14px;
+            }
         }
 
         .speech-bubble::after {
             content: '';
             position: absolute;
-            bottom: -8px;
-            right: 20px;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-top: 8px solid white;
+            bottom: -6px;
+            right: 15px;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid white;
         }
 
         @keyframes pulse-green {
@@ -198,14 +228,23 @@
             }
         }
 
-        @keyframes float {
+        @keyframes bubble-fade {
 
             0%,
-            100% {
+            10% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            20%,
+            80% {
+                opacity: 1;
                 transform: translateY(0);
             }
 
-            50% {
+            90%,
+            100% {
+                opacity: 0;
                 transform: translateY(-5px);
             }
         }
@@ -279,6 +318,157 @@
                 transform: translateY(-5px) translateX(-50%);
             }
         }
+
+        /* Product Cards Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .product-grid {
+                max-width: 600px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .product-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1.5rem;
+                max-width: 1000px;
+            }
+        }
+
+        /* Product Card */
+        .product-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1.25rem;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            display: block;
+            text-decoration: none;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .product-card:hover {
+            border-color: rgba(201, 85, 124, 0.5);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(201, 85, 124, 0.15);
+        }
+
+        /* Card Media */
+        .card-media {
+            aspect-ratio: 9/16;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-media img,
+        .card-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover .card-media img,
+        .product-card:hover .card-media video {
+            transform: scale(1.05);
+        }
+
+        /* Card Content */
+        .card-content {
+            padding: 0.75rem;
+            text-align: center;
+        }
+
+        .card-content h3 {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.15rem;
+            white-space: nowrap;
+        }
+
+        .card-price {
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #c9557c, #e8a0b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.35rem;
+            white-space: nowrap;
+        }
+
+        .card-badge {
+            display: inline-block;
+            margin-top: 0.35rem;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.55rem;
+            font-weight: 500;
+            background: rgba(201, 85, 124, 0.2);
+            border: 1px solid rgba(201, 85, 124, 0.4);
+            border-radius: 9999px;
+            color: #e8a0b8;
+        }
+
+        .card-btn {
+            display: inline-block;
+            margin-top: 0.35rem;
+            padding: 0.3rem 0.5rem;
+            font-size: 0.6rem;
+            font-weight: 500;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 9999px;
+            color: #fff;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .card-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        @media (min-width: 768px) {
+            .card-content {
+                padding: 1rem;
+            }
+
+            .card-content h3 {
+                font-size: 0.9rem;
+                margin-bottom: 0.25rem;
+            }
+
+            .card-price {
+                font-size: 1.1rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .card-badge {
+                padding: 0.25rem 0.75rem;
+                font-size: 0.65rem;
+            }
+
+            .card-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        /* GSAP animation states */
+        .gsap-card {
+            opacity: 0;
+            transform: translateY(30px);
+        }
     </style>
 
     <!-- Meta Pixel Code -->
@@ -323,81 +513,87 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="min-h-screen flex flex-col items-center justify-center relative px-6 pt-20 pb-32">
-        <div class="max-w-5xl w-full text-center">
-            <!-- Main Title -->
-            <h1 class="hero-title font-black tracking-tighter mb-6">
-                <span class="gradient-text">Convites</span><br>
-                <span class="text-white">Premium</span>
-            </h1>
-
-            <!-- Subtitle -->
-            <p class="hero-subtitle text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed font-light">
-                Convites com <span class="text-accent font-medium">botões interativos</span>,
-                abertura <span class="text-accent font-medium">3D com música</span>,
-                confirmação de presença, lista de presentes, manual do convidado e
-                <span class="text-accent font-medium">localização no Google Maps</span>!
-            </p>
-
-            <!-- Feature Tags -->
-            <div class="feature-list mb-10">
-                <span class="feature-tag">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                    </svg>
-                    Música Personalizada
-                </span>
-                <span class="feature-tag">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
-                    </svg>
-                    Botões Interativos
-                </span>
-                <span class="feature-tag">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    Google Maps
-                </span>
-                <span class="feature-tag">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                    </svg>
-                    Confirmação
-                </span>
-                <span class="feature-tag">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
-                    </svg>
-                    Lista de Presentes
-                </span>
+    <!-- Hero Section - Cards de Produtos -->
+    <section class="min-h-screen flex flex-col items-center justify-center relative px-6 pt-24 pb-16">
+        <div class="max-w-6xl w-full">
+            <!-- Título -->
+            <div class="text-center mb-8">
+                <h1 class="hero-title font-black tracking-tighter"
+                    style="font-size: clamp(1.8rem, 6vw, 4rem); white-space: nowrap;">
+                    <span class="text-white">Convites </span>
+                    <span class="gradient-text">Premium</span>
+                </h1>
             </div>
 
-            <!-- CTA Buttons -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-                <a href="modelos.html" class="btn-primary gsap-btn text-lg">
-                    Ver Modelos
+            <!-- Cards Grid - 2x2 mobile, 4x1 desktop -->
+            <div class="product-grid">
+                <!-- Card Convite Estático -->
+                <a href="convite-estatico.html" class="product-card gsap-card">
+                    <div class="card-media">
+                        <img src="assets/products/convite-estatico.jpg" alt="Convite Estático Digital">
+                    </div>
+                    <div class="card-content">
+                        <h3>Convite Estático</h3>
+                        <p class="card-price">R$ 30</p>
+                        <span class="card-btn">Modelos e valores</span>
+                    </div>
                 </a>
-                <a href="orcamento.html" class="btn-secondary gsap-btn text-lg">
-                    Fazer Orçamento
+
+                <!-- Card Convite Premium -->
+                <a href="orcamento.html" class="product-card gsap-card">
+                    <div class="card-media">
+                        <video autoplay loop muted playsinline>
+                            <source src="assets/products/convite-premium.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="card-content">
+                        <h3>Convite Premium</h3>
+                        <p class="card-price">A partir de R$ 60</p>
+                        <span class="card-btn">Modelos e valores</span>
+                    </div>
+                </a>
+
+                <!-- Card Save the Date -->
+                <a href="save-the-date.html" class="product-card gsap-card">
+                    <div class="card-media">
+                        <img src="assets/products/save-the-date.jpg" alt="Save the Date">
+                    </div>
+                    <div class="card-content">
+                        <h3>Save the Date</h3>
+                        <p class="card-price">R$ 35</p>
+                        <span class="card-btn">Modelos e valores</span>
+                    </div>
+                </a>
+
+                <!-- Card Convite Animado -->
+                <a href="convite-animado.html" class="product-card gsap-card">
+                    <div class="card-media">
+                        <video autoplay loop muted playsinline>
+                            <source src="assets/products/convite-animado.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="card-content">
+                        <h3>Convite Animado</h3>
+                        <p class="card-price">A partir de R$ 45</p>
+                        <span class="card-btn">Modelos e valores</span>
+                    </div>
                 </a>
             </div>
 
-            <!-- Urgency Badge -->
-            <div class="badge-urgent">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                Convites Prontos em até 48h!
+            <!-- Badges e CTAs secundários -->
+            <div class="text-center mt-12">
+                <div class="badge-urgent mb-6">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Convites Prontos em até 48h!
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="modelos.html" class="btn-secondary gsap-btn text-base">
+                        Ver Todos os Modelos
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -494,27 +690,12 @@
         &copy; 2024 Convites Premium. Todos os direitos reservados.
     </footer>
 
-    <!-- WhatsApp Float Button -->
-    <div class="whatsapp-float">
-        <div class="speech-bubble">
-            💬 Dúvidas? Fale com um atendente!
-        </div>
-        <a href="https://wa.me/5511939047235" target="_blank" class="whatsapp-btn"
-            onclick="fbq('track', 'Contact', {content_name: 'WhatsApp Float Button', content_category: 'Landing Page'})">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-                <path
-                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-            </svg>
-        </a>
-    </div>
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <script>
         // --- GSAP ANIMATIONS ---
-        // Elements are now hidden by default via CSS, so no gsap.set() needed
-
         // Animate to visible state
         gsap.to(".hero-title", {
             y: 0,
@@ -532,11 +713,12 @@
             delay: 0.5
         });
 
-        gsap.to(".feature-list", {
+        gsap.to(".gsap-card", {
             y: 0,
             opacity: 1,
             duration: 0.8,
             ease: "power3.out",
+            stagger: 0.15,
             delay: 0.7
         });
 
@@ -546,7 +728,7 @@
             duration: 0.6,
             ease: "power3.out",
             stagger: 0.1,
-            delay: 0.9
+            delay: 1.2
         });
 
         gsap.to(".badge-urgent", {
@@ -554,7 +736,7 @@
             opacity: 1,
             duration: 0.6,
             ease: "back.out(1.5)",
-            delay: 1.2
+            delay: 1.0
         });
     </script>
 </body>
