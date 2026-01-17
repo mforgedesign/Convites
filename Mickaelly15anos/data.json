@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-17T17:23:31.562Z",
+  "timestamp": "2026-01-17T18:31:48.314Z",
   "formData": {
     "nome": "Mickaelly",
     "tipo_evento": "Aniversário",
@@ -34,14 +34,18 @@
     "manual_raw_content": "e isso ai tmj",
     "music_name": "Christina Perri - A Thousand Years [Official Music Video].mp3",
     "slug": "Mickaelly15anos",
-    "watermark_enabled": false
+    "watermark_enabled": false,
+    "vid_abertura": "blob:https://builder.mforge.com.br/0b488770-91a5-4606-8a9e-f3a51ba5254b",
+    "fundo_tela": "blob:https://builder.mforge.com.br/aa244c8e-d857-489c-bb92-ce5a3cbd779f"
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768670611562.mp3",
-    "capa": "assets/capa_1768670611562.png",
-    "folha_vazia": "assets/folha_vazia_1768670611562.png",
-    "presentes": "assets/presentes_1768670611562.png"
+    "musica": "assets/musica_1768674708314.mp3",
+    "capa": "assets/capa_1768674708314.png",
+    "folha_vazia": "assets/folha_vazia_1768674708314.png",
+    "fundo_tela": "assets/fundo_tela_1768674708314.mp4",
+    "vid_abertura": "assets/vid_abertura_1768674708314.mp4",
+    "presentes": "assets/presentes_1768674708314.png"
   },
   "toggles": {
     "manualMode": "text",
