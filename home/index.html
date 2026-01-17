@@ -362,6 +362,20 @@
             box-shadow: 0 20px 40px rgba(201, 85, 124, 0.15);
         }
 
+        /* Unavailable state */
+        .product-card.unavailable {
+            filter: grayscale(1);
+            opacity: 0.6;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+
+        .product-card.unavailable .card-badge {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
         /* Card Media */
         .card-media {
             aspect-ratio: 9/16;
@@ -527,19 +541,7 @@
 
             <!-- Cards Grid - 2x2 mobile, 4x1 desktop -->
             <div class="product-grid">
-                <!-- Card Convite Estático -->
-                <a href="convite-estatico.html" class="product-card gsap-card">
-                    <div class="card-media">
-                        <img src="assets/products/convite-estatico.jpg" alt="Convite Estático Digital">
-                    </div>
-                    <div class="card-content">
-                        <h3>Convite Estático</h3>
-                        <p class="card-price">R$ 30</p>
-                        <span class="card-btn">Modelos e valores</span>
-                    </div>
-                </a>
-
-                <!-- Card Convite Premium -->
+                <!-- Card Convite Premium (EM PRIMEIRO) -->
                 <a href="orcamento.html" class="product-card gsap-card">
                     <div class="card-media">
                         <video autoplay loop muted playsinline>
@@ -553,20 +555,32 @@
                     </div>
                 </a>
 
-                <!-- Card Save the Date -->
-                <a href="save-the-date.html" class="product-card gsap-card">
+                <!-- Card Convite Estático (INDISPONÍVEL) -->
+                <a href="#" class="product-card gsap-card unavailable">
+                    <div class="card-media">
+                        <img src="assets/products/convite-estatico.jpg" alt="Convite Estático Digital">
+                    </div>
+                    <div class="card-content">
+                        <h3>Convite Estático</h3>
+                        <p class="card-price">R$ 30</p>
+                        <span class="card-badge">Em breve</span>
+                    </div>
+                </a>
+
+                <!-- Card Save the Date (INDISPONÍVEL) -->
+                <a href="#" class="product-card gsap-card unavailable">
                     <div class="card-media">
                         <img src="assets/products/save-the-date.jpg" alt="Save the Date">
                     </div>
                     <div class="card-content">
                         <h3>Save the Date</h3>
                         <p class="card-price">R$ 35</p>
-                        <span class="card-btn">Modelos e valores</span>
+                        <span class="card-badge">Em breve</span>
                     </div>
                 </a>
 
-                <!-- Card Convite Animado -->
-                <a href="convite-animado.html" class="product-card gsap-card">
+                <!-- Card Convite Animado (INDISPONÍVEL) -->
+                <a href="#" class="product-card gsap-card unavailable">
                     <div class="card-media">
                         <video autoplay loop muted playsinline>
                             <source src="assets/products/convite-animado.mp4" type="video/mp4">
@@ -575,7 +589,7 @@
                     <div class="card-content">
                         <h3>Convite Animado</h3>
                         <p class="card-price">A partir de R$ 45</p>
-                        <span class="card-btn">Modelos e valores</span>
+                        <span class="card-badge">Em breve</span>
                     </div>
                 </a>
             </div>
