@@ -590,6 +590,15 @@
             return localStorage.getItem('selectedModel');
         }
 
+        // Models that have "abertura longa" (long opening) in their demo
+        const modelsWithAberturaLonga = [
+            'modelo-debutante-rosa-gold',
+            'sarah-rosa-dourado',
+            'bela-fera-lizandra',
+            'rafaella-baile-mascaras',
+            'bruna-disney'
+        ];
+
         // Set selected model
         function selectModel(modelId) {
             localStorage.setItem('selectedModel', modelId);
@@ -597,6 +606,14 @@
             if (model) {
                 localStorage.setItem('selectedModelData', JSON.stringify(model));
             }
+
+            // Check if this model has "abertura longa" and set flag
+            if (modelsWithAberturaLonga.includes(modelId)) {
+                localStorage.setItem('autoSelectAberturaLonga', 'true');
+            } else {
+                localStorage.removeItem('autoSelectAberturaLonga');
+            }
+
             // Redirect to quote page after selecting model
             window.location.href = 'orcamento.html';
         }
