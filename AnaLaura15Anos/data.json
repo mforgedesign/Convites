@@ -1,0 +1,53 @@
+{
+  "version": "4.0",
+  "timestamp": "2026-01-17T01:24:32.641Z",
+  "formData": {
+    "nome": "Jheysiele kauanne",
+    "tipo_evento": "Aniversário",
+    "tipo_evento_custom": "",
+    "data": "2026-03-27",
+    "hora": "20:00",
+    "idade": "15",
+    "tema_evento": "Floral Borboletas",
+    "local_evento": "",
+    "paleta_cores": "Pink, Rosa Bebê e Prata",
+    "frase_convite": "",
+    "cor_botoes": "#f08eb1",
+    "sombra_gradiente": "#000000",
+    "posicao_botoes": "100",
+    "tamanho_botoes": "medio",
+    "link_google_maps": "https://maps.app.goo.gl/fwgSsMEnrMq1bnNS7",
+    "link_presentes": "",
+    "manual_content": "<p><i class=\"fa-solid fa-user-tie\"></i> <strong>Traje: Esporte Fino</strong></p><p>Para celebrarmos este momento com toda a elegância e harmonia que sonhamos, sugerimos aos nossos convidados o uso do traje esporte fino. Queremos que você se sinta impecável e confortável para aproveitar cada segundo ao nosso lado.</p><p><i class=\"fa-solid fa-palette\"></i> <strong>Um toque de carinho na escolha das cores:</strong></p><p>Planejamos cada detalhe visual deste dia com muito zelo. Por isso, pedimos gentilmente que <strong>evitem o uso de tons de rosa</strong> em seus trajes, deixando essa cor reservada para um detalhe exclusivo da nossa celebração. Agradecemos por nos ajudarem a tornar esse cenário ainda mais perfeito!</p>",
+    "numero_whatsapp": "5511913140279",
+    "link_confirmacao": "",
+    "permitir_acompanhante": false,
+    "timer_contagem": false,
+    "cover_prompt": "Tipo de evento: Aniversário\nSelo: 15\nPaleta de Cores: Rosa e lilás\nTema: Floral Borboletas\nTask: Create a vertical image of a hyper-realistic 3D render of a premium invitation envelope. The envelope is sealed with an intricately detailed wax seal. The paper boasts a high-quality, textured finish, exuding elegance and sophistication. Background: A setting with elements that enhance the luxurious feel of the invitation without specific thematic details. The composition is centered, with dramatic lighting casting volumetric light and creating a soft focus and depth of field. Lighting: Dramatic, cinematic lighting with volumetric effects. Highlights on the envelope and wax seal accentuate the texture and detail. Style: Photorealistic, hyper-detailed, cinematic, and elegant. Technical Details: Resolution: 8K, ultra high resolution Aspect Ratio: 9:16 Rendering Engine: Octane Render, Unreal Engine 5 Camera: Macro lens, f/2.8, shallow depth of field",
+    "leaf_prompt": "",
+    "animate_background": false,
+    "intro_motion_prompt": "The animation begins with a focus on the closed envelope. As the wax seal gracefully detaches and falls, the envelope's flap uplifts slowly. From its interior, a spectacular eruption of glittering sparkles and smoke, shimmering dust, and glowing light trails emerges, cascading outward in a mesmerizing display. These vibrant particles swirl dynamically, increasing in density and brightness around the envelope. The radiant light and swirling glitter intensify, rapidly expanding to fill the entire scene. CRITICAL: The Color of glow, light and smoke need to be the same of the image color pallete. The overwhelming brilliance transitions the frame to a solid, blinding white screen in the very final frame, achieved through a dramatic zoom-in effect.",
+    "loop_motion_prompt": "The animation displays smooth, looping movements of the shimmering effect based on the provided image. Dramatic sparkles and shining smokes flying in the background, cinematic lighting with volumetric effects (divine rays) filters through shimmering particles, creating a magical atmosphere with highlights. Rendered in a photorealistic and hyper-detailed style, the animation flows perfectly with a cinematic approach, captivating the viewer's attention with its fluid movement and mesmerizing 4K quality. IMPORTANT: Static Camera / No Camera Movement, only environmental motion.",
+    "fill_prompt": "Nome: Jheysiele kauanne\nIdade (se houver): 15\nTipo de evento: Aniversário\nTema: Floral Borboletas\nTask: Preencha essa folha com os dados para convite de forma criativa e elegante.\nColoque elementos de design de forma elegante no convite, divisórias modernas, hierarquia visual madura e profissional, linhas, e uma frase similar a \"Você está convidado para o... (crie a frase conforme o contexto)\" conforme sua criatividade.\nColoque textura, camadas, adornos no texto do nome, letra cursiva (Great Vibes) e efeitos especiais elegantes.",
+    "sugestoes_presentes": "",
+    "gifts_image_prompt": "",
+    "manual_raw_content": "(desenvolva:)\n\nDress code: Traje esporte fino, não usar rosa.",
+    "music_name": "y2mate.com - Ed Sheeran  Photograph Lyrics.mp3",
+    "slug": "AnaLaura15Anos",
+    "watermark_enabled": true,
+    "musica": "blob:https://builder.mforge.com.br/1dadfe1a-2944-4c2b-b8c8-9f8b5f0c2d2f"
+  },
+  "linksExtras": [],
+  "assetsMap": {
+    "musica": "assets/musica_1768613072642.mp3",
+    "capa": "assets/capa_1768613072642.png",
+    "folha_vazia": "assets/folha_vazia_1768613072642.png",
+    "fundo_tela": "assets/fundo_tela_1768613072642.png",
+    "vid_abertura": "assets/vid_abertura_1768613072642.mp4",
+    "presentes": "assets/presentes_1768613072642.png"
+  },
+  "toggles": {
+    "manualMode": "text",
+    "giftsMode": "image"
+  }
+}
