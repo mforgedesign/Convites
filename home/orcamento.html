@@ -993,7 +993,7 @@
 
             <div class="space-y-4 text-gray-300 text-sm leading-relaxed mb-6">
                 <p>Para garantir seu pedido e iniciarmos a produção, pedimos um sinal de apenas <b>R$ 20,00</b>.</p>
-                <p>O restante do valor (R$ <span id="paymentRemaining">40,00</span>) você paga somente após receber o
+                <p>O restante do valor você paga somente após receber o
                     convite pronto, testar e aprovar tudo!</p>
             </div>
 
@@ -1049,6 +1049,26 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Custom Alert Modal -->
+    <div id="customAlertModal" class="modal-overlay" onclick="closeCustomAlert(event)" style="display: none;">
+        <div class="modal-content glass-panel rounded-2xl p-6 md:p-8 max-w-md w-full mx-4"
+            onclick="event.stopPropagation()">
+            <div class="flex items-center gap-3 mb-4">
+                <div id="alertIcon" class="w-12 h-12 rounded-full flex items-center justify-center bg-accent/20">
+                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                    </svg>
+                </div>
+                <h3 id="alertTitle" class="text-lg font-bold text-white">Aviso</h3>
+            </div>
+            <p id="alertMessage" class="text-gray-300 mb-6 whitespace-pre-line"></p>
+            <button onclick="closeCustomAlert()" class="w-full btn-primary py-3 rounded-xl font-semibold">
+                Entendi
+            </button>
         </div>
     </div>
 
