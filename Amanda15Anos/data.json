@@ -1,17 +1,7 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-17T17:46:40.002Z",
+  "timestamp": "2026-01-17T18:07:18.348Z",
   "formData": {
-    "capa": null,
-    "capa_referencia": null,
-    "folha_vazia": null,
-    "vid_abertura": null,
-    "fundo_tela": null,
-    "folha_only": null,
-    "background_only": null,
-    "presentes": null,
-    "manual": null,
-    "musica": "blob:https://builder.mforge.com.br/c2b1d7b8-6355-4822-9ea0-a39d12665f3c",
     "nome": "Amanda ketlhyn",
     "tipo_evento": "Aniversário",
     "tipo_evento_custom": "",
@@ -25,7 +15,7 @@
     "cor_botoes": "#000000",
     "sombra_gradiente": "#000000",
     "posicao_botoes": "7",
-    "tamanho_botoes": "",
+    "tamanho_botoes": "medio",
     "link_google_maps": "https://maps.app.goo.gl/9zP53VaLwqqT2TxFA",
     "link_presentes": "",
     "manual_content": "<p><i class=\"fa-solid fa-clock\"></i> <strong>A pontualidade é o primeiro brinde à nossa alegria.</strong> Sua presença desde o início é essencial para que possamos compartilhar cada detalhe emocionante desta celebração.</p>\n<p><i class=\"fa-solid fa-calendar-check\"></i> <strong>Sua confirmação é fundamental.</strong> Para que possamos preparar tudo com o carinho que você merece, pedimos a gentileza de confirmar sua presença até 15 dias antes do grande dia.</p>\n<p><i class=\"fa-solid fa-camera-retro\"></i> <strong>Prepare o sorriso para memórias inesquecíveis!</strong> Queremos eternizar cada instante ao seu lado com nossa plataforma 360, espelho mágico e um filtro exclusivo personalizado para o evento.</p>\n<p><i class=\"fa-solid fa-heart\"></i> <strong>Celebre com toda a intensidade!</strong> Estamos ansiosos para viver este momento especial e criar lembranças que guardaremos para sempre em nossos corações.</p>",
@@ -48,11 +38,11 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768672000002.mp3",
-    "capa": "assets/capa_1768672000002.png",
-    "fundo_tela": "assets/fundo_tela_1768672000002.mp4",
-    "vid_abertura": "assets/vid_abertura_1768672000002.mp4",
-    "presentes": "assets/presentes_1768672000002.png"
+    "musica": "assets/musica_1768673238348.mp3",
+    "capa": "assets/capa_1768673238348.png",
+    "fundo_tela": "assets/fundo_tela_1768673238348.mp4",
+    "vid_abertura": "assets/vid_abertura_1768673238348.mp4",
+    "presentes": "assets/presentes_1768673238348.png"
   },
   "toggles": {
     "manualMode": "text",
