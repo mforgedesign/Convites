@@ -1,7 +1,17 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-17T18:09:31.035Z",
+  "timestamp": "2026-01-18T01:37:43.532Z",
   "formData": {
+    "capa": null,
+    "capa_referencia": null,
+    "folha_vazia": null,
+    "vid_abertura": null,
+    "fundo_tela": null,
+    "folha_only": null,
+    "background_only": null,
+    "presentes": null,
+    "manual": null,
+    "musica": null,
     "nome": "Amanda ketlhyn",
     "tipo_evento": "Aniversário",
     "tipo_evento_custom": "",
@@ -38,11 +48,11 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768673371035.mp3",
-    "capa": "assets/capa_1768673371035.png",
-    "fundo_tela": "assets/fundo_tela_1768673371035.mp4",
-    "vid_abertura": "assets/vid_abertura_1768673371035.mp4",
-    "presentes": "assets/presentes_1768673371035.png"
+    "musica": "assets/musica_1768700263532.mp3",
+    "capa": "assets/capa_1768700263532.png",
+    "fundo_tela": "assets/fundo_tela_1768700263532.dat",
+    "vid_abertura": "assets/vid_abertura_1768700263532.mp4",
+    "presentes": "assets/presentes_1768700263532.png"
   },
   "toggles": {
     "manualMode": "text",
