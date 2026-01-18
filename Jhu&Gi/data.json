@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-18T13:05:57.536Z",
+  "timestamp": "2026-01-18T13:11:42.481Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -16,7 +16,7 @@
     "tipo_evento": "Aniversário",
     "tipo_evento_custom": "",
     "data": "2026-02-28",
-    "hora": "",
+    "hora": "20:00",
     "idade": "15",
     "tema_evento": "Azul Floral",
     "local_evento": "Espaço Halo - Rua Ten. Avelar Píres de Azevedo, 486 - Osasco SP",
@@ -24,7 +24,7 @@
     "frase_convite": "",
     "cor_botoes": "#000000",
     "sombra_gradiente": "#000000",
-    "posicao_botoes": "100",
+    "posicao_botoes": "20",
     "tamanho_botoes": "",
     "link_google_maps": "https://maps.app.goo.gl/hQnJTwLawtuuemDE8",
     "link_presentes": "",
@@ -48,10 +48,11 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768741557537.mp3",
-    "capa": "assets/capa_1768741557537.png",
-    "folha_vazia": "assets/folha_vazia_1768741557537.png",
-    "vid_abertura": "assets/vid_abertura_1768741557537.mp4"
+    "musica": "assets/musica_1768741902481.mp3",
+    "capa": "assets/capa_1768741902481.png",
+    "folha_vazia": "assets/folha_vazia_1768741902481.png",
+    "fundo_tela": "assets/fundo_tela_1768741902481.png",
+    "vid_abertura": "assets/vid_abertura_1768741902481.mp4"
   },
   "toggles": {
     "manualMode": "text",
