@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-18T13:11:42.481Z",
+  "timestamp": "2026-01-18T13:16:14.644Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -22,7 +22,7 @@
     "local_evento": "Espaço Halo - Rua Ten. Avelar Píres de Azevedo, 486 - Osasco SP",
     "paleta_cores": "Tons de Azul (Royal e Cinderela)",
     "frase_convite": "",
-    "cor_botoes": "#000000",
+    "cor_botoes": "#28468a",
     "sombra_gradiente": "#000000",
     "posicao_botoes": "20",
     "tamanho_botoes": "",
@@ -48,11 +48,11 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768741902481.mp3",
-    "capa": "assets/capa_1768741902481.png",
-    "folha_vazia": "assets/folha_vazia_1768741902481.png",
-    "fundo_tela": "assets/fundo_tela_1768741902481.png",
-    "vid_abertura": "assets/vid_abertura_1768741902481.mp4"
+    "musica": "assets/musica_1768742174644.mp3",
+    "capa": "assets/capa_1768742174644.png",
+    "folha_vazia": "assets/folha_vazia_1768742174644.png",
+    "fundo_tela": "assets/fundo_tela_1768742174644.png",
+    "vid_abertura": "assets/vid_abertura_1768742174644.mp4"
   },
   "toggles": {
     "manualMode": "text",
