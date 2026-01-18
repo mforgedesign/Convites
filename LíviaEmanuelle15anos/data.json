@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-18T16:45:36.191Z",
+  "timestamp": "2026-01-18T16:54:39.119Z",
   "formData": {
     "capa": "blob:https://builder.mforge.com.br/b4b48c7c-956f-47b4-a55a-7833ece298d8",
     "capa_referencia": null,
@@ -26,7 +26,7 @@
     "sombra_gradiente": "#000000",
     "posicao_botoes": "10",
     "tamanho_botoes": "",
-    "link_google_maps": "https://maps.app.goo.gl/dKvkkfoAaxwFe5i49",
+    "link_google_maps": "https://maps.app.goo.gl/dWP6FKJmfTb65cWp6",
     "link_presentes": "",
     "manual_content": "<p>🎭 <strong>Traje de gala obrigatório:</strong></p>\n\n<p>✨ <strong>Damas:</strong> vestido longo, máscara e, se possível, luvas.</p>\n\n<p>🤴 <strong>Cavalheiros:</strong> terno com gravata ou gravata borboleta.</p>\n\n<p>⚠️ <strong>Atenção:</strong> Proibido as mulheres trajes vermelhos e vinho.</p>",
     "numero_whatsapp": "5531993376260",
@@ -44,15 +44,15 @@
     "manual_raw_content": "\n- 🎭 Traje de gala obrigatório:\n✨ Damas: vestido longo, máscara e, se possível, luvas.\n🤴 Cavalheiros: terno com gravata ou gravata borboleta.\nAtenção : Proibido as mulheres  trajes vermelhos e vinho.",
     "music_name": "Give Me Everything - (Cover by Archer Marsh) [Bridgerton Season 3 (Netflix Series)].mp3",
     "slug": "LíviaEmanuelle15anos",
-    "watermark_enabled": true
+    "watermark_enabled": false
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768754736192.mp3",
-    "capa": "assets/capa_1768754736192.png",
-    "folha_vazia": "assets/folha_vazia_1768754736192.png",
-    "fundo_tela": "assets/fundo_tela_1768754736192.mp4",
-    "vid_abertura": "assets/vid_abertura_1768754736192.mp4"
+    "musica": "assets/musica_1768755279119.mp3",
+    "capa": "assets/capa_1768755279119.png",
+    "folha_vazia": "assets/folha_vazia_1768755279119.png",
+    "fundo_tela": "assets/fundo_tela_1768755279119.dat",
+    "vid_abertura": "assets/vid_abertura_1768755279119.mp4"
   },
   "toggles": {
     "manualMode": "text",
