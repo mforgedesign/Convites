@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-18T16:36:59.439Z",
+  "timestamp": "2026-01-18T16:45:36.191Z",
   "formData": {
     "capa": "blob:https://builder.mforge.com.br/b4b48c7c-956f-47b4-a55a-7833ece298d8",
     "capa_referencia": null,
@@ -48,11 +48,11 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768754219439.mp3",
-    "capa": "assets/capa_1768754219439.png",
-    "folha_vazia": "assets/folha_vazia_1768754219439.png",
-    "fundo_tela": "assets/fundo_tela_1768754219439.dat",
-    "vid_abertura": "assets/vid_abertura_1768754219439.mp4"
+    "musica": "assets/musica_1768754736192.mp3",
+    "capa": "assets/capa_1768754736192.png",
+    "folha_vazia": "assets/folha_vazia_1768754736192.png",
+    "fundo_tela": "assets/fundo_tela_1768754736192.mp4",
+    "vid_abertura": "assets/vid_abertura_1768754736192.mp4"
   },
   "toggles": {
     "manualMode": "text",
