@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-17T21:46:43.931Z",
+  "timestamp": "2026-01-18T16:36:59.439Z",
   "formData": {
     "capa": "blob:https://builder.mforge.com.br/b4b48c7c-956f-47b4-a55a-7833ece298d8",
     "capa_referencia": null,
@@ -24,12 +24,12 @@
     "frase_convite": "Caro e gentil leitor…\nPrimeiro baile desta temporada está deveras animado.\nSra Silva apresentando o diamante da temporada com baile de máscara",
     "cor_botoes": "#be2727",
     "sombra_gradiente": "#000000",
-    "posicao_botoes": "3",
+    "posicao_botoes": "10",
     "tamanho_botoes": "",
     "link_google_maps": "https://maps.app.goo.gl/dKvkkfoAaxwFe5i49",
     "link_presentes": "",
-    "manual_content": "<p><i class='fa-solid fa-mask'></i> <strong>Guia de Estilo: Uma Noite de Mistério e Elegância</strong></p><p>Para que nossa celebração seja envolta em sofisticação e magia, convidamos você a mergulhar no glamour do traje de gala.</p><p><i class='fa-solid fa-venus'></i> <strong>Para as Damas:</strong> Celebre a noite com a fluidez de um vestido longo e o charme de uma máscara misteriosa. Para um toque extra de requinte, o uso de luvas é carinhosamente sugerido.</p><p><i class='fa-solid fa-mars'></i> <strong>Para os Cavalheiros:</strong> A impecabilidade de um terno completo, acompanhado pela distinção de uma gravata clássica ou borboleta.</p><p><i class='fa-solid fa-circle-exclamation'></i> <strong>Nota Importante:</strong> Pedimos a gentileza de que as damas reservem as tonalidades de <strong>vermelho e vinho</strong> para outros momentos, evitando-as nesta noite especial.</p>",
-    "numero_whatsapp": "31993376260",
+    "manual_content": "<p>🎭 <strong>Traje de gala obrigatório:</strong></p>\n\n<p>✨ <strong>Damas:</strong> vestido longo, máscara e, se possível, luvas.</p>\n\n<p>🤴 <strong>Cavalheiros:</strong> terno com gravata ou gravata borboleta.</p>\n\n<p>⚠️ <strong>Atenção:</strong> Proibido as mulheres trajes vermelhos e vinho.</p>",
+    "numero_whatsapp": "5531993376260",
     "link_confirmacao": "",
     "permitir_acompanhante": false,
     "timer_contagem": false,
@@ -41,18 +41,18 @@
     "fill_prompt": "Nome: \nIdade (se houver): (não informada)\nTipo de evento: \nTema: \nTask: Preencha essa folha com os dados para convite de forma criativa e elegante.\nColoque elementos de design de forma elegante no convite, divisórias modernas, hierarquia visual madura e profissional, linhas, e uma frase similar a \"Você está convidado para o... (crie a frase conforme o contexto)\" conforme sua criatividade.\nColoque textura, camadas, adornos no texto do nome, letra cursiva (Great Vibes) e efeitos especiais elegantes.",
     "sugestoes_presentes": "",
     "gifts_image_prompt": "",
-    "manual_raw_content": "Manual do Convidado: 🎭 Traje de gala obrigatório:\n✨ Damas: vestido longo, máscara e, se possível, luvas.\n🤴 Cavalheiros: terno com gravata ou gravata borboleta.\nAtenção : Proibido as mulheres trajes vermelhos e vinho.",
+    "manual_raw_content": "\n- 🎭 Traje de gala obrigatório:\n✨ Damas: vestido longo, máscara e, se possível, luvas.\n🤴 Cavalheiros: terno com gravata ou gravata borboleta.\nAtenção : Proibido as mulheres  trajes vermelhos e vinho.",
     "music_name": "Give Me Everything - (Cover by Archer Marsh) [Bridgerton Season 3 (Netflix Series)].mp3",
     "slug": "LíviaEmanuelle15anos",
-    "watermark_enabled": false
+    "watermark_enabled": true
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768686403931.mp3",
-    "capa": "assets/capa_1768686403931.png",
-    "folha_vazia": "assets/folha_vazia_1768686403931.png",
-    "fundo_tela": "assets/fundo_tela_1768686403931.mp4",
-    "vid_abertura": "assets/vid_abertura_1768686403931.mp4"
+    "musica": "assets/musica_1768754219439.mp3",
+    "capa": "assets/capa_1768754219439.png",
+    "folha_vazia": "assets/folha_vazia_1768754219439.png",
+    "fundo_tela": "assets/fundo_tela_1768754219439.dat",
+    "vid_abertura": "assets/vid_abertura_1768754219439.mp4"
   },
   "toggles": {
     "manualMode": "text",
