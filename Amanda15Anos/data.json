@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-18T01:37:43.532Z",
+  "timestamp": "2026-01-18T09:14:22.408Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -48,11 +48,11 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768700263532.mp3",
-    "capa": "assets/capa_1768700263532.png",
-    "fundo_tela": "assets/fundo_tela_1768700263532.dat",
-    "vid_abertura": "assets/vid_abertura_1768700263532.mp4",
-    "presentes": "assets/presentes_1768700263532.png"
+    "musica": "assets/musica_1768727662408.mp3",
+    "capa": "assets/capa_1768727662408.png",
+    "fundo_tela": "assets/fundo_tela_1768727662408.dat",
+    "vid_abertura": "assets/vid_abertura_1768727662408.mp4",
+    "presentes": "assets/presentes_1768727662408.png"
   },
   "toggles": {
     "manualMode": "text",
