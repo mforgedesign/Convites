@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-18T18:14:07.478Z",
+  "timestamp": "2026-01-18T18:19:22.626Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -44,16 +44,16 @@
     "manual_raw_content": "Chegue no horário: Sua presença pontual é muito importante para nós.\n Confirme sua presença: Por favor, confirme presença pelo menos 15 dias antes do evento.\n Divirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.\n Não vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.",
     "music_name": "Lana Del Rey - Chemtrails Over The Country Club (Official Music Video)_[cut_58sec].mp3",
     "slug": "Jhu&Gi",
-    "watermark_enabled": true
+    "watermark_enabled": false
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768760047478.mp3",
-    "capa": "assets/capa_1768760047478.png",
-    "folha_vazia": "assets/folha_vazia_1768760047478.png",
-    "fundo_tela": "assets/fundo_tela_1768760047478.png",
-    "vid_abertura": "assets/vid_abertura_1768760047478.mp4",
-    "presentes": "assets/presentes_1768760047478.png"
+    "musica": "assets/musica_1768760362626.mp3",
+    "capa": "assets/capa_1768760362626.png",
+    "folha_vazia": "assets/folha_vazia_1768760362626.png",
+    "fundo_tela": "assets/fundo_tela_1768760362626.png",
+    "vid_abertura": "assets/vid_abertura_1768760362626.mp4",
+    "presentes": "assets/presentes_1768760362626.png"
   },
   "toggles": {
     "manualMode": "text",
