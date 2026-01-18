@@ -648,7 +648,7 @@
                     </div>
 
                     <!-- Abertura Longa -->
-                    <div class="mini-option-card relative" data-option="aberturalonga" data-price="15">
+                    <div class="mini-option-card relative" data-option="aberturalonga" data-price="25">
                         <div class="mini-checkbox">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
@@ -661,7 +661,7 @@
                                 type="video/mp4">
                         </video>
                         <h4 class="font-semibold">Abertura Longa</h4>
-                        <span class="mini-price text-accent">+ R$ 15</span>
+                        <span class="mini-price text-accent">+ R$ 25</span>
                         <button onclick="event.stopPropagation(); toggleDescription(this)">Como funciona?</button>
                     </div>
 
@@ -681,7 +681,7 @@
                     </div>
 
                     <!-- Lista de Presentes -->
-                    <div class="mini-option-card relative" data-option="listapresentes" data-price="10">
+                    <div class="mini-option-card relative" data-option="listapresentes" data-price="15">
                         <div class="mini-checkbox">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
@@ -694,7 +694,7 @@
                                 type="video/mp4">
                         </video>
                         <h4 class="font-semibold">Lista Presentes</h4>
-                        <span class="mini-price text-accent">+ R$ 10</span>
+                        <span class="mini-price text-accent">+ R$ 15</span>
                         <button onclick="event.stopPropagation(); toggleDescription(this)">Como funciona?</button>
                     </div>
 
@@ -1077,9 +1077,9 @@
         const optionPrices = {
             abertura: { name: 'Abertura Envelope e Folha com Botões', price: 60 },
             savethedate: { name: 'Save The Date (Apenas Imagem)', price: 25 },
-            aberturalonga: { name: 'Abertura Longa com Frases e Foto', price: 15 },
+            aberturalonga: { name: 'Abertura Longa com Frases e Foto', price: 25 },
             sugestaopresentes: { name: 'Sugestão de Presentes', price: 0 },
-            listapresentes: { name: 'Lista de Presentes Inteligente', price: 10 },
+            listapresentes: { name: 'Lista de Presentes Inteligente', price: 15 },
             galeria: { name: 'Galeria de Fotos (até 15 fotos)', price: 10 },
             confirmacaowhatsapp: { name: 'Confirmação pelo WhatsApp', price: 0 },
             confirmacao: { name: 'Formulário de Confirmação de Presença', price: 5 }
@@ -1848,17 +1848,24 @@ _Orcamento feito pelo site_`;
 
         // Check if selected model requires "abertura longa" and auto-select it
         function checkAutoSelectAberturaLonga() {
-            // Only run once per page load (use sessionStorage to track)
-            const alreadyChecked = sessionStorage.getItem('aberturaLongaChecked');
-            if (alreadyChecked) return;
-
             // Get model data from localStorage
             const modelData = localStorage.getItem('selectedModelData');
-            if (!modelData) return;
+            if (!modelData) {
+                console.log('checkAutoSelectAberturaLonga: Nenhum modelo selecionado');
+                return;
+            }
 
             try {
                 const model = JSON.parse(modelData);
                 const modelName = model.name || '';
+                const modelId = model.id || '';
+
+                // Check if we already processed this specific model
+                const lastAutoSelectedModel = localStorage.getItem('lastAutoSelectedModel');
+                if (lastAutoSelectedModel === modelId) {
+                    console.log('checkAutoSelectAberturaLonga: Modelo já processado anteriormente:', modelId);
+                    return;
+                }
 
                 // Check if model name matches any in the list
                 const requiresAberturaLonga = modelsWithAberturaLonga.some(name =>
@@ -1866,8 +1873,12 @@ _Orcamento feito pelo site_`;
                     name.toLowerCase().includes(modelName.toLowerCase())
                 );
 
+                console.log('checkAutoSelectAberturaLonga: Modelo=', modelName, ', RequerAberturaLonga=', requiresAberturaLonga);
+
                 if (requiresAberturaLonga) {
                     const aberturaLongaCard = document.querySelector('.mini-option-card[data-option="aberturalonga"]');
+                    console.log('checkAutoSelectAberturaLonga: Card encontrado=', !!aberturaLongaCard, ', Já selecionado=', aberturaLongaCard?.classList.contains('selected'));
+
                     if (aberturaLongaCard && !aberturaLongaCard.classList.contains('selected')) {
                         // Auto-select the card
                         aberturaLongaCard.classList.add('selected');
@@ -1876,16 +1887,17 @@ _Orcamento feito pelo site_`;
                         const aberturaCard = document.querySelector('.mini-option-card[data-option="abertura"]');
                         if (aberturaCard) aberturaCard.classList.add('selected');
 
-                        console.log('Auto-selecionado: Abertura Longa (modelo: ' + modelName + ')');
+                        console.log('✓ Auto-selecionado: Abertura Longa (modelo: ' + modelName + ')');
                         updateTotal();
                     }
                 }
+
+                // Mark this model as processed
+                localStorage.setItem('lastAutoSelectedModel', modelId);
+
             } catch (e) {
                 console.error('Erro ao verificar modelo:', e);
             }
-
-            // Mark as checked for this session
-            sessionStorage.setItem('aberturaLongaChecked', 'true');
         }
 
         // Initialize
