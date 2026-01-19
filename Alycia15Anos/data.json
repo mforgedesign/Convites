@@ -1,0 +1,51 @@
+{
+  "version": "4.0",
+  "timestamp": "2026-01-19T01:17:05.795Z",
+  "formData": {
+    "musica": "blob:https://builder.mforge.com.br/abbb722c-af6c-4904-9dc9-137e7eec8fee",
+    "nome": "Alycia",
+    "tipo_evento": "Aniversário",
+    "tipo_evento_custom": "",
+    "data": "2026-04-17",
+    "hora": "20:00",
+    "idade": "15",
+    "tema_evento": "Baile de Máscara",
+    "local_evento": "Rua Etel 155 bairro Itinga Araquari sc ",
+    "paleta_cores": "Preto e Dourado",
+    "frase_convite": "",
+    "cor_botoes": "#000000",
+    "sombra_gradiente": "#000000",
+    "posicao_botoes": "3",
+    "tamanho_botoes": "medio",
+    "link_google_maps": "https://maps.app.goo.gl/PYUwG3vn9eGd2c4a6",
+    "link_presentes": "",
+    "manual_content": "<p><i class=\"fa-solid fa-sparkles\"></i> Seja muito bem-vindo ao meu Baile de Gala! Este será um momento verdadeiramente único, planejado com todo o carinho para celebrar meus 15 anos em uma noite repleta de glamour, elegância e alegria. Para que cada detalhe seja ainda mais encantador, preparei algumas orientações especiais:</p><p><i class=\"fa-solid fa-vest\"></i> <strong>Traje:</strong><br>O <em>dress code</em> da noite é <strong>GALA</strong>. Convidamos você a trajar vestidos longos de festa ou terno e traje social completo, para que todos entrem na atmosfera mágica deste baile inesquecível.</p><p><i class=\"fa-solid fa-palette\"></i> <strong>Cores:</strong><br>Para manter a harmonia visual da nossa celebração, pedimos gentilmente que evitem a cor preta, que será de uso exclusivo da debutante. Sinta-se à vontade para explorar outras cores sofisticadas e clássicas!</p><p><i class=\"fa-solid fa-clock\"></i> <strong>Horário:</strong><br>Sua pontualidade é fundamental para que você possa aproveitar cada detalhe preparado com tanto afeto e não perder nenhum dos momentos emocionantes da noite.</p><p><i class=\"fa-solid fa-camera-retro\"></i> <strong>Registros:</strong><br>Aproveite a festa, dance, sorria e registre cada segundo! Teremos fotógrafos profissionais para eternizar cada detalhe, mas sua perspectiva tornará tudo ainda mais incrível.</p><p><i class=\"fa-solid fa-heart\"></i> Sua presença tornará essa noite ainda mais especial. Prepare-se para viver um verdadeiro baile de máscaras dos sonhos! <i class=\"fa-solid fa-mask\"></i></p>",
+    "numero_whatsapp": "5547992199598",
+    "link_confirmacao": "",
+    "permitir_acompanhante": false,
+    "timer_contagem": false,
+    "cover_prompt": "Tipo de evento: Aniversário\nSelo: 15\nPaleta de Cores: Preto e Dourado\nTema: Baile de Máscara\nTask: Create a vertical image of a hyper-realistic 3D render of a premium invitation envelope. The envelope is sealed with an intricately detailed wax seal. The paper boasts a high-quality, textured finish, exuding elegance and sophistication. Background: A setting with elements that enhance the luxurious feel of the invitation without specific thematic details. The composition is centered, with dramatic lighting casting volumetric light and creating a soft focus and depth of field. Lighting: Dramatic, cinematic lighting with volumetric effects. Highlights on the envelope and wax seal accentuate the texture and detail. Style: Photorealistic, hyper-detailed, cinematic, and elegant. Technical Details: Resolution: 8K, ultra high resolution Aspect Ratio: 9:16 Rendering Engine: Octane Render, Unreal Engine 5 Camera: Macro lens, f/2.8, shallow depth of field",
+    "leaf_prompt": "",
+    "animate_background": false,
+    "intro_motion_prompt": "The animation begins with a focus on the closed envelope. As the wax seal gracefully detaches and falls, the envelope's flap uplifts slowly. From its interior, a spectacular eruption of glittering sparkles and smoke, shimmering dust, and glowing light trails emerges, cascading outward in a mesmerizing display. These vibrant particles swirl dynamically, increasing in density and brightness around the envelope. The radiant light and swirling glitter intensify, rapidly expanding to fill the entire scene. CRITICAL: The Color of glow, light and smoke need to be the same of the image color pallete. The overwhelming brilliance transitions the frame to a solid, blinding white screen in the very final frame, achieved through a dramatic zoom-in effect.",
+    "loop_motion_prompt": "The animation displays smooth, looping movements of the shimmering effect based on the provided image. Dramatic sparkles and shining smokes flying in the background, cinematic lighting with volumetric effects (divine rays) filters through shimmering particles, creating a magical atmosphere with highlights. Rendered in a photorealistic and hyper-detailed style, the animation flows perfectly with a cinematic approach, captivating the viewer's attention with its fluid movement and mesmerizing 4K quality. IMPORTANT: Static Camera / No Camera Movement, only environmental motion.",
+    "fill_prompt": "Nome: Alycia\nIdade (se houver): 15\nTipo de evento: Aniversário\nTema: Baile de Máscara\nTask: Preencha essa folha com os dados para convite de forma criativa e elegante.\nColoque elementos de design de forma elegante no convite, divisórias modernas, hierarquia visual madura e profissional, linhas, e uma frase similar a \"Você está convidado para o... (crie a frase conforme o contexto)\" conforme sua criatividade.\nColoque textura, camadas, adornos no texto do nome, letra cursiva (Great Vibes) e efeitos especiais elegantes.",
+    "sugestoes_presentes": "Camera shot\nJoias dourada e prata\nCanetas touth ou acrílicas \nMaquiagem\nPerfume/body splash mais floral\nCrocs tamanho 34\nTênis tamanho 34\nRoupa tamanho M\nCoisas de skin care\nCoisas relacionado a my little pony, hello kitty, alien stage ou pokemon\nPins para crocs\nAlbum de photocards\nEco bag\nLuminaria projetora\nCoisas relacionadas a desenho como aquarela, canetas de contorno e pincéis\n\nIdeia: se vc nao tem tempo o ideia do que pode me dar, tenho sonho de comprar um computador se puder me ajudar com esse sonho, vou deixar minha chave pix para depositar um valor de 50 a 100 reais ou o que seu coração tocar de me dar \nChave: 14288130980",
+    "gifts_image_prompt": "",
+    "manual_raw_content": "(Não modifique o texto, apenas corrija erros de português e adicione os fa-icons)\n seja bem vindo ao meu baile de gala, este será um momento muito especial, pensando com\nCarinho para celebrar meus 15 anos, em uma noite de glamur, elegância e alegria. Para que tudo fique ainda mais encantador preparei algumas orientações especiais:\nTraje:\nO dress code da noite e GALA. Convidamos você a vir com vestidos longos de festa e terno ou traje social e elegante, para que todos entrem no clima desse baile inesquecível.\n\ncores:\nPara manter a harmonia da festa, pedimos gentilmente que evitem a cor preta que será usada exclusivamente pela debutante. Fique a vontade para usar outras cores sofisticadas e clássicas \n\nHorário:\nChegue no horário para aproveitar cada detalhe preparado com carinho e não perder momentos especiais da noite\n\nRegistros:\nAproveite a festa, dance, sorria e registre esse momento incrível!! Teremos fotógrafos para eternizar cada detalhe.\n\nSua presença tornará essa noite ainda mais especial. Prepare-se para viver um verdadeiro baile de máscaras do sonhos!",
+    "music_name": "Taylor Swift - Wildest Dreams.mp3",
+    "slug": "Alycia15Anos",
+    "watermark_enabled": true
+  },
+  "linksExtras": [],
+  "assetsMap": {
+    "musica": "assets/musica_1768785425795.mp3",
+    "fundo_tela": "assets/fundo_tela_1768785425795.png",
+    "vid_abertura": "assets/vid_abertura_1768785425795.mp4",
+    "presentes": "assets/presentes_1768785425795.png"
+  },
+  "toggles": {
+    "manualMode": "text",
+    "giftsMode": "image"
+  }
+}
