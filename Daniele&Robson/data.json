@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-19T21:26:07.854Z",
+  "timestamp": "2026-01-19T21:45:00.209Z",
   "formData": {
     "nome": "Daniele e Robson",
     "tipo_evento": "Casamento",
@@ -34,15 +34,25 @@
     "manual_raw_content": "(Não altere nada dessa vez, apenas acrescente os icons)\n\nChegue no horário: Sua presença pontual é muito importante para nós.\n Confirme sua presença: Por favor, confirme presença pelo menos 15 dias antes do evento.\n Divirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.\n Não vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.",
     "music_name": "Leonard Cohen - Hallelujah ( violin version from ViOLiNiA).mp3",
     "slug": "Daniele&Robson",
-    "watermark_enabled": true
+    "watermark_enabled": false,
+    "capa": null,
+    "capa_referencia": null,
+    "folha_vazia": null,
+    "vid_abertura": null,
+    "fundo_tela": null,
+    "folha_only": null,
+    "background_only": null,
+    "presentes": null,
+    "manual": null,
+    "musica": null
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768857967854.mp3",
-    "capa": "assets/capa_1768857967854.png",
-    "folha_vazia": "assets/folha_vazia_1768857967854.png",
-    "fundo_tela": "assets/fundo_tela_1768857967854.mp4",
-    "vid_abertura": "assets/vid_abertura_1768857967854.mp4"
+    "musica": "assets/musica_1768859100209.mp3",
+    "capa": "assets/capa_1768859100209.png",
+    "folha_vazia": "assets/folha_vazia_1768859100209.png",
+    "fundo_tela": "assets/fundo_tela_1768859100209.dat",
+    "vid_abertura": "assets/vid_abertura_1768859100209.mp4"
   },
   "toggles": {
     "manualMode": "text",
