@@ -1616,11 +1616,13 @@
             // Get selected options
             const selectedOptions = [];
             let total = 0;
-            document.querySelectorAll('.mini-option-card.selected').forEach(card => {
+            document.querySelectorAll('.option-card.selected, .mini-option-card.selected').forEach(card => {
                 const option = card.dataset.option;
                 const price = parseInt(card.dataset.price);
-                selectedOptions.push('- ' + optionPrices[option].name + ' - R$ ' + price.toFixed(2).replace('.', ','));
-                total += price;
+                if (optionPrices[option]) {
+                    selectedOptions.push('- ' + optionPrices[option].name + ' - R$ ' + price.toFixed(2).replace('.', ','));
+                    total += price;
+                }
             });
 
             // Get selected model
