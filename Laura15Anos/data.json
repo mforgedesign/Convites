@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-19T12:09:26.534Z",
+  "timestamp": "2026-01-19T16:44:07.409Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -29,7 +29,7 @@
     "link_google_maps": "https://maps.app.goo.gl/UUqYVErPq3E2fuT89",
     "link_presentes": "",
     "manual_content": "<p><i class=\"fa-solid fa-envelope-open-text\"></i> 1. “O convite é reservado exclusivamente para você.”</p>\n<p><i class=\"fa-solid fa-chair\"></i> 2. <strong>LUGAR MARCADO:</strong> “Reservamos um lugar especial só para você.”</p>\n<p><i class=\"fa-solid fa-heart\"></i> 3. <strong>EVENTO ÍNTIMO:</strong> “Para manter o evento mais intimista, os convites são individuais.”</p>\n<p><i class=\"fa-solid fa-building-circle-exclamation\"></i> 4. <strong>LIMITES DO LOCAL:</strong> “Devido ao espaço reduzido, não podemos estender o convite para acompanhantes.”</p>\n<p><i class=\"fa-solid fa-clipboard-check\"></i> 5. <strong>LISTA DEFINIDA:</strong> “A lista de convidados está fechada e inclui apenas quem recebeu o convite.”</p>\n<p><i class=\"fa-solid fa-user-tie\"></i> 6. <strong>TRAJE:</strong> Esporte fino ou Social</p>\n<p><i class=\"fa-solid fa-circle-exclamation\"></i> 7. <strong>RESTRIÇÃO:</strong> Proibido usar rosa</p>",
-    "numero_whatsapp": "",
+    "numero_whatsapp": "11970889955",
     "link_confirmacao": "",
     "permitir_acompanhante": false,
     "timer_contagem": false,
@@ -48,13 +48,14 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768824566534.mp3",
-    "capa": "assets/capa_1768824566534.png",
-    "fundo_tela": "assets/fundo_tela_1768824566534.mp4",
-    "vid_abertura": "assets/vid_abertura_1768824566534.mp4"
+    "musica": "assets/musica_1768841047409.mp3",
+    "capa": "assets/capa_1768841047409.png",
+    "fundo_tela": "assets/fundo_tela_1768841047409.dat",
+    "vid_abertura": "assets/vid_abertura_1768841047409.mp4",
+    "presentes": "assets/presentes_1768841047409.png"
   },
   "toggles": {
     "manualMode": "text",
-    "giftsMode": "link"
+    "giftsMode": "image"
   }
 }
