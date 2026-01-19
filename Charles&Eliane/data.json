@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-19T18:52:03.189Z",
+  "timestamp": "2026-01-19T19:15:44.508Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -44,14 +44,14 @@
     "manual_raw_content": "(dessa vez, não altere nada do texto, apenas coloque os ícones:)\n\n-  Siga essas instruções e divirta-se\n\nÉ com muita alegria que damos as boas-vindas a você. Estamos vivendo um momento especial e ficamos felizes em poder compartilhá-lo com pessoas queridas.\n\n- Chegada\nPedimos, com carinho, que chegue com alguns minutos de antecedência, pois a cerimônia será realizada no horário.\n\n- Traje\nQueremos que fiquem a vontade com o traje que desejarem.\n\n- Crianças\nAmamos as crianças, e por este motivo escolhemos um local com muita interatividade, brinquedos para todas as idades, jogos eletrônicos e muita diversão para crianças e adultos. Não vai faltar nada para a satisfação de todos.\n\n- Presente\nO maior presente para nós é a sua presença!\n\n- Confirmação\nDevido ao buffet ser pelo número de pessoas, pedimos gentilmente sua confirmação.\n\nToda honra, toda glória e majestade sejam dadas a Deus e a Jesus Cristo nosso Senhor que nos conduziu para o nosso enlace.\nEfésios 3:19-21\n\nTer você conosco tornará esse momento ainda mais especial e abençoado.\n\nCom carinho, \n\nCharles & Eliane",
     "music_name": "Christina Perri - A Thousand Years (Tradução_Legendado).mp3",
     "slug": "Charles&Eliane",
-    "watermark_enabled": true
+    "watermark_enabled": false
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768848723189.mp3",
-    "capa": "assets/capa_1768848723189.png",
-    "fundo_tela": "assets/fundo_tela_1768848723189.mp4",
-    "vid_abertura": "assets/vid_abertura_1768848723189.mp4"
+    "musica": "assets/musica_1768850144508.mp3",
+    "capa": "assets/capa_1768850144508.png",
+    "fundo_tela": "assets/fundo_tela_1768850144508.dat",
+    "vid_abertura": "assets/vid_abertura_1768850144508.mp4"
   },
   "toggles": {
     "manualMode": "text",
