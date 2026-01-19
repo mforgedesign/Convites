@@ -1918,11 +1918,12 @@ _Orcamento feito pelo site_`;
                         aberturaLongaCard.classList.add('selected');
 
                         // Make sure "abertura" is also selected (it's the base package)
-                        const aberturaCard = document.querySelector('.mini-option-card[data-option="abertura"]');
+                        const aberturaCard = document.querySelector('.option-card[data-option="abertura"]');
                         if (aberturaCard) aberturaCard.classList.add('selected');
 
                         console.log('✓ Auto-selecionado: Abertura Longa (modelo: ' + modelName + ')');
                         updateTotal();
+                        saveFormData(); // Persist auto-selection
                     }
                 }
 
