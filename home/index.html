@@ -352,8 +352,6 @@
             transition: all 0.4s ease;
             display: block;
             text-decoration: none;
-            opacity: 0;
-            transform: translateY(30px);
         }
 
         .product-card:hover {
@@ -727,14 +725,7 @@
             delay: 0.5
         });
 
-        gsap.to(".gsap-card", {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            ease: "power3.out",
-            stagger: 0.15,
-            delay: 0.7
-        });
+
 
         gsap.to(".gsap-btn", {
             y: 0,
