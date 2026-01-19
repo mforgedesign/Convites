@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-19T19:18:03.532Z",
+  "timestamp": "2026-01-19T19:25:11.706Z",
   "formData": {
     "capa": "blob:https://builder.mforge.com.br/94b94b43-c1ac-44a5-95d6-dd2337d4cdbd",
     "capa_referencia": null,
@@ -44,15 +44,15 @@
     "manual_raw_content": "Chegue no horário: Sua presença pontual é muito importante para nós.\nConfirme sua presença: Por favor, confirme presença pelo menos 15 dias antes do evento.\nDivirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.\nNão vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.",
     "music_name": "Christina Perri - A Thousand Years (Piano & Cello Cover) - The Piano Guys.mp3",
     "slug": "Nicoly15anos",
-    "watermark_enabled": true
+    "watermark_enabled": false
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768850283532.mp3",
-    "capa": "assets/capa_1768850283532.png",
-    "folha_vazia": "assets/folha_vazia_1768850283532.png",
-    "fundo_tela": "assets/fundo_tela_1768850283532.mp4",
-    "vid_abertura": "assets/vid_abertura_1768850283532.mp4"
+    "musica": "assets/musica_1768850711706.mp3",
+    "capa": "assets/capa_1768850711706.png",
+    "folha_vazia": "assets/folha_vazia_1768850711706.png",
+    "fundo_tela": "assets/fundo_tela_1768850711706.dat",
+    "vid_abertura": "assets/vid_abertura_1768850711706.mp4"
   },
   "toggles": {
     "manualMode": "text",
