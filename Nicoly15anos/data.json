@@ -1,17 +1,7 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-19T19:25:11.706Z",
+  "timestamp": "2026-01-19T22:22:58.878Z",
   "formData": {
-    "capa": "blob:https://builder.mforge.com.br/94b94b43-c1ac-44a5-95d6-dd2337d4cdbd",
-    "capa_referencia": null,
-    "folha_vazia": "blob:https://builder.mforge.com.br/17e20eb5-66f8-4692-a8b0-7d7a4f5fc174",
-    "vid_abertura": null,
-    "fundo_tela": "blob:https://builder.mforge.com.br/bd169597-d682-40a1-9298-8516fd8999a6",
-    "folha_only": null,
-    "background_only": null,
-    "presentes": null,
-    "manual": null,
-    "musica": "blob:https://builder.mforge.com.br/6eaee959-b988-4e5e-933a-84c31b51a7ba",
     "nome": "Nicoly",
     "tipo_evento": "Aniversário",
     "tipo_evento_custom": "",
@@ -44,15 +34,25 @@
     "manual_raw_content": "Chegue no horário: Sua presença pontual é muito importante para nós.\nConfirme sua presença: Por favor, confirme presença pelo menos 15 dias antes do evento.\nDivirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.\nNão vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.",
     "music_name": "Christina Perri - A Thousand Years (Piano & Cello Cover) - The Piano Guys.mp3",
     "slug": "Nicoly15anos",
-    "watermark_enabled": false
+    "watermark_enabled": false,
+    "capa": "blob:https://builder.mforge.com.br/94b94b43-c1ac-44a5-95d6-dd2337d4cdbd",
+    "capa_referencia": null,
+    "folha_vazia": "blob:https://builder.mforge.com.br/17e20eb5-66f8-4692-a8b0-7d7a4f5fc174",
+    "vid_abertura": null,
+    "fundo_tela": "blob:https://builder.mforge.com.br/bd169597-d682-40a1-9298-8516fd8999a6",
+    "folha_only": null,
+    "background_only": null,
+    "presentes": null,
+    "manual": null,
+    "musica": "blob:https://builder.mforge.com.br/6eaee959-b988-4e5e-933a-84c31b51a7ba"
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768850711706.mp3",
-    "capa": "assets/capa_1768850711706.png",
-    "folha_vazia": "assets/folha_vazia_1768850711706.png",
-    "fundo_tela": "assets/fundo_tela_1768850711706.dat",
-    "vid_abertura": "assets/vid_abertura_1768850711706.mp4"
+    "musica": "assets/musica_1768861378878.mp3",
+    "capa": "assets/capa_1768861378878.png",
+    "folha_vazia": "assets/folha_vazia_1768861378878.png",
+    "fundo_tela": "assets/fundo_tela_1768861378878.mp4",
+    "vid_abertura": "assets/vid_abertura_1768861378878.mp4"
   },
   "toggles": {
     "manualMode": "text",
