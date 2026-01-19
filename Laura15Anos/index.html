@@ -15,7 +15,7 @@
     <!-- Open Graph for WhatsApp/Social Preview -->
     <meta property="og:title" content="Laura | Aniversário 15 Anos">
     <meta property="og:description" content="Clique para ver o convite interativo!">
-    <meta property="og:image" content="capa/capa_1768843486760.png">
+    <meta property="og:image" content="capa/capa_1768846892177.png">
     <meta property="og:type" content="website">
 
     <!-- Envelope Favicon -->
@@ -106,19 +106,19 @@
 
         <!-- Background (Unified) - Layer 1 -->
         <!-- Can be image or video - determined by file extension -->
-        <img id="fundoTelaImg" src="assets/fundo_tela_1768843486760.dat" class="camada z-10 invisivel"
+        <img id="fundoTelaImg" src="assets/fundo_tela_1768846892177.mp4" class="camada z-10 invisivel"
             onerror="this.style.display='none'">
         <video id="fundoTelaVideo" class="camada z-10 invisivel" playsinline loop muted
             onerror="this.style.display='none'">
-            <source src="assets/fundo_tela_1768843486760.dat" type="video/mp4">
+            <source src="assets/fundo_tela_1768846892177.mp4" type="video/mp4">
         </video>
 
         <video id="videoAbertura" class="camada z-20" playsinline muted>
-            <source src="assets/vid_abertura_1768843486760.mp4" type="video/mp4">
+            <source src="assets/vid_abertura_1768846892177.mp4" type="video/mp4">
         </video>
 
         <audio id="musicaFundo" loop preload="auto">
-            <source src="assets/musica_1768843486760.mp3" type="audio/mp3">
+            <source src="assets/musica_1768846892177.mp3" type="audio/mp3">
         </audio>
 
         <button id="btnMute"
@@ -174,7 +174,7 @@
 
         <div id="capaInicial"
             class="absolute inset-0 z-50 bg-cover bg-center flex flex-col items-center justify-center cursor-pointer transition-opacity duration-700"
-            style="background-image: url('assets/capa_1768843486760.png');">
+            style="background-image: url('assets/capa_1768846892177.png');">
             <div class="absolute inset-0 bg-black/20"></div>
 
             <div id="dicaInteractionContainer" class="relative z-10 flex flex-col items-center gap-4 animate-pulse">
@@ -234,7 +234,7 @@
                 class="absolute top-3 right-3 z-10 bg-black/50 text-white hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center transition-colors border border-white/20">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <img id="imagemPresentes" src="assets/presentes_1768843486760.png" class="max-w-full max-h-[85vh] object-contain rounded-lg">
+            <img id="imagemPresentes" src="assets/presentes_1768846892177.png" class="max-w-full max-h-[85vh] object-contain rounded-lg">
         </div>
     </div>
 
@@ -322,7 +322,7 @@
         // ==================================================================
         // 1. CONFIGURAÇÃO DOS BOTÕES (Injetado pelo AutoBuilder)
         // ==================================================================
-        const menuConfig = [{"id":"location","titulo":"Localização","icone":"fa-solid fa-location-dot","link":"https://maps.app.goo.gl/UUqYVErPq3E2fuT89"},{"id":"manual","titulo":"Manual","icone":"fa-solid fa-book-open","link":"#","manualText":"<div><p><i class=\"fa-solid fa-envelope-open-text\"></i> O convite é reservado exclusivamente para você.</p><br><p><strong><i class=\"fa-solid fa-chair\"></i> LUGAR MARCADO</strong><br>“Reservamos um lugar especial só para você.”</p><br><p><strong><i class=\"fa-solid fa-user-tie\"></i> TRAJE</strong><br>Esporte fino ou Social</p><br><p><strong><i class=\"fa-solid fa-circle-exclamation\"></i> RESTRIÇÃO</strong><br>Proibido usar rosa</p></div>"},{"id":"rsvp","titulo":"Confirmar Presença","icone":"fa-brands fa-whatsapp","link":"https://wa.me/11970889955"},{"id":"gifts","titulo":"Presentes","icone":"fa-solid fa-gift","link":"#","isGiftImage":true}];
+        const menuConfig = [{"id":"location","titulo":"Localização","icone":"fa-solid fa-location-dot","link":"https://maps.app.goo.gl/UUqYVErPq3E2fuT89"},{"id":"manual","titulo":"Manual","icone":"fa-solid fa-book-open","link":"#","manualText":"<p><i class=\"fa-solid fa-crown\"></i> <strong>Convite Real</strong><br>“Este convite foi destinado exclusivamente a você.”</p>\n<p><i class=\"fa-solid fa-heart\"></i> <strong>Lugar de Honra</strong><br>“Um lugar especial foi reservado para recebê-lo(a) neste momento encantado.”</p>\n<p><i class=\"fa-solid fa-wand-magic-sparkles\"></i> <strong>Celebração Íntima</strong><br>“Para preservar a magia e a exclusividade desta celebração, o convite é pessoal e intransferível.”</p>\n<p><i class=\"fa-solid fa-user-tie\"></i> <strong>Traje de Realeza</strong><br>“Esporte fino ou social, digno de um baile real.”</p>\n<p><i class=\"fa-solid fa-circle-exclamation\"></i> <strong>Aviso do Reino</strong><br>“Para manter a harmonia do palácio, não é permitido o uso da cor rosa.”</p>"},{"id":"rsvp","titulo":"Confirmar Presença","icone":"fa-brands fa-whatsapp","link":"https://wa.me/11970889955"},{"id":"gifts","titulo":"Presentes","icone":"fa-solid fa-gift","link":"#","isGiftImage":true}];
         // Injected by AutoBuilder
         const buttonSize = parseFloat('1.0') || 1.0;
 
