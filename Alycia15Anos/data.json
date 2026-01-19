@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-19T01:17:05.795Z",
+  "timestamp": "2026-01-19T01:19:33.330Z",
   "formData": {
     "musica": "blob:https://builder.mforge.com.br/abbb722c-af6c-4904-9dc9-137e7eec8fee",
     "nome": "Alycia",
@@ -39,10 +39,11 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768785425795.mp3",
-    "fundo_tela": "assets/fundo_tela_1768785425795.png",
-    "vid_abertura": "assets/vid_abertura_1768785425795.mp4",
-    "presentes": "assets/presentes_1768785425795.png"
+    "musica": "assets/musica_1768785573330.mp3",
+    "capa": "assets/capa_1768785573330.png",
+    "fundo_tela": "assets/fundo_tela_1768785573330.png",
+    "vid_abertura": "assets/vid_abertura_1768785573330.mp4",
+    "presentes": "assets/presentes_1768785573330.png"
   },
   "toggles": {
     "manualMode": "text",
