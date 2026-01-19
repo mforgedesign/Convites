@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-19T19:12:18.816Z",
+  "timestamp": "2026-01-19T19:43:48.051Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -44,15 +44,15 @@
     "manual_raw_content": "(Não acrescente ou modifique o texto dessa vez, apenas coloque os ícones. Conserve os títulos)\nConvite Real\n“Este convite foi destinado exclusivamente a você.”\nLugar de Honra\n“Um lugar especial foi reservado para recebê-lo(a) neste momento encantado.”\nCelebração Íntima\n“Para preservar a magia e a exclusividade desta celebração, o convite é pessoal e intransferível.”\nTraje de Realeza\n“Esporte fino ou social, digno de um baile real.”\nAviso do Reino\n“Para manter a harmonia do palácio, não é permitido o uso da cor rosa.”",
     "music_name": "Christina Perri - A Thousand Years [Official Music Video].mp3",
     "slug": "Laura15Anos",
-    "watermark_enabled": true
+    "watermark_enabled": false
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768849938816.mp3",
-    "capa": "assets/capa_1768849938816.png",
-    "fundo_tela": "assets/fundo_tela_1768849938816.dat",
-    "vid_abertura": "assets/vid_abertura_1768849938816.mp4",
-    "presentes": "assets/presentes_1768849938816.png"
+    "musica": "assets/musica_1768851828051.mp3",
+    "capa": "assets/capa_1768851828051.png",
+    "fundo_tela": "assets/fundo_tela_1768851828051.mp4",
+    "vid_abertura": "assets/vid_abertura_1768851828051.mp4",
+    "presentes": "assets/presentes_1768851828051.png"
   },
   "toggles": {
     "manualMode": "text",
