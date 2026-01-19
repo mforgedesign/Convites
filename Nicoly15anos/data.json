@@ -1,12 +1,17 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-18T18:01:41.140Z",
+  "timestamp": "2026-01-19T11:44:35.632Z",
   "formData": {
-    "musica": "blob:https://builder.mforge.com.br/224846b4-f890-4c53-90e9-160a78120e75",
-    "folha_vazia": "blob:https://builder.mforge.com.br/17e20eb5-66f8-4692-a8b0-7d7a4f5fc174",
-    "vid_abertura": "blob:https://builder.mforge.com.br/e9b97264-7a3c-4268-8afb-190f95a22b2b",
-    "fundo_tela": "blob:https://builder.mforge.com.br/bd169597-d682-40a1-9298-8516fd8999a6",
     "capa": "blob:https://builder.mforge.com.br/94b94b43-c1ac-44a5-95d6-dd2337d4cdbd",
+    "capa_referencia": null,
+    "folha_vazia": "blob:https://builder.mforge.com.br/17e20eb5-66f8-4692-a8b0-7d7a4f5fc174",
+    "vid_abertura": null,
+    "fundo_tela": "blob:https://builder.mforge.com.br/bd169597-d682-40a1-9298-8516fd8999a6",
+    "folha_only": null,
+    "background_only": null,
+    "presentes": null,
+    "manual": null,
+    "musica": "blob:https://builder.mforge.com.br/224846b4-f890-4c53-90e9-160a78120e75",
     "nome": "Nicoly",
     "tipo_evento": "Aniversário",
     "tipo_evento_custom": "",
@@ -23,7 +28,7 @@
     "tamanho_botoes": "medio",
     "link_google_maps": "https://maps.app.goo.gl/53AfKRdEpS6B3RjF8",
     "link_presentes": "",
-    "manual_content": "<p><i class=\"fa-solid fa-clock\"></i> <strong>A Pontualidade é um Gesto de Carinho</strong><br>Sua presença no horário marcado é essencial para que possamos iniciar este sonho juntos. Cada minuto desse dia foi planejado para ser vivido ao seu lado.</p><p><i class=\"fa-solid fa-calendar-check\"></i> <strong>Confirme sua Presença</strong><br>Para que possamos preparar cada detalhe com a perfeição que você merece, pedimos a gentileza de confirmar sua vinda com até 15 dias de antecedência.</p><p><i class=\"fa-solid fa-champagne-glasses\"></i> <strong>Celebre Cada Instante</strong><br>Prepare o seu melhor sorriso! Estamos ansiosos para compartilhar a alegria deste momento único com as pessoas que mais amamos.</p><p><i class=\"fa-solid fa-cake-candles\"></i> <strong>Colecione Memórias Conosco</strong><br>Não se despeça sem antes nos dar um abraço apertado e saborear uma fatia do nosso bolo. Queremos guardar no coração cada segundo da sua companhia.</p>",
+    "manual_content": "<p><i class='fa-solid fa-clock'></i> <strong>O valor da sua presença</strong><br>Sua pontualidade é o primeiro presente que recebemos. Pedimos o carinho de chegar no horário para que possamos viver cada detalhe deste início especial juntos.</p><p><i class='fa-solid fa-calendar-check'></i> <strong>R.S.V.P.</strong><br>Para que possamos preparar tudo com a perfeição que você merece, por favor, confirme sua presença com até 15 dias de antecedência. Sua confirmação é essencial para a nossa organização.</p><p><i class='fa-solid fa-champagne-glasses'></i> <strong>Celebre cada instante</strong><br>Prepare o seu melhor sorriso! Estamos ansiosos para celebrar a vida e criar memórias inesquecíveis ao seu lado.</p><p><i class='fa-solid fa-heart'></i> <strong>Um brinde à doçura</strong><br>Não se despeça sem antes nos presentear com um abraço e saborear uma fatia do nosso bolo. Queremos compartilhar a alegria de cada segundo com você.</p>",
     "numero_whatsapp": "",
     "link_confirmacao": "https://docs.google.com/forms/d/e/1FAIpQLSetiro4OCTqyJDDDoSL2mJ2iB_NSMOIzTKpVkJ_yi4TdtWEcw/viewform?usp=dialog",
     "permitir_acompanhante": false,
@@ -39,16 +44,14 @@
     "manual_raw_content": "Chegue no horário: Sua presença pontual é muito importante para nós.\nConfirme sua presença: Por favor, confirme presença pelo menos 15 dias antes do evento.\nDivirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.\nNão vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.",
     "music_name": "Christina Perri - A Thousand Years [Official Music Video].mp3",
     "slug": "Nicoly15anos",
-    "watermark_enabled": false
+    "watermark_enabled": true
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768759301140.mp3",
-    "capa": "assets/capa_1768759301140.png",
-    "folha_vazia": "assets/folha_vazia_1768759301140.png",
-    "fundo_tela": "assets/fundo_tela_1768759301140.mp4",
-    "vid_abertura": "assets/vid_abertura_1768759301140.mp4",
-    "presentes": "assets/presentes_1768759301140.png"
+    "musica": "assets/musica_1768823075632.mp3",
+    "capa": "assets/capa_1768823075632.png",
+    "folha_vazia": "assets/folha_vazia_1768823075632.png",
+    "fundo_tela": "assets/fundo_tela_1768823075632.dat"
   },
   "toggles": {
     "manualMode": "text",
