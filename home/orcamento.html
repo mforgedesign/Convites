@@ -666,7 +666,7 @@
                     </div>
 
                     <!-- Sugestão de Presentes -->
-                    <div class="mini-option-card relative" data-option="sugestaopresentes" data-price="0">
+                    <div class="mini-option-card relative selected" data-option="sugestaopresentes" data-price="0">
                         <div class="mini-checkbox">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
@@ -718,7 +718,7 @@
                     </div>
 
                     <!-- Confirmação WhatsApp -->
-                    <div class="mini-option-card relative" data-option="confirmacaowhatsapp" data-price="0">
+                    <div class="mini-option-card relative selected" data-option="confirmacaowhatsapp" data-price="0">
                         <div class="mini-checkbox">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
@@ -949,10 +949,16 @@
             <div id="infoModalContent" class="text-gray-300 text-sm leading-relaxed space-y-3">
                 <!-- Content injected via JS -->
             </div>
-            <button onclick="closeInfoModal()"
-                class="w-full mt-6 py-3 bg-white/5 hover:bg-white/10 rounded-xl font-semibold border border-white/10 transition-all text-sm">
-                Entendido
-            </button>
+            <div class="flex gap-3 mt-6">
+                <button onclick="selectFromInfoModal()"
+                    class="flex-1 py-3 bg-green-500/20 hover:bg-green-500/30 text-green-400 rounded-xl font-semibold border border-green-500/30 transition-all text-sm">
+                    ✓ Eu quero
+                </button>
+                <button onclick="closeInfoModal()"
+                    class="flex-1 py-3 bg-white/5 hover:bg-white/10 text-gray-300 rounded-xl font-semibold border border-white/10 transition-all text-sm">
+                    Não quero
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1126,8 +1132,12 @@
             }
         };
 
+        // Track which card opened the info modal
+        let currentInfoModalCard = null;
+
         function toggleDescription(btn) {
             const card = btn.closest('.mini-option-card');
+            currentInfoModalCard = card; // Store reference to the card
             const option = card.dataset.option;
             const data = optionDescriptions[option];
 
@@ -1161,6 +1171,24 @@
             const modal = document.getElementById('infoModal');
             modal.classList.add('hidden');
             modal.classList.remove('flex');
+            currentInfoModalCard = null;
+        }
+
+        function selectFromInfoModal() {
+            if (currentInfoModalCard) {
+                // Select the card
+                currentInfoModalCard.classList.add('selected');
+
+                // If this is aberturalonga, also select abertura (dependency)
+                if (currentInfoModalCard.dataset.option === 'aberturalonga') {
+                    const aberturaCard = document.querySelector('.mini-option-card[data-option="abertura"]');
+                    if (aberturaCard) aberturaCard.classList.add('selected');
+                }
+
+                updateTotal();
+                saveFormData();
+            }
+            closeInfoModal();
         }
 
 
@@ -1579,16 +1607,16 @@
             const paletaCores = document.getElementById('paletaCores').value.trim();
 
             // Check if confirmacao option is selected
-            const confirmacaoSelected = document.querySelector('.option-card[data-option="confirmacao"].selected');
+            const confirmacaoSelected = document.querySelector('.mini-option-card[data-option="confirmacao"].selected');
             const whatsappConfirmacao = confirmacaoSelected ? '' : document.getElementById('whatsappConfirmacao').value.trim();
 
             // Check if sugestaopresentes option is selected
-            const sugestaoSelected = document.querySelector('.option-card[data-option="sugestaopresentes"].selected');
+            const sugestaoSelected = document.querySelector('.mini-option-card[data-option="sugestaopresentes"].selected');
 
             // Get selected options
             const selectedOptions = [];
             let total = 0;
-            document.querySelectorAll('.option-card.selected').forEach(card => {
+            document.querySelectorAll('.mini-option-card.selected').forEach(card => {
                 const option = card.dataset.option;
                 const price = parseInt(card.dataset.price);
                 selectedOptions.push('- ' + optionPrices[option].name + ' - R$ ' + price.toFixed(2).replace('.', ','));
@@ -1790,9 +1818,10 @@ _Orcamento feito pelo site_`;
             document.getElementById('cronometroToggle').classList.remove('active');
             document.getElementById('cronometroLabel').textContent = 'Não';
 
-            // Reset options (only keep default selected)
-            document.querySelectorAll('.option-card').forEach(card => {
-                if (card.dataset.option === 'abertura') {
+            // Reset options (keep default free options selected)
+            const defaultSelectedOptions = ['abertura', 'confirmacaowhatsapp', 'sugestaopresentes'];
+            document.querySelectorAll('.mini-option-card').forEach(card => {
+                if (defaultSelectedOptions.includes(card.dataset.option)) {
                     card.classList.add('selected');
                 } else {
                     card.classList.remove('selected');
@@ -1818,7 +1847,7 @@ _Orcamento feito pelo site_`;
             });
 
             // Options cards
-            document.querySelectorAll('.option-card').forEach(card => {
+            document.querySelectorAll('.mini-option-card').forEach(card => {
                 card.addEventListener('click', () => {
                     setTimeout(saveFormData, 100);
                 });
