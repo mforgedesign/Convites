@@ -1373,7 +1373,7 @@
             });
             document.getElementById('totalPrice').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
             // Toggle WhatsApp confirmacao field visibility based on confirmacao option
-            const confirmacaoSelected = document.querySelector('.option-card[data-option="confirmacao"].selected');
+            const confirmacaoSelected = document.querySelector('.mini-option-card[data-option="confirmacao"].selected');
             const whatsappContainer = document.getElementById('whatsappConfirmacaoContainer');
             if (confirmacaoSelected) {
                 whatsappContainer.classList.add('hidden');
@@ -1382,7 +1382,7 @@
             }
 
             // Toggle Sugestoes field visibility based on sugestaopresentes option
-            const sugestaoSelected = document.querySelector('.option-card[data-option="sugestaopresentes"].selected');
+            const sugestaoSelected = document.querySelector('.mini-option-card[data-option="sugestaopresentes"].selected');
             const sugestoesContainer = document.getElementById('sugestoesContainer');
             if (sugestaoSelected) {
                 sugestoesContainer.classList.remove('hidden');
@@ -1735,8 +1735,9 @@ _Orcamento feito pelo site_`;
                 musica: document.getElementById('musica').value,
                 manual: document.getElementById('manual').value,
                 paletaCores: document.getElementById('paletaCores').value,
+                temaConvite: document.getElementById('temaConvite').value,
                 cronometroEnabled: cronometroEnabled,
-                selectedOptions: Array.from(document.querySelectorAll('.option-card.selected')).map(c => c.dataset.option)
+                selectedOptions: Array.from(document.querySelectorAll('.option-card.selected, .mini-option-card.selected')).map(c => c.dataset.option)
             };
             localStorage.setItem('orcamentoFormData', JSON.stringify(formData));
         }
@@ -1766,6 +1767,7 @@ _Orcamento feito pelo site_`;
                 if (formData.musica) document.getElementById('musica').value = formData.musica;
                 if (formData.manual) document.getElementById('manual').value = formData.manual;
                 if (formData.paletaCores) document.getElementById('paletaCores').value = formData.paletaCores;
+                if (formData.temaConvite) document.getElementById('temaConvite').value = formData.temaConvite;
 
                 // Load cronometro toggle
                 if (formData.cronometroEnabled) {
@@ -1777,12 +1779,12 @@ _Orcamento feito pelo site_`;
                 // Load selected options
                 if (formData.selectedOptions && formData.selectedOptions.length > 0) {
                     // First deselect all
-                    document.querySelectorAll('.option-card').forEach(card => {
+                    document.querySelectorAll('.option-card, .mini-option-card').forEach(card => {
                         card.classList.remove('selected');
                     });
                     // Then select saved ones
                     formData.selectedOptions.forEach(optionId => {
-                        const card = document.querySelector(`.option-card[data-option="${optionId}"]`);
+                        const card = document.querySelector(`.option-card[data-option="${optionId}"], .mini-option-card[data-option="${optionId}"]`);
                         if (card) card.classList.add('selected');
                     });
                     updateTotal();
@@ -1814,6 +1816,7 @@ _Orcamento feito pelo site_`;
             document.getElementById('musica').value = '';
             document.getElementById('manual').value = '';
             document.getElementById('paletaCores').value = '';
+            document.getElementById('temaConvite').value = '';
 
             // Reset cronometro
             cronometroEnabled = false;
@@ -1822,7 +1825,7 @@ _Orcamento feito pelo site_`;
 
             // Reset options (keep default free options selected)
             const defaultSelectedOptions = ['abertura', 'confirmacaowhatsapp', 'sugestaopresentes'];
-            document.querySelectorAll('.mini-option-card').forEach(card => {
+            document.querySelectorAll('.option-card, .mini-option-card').forEach(card => {
                 if (defaultSelectedOptions.includes(card.dataset.option)) {
                     card.classList.add('selected');
                 } else {
@@ -1840,7 +1843,7 @@ _Orcamento feito pelo site_`;
         // Add listeners for auto-save
         function setupAutoSave() {
             // Form inputs
-            ['nomes', 'tipoEvento', 'idade', 'dataEvento', 'horaInicio', 'horaTermino', 'musica', 'manual', 'paletaCores'].forEach(id => {
+            ['nomes', 'tipoEvento', 'idade', 'dataEvento', 'horaInicio', 'horaTermino', 'musica', 'manual', 'paletaCores', 'temaConvite'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
                     el.addEventListener('input', saveFormData);
@@ -1849,7 +1852,7 @@ _Orcamento feito pelo site_`;
             });
 
             // Options cards
-            document.querySelectorAll('.mini-option-card').forEach(card => {
+            document.querySelectorAll('.option-card, .mini-option-card').forEach(card => {
                 card.addEventListener('click', () => {
                     setTimeout(saveFormData, 100);
                 });
