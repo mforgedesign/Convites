@@ -1,17 +1,7 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-19T20:15:02.709Z",
+  "timestamp": "2026-01-19T21:33:43.003Z",
   "formData": {
-    "capa": "blob:https://builder.mforge.com.br/62cdc2ee-30af-4230-8483-bc6799bb647a",
-    "capa_referencia": null,
-    "folha_vazia": "blob:https://builder.mforge.com.br/62ee85a1-2ac6-4213-ab7d-10add1b034c7",
-    "vid_abertura": "blob:https://builder.mforge.com.br/9adfa2ac-71b9-4348-b658-58e966a41747",
-    "fundo_tela": "blob:https://builder.mforge.com.br/df8492bc-ec44-44e4-ab11-c41618965107",
-    "folha_only": null,
-    "background_only": null,
-    "presentes": null,
-    "manual": null,
-    "musica": "blob:https://builder.mforge.com.br/0de7d035-41fe-4629-876e-41b6c4de1a20",
     "nome": "Manuela",
     "tipo_evento": "Aniversário",
     "tipo_evento_custom": "",
@@ -22,7 +12,7 @@
     "local_evento": "Salão de festas Elshaday Maria do Carmo Garcia 609, Bela Vista/ Alvorada-RS",
     "paleta_cores": "Rosa e dourado (Rosê Gold)",
     "frase_convite": "",
-    "cor_botoes": "#ce6a27",
+    "cor_botoes": "#bb6885",
     "sombra_gradiente": "#000000",
     "posicao_botoes": "6",
     "tamanho_botoes": "",
@@ -44,14 +34,24 @@
     "manual_raw_content": "(Dessa vez não altere o texto, apenas coloque os icons)\n- Seja muito bem-vindo(a)!\nSua presença é muito especial e torna essa noite ainda mais inesquecível 🤍\n- Confirmação de presença: pedimos, com carinho, que confirme até o dia 14/02\n• Chegada pontual: sua pontualidade é essencial para começarmos juntos\n• Dress code: Traje Social, para manter a harmonia da celebração\n*Por gentileza não usar tons de rosa ou laranja no dia da festa\n• Convidado não convida: convite pessoal e intransferível\n\nAproveite cada momento dessa noite especial! Dance, celebre, sorria, registre momentos inesquecíveis e não vá embora sem um abraço e um pedaço de bolo 💖🍰\n\n📸 Tire muitas fotos (e marque a aniversariante !)\n💃Aproveite a pista e divirta-se\n🚫 Deixe preocupações do lado de fora\n💖 Espalhe amor, alegria e boas energias\n\nEsperamos você para celebrar conosco esse momento especial e inesquecível! 🤍",
     "music_name": "Disney Intro Full HD 1080p para retrospectiva animada estudio100.mp3",
     "slug": "Manuela15Anos",
-    "watermark_enabled": true
+    "watermark_enabled": true,
+    "capa": "blob:https://builder.mforge.com.br/62cdc2ee-30af-4230-8483-bc6799bb647a",
+    "capa_referencia": null,
+    "folha_vazia": "blob:https://builder.mforge.com.br/62ee85a1-2ac6-4213-ab7d-10add1b034c7",
+    "vid_abertura": "blob:https://builder.mforge.com.br/9adfa2ac-71b9-4348-b658-58e966a41747",
+    "fundo_tela": "blob:https://builder.mforge.com.br/df8492bc-ec44-44e4-ab11-c41618965107",
+    "folha_only": null,
+    "background_only": null,
+    "presentes": null,
+    "manual": null,
+    "musica": "blob:https://builder.mforge.com.br/0de7d035-41fe-4629-876e-41b6c4de1a20"
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768853702709.mp3",
-    "capa": "assets/capa_1768853702709.png",
-    "fundo_tela": "assets/fundo_tela_1768853702709.dat",
-    "vid_abertura": "assets/vid_abertura_1768853702709.mp4"
+    "musica": "assets/musica_1768858423003.mp3",
+    "capa": "assets/capa_1768858423003.png",
+    "fundo_tela": "assets/fundo_tela_1768858423003.mp4",
+    "vid_abertura": "assets/vid_abertura_1768858423003.mp4"
   },
   "toggles": {
     "manualMode": "text",
