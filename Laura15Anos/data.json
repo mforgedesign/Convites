@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-19T16:49:13.838Z",
+  "timestamp": "2026-01-19T17:24:46.760Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -28,7 +28,7 @@
     "tamanho_botoes": "",
     "link_google_maps": "https://maps.app.goo.gl/UUqYVErPq3E2fuT89",
     "link_presentes": "",
-    "manual_content": "<p><i class=\"fa-solid fa-envelope-open-text\"></i> 1. “O convite é reservado exclusivamente para você.”</p>\n<p><i class=\"fa-solid fa-chair\"></i> 2. <strong>LUGAR MARCADO:</strong> “Reservamos um lugar especial só para você.”</p>\n<p><i class=\"fa-solid fa-heart\"></i> 3. <strong>EVENTO ÍNTIMO:</strong> “Para manter o evento mais intimista, os convites são individuais.”</p>\n<p><i class=\"fa-solid fa-building-circle-exclamation\"></i> 4. <strong>LIMITES DO LOCAL:</strong> “Devido ao espaço reduzido, não podemos estender o convite para acompanhantes.”</p>\n<p><i class=\"fa-solid fa-clipboard-check\"></i> 5. <strong>LISTA DEFINIDA:</strong> “A lista de convidados está fechada e inclui apenas quem recebeu o convite.”</p>\n<p><i class=\"fa-solid fa-user-tie\"></i> 6. <strong>TRAJE:</strong> Esporte fino ou Social</p>\n<p><i class=\"fa-solid fa-circle-exclamation\"></i> 7. <strong>RESTRIÇÃO:</strong> Proibido usar rosa</p>",
+    "manual_content": "<div><p><i class=\"fa-solid fa-envelope-open-text\"></i> O convite é reservado exclusivamente para você.</p><br><p><strong><i class=\"fa-solid fa-chair\"></i> LUGAR MARCADO</strong><br>“Reservamos um lugar especial só para você.”</p><br><p><strong><i class=\"fa-solid fa-user-tie\"></i> TRAJE</strong><br>Esporte fino ou Social</p><br><p><strong><i class=\"fa-solid fa-circle-exclamation\"></i> RESTRIÇÃO</strong><br>Proibido usar rosa</p></div>",
     "numero_whatsapp": "11970889955",
     "link_confirmacao": "",
     "permitir_acompanhante": false,
@@ -41,18 +41,18 @@
     "fill_prompt": "Nome: \nIdade (se houver): (não informada)\nTipo de evento: \nTema: \nTask: Preencha essa folha com os dados para convite de forma criativa e elegante.\nColoque elementos de design de forma elegante no convite, divisórias modernas, hierarquia visual madura e profissional, linhas, e uma frase similar a \"Você está convidado para o... (crie a frase conforme o contexto)\" conforme sua criatividade.\nColoque textura, camadas, adornos no texto do nome, letra cursiva (Great Vibes) e efeitos especiais elegantes.",
     "sugestoes_presentes": "",
     "gifts_image_prompt": "",
-    "manual_raw_content": "(Não acrescente ou modifique o texto dessa vez, apenas coloque os ícones. Conserve os títulos)\n “O convite é reservado exclusivamente para você.”\n2. LUGAR MARCADO\n“Reservamos um lugar especial só para você.”\n3. EVENTO ÍNTIMO\n“Para manter o evento mais intimista, os convites são individuais.”\n4. LIMITES DO LOCAL\n“Devido ao espaço reduzido, não podemos estender o convite para acompanhantes.”\n5. LISTA DEFINIDA\n“A lista de convidados está fechada e inclui apenas quem recebeu o convite.”\n6. TRAJE\nEsporte fino ou Social \n7. RESTRIÇÃO \nProibido usar rosa",
+    "manual_raw_content": "(Não acrescente ou modifique o texto dessa vez, apenas coloque os ícones. Conserve os títulos)\nO convite é reservado exclusivamente para você.\nLUGAR MARCADO\n“Reservamos um lugar especial só para você.”\nTRAJE\nEsporte fino ou Social \nRESTRIÇÃO \nProibido usar rosa",
     "music_name": "Christina Perri - A Thousand Years [Official Music Video].mp3",
     "slug": "Laura15Anos",
     "watermark_enabled": true
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768841353838.mp3",
-    "capa": "assets/capa_1768841353838.png",
-    "fundo_tela": "assets/fundo_tela_1768841353838.dat",
-    "vid_abertura": "assets/vid_abertura_1768841353838.mp4",
-    "presentes": "assets/presentes_1768841353838.png"
+    "musica": "assets/musica_1768843486760.mp3",
+    "capa": "assets/capa_1768843486760.png",
+    "fundo_tela": "assets/fundo_tela_1768843486760.dat",
+    "vid_abertura": "assets/vid_abertura_1768843486760.mp4",
+    "presentes": "assets/presentes_1768843486760.png"
   },
   "toggles": {
     "manualMode": "text",
