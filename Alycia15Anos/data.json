@@ -1,7 +1,16 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-19T01:19:33.330Z",
+  "timestamp": "2026-01-19T10:05:08.937Z",
   "formData": {
+    "capa": null,
+    "capa_referencia": null,
+    "folha_vazia": null,
+    "vid_abertura": null,
+    "fundo_tela": null,
+    "folha_only": null,
+    "background_only": null,
+    "presentes": null,
+    "manual": null,
     "musica": "blob:https://builder.mforge.com.br/abbb722c-af6c-4904-9dc9-137e7eec8fee",
     "nome": "Alycia",
     "tipo_evento": "Aniversário",
@@ -35,15 +44,16 @@
     "manual_raw_content": "(Não modifique o texto, apenas corrija erros de português e adicione os fa-icons)\n seja bem vindo ao meu baile de gala, este será um momento muito especial, pensando com\nCarinho para celebrar meus 15 anos, em uma noite de glamur, elegância e alegria. Para que tudo fique ainda mais encantador preparei algumas orientações especiais:\nTraje:\nO dress code da noite e GALA. Convidamos você a vir com vestidos longos de festa e terno ou traje social e elegante, para que todos entrem no clima desse baile inesquecível.\n\ncores:\nPara manter a harmonia da festa, pedimos gentilmente que evitem a cor preta que será usada exclusivamente pela debutante. Fique a vontade para usar outras cores sofisticadas e clássicas \n\nHorário:\nChegue no horário para aproveitar cada detalhe preparado com carinho e não perder momentos especiais da noite\n\nRegistros:\nAproveite a festa, dance, sorria e registre esse momento incrível!! Teremos fotógrafos para eternizar cada detalhe.\n\nSua presença tornará essa noite ainda mais especial. Prepare-se para viver um verdadeiro baile de máscaras do sonhos!",
     "music_name": "Taylor Swift - Wildest Dreams.mp3",
     "slug": "Alycia15Anos",
-    "watermark_enabled": true
+    "watermark_enabled": false
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768785573330.mp3",
-    "capa": "assets/capa_1768785573330.png",
-    "fundo_tela": "assets/fundo_tela_1768785573330.png",
-    "vid_abertura": "assets/vid_abertura_1768785573330.mp4",
-    "presentes": "assets/presentes_1768785573330.png"
+    "musica": "assets/musica_1768817108937.mp3",
+    "capa": "assets/capa_1768817108937.png",
+    "folha_vazia": "assets/folha_vazia_1768817108937.png",
+    "fundo_tela": "assets/fundo_tela_1768817108937.png",
+    "vid_abertura": "assets/vid_abertura_1768817108937.mp4",
+    "presentes": "assets/presentes_1768817108937.png"
   },
   "toggles": {
     "manualMode": "text",
