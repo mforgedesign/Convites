@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-19T18:21:32.177Z",
+  "timestamp": "2026-01-19T18:28:35.420Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -22,7 +22,7 @@
     "local_evento": "Paladino Eventos - R. Prof. Antônio Austregésilo, 225 - Jardim Boa Esperanca, São Paulo - SP, 05867-000",
     "paleta_cores": "Rosa bebe com dourado",
     "frase_convite": "",
-    "cor_botoes": "#000000",
+    "cor_botoes": "#ec8992",
     "sombra_gradiente": "#000000",
     "posicao_botoes": "100",
     "tamanho_botoes": "",
@@ -48,11 +48,11 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768846892177.mp3",
-    "capa": "assets/capa_1768846892177.png",
-    "fundo_tela": "assets/fundo_tela_1768846892177.mp4",
-    "vid_abertura": "assets/vid_abertura_1768846892177.mp4",
-    "presentes": "assets/presentes_1768846892177.png"
+    "musica": "assets/musica_1768847315420.mp3",
+    "capa": "assets/capa_1768847315420.png",
+    "fundo_tela": "assets/fundo_tela_1768847315420.mp4",
+    "vid_abertura": "assets/vid_abertura_1768847315420.mp4",
+    "presentes": "assets/presentes_1768847315420.png"
   },
   "toggles": {
     "manualMode": "text",
