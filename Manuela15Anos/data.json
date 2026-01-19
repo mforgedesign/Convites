@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-19T16:27:06.712Z",
+  "timestamp": "2026-01-19T20:15:02.709Z",
   "formData": {
     "capa": "blob:https://builder.mforge.com.br/62cdc2ee-30af-4230-8483-bc6799bb647a",
     "capa_referencia": null,
@@ -22,14 +22,14 @@
     "local_evento": "Salão de festas Elshaday Maria do Carmo Garcia 609, Bela Vista/ Alvorada-RS",
     "paleta_cores": "Rosa e dourado (Rosê Gold)",
     "frase_convite": "",
-    "cor_botoes": "#ddb55f",
+    "cor_botoes": "#ce6a27",
     "sombra_gradiente": "#000000",
-    "posicao_botoes": "100",
+    "posicao_botoes": "6",
     "tamanho_botoes": "",
     "link_google_maps": "https://maps.app.goo.gl/FZJahJDhdZEPQ9mr7",
     "link_presentes": "",
-    "manual_content": "<p><i class=\"fa-solid fa-heart-pulse\"></i> <strong>Seja muito bem-vindo(a)!</strong><br>Sua presença é o toque de luz que tornará esta noite verdadeiramente inesquecível. Estamos ansiosos para celebrar este capítulo único ao seu lado.</p><p><i class=\"fa-solid fa-calendar-check\"></i> <strong>R.S.V.P:</strong> Para que possamos preparar cada detalhe com o máximo carinho, pedimos a gentileza de confirmar sua presença até o dia <strong>14/02</strong>.</p><p><i class=\"fa-solid fa-clock\"></i> <strong>Pontualidade:</strong> Cada segundo deste encontro é precioso. Sua chegada no horário previsto é essencial para que possamos dar início a este sonho juntos.</p><p><i class=\"fa-solid fa-user-tie\"></i> <strong>Dress Code:</strong> Celebre conosco em <strong>Traje Social</strong>. Para mantermos a harmonia visual desta noite especial, pedimos carinhosamente que <strong>não utilize tons de rosa ou laranja</strong>.</p><p><i class=\"fa-solid fa-envelope-open-text\"></i> <strong>Convite Individual:</strong> Este é um momento íntimo e reservado. Por isso, lembramos que o convite é pessoal e intransferível.</p><p><i class=\"fa-solid fa-sparkles\"></i> <strong>Viva Intensamente:</strong><br><i class=\"fa-solid fa-camera-retro\"></i> Registre cada instante e marque a aniversariante!<br><i class=\"fa-solid fa-music\"></i> Deixe as preocupações de fora e entregue-se à pista de dança.<br><i class=\"fa-solid fa-cake-candles\"></i> Não vá embora sem um abraço apertado e um delicioso pedaço de bolo.</p><p><i class=\"fa-solid fa-glass-cheers\"></i> <strong>Esperamos por você para transformarmos este momento em uma lembrança eterna!</strong></p",
-    "numero_whatsapp": "55 51984579745",
+    "manual_content": "<p><i class=\"fa-solid fa-heart\"></i> <strong>Seja muito bem-vindo(a)!</strong><br>Sua presença é muito especial e torna essa noite ainda mais inesquecível.</p><p><i class=\"fa-solid fa-calendar-check\"></i> <strong>Confirmação de presença:</strong> Pedimos, com carinho, que confirme até o dia 14/02.</p><p><i class=\"fa-solid fa-clock\"></i> <strong>Chegada pontual:</strong> Sua pontualidade é essencial para começarmos juntos.</p><p><i class=\"fa-solid fa-user-tie\"></i> <strong>Dress code:</strong> Traje Social, para manter a harmonia da celebração.<br><em><i class=\"fa-solid fa-circle-exclamation\"></i> Por gentileza, não usar tons de rosa ou laranja no dia da festa.</em></p><p><i class=\"fa-solid fa-id-card-clip\"></i> <strong>Convidado não convida:</strong> Convite pessoal e intransferível.</p><p><i class=\"fa-solid fa-cake-candles\"></i> Aproveite cada momento dessa noite especial! Dance, celebre, sorria, registre momentos inesquecíveis e não vá embora sem um abraço e um pedaço de bolo.</p><ul><li><i class=\"fa-solid fa-camera\"></i> Tire muitas fotos (e marque a aniversariante!)</li><li><i class=\"fa-solid fa-music\"></i> Aproveite a pista e divirta-se</li><li><i class=\"fa-solid fa-door-open\"></i> Deixe preocupações do lado de fora</li><li><i class=\"fa-solid fa-wand-magic-sparkles\"></i> Espalhe amor, alegria e boas energias</li></ul><p><i class=\"fa-solid fa-champagne-glasses\"></i> <strong>Esperamos você para celebrar conosco esse momento especial e inesquecível!</strong></p>",
+    "numero_whatsapp": "5551984579745",
     "link_confirmacao": "",
     "permitir_acompanhante": false,
     "timer_contagem": false,
@@ -41,17 +41,17 @@
     "fill_prompt": "Nome: \nIdade (se houver): (não informada)\nTipo de evento: \nTema: \nTask: Preencha essa folha com os dados para convite de forma criativa e elegante.\nColoque elementos de design de forma elegante no convite, divisórias modernas, hierarquia visual madura e profissional, linhas, e uma frase similar a \"Você está convidado para o... (crie a frase conforme o contexto)\" conforme sua criatividade.\nColoque textura, camadas, adornos no texto do nome, letra cursiva (Great Vibes) e efeitos especiais elegantes.",
     "sugestoes_presentes": "",
     "gifts_image_prompt": "",
-    "manual_raw_content": "- Seja muito bem-vindo(a)!\nSua presença é muito especial e torna essa noite ainda mais inesquecível 🤍\n- Confirmação de presença: pedimos, com carinho, que confirme até o dia 14/02\n• Chegada pontual: sua pontualidade é essencial para começarmos juntos\n• Dress code: Traje Social, para manter a harmonia da celebração\n*Por gentileza não usar tons de rosa ou laranja no dia da festa\n• Convidado não convida: convite pessoal e intransferível\n\nAproveite cada momento dessa noite especial! Dance, celebre, sorria, registre momentos inesquecíveis e não vá embora sem um abraço e um pedaço de bolo 💖🍰\n\n📸 Tire muitas fotos (e marque a aniversariante !)\n💃Aproveite a pista e divirta-se\n🚫 Deixe preocupações do lado de fora\n💖 Espalhe amor, alegria e boas energias\n\nEsperamos você para celebrar conosco esse momento especial e inesquecível! 🤍",
+    "manual_raw_content": "(Dessa vez não altere o texto, apenas coloque os icons)\n- Seja muito bem-vindo(a)!\nSua presença é muito especial e torna essa noite ainda mais inesquecível 🤍\n- Confirmação de presença: pedimos, com carinho, que confirme até o dia 14/02\n• Chegada pontual: sua pontualidade é essencial para começarmos juntos\n• Dress code: Traje Social, para manter a harmonia da celebração\n*Por gentileza não usar tons de rosa ou laranja no dia da festa\n• Convidado não convida: convite pessoal e intransferível\n\nAproveite cada momento dessa noite especial! Dance, celebre, sorria, registre momentos inesquecíveis e não vá embora sem um abraço e um pedaço de bolo 💖🍰\n\n📸 Tire muitas fotos (e marque a aniversariante !)\n💃Aproveite a pista e divirta-se\n🚫 Deixe preocupações do lado de fora\n💖 Espalhe amor, alegria e boas energias\n\nEsperamos você para celebrar conosco esse momento especial e inesquecível! 🤍",
     "music_name": "Disney Intro Full HD 1080p para retrospectiva animada estudio100.mp3",
     "slug": "Manuela15Anos",
-    "watermark_enabled": false
+    "watermark_enabled": true
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768840026712.mp3",
-    "capa": "assets/capa_1768840026712.png",
-    "fundo_tela": "assets/fundo_tela_1768840026712.mp4",
-    "vid_abertura": "assets/vid_abertura_1768840026712.mp4"
+    "musica": "assets/musica_1768853702709.mp3",
+    "capa": "assets/capa_1768853702709.png",
+    "fundo_tela": "assets/fundo_tela_1768853702709.dat",
+    "vid_abertura": "assets/vid_abertura_1768853702709.mp4"
   },
   "toggles": {
     "manualMode": "text",
