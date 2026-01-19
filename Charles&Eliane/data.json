@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-19T11:30:41.067Z",
+  "timestamp": "2026-01-19T15:46:17.947Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -11,7 +11,7 @@
     "background_only": null,
     "presentes": null,
     "manual": null,
-    "musica": null,
+    "musica": "blob:https://builder.mforge.com.br/fb12a688-bc9e-4bf4-89ba-ef5e8b506034",
     "nome": "",
     "tipo_evento": "",
     "tipo_evento_custom": "",
@@ -28,7 +28,7 @@
     "tamanho_botoes": "",
     "link_google_maps": "",
     "link_presentes": "",
-    "manual_content": "",
+    "manual_content": "<h1><i class='fa-solid fa-gift'></i> Siga essas instruções e divirta-se</h1>\n<p>É com grande alegria que recebemos você em nosso momento especial. A sua presença é um presente que queremos compartilhar com aqueles que amamos.</p>\n\n<h2><i class='fa-solid fa-clock'></i> Chegada</h2>\n<p>Pedimos, com carinho, que chegue alguns minutos antes, pois a cerimônia terá início pontualmente.</p>\n\n<h2><i class='fa-solid fa-tshirt'></i> Traje</h2>\n<p>Sinta-se à vontade para vestir o traje que mais lhe agradar.</p>\n\n<h2><i class='fa-solid fa-child'></i> Crianças</h2>\n<p>Abrimos nossas portas com alegria para as crianças! Escolhemos um local repleto de interatividade, brinquedos de todas as idades, jogos eletrônicos e muita diversão para pequenos e grandes. Todos serão muito bem-vindos!</p>\n\n<h2><i class='fa-solid fa-heart'></i> Presente</h2>\n<p>O maior presente que podemos receber é a sua presença!</p>\n\n<h2><i class='fa-solid fa-check-circle'></i> Confirmação</h2>\n<p>Para garantir a melhor experiência, pedimos gentilmente a sua confirmação, uma vez que o buffet será preparado conforme o número de convidados.</p>\n\n<p>Toda honra, toda glória e majestade sejam dadas a Deus e a Jesus Cristo, nosso Senhor, que nos guiou até este enlace. <br>Efésios 3:19-21</p>\n\n<p>Ter você conosco tornará este momento ainda mais especial e abençoado.</p>\n\n<p>Com carinho, <br>Charles & Eliane</p>",
     "numero_whatsapp": "",
     "link_confirmacao": "",
     "permitir_acompanhante": false,
@@ -41,15 +41,17 @@
     "fill_prompt": "Nome: \nIdade (se houver): (não informada)\nTipo de evento: \nTema: \nTask: Preencha essa folha com os dados para convite de forma criativa e elegante.\nColoque elementos de design de forma elegante no convite, divisórias modernas, hierarquia visual madura e profissional, linhas, e uma frase similar a \"Você está convidado para o... (crie a frase conforme o contexto)\" conforme sua criatividade.\nColoque textura, camadas, adornos no texto do nome, letra cursiva (Great Vibes) e efeitos especiais elegantes.",
     "sugestoes_presentes": "",
     "gifts_image_prompt": "",
-    "manual_raw_content": "",
-    "music_name": "",
+    "manual_raw_content": "(dessa vez, não altere nada, apenas coloque os ícones:)\n\n-  Siga essas instruções e divirta-se\n\nÉ com muita alegria que damos as boas-vindas a você. Estamos vivendo um momento especial e ficamos felizes em poder compartilhá-lo com pessoas queridas.\n\n- Chegada\nPedimos, com carinho, que chegue com alguns minutos de antecedência, pois a cerimônia será realizada no horário.\n\n- Traje\nQueremos que fiquem a vontade com o traje que desejarem.\n\n- Crianças\nAmamos as crianças, e por este motivo escolhemos um local com muita interatividade, brinquedos para todas as idades, jogos eletrônicos e muita diversão para crianças e adultos. Não vai faltar nada para a satisfação de todos.\n\n- Presente\nO maior presente para nós é a sua presença!\n\n- Confirmação\nDevido ao buffet ser pelo número de pessoas, pedimos gentilmente sua confirmação.\n\nToda honra, toda glória e majestade sejam dadas a Deus e a Jesus Cristo nosso Senhor que nos conduziu para o nosso enlace.\nEfésios 3:19-21\n\nTer você conosco tornará esse momento ainda mais especial e abençoado.\n\nCom carinho, \n\nCharles & Eliane",
+    "music_name": "Christina Perri - A Thousand Years (Tradução_Legendado).mp3",
     "slug": "Charles&Eliane",
     "watermark_enabled": true
   },
   "linksExtras": [],
   "assetsMap": {
-    "capa": "assets/capa_1768822241067.png",
-    "vid_abertura": "assets/vid_abertura_1768822241067.mp4"
+    "musica": "assets/musica_1768837577947.mp3",
+    "capa": "assets/capa_1768837577947.png",
+    "fundo_tela": "assets/fundo_tela_1768837577947.mp4",
+    "vid_abertura": "assets/vid_abertura_1768837577947.mp4"
   },
   "toggles": {
     "manualMode": "text",
