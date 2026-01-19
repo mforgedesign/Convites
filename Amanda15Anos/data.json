@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-18T09:14:22.408Z",
+  "timestamp": "2026-01-19T15:39:30.288Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -44,15 +44,15 @@
     "manual_raw_content": "Chegue no horário: Sua presença pontual é muito importante para nós.\n Confirme sua presença: Por favor, confirme presença pelo menos 15 dias antes do evento.\n Divirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.\nTeremos plataforma 360, espelho mágico e filtro personalizado para as fotos!",
     "music_name": "Jade LeMac - Constellations (Lyrics).mp3",
     "slug": "Amanda15Anos",
-    "watermark_enabled": true
+    "watermark_enabled": false
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768727662408.mp3",
-    "capa": "assets/capa_1768727662408.png",
-    "fundo_tela": "assets/fundo_tela_1768727662408.dat",
-    "vid_abertura": "assets/vid_abertura_1768727662408.mp4",
-    "presentes": "assets/presentes_1768727662408.png"
+    "musica": "assets/musica_1768837170288.mp3",
+    "capa": "assets/capa_1768837170288.png",
+    "fundo_tela": "assets/fundo_tela_1768837170288.dat",
+    "vid_abertura": "assets/vid_abertura_1768837170288.mp4",
+    "presentes": "assets/presentes_1768837170288.png"
   },
   "toggles": {
     "manualMode": "text",
