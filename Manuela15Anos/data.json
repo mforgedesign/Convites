@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-19T21:33:43.003Z",
+  "timestamp": "2026-01-19T21:50:50.901Z",
   "formData": {
     "nome": "Manuela",
     "tipo_evento": "Aniversário",
@@ -17,7 +17,7 @@
     "posicao_botoes": "6",
     "tamanho_botoes": "",
     "link_google_maps": "https://maps.app.goo.gl/FZJahJDhdZEPQ9mr7",
-    "link_presentes": "",
+    "link_presentes": "https://presentes.mforge.com.br/manuela15anos",
     "manual_content": "<p><i class=\"fa-solid fa-heart\"></i> <strong>Seja muito bem-vindo(a)!</strong><br>Sua presença é muito especial e torna essa noite ainda mais inesquecível.</p><p><i class=\"fa-solid fa-calendar-check\"></i> <strong>Confirmação de presença:</strong> Pedimos, com carinho, que confirme até o dia 14/02.</p><p><i class=\"fa-solid fa-clock\"></i> <strong>Chegada pontual:</strong> Sua pontualidade é essencial para começarmos juntos.</p><p><i class=\"fa-solid fa-user-tie\"></i> <strong>Dress code:</strong> Traje Social, para manter a harmonia da celebração.<br><em><i class=\"fa-solid fa-circle-exclamation\"></i> Por gentileza, não usar tons de rosa ou laranja no dia da festa.</em></p><p><i class=\"fa-solid fa-id-card-clip\"></i> <strong>Convidado não convida:</strong> Convite pessoal e intransferível.</p><p><i class=\"fa-solid fa-cake-candles\"></i> Aproveite cada momento dessa noite especial! Dance, celebre, sorria, registre momentos inesquecíveis e não vá embora sem um abraço e um pedaço de bolo.</p><ul><li><i class=\"fa-solid fa-camera\"></i> Tire muitas fotos (e marque a aniversariante!)</li><li><i class=\"fa-solid fa-music\"></i> Aproveite a pista e divirta-se</li><li><i class=\"fa-solid fa-door-open\"></i> Deixe preocupações do lado de fora</li><li><i class=\"fa-solid fa-wand-magic-sparkles\"></i> Espalhe amor, alegria e boas energias</li></ul><p><i class=\"fa-solid fa-champagne-glasses\"></i> <strong>Esperamos você para celebrar conosco esse momento especial e inesquecível!</strong></p>",
     "numero_whatsapp": "5551984579745",
     "link_confirmacao": "",
@@ -48,10 +48,10 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768858423003.mp3",
-    "capa": "assets/capa_1768858423003.png",
-    "fundo_tela": "assets/fundo_tela_1768858423003.mp4",
-    "vid_abertura": "assets/vid_abertura_1768858423003.mp4"
+    "musica": "assets/musica_1768859450901.mp3",
+    "capa": "assets/capa_1768859450901.png",
+    "fundo_tela": "assets/fundo_tela_1768859450901.dat",
+    "vid_abertura": "assets/vid_abertura_1768859450901.mp4"
   },
   "toggles": {
     "manualMode": "text",
