@@ -1,0 +1,56 @@
+{
+  "version": "4.0",
+  "timestamp": "2026-01-20T21:09:12.327Z",
+  "formData": {
+    "nome": "Julia",
+    "tipo_evento": "",
+    "tipo_evento_custom": "",
+    "data": "2026-03-12",
+    "hora": "19:00",
+    "idade": "15",
+    "tema_evento": "Baile de Máscara",
+    "local_evento": "",
+    "paleta_cores": "Preto e Prata",
+    "frase_convite": "",
+    "cor_botoes": "#363636",
+    "sombra_gradiente": "#000000",
+    "posicao_botoes": "10",
+    "tamanho_botoes": "medio",
+    "link_google_maps": "https://maps.app.goo.gl/Mk2AvBy7xWugSizX7",
+    "link_presentes": "https://www.canva.com/design/DAG2_OLw-JE/GvVM_dj3ppSNsmN7oWgNxg/view?utm_content=DAG2_OLw-JE&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h4e1ff6e568",
+    "manual_content": "",
+    "numero_whatsapp": "",
+    "link_confirmacao": "https://docs.google.com/forms/d/e/1FAIpQLSezR-cgu_Bh4FSAy4kle4onGcu3eQYRgtna8yCZfRT676eZcg/viewform",
+    "permitir_acompanhante": false,
+    "timer_contagem": false,
+    "cover_prompt": "",
+    "leaf_prompt": "",
+    "animate_background": false,
+    "intro_motion_prompt": "The animation begins with a focus on the closed envelope. As the wax seal gracefully detaches and falls, the envelope's flap uplifts slowly. From its interior, a spectacular eruption of glittering sparkles and smoke, shimmering dust, and glowing light trails emerges, cascading outward in a mesmerizing display. These vibrant particles swirl dynamically, increasing in density and brightness around the envelope. The radiant light and swirling glitter intensify, rapidly expanding to fill the entire scene. CRITICAL: The Color of glow, light and smoke need to be the same of the image color pallete. The overwhelming brilliance transitions the frame to a solid, blinding white screen in the very final frame, achieved through a dramatic zoom-in effect.",
+    "loop_motion_prompt": "The animation displays smooth, looping movements of the shimmering effect based on the provided image. Dramatic sparkles and shining smokes flying in the background, cinematic lighting with volumetric effects (divine rays) filters through shimmering particles, creating a magical atmosphere with highlights. Rendered in a photorealistic and hyper-detailed style, the animation flows perfectly with a cinematic approach, captivating the viewer's attention with its fluid movement and mesmerizing 4K quality. IMPORTANT: Static Camera / No Camera Movement, only environmental motion.",
+    "fill_prompt": "",
+    "sugestoes_presentes": "",
+    "gifts_image_prompt": "",
+    "manual_raw_content": "",
+    "music_name": "",
+    "slug": "Julia15AnosBaileMascara",
+    "watermark_enabled": false
+  },
+  "linksExtras": [
+    {
+      "id": 0,
+      "label": "Manual do Convidado",
+      "url": "https://www.canva.com/design/DAG2_PMhvoA/5WU_st5qODc84PxRR7u1aQ/view?utm_content=DAG2_PMhvoA&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3880322b5a",
+      "icon": "fa-solid fa-info-circle"
+    }
+  ],
+  "assetsMap": {
+    "capa": "assets/capa_1768943352327.png",
+    "fundo_tela": "assets/fundo_tela_1768943352327.mp4",
+    "vid_abertura": "assets/vid_abertura_1768943352327.mp4"
+  },
+  "toggles": {
+    "manualMode": "text",
+    "giftsMode": "link"
+  }
+}
