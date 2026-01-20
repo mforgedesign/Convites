@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-20T11:18:46.449Z",
+  "timestamp": "2026-01-20T12:20:43.311Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -11,7 +11,7 @@
     "background_only": null,
     "presentes": null,
     "manual": null,
-    "musica": null,
+    "musica": "blob:https://builder.mforge.com.br/5ac057d2-36f5-4ef8-8551-0e36431f2797",
     "nome": "Yasmin",
     "tipo_evento": "Aniversário",
     "tipo_evento_custom": "",
@@ -42,16 +42,17 @@
     "sugestoes_presentes": "",
     "gifts_image_prompt": "",
     "manual_raw_content": "(Elabore com base nos dados abaixo:)\nDress code: Traje Esporte Fino.\nAtenção: As cores azul, vermelho e dourado são exclusivas da debutante, favor evitar de utilizar!\n\nTamanhos para presente:\nTamanho Para Blusa: P\nTamanho para Calça: 38 ou 40\nTamanho para Calçado: 39\nTamanho para Vestido: P\n",
-    "music_name": "",
+    "music_name": "musica.mp3",
     "slug": "Yasmin15Anos",
     "watermark_enabled": true
   },
   "linksExtras": [],
   "assetsMap": {
-    "capa": "assets/capa_1768907926449.png",
-    "folha_vazia": "assets/folha_vazia_1768907926449.png",
-    "fundo_tela": "assets/fundo_tela_1768907926449.png",
-    "vid_abertura": "assets/vid_abertura_1768907926449.mp4"
+    "musica": "assets/musica_1768911643311.mp3",
+    "capa": "assets/capa_1768911643311.png",
+    "folha_vazia": "assets/folha_vazia_1768911643311.png",
+    "fundo_tela": "assets/fundo_tela_1768911643311.png",
+    "vid_abertura": "assets/vid_abertura_1768911643311.mp4"
   },
   "toggles": {
     "manualMode": "text",
