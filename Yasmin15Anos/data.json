@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-20T12:32:48.706Z",
+  "timestamp": "2026-01-20T15:22:09.674Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -29,8 +29,8 @@
     "link_google_maps": "https://maps.app.goo.gl/4iCQKuY1MbY9yrwf6",
     "link_presentes": "",
     "manual_content": "<p><i class='fa-solid fa-clock'></i> <strong>Chegue no horário:</strong> Sua presença pontual é muito importante para nós.</p>\n\n<p><i class='fa-solid fa-clipboard-check'></i> <strong>Confirme sua presença:</strong> Por favor, confirme presença pelo menos 15 dias antes do evento.</p>\n\n<p><i class='fa-solid fa-champagne-glasses'></i> <strong>Divirta-se bastante!</strong> Estamos ansiosos para celebrar este momento especial com você.</p>\n\n<p><i class='fa-solid fa-cake-candles'></i> <strong>Não vá embora sem me dar um abraço e comer um pedaço do bolo:</strong> Queremos compartilhar cada instante com você.</p>\n\n<p><i class='fa-solid fa-user-tie'></i> <strong>Dress Code:</strong> Traje Esporte Fino</p>\n\n<p><i class='fa-solid fa-exclamation-circle'></i> <strong>Atenção:</strong> As cores azul, vermelho e dourado são exclusivas da debutante. Pedimos a gentileza de evitá-las em sua vestimenta.</p>\n\n<p><i class='fa-solid fa-gift'></i> <strong>Tamanhos para presentes:</strong></p>\n<ul>\n    <li><strong>Blusa:</strong> P</li>\n    <li><strong>Calça:</strong> 38 ou 40</li>\n    <li><strong>Calçado:</strong> 39</li>\n    <li><strong>Vestido:</strong> P</li>\n</ul>",
-    "numero_whatsapp": "553199631173",
-    "link_confirmacao": "",
+    "numero_whatsapp": "",
+    "link_confirmacao": "https://chat.whatsapp.com/LOWLD1HRjg3Fxu1qwwL63p",
     "permitir_acompanhante": false,
     "timer_contagem": true,
     "cover_prompt": "Tipo de evento: \nSelo: \nPaleta de Cores: \nTema: \nTask: Create a vertical image of a hyper-realistic 3D render of a premium invitation envelope. The envelope is sealed with an intricately detailed wax seal. The paper boasts a high-quality, textured finish, exuding elegance and sophistication. Background: A setting with elements that enhance the luxurious feel of the invitation without specific thematic details. The composition is centered, with dramatic lighting casting volumetric light and creating a soft focus and depth of field. Lighting: Dramatic, cinematic lighting with volumetric effects. Highlights on the envelope and wax seal accentuate the texture and detail. Style: Photorealistic, hyper-detailed, cinematic, and elegant. Technical Details: Resolution: 8K, ultra high resolution Aspect Ratio: 9:16 Rendering Engine: Octane Render, Unreal Engine 5 Camera: Macro lens, f/2.8, shallow depth of field",
@@ -48,11 +48,11 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768912368706.mp3",
-    "capa": "assets/capa_1768912368706.png",
-    "folha_vazia": "assets/folha_vazia_1768912368706.png",
-    "fundo_tela": "assets/fundo_tela_1768912368706.png",
-    "vid_abertura": "assets/vid_abertura_1768912368706.mp4"
+    "musica": "assets/musica_1768922529674.mp3",
+    "capa": "assets/capa_1768922529674.png",
+    "folha_vazia": "assets/folha_vazia_1768922529674.png",
+    "fundo_tela": "assets/fundo_tela_1768922529674.png",
+    "vid_abertura": "assets/vid_abertura_1768922529674.mp4"
   },
   "toggles": {
     "manualMode": "text",
