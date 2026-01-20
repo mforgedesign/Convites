@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-20T01:03:26.944Z",
+  "timestamp": "2026-01-20T01:46:51.981Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -22,7 +22,7 @@
     "local_evento": "Alameda Maria Turíbia de Jesus 85, centro, Betim. MG.",
     "paleta_cores": "",
     "frase_convite": "",
-    "cor_botoes": "#000000",
+    "cor_botoes": "#770e0e",
     "sombra_gradiente": "#000000",
     "posicao_botoes": "5",
     "tamanho_botoes": "",
@@ -47,9 +47,14 @@
     "watermark_enabled": true
   },
   "linksExtras": [],
-  "assetsMap": {},
+  "assetsMap": {
+    "capa": "assets/capa_1768873611981.png",
+    "folha_vazia": "assets/folha_vazia_1768873611981.png",
+    "fundo_tela": "assets/fundo_tela_1768873611981.png",
+    "vid_abertura": "assets/vid_abertura_1768873611981.mp4"
+  },
   "toggles": {
     "manualMode": "text",
-    "giftsMode": "link"
+    "giftsMode": "image"
   }
 }
