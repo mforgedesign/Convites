@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-20T12:36:12.400Z",
+  "timestamp": "2026-01-20T13:19:29.462Z",
   "formData": {
     "capa": "blob:https://builder.mforge.com.br/94b94b43-c1ac-44a5-95d6-dd2337d4cdbd",
     "capa_referencia": null,
@@ -44,16 +44,16 @@
     "manual_raw_content": "Chegue no horário: Sua presença pontual é muito importante para nós.\n Confirme sua presença: Por favor, confirme presença pelo menos 15 dias antes do evento.\n Divirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.\n Não vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.",
     "music_name": "Vejo Enfim a Luz Brilhar.mp3",
     "slug": "Giovanna15anos",
-    "watermark_enabled": true
+    "watermark_enabled": false
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768912572400.mp3",
-    "capa": "assets/capa_1768912572400.png",
-    "folha_vazia": "assets/folha_vazia_1768912572400.png",
-    "fundo_tela": "assets/fundo_tela_1768912572400.dat",
-    "vid_abertura": "assets/vid_abertura_1768912572400.mp4",
-    "presentes": "assets/presentes_1768912572400.png"
+    "musica": "assets/musica_1768915169462.mp3",
+    "capa": "assets/capa_1768915169462.png",
+    "folha_vazia": "assets/folha_vazia_1768915169462.png",
+    "fundo_tela": "assets/fundo_tela_1768915169462.dat",
+    "vid_abertura": "assets/vid_abertura_1768915169462.mp4",
+    "presentes": "assets/presentes_1768915169462.png"
   },
   "toggles": {
     "manualMode": "text",
