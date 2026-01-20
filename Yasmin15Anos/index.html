@@ -5,20 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Prevent browser caching - always fetch fresh content -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 
-    <title>Yasmin | Aniversário 15 Anos</title>
+    <title>[[OG_TITLE]]</title>
 
-    <!-- Open Graph for WhatsApp/Social Preview -->
-    <meta property="og:title" content="Yasmin | Aniversário 15 Anos">
+    <meta property="og:title" content="[[OG_TITLE]]">
     <meta property="og:description" content="Clique para ver o convite interativo!">
-    <meta property="og:image" content="capa/capa_1768922914783.png">
+    <meta property="og:image" content="capa/[[CAPA_FILENAME]]">
     <meta property="og:type" content="website">
 
-    <!-- Envelope Favicon -->
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M64 112c-8.8 0-16 7.2-16 16v22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1V128c0-8.8-7.2-16-16-16H64zM48 212.2V384c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V212.2L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64H448c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z'/></svg>">
 
@@ -97,45 +94,39 @@
             text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
         }
     </style>
-<style>:root { --button-color: #770e0e; } .custom-button-bg { background-color: var(--button-color) !important; }</style></head>
+</head>
 
 <body class="w-full h-[100dvh] flex justify-center items-center">
 
     <div id="mainContainer"
         class="relative w-full max-w-[480px] h-full bg-black shadow-2xl overflow-hidden transition-all duration-300">
 
-        <!-- Background (Unified) - Layer 1 -->
-        <!-- Can be image or video - determined by file extension -->
-        <img id="fundoTelaImg" src="assets/fundo_tela_1768922914783.png" class="camada z-10 invisivel"
+        <img id="fundoTelaImg" src="[[FUNDO_TELA_URL]]" class="camada z-10 invisivel"
             onerror="this.style.display='none'">
         <video id="fundoTelaVideo" class="camada z-10 invisivel" playsinline loop muted
             onerror="this.style.display='none'">
-            <source src="assets/fundo_tela_1768922914783.png" type="video/mp4">
+            <source src="[[FUNDO_TELA_URL]]" type="video/mp4">
         </video>
 
         <video id="videoAbertura" class="camada z-20" playsinline muted>
-            <source src="assets/vid_abertura_1768922914783.mp4" type="video/mp4">
+            <source src="[[VIDEO_ABERTURA_URL]]" type="video/mp4">
         </video>
 
         <audio id="musicaFundo" loop preload="auto">
-            <source src="assets/musica_1768922914783.mp3" type="audio/mp3">
+            <source src="[[MUSICA_URL]]" type="audio/mp3">
         </audio>
 
         <button id="btnMute"
             class="absolute top-4 left-4 z-40 text-white bg-black/50 rounded-full w-10 h-10 flex items-center justify-center invisivel transition-all hover:bg-black/70">
             <i class="fa-solid fa-volume-high" id="iconMute"></i>
         </button>
-        <!-- [skip] -->
-
-
         <button id="btnPular"
             class="absolute top-4 right-4 z-40 bg-white/20 backdrop-blur-sm border border-white/40 text-white px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-wider invisivel hover:bg-white/30 transition-all">
             Pular
         </button>
 
-        <!-- Timer Countdown -->
         <div id="countdownContainer"
-            class="absolute top-[34px] left-0 w-full z-40 flex flex-col items-center justify-center invisivel transition-opacity duration-1000 texto-sombra pointer-events-none ">
+            class="absolute top-[34px] left-0 w-full z-40 flex flex-col items-center justify-center invisivel transition-opacity duration-1000 texto-sombra pointer-events-none [[TIMER_HIDE_CLASS]]">
             <h2 class="text-white text-[10px] sm:text-xs uppercase tracking-[0.2em] mb-2 font-semibold opacity-90">
                 Contagem Regressiva</h2>
             <div class="flex gap-3 sm:gap-4 text-white">
@@ -158,23 +149,21 @@
             </div>
         </div>
 
-        <!-- Gradiente de fundo fixo (não se move) -->
         <div id="containerShadow"
             class="absolute bottom-0 left-0 w-full z-30 pb-10 px-2 pt-20 invisivel transition-opacity duration-1000"
             style="background: linear-gradient(to top, [[SHADOW_COLOR]]E6, [[SHADOW_COLOR]]66, transparent);">
         </div>
 
-        <!-- Container dos botões (se move com offset) -->
         <div id="containerBotoes"
             class="absolute left-0 w-full z-40 pb-10 px-2 invisivel transition-opacity duration-1000 flex justify-center"
-            style="bottom: 5px;">
+            style="bottom: [[BUTTONS_OFFSET]]px;">
             <div id="gridBotoes" class="flex flex-row flex-nowrap justify-evenly gap-1 w-full max-w-[480px]">
             </div>
         </div>
 
         <div id="capaInicial"
             class="absolute inset-0 z-50 bg-cover bg-center flex flex-col items-center justify-center cursor-pointer transition-opacity duration-700"
-            style="background-image: url('assets/capa_1768922914783.png');">
+            style="background-image: url('[[CAPA_URL]]');">
             <div class="absolute inset-0 bg-black/20"></div>
 
             <div id="dicaInteractionContainer" class="relative z-10 flex flex-col items-center gap-4 animate-pulse">
@@ -185,9 +174,8 @@
             </div>
         </div>
 
-        <!-- Marca d'água de Pagamento Pendente -->
         <div id="watermark"
-            class="absolute inset-0 z-[100] flex items-center justify-center pointer-events-none ">
+            class="absolute inset-0 z-[100] flex items-center justify-center pointer-events-none [[WATERMARK_HIDE_CLASS]]">
             <div class="transform -rotate-45 pointer-events-none select-none opacity-80">
                 <h1 class="text-4xl sm:text-6xl font-black uppercase tracking-widest text-center whitespace-nowrap"
                     style="-webkit-text-stroke: 1px rgba(0,0,0,0.3); color: rgba(255,255,255,0.25);">
@@ -198,18 +186,15 @@
 
     </div>
 
-    <!-- Popup Manual do Convidado -->
     <div id="popupManual"
         class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm invisivel">
         <div
             class="relative w-full max-w-[400px] h-[80%] rounded-xl shadow-2xl overflow-hidden flex flex-col border border-white/20">
-            <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="assets/folha_vazia_1768922914783.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="[[FOLHA_URL]]" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/60"></div>
             </div>
 
-            <!-- Header -->
             <div class="relative z-10 flex justify-between items-center p-4 border-b border-white/10">
                 <h2 id="manualTitle" class="text-xl font-bold text-white">Manual</h2>
                 <button id="btnCloseManual" class="text-white hover:text-gray-300 transition-colors">
@@ -217,16 +202,13 @@
                 </button>
             </div>
 
-            <!-- Content -->
             <div class="relative z-10 p-6 overflow-y-auto custom-scrollbar text-white text-center space-y-6">
                 <div id="manualContent" class="text-sm leading-relaxed text-left">
-                    <!-- Conteúdo do manual será inserido aqui -->
-                </div>
+                    </div>
             </div>
         </div>
     </div>
 
-    <!-- Popup Imagem de Presentes -->
     <div id="popupPresentes"
         class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm invisivel">
         <div class="relative max-w-[90vw] max-h-[90vh] rounded-xl shadow-2xl overflow-hidden">
@@ -238,7 +220,6 @@
         </div>
     </div>
 
-    <!-- Popup Imagem do Manual -->
     <div id="popupManualImage"
         class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm invisivel">
         <div class="relative max-w-[90vw] max-h-[90vh] rounded-xl shadow-2xl overflow-hidden">
@@ -250,19 +231,16 @@
         </div>
     </div>
 
-    <!-- Popup Confirmação RSVP -->
     <div id="popupRSVP"
         class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm invisivel">
         <div
             class="relative w-full max-w-[350px] rounded-xl shadow-2xl overflow-hidden border border-white/20 m-4 flex flex-col">
 
-            <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="assets/folha_vazia_1768922914783.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="[[FOLHA_URL]]" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/70"></div>
             </div>
 
-            <!-- Header -->
             <div
                 class="relative z-10 flex justify-between items-center p-4 border-b border-white/10 bg-black/30 backdrop-blur-sm">
                 <h2 class="text-lg font-bold text-white"><i class="fa-brands fa-whatsapp text-green-500 mr-2"></i>
@@ -272,7 +250,6 @@
                 </button>
             </div>
 
-            <!-- Form -->
             <div class="relative z-10 p-6 space-y-4">
                 <div>
                     <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Seu Nome Completo *</label>
@@ -288,7 +265,7 @@
                         placeholder="(DDD) 99999-9999">
                 </div>
 
-                <div id="container-acompanhantes" class="!hidden">
+                <div id="container-acompanhantes" class="[[COMPANION_HIDE_CLASS]]">
                     <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Total de Acompanhantes</label>
                     <div class="flex items-center gap-3">
                         <button id="btn-dec-acomp"
@@ -302,7 +279,7 @@
                         anfitrião.</p>
                 </div>
 
-                <div class="flex items-center gap-2 mt-2 !hidden">
+                <div class="flex items-center gap-2 mt-2 [[COMPANION_HIDE_CLASS]]">
                     <input type="checkbox" id="check-no-acomp"
                         class="w-4 h-4 rounded bg-black/40 border-stone-500 text-green-500 focus:ring-green-500 focus:ring-offset-0">
                     <label for="check-no-acomp"
@@ -322,9 +299,9 @@
         // ==================================================================
         // 1. CONFIGURAÇÃO DOS BOTÕES (Injetado pelo AutoBuilder)
         // ==================================================================
-        const menuConfig = [{"id":"location","titulo":"Localização","icone":"fa-solid fa-location-dot","link":"https://maps.app.goo.gl/4iCQKuY1MbY9yrwf6"},{"id":"manual","titulo":"Manual","icone":"fa-solid fa-book-open","link":"#","manualText":"<p><i class='fa-solid fa-clock'></i> <strong>Chegue no horário:</strong> Sua presença pontual é muito importante para nós.</p>\n\n<p><i class='fa-solid fa-clipboard-check'></i> <strong>Confirme sua presença:</strong> Por favor, confirme presença pelo menos 15 dias antes do evento.</p>\n\n<p><i class='fa-solid fa-champagne-glasses'></i> <strong>Divirta-se bastante!</strong> Estamos ansiosos para celebrar este momento especial com você.</p>\n\n<p><i class='fa-solid fa-cake-candles'></i> <strong>Não vá embora sem me dar um abraço e comer um pedaço do bolo:</strong> Queremos compartilhar cada instante com você.</p>\n\n<p><i class='fa-solid fa-user-tie'></i> <strong>Dress Code:</strong> Traje Esporte Fino</p>\n\n<p><i class='fa-solid fa-exclamation-circle'></i> <strong>Atenção:</strong> As cores azul, vermelho e dourado são exclusivas da debutante. Pedimos a gentileza de evitá-las em sua vestimenta.</p>\n\n<p><i class='fa-solid fa-gift'></i> <strong>Tamanhos para presentes:</strong></p>\n<ul>\n    <li><strong>Blusa:</strong> P</li>\n    <li><strong>Calça:</strong> 38 ou 40</li>\n    <li><strong>Calçado:</strong> 39</li>\n    <li><strong>Vestido:</strong> P</li>\n</ul>"},{"id":"rsvp","titulo":"Confirmar Presença","icone":"fa-solid fa-check","link":"https://chat.whatsapp.com/LOWLD1HRjg3Fxu1qwwL63p"}];
+        const menuConfig = [[MENU_CONFIG]];
         // Injected by AutoBuilder
-        const buttonSize = parseFloat('1.0') || 1.0;
+        const buttonSize = parseFloat('[[BUTTON_SIZE]]') || 1.0;
 
         // ==================================================================
         // 2. REFERÊNCIAS DO DOM
@@ -453,7 +430,7 @@
         });
 
         // Injected State for Logic
-        const companionHideClass = "!hidden";
+        const companionHideClass = "[[COMPANION_HIDE_CLASS]]";
 
         window.abrirRSVP = function (e, link) {
             e.preventDefault();
@@ -613,10 +590,10 @@
                 anchor.removeAttribute('target');
                 anchor.addEventListener('click', abrirPresentes);
             } else if (isRSVP) {
-                // Smart RSVP Logic
-                anchor.href = "#";
-                anchor.removeAttribute('target'); // RSVP popup is internal
-                anchor.addEventListener('click', (e) => abrirRSVP(e, btn.link));
+                // -----------------------------------------------------------------------
+                // MODIFICAÇÃO: Link direto para o grupo do WhatsApp
+                // -----------------------------------------------------------------------
+                anchor.href = "https://chat.whatsapp.com/LOWLD1HRjg3Fxu1qwwL63p";
             } else {
                 anchor.href = btn.link;
             }
@@ -631,7 +608,7 @@
             anchor.innerHTML = `
                 <div class="rounded-full border border-stone-300 p-[2px] transition-transform duration-300 group-hover:scale-105 group-active:scale-95">
                     <div class="rounded-full custom-button-bg text-white flex items-center justify-center shadow-lg group-hover:bg-stone-700 transition-colors"
-                         style="width: ${sizePx}px; height: ${sizePx}px; background-color: #770e0e;">
+                         style="width: ${sizePx}px; height: ${sizePx}px; background-color: [[BUTTON_COLOR]];">
                         <i class="${btn.icone}" style="font-size: ${iconRem}rem;"></i>
                     </div>
                 </div>
@@ -756,7 +733,7 @@
         // TIMER DE CONTAGEM REGRESSIVA
         // ==================================================================
         function atualizarCronometro() {
-            const dataAlvo = new Date('2026-02-28T21:00:00');
+            const dataAlvo = new Date('[[EVENT_DATETIME]]');
             const agora = new Date();
 
             let diferenca = dataAlvo - agora;
