@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-20T13:26:05.109Z",
+  "timestamp": "2026-01-20T13:38:54.413Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -44,17 +44,18 @@
     "manual_raw_content": "- Solicitamos a gentileza de confirmar a presença antecipadamente.\n\n* Cheguem no horário para aproveitar cada momento e preparados para essa experiência memorável.\n\n* Traje: De preferência esporte fino.",
     "music_name": "Exploration- Coraline Soundtrack.mp3",
     "slug": "Alícia15Anos",
-    "watermark_enabled": true
+    "watermark_enabled": false
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768915565109.mp3",
-    "capa": "assets/capa_1768915565109.png",
-    "fundo_tela": "assets/fundo_tela_1768915565109.mp4",
-    "vid_abertura": "assets/vid_abertura_1768915565109.mp4"
+    "musica": "assets/musica_1768916334414.mp3",
+    "capa": "assets/capa_1768916334414.png",
+    "fundo_tela": "assets/fundo_tela_1768916334414.mp4",
+    "vid_abertura": "assets/vid_abertura_1768916334414.mp4",
+    "presentes": "assets/presentes_1768916334414.png"
   },
   "toggles": {
     "manualMode": "text",
-    "giftsMode": "link"
+    "giftsMode": "image"
   }
 }
