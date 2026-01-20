@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-20T22:58:54.332Z",
+  "timestamp": "2026-01-20T23:43:36.142Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -53,13 +53,19 @@
       "label": "Manual do Convidado",
       "url": "https://www.canva.com/design/DAG2_PMhvoA/5WU_st5qODc84PxRR7u1aQ/view?utm_content=DAG2_PMhvoA&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3880322b5a",
       "icon": "fa-solid fa-info-circle"
+    },
+    {
+      "id": 1,
+      "label": "Galeria de Fotos",
+      "url": "https://vocal-shortbread-f6b7bc.netlify.app/",
+      "icon": "fa-solid fa-link"
     }
   ],
   "assetsMap": {
-    "musica": "assets/musica_1768949934332.mp3",
-    "capa": "assets/capa_1768949934332.png",
-    "fundo_tela": "assets/fundo_tela_1768949934332.dat",
-    "vid_abertura": "assets/vid_abertura_1768949934332.mp4"
+    "musica": "assets/musica_1768952616142.mp3",
+    "capa": "assets/capa_1768952616142.png",
+    "fundo_tela": "assets/fundo_tela_1768952616142.mp4",
+    "vid_abertura": "assets/vid_abertura_1768952616142.mp4"
   },
   "toggles": {
     "manualMode": "text",
