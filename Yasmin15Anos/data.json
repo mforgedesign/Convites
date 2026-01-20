@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-20T21:25:45.173Z",
+  "timestamp": "2026-01-20T22:21:51.740Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -22,13 +22,13 @@
     "local_evento": "Alameda Maria Turíbia de Jesus 85, centro, Betim. MG.",
     "paleta_cores": "",
     "frase_convite": "",
-    "cor_botoes": "#000000",
+    "cor_botoes": "#751a1a",
     "sombra_gradiente": "#000000",
     "posicao_botoes": "4",
     "tamanho_botoes": "",
     "link_google_maps": "Alameda Maria Turíbia de Jesus 85, centro, Betim. MG.",
     "link_presentes": "",
-    "manual_content": "<p><i class='fa-solid fa-clock'></i> <strong>Chegue no horário:</strong> Sua presença pontual é muito importante para nós.</p>\n\n<p><i class='fa-solid fa-clipboard-check'></i> <strong>Confirme sua presença:</strong> Por favor, confirme presença pelo menos 15 dias antes do evento.</p>\n\n<p><i class='fa-solid fa-champagne-glasses'></i> <strong>Divirta-se bastante!</strong> Estamos ansiosos para celebrar este momento especial com você.</p>\n\n<p><i class='fa-solid fa-cake-candles'></i> <strong>Não vá embora sem me dar um abraço e comer um pedaço do bolo:</strong> Queremos compartilhar cada instante com você.</p>\n\n<p><i class='fa-solid fa-user-tie'></i> <strong>Dress Code:</strong> Traje Esporte Fino</p>\n\n<p><i class='fa-solid fa-exclamation-circle'></i> <strong>Atenção:</strong> As cores azul, vermelho e dourado são exclusivas da debutante. Pedimos a gentileza de evitá-las em sua vestimenta.</p>\n\n<p><i class='fa-solid fa-gift'></i> <strong>Tamanhos para presentes:</strong></p>\n<ul>\n    <li><strong>Blusa:</strong> P</li>\n    <li><strong>Calça:</strong> 38 ou 40</li>\n    <li><strong>Calçado:</strong> 39</li>\n    <li><strong>Vestido:</strong> P</li>\n</ul>",
+    "manual_content": "<p><i class='fa-solid fa-clock'></i> <strong>Chegue no horário:</strong> Sua presença pontual é muito importante para nós.</p>\n\n<p><i class='fa-solid fa-clipboard-check'></i> <strong>Confirme sua presença:</strong> Favor confirmar presença até dia 10/02, para melhor organização e para que seu nome possa constar na lista de entrada dos convidados.</p>\n\n<p><i class='fa-solid fa-champagne-glasses'></i> <strong>Divirta-se bastante!</strong> Estamos ansiosos para celebrar este momento especial com você.</p>\n\n<p><i class='fa-solid fa-cake-candles'></i> <strong>Não vá embora sem me dar um abraço e comer um pedaço do bolo:</strong> Queremos compartilhar cada instante com você.</p>\n\n<p><i class='fa-solid fa-user-tie'></i> <strong>Dress Code:</strong> Traje Esporte Fino</p>\n\n<p><i class='fa-solid fa-exclamation-circle'></i> <strong>Atenção:</strong> As cores azul, vermelho e dourado são exclusivas da debutante. Pedimos a gentileza de evitá-las em sua vestimenta.</p>\n\n<p><i class='fa-solid fa-gift'></i> <strong>Presentes:</strong></p>\n<ul>\n    <li><strong>Blusa:</strong> P</li>\n    <li><strong>Calça:</strong> 38 ou 40</li>\n    <li><strong>Calçado:</strong> 39</li>\n    <li><strong>Vestido:</strong> P</li>\n    <li><strong>Pix: (31)996485343</strong></li>\n</ul>",
     "numero_whatsapp": "",
     "link_confirmacao": "https://chat.whatsapp.com/LOWLD1HRjg3Fxu1qwwL63p",
     "permitir_acompanhante": false,
@@ -48,11 +48,11 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768944345173.mp3",
-    "capa": "assets/capa_1768944345173.png",
-    "folha_vazia": "assets/folha_vazia_1768944345173.png",
-    "fundo_tela": "assets/fundo_tela_1768944345173.png",
-    "vid_abertura": "assets/vid_abertura_1768944345173.mp4"
+    "musica": "assets/musica_1768947711740.mp3",
+    "capa": "assets/capa_1768947711740.png",
+    "folha_vazia": "assets/folha_vazia_1768947711740.png",
+    "fundo_tela": "assets/fundo_tela_1768947711740.png",
+    "vid_abertura": "assets/vid_abertura_1768947711740.mp4"
   },
   "toggles": {
     "manualMode": "text",
