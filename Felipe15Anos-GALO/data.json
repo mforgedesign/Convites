@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-20T23:46:28.269Z",
+  "timestamp": "2026-01-20T23:50:50.767Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -45,13 +45,13 @@
     "music_name": "",
     "slug": "Felipe15Anos-GALO",
     "watermark_enabled": true,
-    "confirmacao": ""
+    "confirmacao": "i"
   },
   "linksExtras": [],
   "assetsMap": {
-    "capa": "assets/capa_1768952788269.png",
-    "fundo_tela": "assets/fundo_tela_1768952788269.png",
-    "vid_abertura": "assets/vid_abertura_1768952788269.mp4"
+    "capa": "assets/capa_1768953050767.png",
+    "fundo_tela": "assets/fundo_tela_1768953050767.png",
+    "vid_abertura": "assets/vid_abertura_1768953050767.mp4"
   },
   "toggles": {
     "manualMode": "text",
