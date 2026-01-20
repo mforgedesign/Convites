@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-20T13:16:08.808Z",
+  "timestamp": "2026-01-20T13:26:05.109Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -24,7 +24,7 @@
     "frase_convite": "",
     "cor_botoes": "#311c4a",
     "sombra_gradiente": "#000000",
-    "posicao_botoes": "100",
+    "posicao_botoes": "5",
     "tamanho_botoes": "",
     "link_google_maps": "https://maps.app.goo.gl/AudFnNaZY6qxhU9i9",
     "link_presentes": "",
@@ -48,10 +48,10 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768914968808.mp3",
-    "capa": "assets/capa_1768914968808.png",
-    "fundo_tela": "assets/fundo_tela_1768914968808.mp4",
-    "vid_abertura": "assets/vid_abertura_1768914968808.mp4"
+    "musica": "assets/musica_1768915565109.mp3",
+    "capa": "assets/capa_1768915565109.png",
+    "fundo_tela": "assets/fundo_tela_1768915565109.mp4",
+    "vid_abertura": "assets/vid_abertura_1768915565109.mp4"
   },
   "toggles": {
     "manualMode": "text",
