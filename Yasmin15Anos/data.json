@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-20T01:46:51.981Z",
+  "timestamp": "2026-01-20T11:18:46.449Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -28,8 +28,8 @@
     "tamanho_botoes": "",
     "link_google_maps": "https://maps.app.goo.gl/4iCQKuY1MbY9yrwf6",
     "link_presentes": "",
-    "manual_content": "",
-    "numero_whatsapp": "",
+    "manual_content": "<p><i class='fa-solid fa-user-tie'></i> <strong>Dress Code:</strong> Traje Esporte Fino</p><p><i class='fa-solid fa-exclamation-circle'></i> <strong>Atenção:</strong> As cores azul, vermelho e dourado são exclusivas da debutante. Pedimos a gentileza de evitá-las em sua vestimenta.</p><p><i class='fa-solid fa-gift'></i> <strong>Tamanhos para presentes:</strong></p><ul><li><strong>Blusa:</strong> P</li><li><strong>Calça:</strong> 38 ou 40</li><li><strong>Calçado:</strong> 39</li><li><strong>Vestido:</strong> P</li></ul>",
+    "numero_whatsapp": "553199631173",
     "link_confirmacao": "",
     "permitir_acompanhante": false,
     "timer_contagem": true,
@@ -41,17 +41,17 @@
     "fill_prompt": "Nome: \nIdade (se houver): (não informada)\nTipo de evento: \nTema: \nTask: Preencha essa folha com os dados para convite de forma criativa e elegante.\nColoque elementos de design de forma elegante no convite, divisórias modernas, hierarquia visual madura e profissional, linhas, e uma frase similar a \"Você está convidado para o... (crie a frase conforme o contexto)\" conforme sua criatividade.\nColoque textura, camadas, adornos no texto do nome, letra cursiva (Great Vibes) e efeitos especiais elegantes.",
     "sugestoes_presentes": "",
     "gifts_image_prompt": "",
-    "manual_raw_content": "",
+    "manual_raw_content": "(Elabore com base nos dados abaixo:)\nDress code: Traje Esporte Fino.\nAtenção: As cores azul, vermelho e dourado são exclusivas da debutante, favor evitar de utilizar!\n\nTamanhos para presente:\nTamanho Para Blusa: P\nTamanho para Calça: 38 ou 40\nTamanho para Calçado: 39\nTamanho para Vestido: P\n",
     "music_name": "",
     "slug": "Yasmin15Anos",
     "watermark_enabled": true
   },
   "linksExtras": [],
   "assetsMap": {
-    "capa": "assets/capa_1768873611981.png",
-    "folha_vazia": "assets/folha_vazia_1768873611981.png",
-    "fundo_tela": "assets/fundo_tela_1768873611981.png",
-    "vid_abertura": "assets/vid_abertura_1768873611981.mp4"
+    "capa": "assets/capa_1768907926449.png",
+    "folha_vazia": "assets/folha_vazia_1768907926449.png",
+    "fundo_tela": "assets/fundo_tela_1768907926449.png",
+    "vid_abertura": "assets/vid_abertura_1768907926449.mp4"
   },
   "toggles": {
     "manualMode": "text",
