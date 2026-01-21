@@ -1,17 +1,7 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-21T02:34:01.700Z",
+  "timestamp": "2026-01-21T02:59:00.929Z",
   "formData": {
-    "capa": null,
-    "capa_referencia": null,
-    "folha_vazia": null,
-    "vid_abertura": null,
-    "fundo_tela": null,
-    "folha_only": null,
-    "background_only": null,
-    "presentes": null,
-    "manual": null,
-    "musica": "blob:https://builder.mforge.com.br/20b610b2-f1c4-4ec5-8654-05b01093ebb5",
     "nome": "Izabelly Hadassa",
     "tipo_evento": "Aniversário",
     "tipo_evento_custom": "",
@@ -25,7 +15,7 @@
     "cor_botoes": "#193592",
     "sombra_gradiente": "#000000",
     "posicao_botoes": "0",
-    "tamanho_botoes": "",
+    "tamanho_botoes": "medio",
     "link_google_maps": "https://maps.app.goo.gl/95NhXhcV9dgR8GSB7",
     "link_presentes": "",
     "manual_content": "<p><i class=\"fa-solid fa-clock\"></i> <strong>Horário:</strong> Iniciaremos nossa celebração pontualmente às 21h00. Sua pontualidade tornará o início deste sonho ainda mais especial!</p><p><i class=\"fa-solid fa-user-tie\"></i> <strong>Dress Code:</strong> Para celebrarmos em grande estilo, o traje sugerido é o Esporte Fino.</p><p><i class=\"fa-solid fa-calendar-check\"></i> <strong>R.S.V.P:</strong> Sua presença é fundamental para nós. Por favor, confirme sua participação até o dia 20/06.</p><p><i class=\"fa-solid fa-heart\"></i> <strong>Um pedido especial:</strong> Se você foi convidado, é porque ocupa um lugar único em meu coração. Por isso, não saia da festa sem antes me dar um abraço! Quero celebrar cada momento ao seu lado.</p><p>Com  amor,<br><strong>Izabelly Hadassa</strong></p>",
@@ -43,15 +33,15 @@
     "manual_raw_content": "(Não acrescente ou modfique o texto)\n\n- Dress code: Sport fino\n\nConfirmações de presença até 20/06\n\nNão saia da festa antes de me dar um abraço! Afinal, se te convidei é porque você é especial para mim!\n\nIniciaremos pontualmente às 21h00, então não se atrasa!\n\nCom amor, Izabelly Hadassa.",
     "music_name": "b716-746c-4d16-98bc-bb52700fe4b9.mp3",
     "slug": "Izabelly15Anos",
-    "watermark_enabled": true
+    "watermark_enabled": false
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768962841700.mp3",
-    "capa": "assets/capa_1768962841700.png",
-    "folha_vazia": "assets/folha_vazia_1768962841700.png",
-    "fundo_tela": "assets/fundo_tela_1768962841700.mp4",
-    "vid_abertura": "assets/vid_abertura_1768962841700.mp4"
+    "musica": "assets/musica_1768964340929.mp3",
+    "capa": "assets/capa_1768964340929.png",
+    "folha_vazia": "assets/folha_vazia_1768964340929.png",
+    "fundo_tela": "assets/fundo_tela_1768964340929.mp4",
+    "vid_abertura": "assets/vid_abertura_1768964340929.mp4"
   },
   "toggles": {
     "manualMode": "text",
