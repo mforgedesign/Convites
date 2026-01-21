@@ -15,7 +15,7 @@
     <!-- Open Graph for WhatsApp/Social Preview -->
     <meta property="og:title" content="Convite | Aniversário">
     <meta property="og:description" content="Clique para ver o convite interativo!">
-    <meta property="og:image" content="capa/capa_1769035299865.png">
+    <meta property="og:image" content="capa/capa_1769035836082.png">
     <meta property="og:type" content="website">
 
     <!-- Envelope Favicon -->
@@ -96,6 +96,44 @@
         .texto-sombra {
             text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
         }
+
+        /* =========================================
+           SCENARIOS CSS (Injected via Render Mode)
+           ========================================= */
+
+        /* Scenario A: Direct Mode (No Cover, No Intro) */
+        .mode-direct #capaInicial {
+            background-image: none !important;
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Slight darken for text readability */
+        }
+
+        .mode-direct #capaInicial .bg-black\/20 {
+            display: none;
+        }
+
+        /* Show content immediately behind */
+        .mode-direct #fundoTelaImg,
+        .mode-direct #fundoTelaVideo,
+        .mode-direct #containerBotoes,
+        .mode-direct #containerShadow {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+        }
+
+        .mode-direct #videoAbertura {
+            display: none !important;
+        }
+
+        /* Scenario C: Transparent Cover (Intro as Cover) */
+        .mode-transparent #capaInicial {
+            background-image: none !important;
+            background-color: transparent !important;
+        }
+
+        .mode-transparent #capaInicial .bg-black\/20 {
+            display: none;
+        }
     </style>
 <style>:root { --button-color: #2c0863; } .custom-button-bg { background-color: var(--button-color) !important; }</style></head>
 
@@ -106,19 +144,19 @@
 
         <!-- Background (Unified) - Layer 1 -->
         <!-- Can be image or video - determined by file extension -->
-        <img id="fundoTelaImg" src="assets/fundo_tela_1769035299865.mp4" class="camada z-10 invisivel"
+        <img id="fundoTelaImg" src="assets/fundo_tela_1769035836082.mp4" class="camada z-10 invisivel"
             onerror="this.style.display='none'">
         <video id="fundoTelaVideo" class="camada z-10 invisivel" playsinline loop muted
             onerror="this.style.display='none'">
-            <source src="assets/fundo_tela_1769035299865.mp4" type="video/mp4">
+            <source src="assets/fundo_tela_1769035836082.mp4" type="video/mp4">
         </video>
 
         <video id="videoAbertura" class="camada z-20" playsinline muted>
-            <source src="assets/vid_abertura_1769035299865.mp4" type="video/mp4">
+            <source src="assets/vid_abertura_1769035836082.mp4" type="video/mp4">
         </video>
 
         <audio id="musicaFundo" loop preload="auto">
-            <source src="assets/musica_1769035299865.mp3" type="audio/mp3">
+            <source src="assets/musica_1769035836082.mp3" type="audio/mp3">
         </audio>
 
         <button id="btnMute"
@@ -174,7 +212,7 @@
 
         <div id="capaInicial"
             class="absolute inset-0 z-50 bg-cover bg-center flex flex-col items-center justify-center cursor-pointer transition-opacity duration-700"
-            style="background-image: url('assets/capa_1769035299865.png');">
+            style="background-image: url('assets/capa_1769035836082.png');">
             <div class="absolute inset-0 bg-black/20"></div>
 
             <div id="dicaInteractionContainer" class="relative z-10 flex flex-col items-center gap-4 animate-pulse">
@@ -205,7 +243,7 @@
             class="relative w-full max-w-[400px] h-[80%] rounded-xl shadow-2xl overflow-hidden flex flex-col border border-white/20">
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="assets/folha_vazia_1769035299865.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="assets/folha_vazia_1769035836082.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/60"></div>
             </div>
 
@@ -234,7 +272,7 @@
                 class="absolute top-3 right-3 z-10 bg-black/50 text-white hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center transition-colors border border-white/20">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <img id="imagemPresentes" src="assets/presentes_1769035299865.png" class="max-w-full max-h-[85vh] object-contain rounded-lg">
+            <img id="imagemPresentes" src="assets/presentes_1769035836082.png" class="max-w-full max-h-[85vh] object-contain rounded-lg">
         </div>
     </div>
 
@@ -258,7 +296,7 @@
 
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="assets/folha_vazia_1769035299865.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="assets/folha_vazia_1769035836082.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/70"></div>
             </div>
 
@@ -319,6 +357,23 @@
     </div>
 
     <script>
+        // ==================================================================
+        // 0. RENDER MODE & SCENARIO LOGIC
+        // ==================================================================
+        const renderMode = '[[RENDER_MODE]]'; // standard, direct, transparent-cover
+        console.log('[AutoBuilder] Render Mode:', renderMode);
+
+        if (renderMode === 'direct') {
+            document.body.classList.add('mode-direct');
+            const icon = document.querySelector('#dicaInteractionContainer i');
+            const text = document.querySelector('#dicaInteractionContainer h1');
+            // Change to Music Hint
+            if (icon) icon.className = "fa-solid fa-music text-5xl text-white drop-shadow-lg animar-clique";
+            if (text) text.innerText = "Clique para tocar a música!";
+        } else if (renderMode === 'transparent-cover') {
+            document.body.classList.add('mode-transparent');
+        }
+
         // ==================================================================
         // 1. CONFIGURAÇÃO DOS BOTÕES (Injetado pelo AutoBuilder)
         // ==================================================================
@@ -460,7 +515,7 @@
 
             // SIMPLIFIED LOGIC: Any URL opens directly, only raw phone numbers use popup
             const isUrl = link.startsWith("http");
-            
+
             if (isUrl) {
                 // ANY URL (forms, group chats, wedding sites, etc) opens directly
                 window.open(link, '_blank');
@@ -680,10 +735,17 @@
                 fundoTelaVideo.play().catch(function (e) { console.log("Fundo video not used or play failed"); });
             }
 
-            // Vídeo de abertura na camada da frente
-            if (videoAbertura) {
-                videoAbertura.currentTime = 0;
-                videoAbertura.play().catch(function (e) { console.error("Intro play failed:", e); });
+            // SCENARIO SPECIFIC LOGIC
+            if (renderMode === 'direct') {
+                // Skip Intro entirely -> Go to Loop State directly
+                irParaLoop();
+            } else {
+                // Standard or Transparent-Cover Mode -> Play Intro
+                // Vídeo de abertura na camada da frente
+                if (videoAbertura) {
+                    videoAbertura.currentTime = 0;
+                    videoAbertura.play().catch(function (e) { console.error("Intro play failed:", e); });
+                }
             }
 
             // Mostra controles
