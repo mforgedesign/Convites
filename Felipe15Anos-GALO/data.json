@@ -1,17 +1,8 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-21T22:45:03.704Z",
+  "timestamp": "2026-01-21T23:02:21.758Z",
   "formData": {
     "capa": null,
-    "capa_referencia": null,
-    "folha_vazia": null,
-    "vid_abertura": null,
-    "fundo_tela": null,
-    "folha_only": null,
-    "background_only": null,
-    "presentes": null,
-    "manual": null,
-    "musica": "blob:https://builder.mforge.com.br/e0afe0f3-46e4-4436-8009-1627eeb2eeef",
     "nome": "Felipe",
     "tipo_evento": "Aniversário",
     "tipo_evento_custom": "",
@@ -25,12 +16,11 @@
     "cor_botoes": "#000000",
     "sombra_gradiente": "#000000",
     "posicao_botoes": "18",
-    "tamanho_botoes": "",
+    "tamanho_botoes": "medio",
     "link_google_maps": "https://maps.app.goo.gl/4iCQKuY1MbY9yrwf6",
     "link_presentes": "",
-    "manual_content": "<p><i class='fa-solid fa-clock'></i> <strong>Chegue no horário:</strong> Sua presença pontual é muito importante para nós.</p>\n\n<p><i class='fa-solid fa-clipboard-check'></i> <strong>Confirme sua presença:</strong> Favor confirmar presença até dia 10/02, para melhor organização e para que seu nome possa constar na lista de entrada dos convidados.</p>\n\n<p><i class='fa-solid fa-champagne-glasses'></i> <strong>Divirta-se bastante!</strong> Estamos ansiosos para celebrar este momento especial com você.</p>\n\n<p><i class='fa-solid fa-cake-candles'></i> <strong>Não vá embora sem me dar um abraço e comer um pedaço do bolo:</strong> Queremos compartilhar cada instante com você.</p>\n\n<p><i class='fa-solid fa-user-tie'></i> <strong>Dress Code:</strong> Traje Esporte Fino</p>\n\n<p><i class='fa-solid fa-gift'></i> <strong>Presentes:</strong></p>\n<ul>\n    <li><strong>Perfume</strong></li>\n    <li><strong>Calçado:</strong> 41</li>\n    <li><strong>Pix: </strong></li>\n</ul>",
-    "numero_whatsapp": "",
-    "link_confirmacao": "https://docs.google.com/forms/d/e/1FAIpQLSezR-cgu_Bh4FSAy4kle4onGcu3eQYRgtna8yCZfRT676eZcg/viewform",
+    "manual_content": "<p><i class='fa-solid fa-clock'></i> <strong>Chegue no horário:</strong> Sua presença pontual é muito importante para nós.</p>\n\n<p><i class='fa-solid fa-clipboard-check'></i> <strong>Confirme sua presença:</strong> Favor confirmar presença até dia 10/02, para melhor organização e para que seu nome possa constar na lista de entrada dos convidados.</p>\n\n<p><i class='fa-solid fa-champagne-glasses'></i> <strong>Divirta-se bastante!</strong> Estamos ansiosos para celebrar este momento especial com você.</p>\n\n<p><i class='fa-solid fa-cake-candles'></i> <strong>Não vá embora sem me dar um abraço e comer um pedaço do bolo:</strong> Queremos compartilhar cada instante com você.</p>\n\n<p><i class='fa-solid fa-user-tie'></i> <strong>Dress Code:</strong> Traje Esporte Fino</p>\n",
+    "confirmacao": "https://chat.whatsapp.com/LOWLD1HRjg3Fxu1qwwL63p",
     "permitir_acompanhante": false,
     "timer_contagem": false,
     "cover_prompt": "Tipo de evento: \nSelo: \nPaleta de Cores: \nTema: \nTask: Create a vertical image of a hyper-realistic 3D render of a premium invitation envelope. The envelope is sealed with an intricately detailed wax seal. The paper boasts a high-quality, textured finish, exuding elegance and sophistication. Background: A setting with elements that enhance the luxurious feel of the invitation without specific thematic details. The composition is centered, with dramatic lighting casting volumetric light and creating a soft focus and depth of field. Lighting: Dramatic, cinematic lighting with volumetric effects. Highlights on the envelope and wax seal accentuate the texture and detail. Style: Photorealistic, hyper-detailed, cinematic, and elegant. Technical Details: Resolution: 8K, ultra high resolution Aspect Ratio: 9:16 Rendering Engine: Octane Render, Unreal Engine 5 Camera: Macro lens, f/2.8, shallow depth of field",
@@ -44,14 +34,14 @@
     "manual_raw_content": "",
     "music_name": "HINO DO ATLÉTICO-MG.mp3",
     "slug": "Felipe15Anos-GALO",
-    "watermark_enabled": false,
-    "confirmacao": "https://chat.whatsapp.com/LOWLD1HRjg3Fxu1qwwL63p"
+    "watermark_enabled": false
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1769035503704.mp3",
-    "fundo_tela": "assets/fundo_tela_1769035503704.png",
-    "presentes": "assets/presentes_1769035503704.png"
+    "musica": "assets/musica_1769036541758.mp3",
+    "fundo_tela": "assets/fundo_tela_1769036541758.png",
+    "vid_abertura": "assets/vid_abertura_1769036541758.mp4",
+    "presentes": "assets/presentes_1769036541758.png"
   },
   "toggles": {
     "manualMode": "text",
