@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-20T14:31:38.183Z",
+  "timestamp": "2026-01-21T11:07:28.914Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -28,7 +28,7 @@
     "tamanho_botoes": "",
     "link_google_maps": "https://maps.app.goo.gl/STgUoxLEtpj67dXQ6",
     "link_presentes": "",
-    "manual_content": "<p><i class=\"fa-solid fa-user-tie\"></i> <strong>Dress Code: Elegância e Estilo</strong><br>Para celebrarmos este momento com todo o charme que ele merece, convidamos nossos queridos convidados a virem em <strong>Traje Esporte Fino</strong>. Queremos que você se sinta impecável e confortável para aproveitar cada brinde conosco.</p><p><i class=\"fa-solid fa-palette\"></i> <strong>Um Pedido Especial</strong><br>Com carinho, pedimos gentilmente que as cores <strong>branco e rosé</strong> sejam reservadas exclusivamente para a noiva. Agradecemos por nos ajudarem a tornar este dia visualmente inesquecível!</p>",
+    "manual_content": "<p><i class=\"fa-solid fa-user-tie\"></i> <strong>Dress Code: Elegância e Estilo</strong><br>Para celebrarmos este momento com todo o charme que ele merece, convidamos nossos queridos convidados a virem em <strong>Traje Esporte Fino</strong>. Queremos que você se sinta impecável e confortável para aproveitar cada brinde conosco.</p><p><i class=\"fa-solid fa-palette\"></i> <strong>Um Pedido Especial</strong><br>Com carinho, pedimos gentilmente que as cores <strong>branco e rosé</strong> sejam reservadas exclusivamente para a aniversariante. Agradecemos por nos ajudarem a tornar este dia visualmente inesquecível!</p>",
     "numero_whatsapp": "5519987660835",
     "link_confirmacao": "",
     "permitir_acompanhante": false,
@@ -44,16 +44,17 @@
     "manual_raw_content": "(Elabore de forma criativa:)\n\nDress code: Traje esporte fino\nNão usar Rosé e branco",
     "music_name": "Christina Perri - A Thousand Years (Piano & Cello Cover) - The Piano Guys.mp3",
     "slug": "KemillyLuiza15Anos",
-    "watermark_enabled": true
+    "watermark_enabled": true,
+    "confirmacao": "5519987660835"
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768919498184.mp3",
-    "capa": "assets/capa_1768919498184.png",
-    "folha_vazia": "assets/folha_vazia_1768919498184.png",
-    "fundo_tela": "assets/fundo_tela_1768919498184.png",
-    "vid_abertura": "assets/vid_abertura_1768919498184.mp4",
-    "presentes": "assets/presentes_1768919498184.png"
+    "musica": "assets/musica_1768993648914.mp3",
+    "capa": "assets/capa_1768993648914.png",
+    "folha_vazia": "assets/folha_vazia_1768993648914.png",
+    "fundo_tela": "assets/fundo_tela_1768993648914.png",
+    "vid_abertura": "assets/vid_abertura_1768993648914.mp4",
+    "presentes": "assets/presentes_1768993648914.png"
   },
   "toggles": {
     "manualMode": "text",
