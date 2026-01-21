@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-21T00:14:26.926Z",
+  "timestamp": "2026-01-21T21:40:18.262Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -44,17 +44,17 @@
     "manual_raw_content": "",
     "music_name": "musica.mp3",
     "slug": "Yasmin15Anos",
-    "watermark_enabled": true,
+    "watermark_enabled": false,
     "confirmacao": "https://chat.whatsapp.com/LOWLD1HRjg3Fxu1qwwL63p"
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1768954466926.mp3",
-    "capa": "assets/capa_1768954466926.png",
-    "folha_vazia": "assets/folha_vazia_1768954466926.png",
-    "fundo_tela": "assets/fundo_tela_1768954466926.mp4",
-    "vid_abertura": "assets/vid_abertura_1768954466926.mp4",
-    "presentes": "assets/presentes_1768954466926.png"
+    "musica": "assets/musica_1769031618262.mp3",
+    "capa": "assets/capa_1769031618262.png",
+    "folha_vazia": "assets/folha_vazia_1769031618262.png",
+    "fundo_tela": "assets/fundo_tela_1769031618262.dat",
+    "vid_abertura": "assets/vid_abertura_1769031618262.mp4",
+    "presentes": "assets/presentes_1769031618262.png"
   },
   "toggles": {
     "manualMode": "text",
