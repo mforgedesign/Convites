@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-21T00:17:30.096Z",
+  "timestamp": "2026-01-21T21:39:14.760Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -24,7 +24,7 @@
     "frase_convite": "",
     "cor_botoes": "#000000",
     "sombra_gradiente": "#000000",
-    "posicao_botoes": "100",
+    "posicao_botoes": "18",
     "tamanho_botoes": "",
     "link_google_maps": "https://maps.app.goo.gl/4iCQKuY1MbY9yrwf6",
     "link_presentes": "",
@@ -44,17 +44,18 @@
     "manual_raw_content": "",
     "music_name": "",
     "slug": "Felipe15Anos-GALO",
-    "watermark_enabled": true,
-    "confirmacao": "i"
+    "watermark_enabled": false,
+    "confirmacao": "https://chat.whatsapp.com/LOWLD1HRjg3Fxu1qwwL63p"
   },
   "linksExtras": [],
   "assetsMap": {
-    "capa": "assets/capa_1768954650097.png",
-    "fundo_tela": "assets/fundo_tela_1768954650097.png",
-    "vid_abertura": "assets/vid_abertura_1768954650097.mp4"
+    "capa": "assets/capa_1769031554760.png",
+    "fundo_tela": "assets/fundo_tela_1769031554760.png",
+    "vid_abertura": "assets/vid_abertura_1769031554760.mp4",
+    "presentes": "assets/presentes_1769031554760.png"
   },
   "toggles": {
     "manualMode": "text",
-    "giftsMode": "link"
+    "giftsMode": "image"
   }
 }
