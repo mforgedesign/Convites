@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-21T21:39:14.760Z",
+  "timestamp": "2026-01-21T22:45:03.704Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -11,7 +11,7 @@
     "background_only": null,
     "presentes": null,
     "manual": null,
-    "musica": null,
+    "musica": "blob:https://builder.mforge.com.br/e0afe0f3-46e4-4436-8009-1627eeb2eeef",
     "nome": "Felipe",
     "tipo_evento": "Aniversário",
     "tipo_evento_custom": "",
@@ -42,17 +42,16 @@
     "sugestoes_presentes": "",
     "gifts_image_prompt": "",
     "manual_raw_content": "",
-    "music_name": "",
+    "music_name": "HINO DO ATLÉTICO-MG.mp3",
     "slug": "Felipe15Anos-GALO",
     "watermark_enabled": false,
     "confirmacao": "https://chat.whatsapp.com/LOWLD1HRjg3Fxu1qwwL63p"
   },
   "linksExtras": [],
   "assetsMap": {
-    "capa": "assets/capa_1769031554760.png",
-    "fundo_tela": "assets/fundo_tela_1769031554760.png",
-    "vid_abertura": "assets/vid_abertura_1769031554760.mp4",
-    "presentes": "assets/presentes_1769031554760.png"
+    "musica": "assets/musica_1769035503704.mp3",
+    "fundo_tela": "assets/fundo_tela_1769035503704.png",
+    "presentes": "assets/presentes_1769035503704.png"
   },
   "toggles": {
     "manualMode": "text",
