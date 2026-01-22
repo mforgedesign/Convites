@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-22T19:10:01.041Z",
+  "timestamp": "2026-01-22T20:55:51.675Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -39,7 +39,7 @@
     "manual_raw_content": "",
     "music_name": "Christina Perri - A Thousand Years (Piano & Cello Cover) - The Piano Guys.mp3",
     "slug": "KemillyLuiza15Anos",
-    "watermark_enabled": true,
+    "watermark_enabled": false,
     "folha_only": null,
     "background_only": null,
     "numero_whatsapp": "5519987660835",
@@ -50,12 +50,12 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1769109001041.mp3",
-    "capa": "assets/capa_1769109001041.png",
-    "folha_vazia": "assets/folha_vazia_1769109001041.png",
-    "fundo_tela": "assets/fundo_tela_1769109001041.png",
-    "vid_abertura": "assets/vid_abertura_1769109001041.mp4",
-    "presentes": "assets/presentes_1769109001041.png"
+    "musica": "assets/musica_1769115351675.mp3",
+    "capa": "assets/capa_1769115351675.png",
+    "folha_vazia": "assets/folha_vazia_1769115351675.png",
+    "fundo_tela": "assets/fundo_tela_1769115351675.png",
+    "vid_abertura": "assets/vid_abertura_1769115351675.mp4",
+    "presentes": "assets/presentes_1769115351675.png"
   },
   "toggles": {
     "manualMode": "text",
