@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-22T03:27:35.080Z",
+  "timestamp": "2026-01-22T03:32:25.184Z",
   "formData": {
     "nome": "Adriana e José",
     "tipo_evento": "",
@@ -35,12 +35,12 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1769052455080.mp3",
-    "capa": "assets/capa_1769052455080.png",
-    "folha_vazia": "assets/folha_vazia_1769052455080.png",
-    "fundo_tela": "assets/fundo_tela_1769052455080.mp4",
-    "vid_abertura": "assets/vid_abertura_1769052455080.mp4",
-    "presentes": "assets/presentes_1769052455080.png"
+    "musica": "assets/musica_1769052745184.mp3",
+    "capa": "assets/capa_1769052745184.png",
+    "folha_vazia": "assets/folha_vazia_1769052745184.png",
+    "fundo_tela": "assets/fundo_tela_1769052745184.mp4",
+    "vid_abertura": "assets/vid_abertura_1769052745184.mp4",
+    "presentes": "assets/presentes_1769052745184.png"
   },
   "toggles": {
     "manualMode": "text",
