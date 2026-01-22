@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<!--
+  AutoBuilder v4.1 - Final Template
+  =================================
+  Template base para geração de convites.
+  Contém a lógica de:
+  - Animação (Abertura/Loop)
+  - Botões Dinâmicos ([[BUTTON_FILL_ENABLED]])
+  - Sombras Configuráveis ([[SHADOW_STYLE]])
+  - Modo Offline / PWA
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Adriana e José | Evento</title>
+
+    <!-- Meta Tags para Redes Sociais -->
+    <meta property="og:title" content="Adriana e José | Evento">
+    <meta property="og:description" content="Você recebeu um convite especial!">
+    <meta property="og:image" content="capa/capa_1769051146544.png">
+    <meta property="og:type" content="website">
+
+    <!-- Tailwind CSS (CDN para garantir compatibilidade) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Estilos Globais e Utilitários */
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #000;
+            overflow: hidden;
+            /* Impede scroll no corpo principal */
+            touch-action: none;
+            /* Melhora performance em mobile */
+        }
+
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Classes de Controle de Visibilidade */
+        .invisivel {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .visivel {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Transições */
+        .transition-opacity {
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        /* Animação de Entrada dos Botões */
+        @keyframes slideUpFade {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .button-entrance {
+            opacity: 0;
+            animation: slideUpFade 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        /* Ajustes de Z-Index */
+        #layer-video {
+            z-index: 10;
+        }
+
+        #layer-interface {
+            z-index: 20;
+        }
+
+        #layer-popups {
+            z-index: 50;
+        }
+
+        /* Direct Mode Click Animation */
+        .animar-clique {
+            animation: pulse 1.5s infinite;
+        }
+    </style>
+<style>:root { --button-color: #164e51; } .custom-button-bg { background-color: var(--button-color) !important; }</style></head>
+
+<body class="text-gray-800 antialiased h-screen w-screen relative">
+
+    <!-- ==================================================================
+       CAMADA 1: FUNDO / VÍDEO / CAPA
+       ================================================================== -->
+    <div id="layer-video" class="absolute inset-0 w-full h-full overflow-hidden bg-black">
+
+        <!-- ELEMENTO DE VÍDEO ÚNICO (Estratégia Swap Source) -->
+        <video id="mainVideo"
+            class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" playsinline
+            webkit-playsinline x5-playsinline preload="auto">
+            <!-- Source will be injected via JS -->
+        </video>
+
+        <!-- IMAGEM DE CAPA (Placeholder antes do play) -->
+        <div id="capaContainer"
+            class="absolute inset-0 w-full h-full bg-cover bg-center z-20 flex flex-col items-center justify-center transition-opacity duration-1000"
+            style="background-image: url('capa/capa_1769051146544.png');">
+
+            <!-- Botão de Início (Centralizado) -->
+            <button id="btnIniciar"
+                class="group relative px-8 py-4 bg-white/10 backdrop-blur-md border border-white/30 rounded-full text-white overflow-hidden transition-all hover:scale-105 hover:bg-white/20 shadow-2xl animate-float">
+                <span class="relative z-10 flex items-center gap-3 font-serif italic text-xl tracking-wider">
+                    <i class="fa-solid fa-envelope-open-text text-sm"></i>
+                    Abrir Convite
+                </span>
+                <!-- Shine Effect -->
+                <div
+                    class="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent z-0">
+                </div>
+            </button>
+
+            <!-- Dica para Modo Direct (Oculto por padrão) -->
+            <div id="dicaInteractionContainer"
+                class="absolute bottom-32 flex flex-col items-center gap-2 transition-opacity duration-500 opacity-0 pointer-events-none">
+                <i class="fa-regular fa-hand-pointer text-4xl text-white drop-shadow-lg animate-bounce"></i>
+                <h1 class="text-white text-lg font-light drop-shadow-md tracking-widest uppercase">Toque para Abrir</h1>
+            </div>
+
+            <!-- Marca D'água (Dinâmica) -->
+            <div id="watermark"
+                class="absolute bottom-4 left-0 w-full text-center pointer-events-none [[WATERMARK_CLASS]]">
+                <p class="text-[10px] text-white/40 uppercase tracking-[0.2em]">Criado com AutoBuilder</p>
+                <!-- Seletor de Pagamento (Invisível no render final se pago) -->
+            </div>
+        </div>
+
+        <!-- FOLHA VAZIA PREENCHIDA (Fallback estático ou Layer de Fundo) -->
+        <!-- Usado apenas se não houver vídeo de loop, ou como transição -->
+        <div id="staticBackground"
+            class="absolute inset-0 w-full h-full bg-cover bg-center z-0 opacity-0 transition-opacity duration-1000"
+            style="background-image: url('folha/folha_preenchida.png');">
+        </div>
+    </div>
+
+    <!-- ==================================================================
+       CAMADA 2: INTERFACE (BOTÕES, TEXTOS, ETC)
+       ================================================================== -->
+    <div id="layer-interface" class="absolute inset-0 w-full h-full pointer-events-none">
+
+        <!-- Countdown Topo (Opcional) -->
+        <div id="countdownContainer"
+            class="absolute top-12 left-0 w-full flex justify-center z-30 transition-all duration-700 -translate-y-20 ">
+            <div class="bg-black/20 backdrop-blur-sm px-6 py-2 rounded-full border border-white/10">
+                <div class="flex gap-4 text-white font-serif" id="countdownTimer">
+                    <!-- JS preenche -->
+                    <span class="flex flex-col items-center"><strong class="text-xl leading-none"
+                            id="d-day">00</strong><small
+                            class="text-[8px] uppercase tracking-widest opacity-80">Dias</small></span>
+                    <span class="text-xl self-start mt-[-2px]">:</span>
+                    <span class="flex flex-col items-center"><strong class="text-xl leading-none"
+                            id="d-hour">00</strong><small
+                            class="text-[8px] uppercase tracking-widest opacity-80">Hrs</small></span>
+                    <span class="text-xl self-start mt-[-2px]">:</span>
+                    <span class="flex flex-col items-center"><strong class="text-xl leading-none"
+                            id="d-min">00</strong><small
+                            class="text-[8px] uppercase tracking-widest opacity-80">Min</small></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gradiente de fundo fixo (não se move) -->
+        <div id="containerShadow"
+            class="absolute bottom-0 left-0 w-full z-30 pb-10 px-2 pt-20 invisivel transition-opacity duration-1000"
+            style="[[SHADOW_STYLE]]">
+        </div>
+
+        <!-- Container dos botões (se move com offset) -->
+        <div id="containerBotoes"
+            class="absolute bottom-[24%] left-0 w-full z-40 px-6 pointer-events-auto transition-all duration-1000 translate-y-20 opacity-0 flex flex-col items-center justify-end pb-8">
+            <!-- Botões injetados via JS -->
+        </div>
+
+    </div>
+
+    <!-- ==================================================================
+       CAMADA 3: POPUPS E MODAIS
+       ================================================================== -->
+    <div id="layer-popups" class="relative z-50">
+
+        <!-- POPUP MANUAL (TEXTO) -->
+        <div id="popupManual"
+            class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 invisivel transition-opacity duration-300">
+            <div
+                class="bg-white w-full max-w-md max-h-[80vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-[scaleIn_0.3s_ease-out]">
+                <div class="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                    <h3 class="font-serif italic text-xl text-gray-800">Informações</h3>
+                    <button id="btnCloseManual"
+                        class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors">
+                        <i class="fa-solid fa-xmark text-gray-600"></i>
+                    </button>
+                </div>
+                <div class="p-6 overflow-y-auto prose prose-sm max-w-none text-gray-600 leading-relaxed"
+                    id="manualContent">
+                    <!-- Conteúdo injetado -->
+                </div>
+            </div>
+        </div>
+
+        <!-- POPUP MANUAL (IMAGEM) -->
+        <div id="popupManualImage"
+            class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 invisivel transition-opacity duration-300 z-[60]">
+            <button id="btnCloseManualImage"
+                class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur text-white flex items-center justify-center transition-all z-10">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <img src="manual/manual.png"
+                class="max-w-full max-h-[90vh] rounded-lg shadow-2xl object-contain animate-[scaleIn_0.3s_ease-out]"
+                alt="Manual">
+        </div>
+
+        <!-- POPUP PRESENTES (IMAGEM) -->
+        <div id="popupPresentes"
+            class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 invisivel transition-opacity duration-300 z-[60]">
+            <button id="btnClosePresentes"
+                class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur text-white flex items-center justify-center transition-all z-10">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <img src="presentes/presentes.png"
+                class="max-w-full max-h-[90vh] rounded-lg shadow-2xl object-contain animate-[scaleIn_0.3s_ease-out]"
+                alt="Lista de Presentes">
+        </div>
+
+        <!-- POPUP RSVP (CONFIRMAÇÃO) -->
+        <div id="popupRSVP"
+            class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 invisivel transition-opacity duration-300">
+            <div
+                class="bg-white w-full max-w-md rounded-t-2xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-[slideUp_0.4s_cubic-bezier(0.16,1,0.3,1)]">
+                <!-- Header Com Imagem/Cor -->
+                <div
+                    class="bg-#164e51 h-24 flex items-center justify-center relative pattern-grid-lg text-white">
+                    <h3 class="font-serif italic text-2xl drop-shadow-md">Confirmação</h3>
+                    <button id="btnCloseRSVP" class="absolute top-4 right-4 text-white/80 hover:text-white transition">
+                        <i class="fa-solid fa-xmark text-2xl"></i>
+                    </button>
+                </div>
+
+                <div class="p-6 space-y-5">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Seu Nome
+                            Completo</label>
+                        <input type="text" id="inputName"
+                            class="w-full border-b-2 border-gray-200 focus:border-#164e51 outline-none py-2 text-gray-800 transition-colors bg-transparent"
+                            placeholder="Ex: Maria Silva">
+                    </div>
+                    <div>
+                        <label
+                            class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">WhatsApp</label>
+                        <input type="tel" id="inputPhone"
+                            class="w-full border-b-2 border-gray-200 focus:border-#164e51 outline-none py-2 text-gray-800 transition-colors bg-transparent"
+                            placeholder="(11) 99999-9999">
+                    </div>
+
+                    <!-- Divisor -->
+                    <hr class="border-gray-100">
+
+                    <!-- Acompanhantes -->
+                    <div id="container-acompanhantes" class="flex items-center justify-between">
+                        <div>
+                            <span class="block text-sm font-medium text-gray-700">Acompanhantes</span>
+                            <span class="text-xs text-gray-400">Total de convidados extras</span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-gray-50 rounded-full px-2 py-1 border border-gray-200">
+                            <button id="btn-dec-acomp"
+                                class="w-8 h-8 rounded-full bg-white shadow-sm text-gray-600 hover:text-red-500 transition disabled:opacity-50"><i
+                                    class="fa-solid fa-minus text-xs"></i></button>
+                            <span id="txtAcompCount"
+                                class="font-mono font-bold text-lg w-4 text-center text-gray-700">0</span>
+                            <button id="btn-inc-acomp"
+                                class="w-8 h-8 rounded-full bg-white shadow-sm text-gray-600 hover:text-green-500 transition"><i
+                                    class="fa-solid fa-plus text-xs"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" id="check-no-acomp"
+                            class="rounded text-#164e51 focus:ring-#164e51 border-gray-300">
+                        <label for="check-no-acomp" class="text-sm text-gray-500 cursor-pointer select-none">Vou
+                            sozinho(a)</label>
+                    </div>
+
+                    <button id="btnConfirmRSVP"
+                        class="w-full bg-#164e51 text-white py-4 rounded-xl font-bold shadow-lg shadow-#164e51/30 hover:shadow-xl hover:scale-[1.02] transition-all active:scale-95 mt-2">
+                        Enviar Confirmação <i class="fa-brands fa-whatsapp ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // ==================================================================
+        // 1. DADOS E CONFIGURAÇÃO
+        // ==================================================================
+
+        // Injetado pelo Build System
+        const menuConfig = [{"id":"location","titulo":"Localização","icone":"fa-solid fa-location-dot","link":"https://maps.app.goo.gl/2Exc5LzRcvrZxNqd7"},{"id":"gifts","titulo":"Presentes","icone":"fa-solid fa-gift","link":"#","isGiftImage":true},{"id":"rsvp","titulo":"Confirmar Presença","icone":"fa-brands fa-whatsapp","link":"https://wa.me/5582933002043"},{"id":"manual","titulo":"Manual","icone":"fa-solid fa-book-open","link":"#","manualText":"<p><i class=\"fa-solid fa-clock\"></i> <strong>Chegue no horário:</strong> Sua presença pontual é muito importante para nós.</p><p><i class=\"fa-solid fa-check-circle\"></i> <strong>Confirme sua presença:</strong> Por favor, confirme sua presença pelo menos 15 dias antes do evento.</p><p><i class=\"fa-solid fa-smile\"></i> <strong>Divirta-se bastante!</strong> Estamos ansiosos para celebrar este momento especial com você.</p><p><i class=\"fa-solid fa-heart\"></i> <strong>Não vá embora sem me dar um abraço e comer um pedaço do bolo:</strong> Queremos compartilhar cada instante com você.</p>"}];
+        const eventDateString = '2026-04-04T00:00:00';
+
+        // Elementos DOM
+        const mainVideo = document.getElementById('mainVideo');
+        const capaContainer = document.getElementById('capaContainer');
+        const btnIniciar = document.getElementById('btnIniciar');
+        const containerShadow = document.getElementById('containerShadow');
+        const containerBotoes = document.getElementById('containerBotoes');
+        const countdownContainer = document.getElementById('countdownContainer');
+
+        // ==================================================================
+        // 7. LÓGICA DO POPUP MANUAL (DEFINIDO ANTES PARA USAR NO LOOP)
+        // ==================================================================
+        window.abrirManual = function (e) {
+            e.preventDefault();
+            popupManual.classList.remove('invisivel');
+        }
+
+        btnCloseManual.addEventListener('click', () => {
+            popupManual.classList.add('invisivel');
+        });
+
+        // Fechar ao clicar fora
+        popupManual.addEventListener('click', (e) => {
+            if (e.target === popupManual) {
+                popupManual.classList.add('invisivel');
+            }
+        });
+
+        // ==================================================================
+        // 8. LÓGICA DO POPUP PRESENTES (DEFINIDO ANTES PARA USAR NO LOOP)
+        // ==================================================================
+        window.abrirPresentes = function (e) {
+            e.preventDefault();
+            popupPresentes.classList.remove('invisivel');
+        }
+
+        btnClosePresentes.addEventListener('click', () => {
+            popupPresentes.classList.add('invisivel');
+        });
+
+        popupPresentes.addEventListener('click', (e) => {
+            if (e.target === popupPresentes) {
+                popupPresentes.classList.add('invisivel');
+            }
+        });
+
+        // ==================================================================
+        // 8.5. LÓGICA DO POPUP IMAGEM MANUAL
+        // ==================================================================
+        const popupManualImage = document.getElementById('popupManualImage');
+        const btnCloseManualImage = document.getElementById('btnCloseManualImage');
+
+        window.abrirManualImage = function (e) {
+            e.preventDefault();
+            popupManualImage.classList.remove('invisivel');
+        }
+
+        if (btnCloseManualImage) {
+            btnCloseManualImage.addEventListener('click', () => {
+                popupManualImage.classList.add('invisivel');
+            });
+        }
+
+        if (popupManualImage) {
+            popupManualImage.addEventListener('click', (e) => {
+                if (e.target === popupManualImage) {
+                    popupManualImage.classList.add('invisivel');
+                }
+            });
+        }
+
+        // ==================================================================
+        // 9. LÓGICA DO POPUP RSVP (CONFIRMAÇÃO)
+        // ==================================================================
+
+        // Counter Logic
+        let acompCount = 0;
+        const txtAcompCount = document.getElementById('txtAcompCount');
+        const checkNoAcomp = document.getElementById('check-no-acomp');
+        const inputName = document.getElementById('inputName');
+        const inputPhone = document.getElementById('inputPhone');
+        let currentRSVPNumber = "";
+
+        document.getElementById('btn-dec-acomp').addEventListener('click', () => {
+            if (acompCount > 0) { acompCount--; txtAcompCount.textContent = acompCount; }
+        });
+        document.getElementById('btn-inc-acomp').addEventListener('click', () => {
+            acompCount++; txtAcompCount.textContent = acompCount;
+        });
+
+        // Checkbox Logic
+        checkNoAcomp.addEventListener('change', (e) => {
+            const container = document.getElementById('container-acompanhantes');
+            if (e.target.checked) {
+                container.classList.add('hidden');
+                acompCount = 0;
+            } else {
+                container.classList.remove('hidden');
+            }
+        });
+
+        // Injected State for Logic
+        const companionHideClass = "!hidden";
+
+        window.abrirRSVP = function (e, link) {
+            e.preventDefault();
+
+            // SIMPLIFIED LOGIC: Any URL opens directly, only raw phone numbers use popup
+            const isUrl = link.startsWith("http");
+
+            if (isUrl) {
+                // ANY URL (forms, group chats, wedding sites, etc) opens directly
+                window.open(link, '_blank');
+                return;
+            }
+
+            // It is a phone (either raw digits or wa.me link)
+            // Extract just digits
+            currentRSVPNumber = link.replace(/\D/g, '');
+
+            // Reset Form
+            inputName.value = "";
+            inputPhone.value = "";
+            acompCount = 0;
+            txtAcompCount.textContent = "0";
+            checkNoAcomp.checked = false;
+
+            // Visibility Logic: Respect Global Settings
+            const containerAcomp = document.getElementById('container-acompanhantes');
+            const checkContainer = document.getElementById('check-no-acomp').parentElement;
+
+            if (companionHideClass.includes('hidden')) {
+                // Feature Disabled globally
+                containerAcomp.classList.add('hidden');
+                checkContainer.classList.add('hidden');
+            } else {
+                // Feature Enabled
+                containerAcomp.classList.remove('hidden');
+                checkContainer.classList.remove('hidden');
+            }
+
+            popupRSVP.classList.remove('invisivel');
+        }
+
+        // Close Logic
+        btnCloseRSVP.addEventListener('click', () => popupRSVP.classList.add('invisivel'));
+        popupRSVP.addEventListener('click', (e) => {
+            if (e.target === popupRSVP) popupRSVP.classList.add('invisivel');
+        });
+
+        // Send Logic
+        btnConfirmRSVP.addEventListener('click', () => {
+            const name = inputName.value.trim();
+            const phone = inputPhone.value.trim();
+
+            if (!name || !phone) {
+                alert("Por favor, preencha Nome e WhatsApp.");
+                return;
+            }
+
+            let message = `Olá! Gostaria de confirmar minha presença.\n\n*Nome:* ${name}\n*Telefone:* ${phone}`;
+
+            // Only include companion info if feature is enabled
+            if (!companionHideClass.includes('hidden')) {
+                if (!checkNoAcomp.checked) {
+                    if (acompCount > 0) {
+                        message += `\n*Acompanhantes:* ${acompCount}`;
+                    } else {
+                        message += `\n*Acompanhantes:* Nenhum`;
+                    }
+                } else {
+                    message += `\n*Acompanhantes:* Nenhum (Vou sozinho)`;
+                }
+            }
+
+            const waUrl = `https://wa.me/${currentRSVPNumber}?text=${encodeURIComponent(message)}`;
+            window.open(waUrl, '_blank');
+
+            popupRSVP.classList.add('invisivel');
+        });
+
+        // ==================================================================
+        // 3. RENDERIZAÇÃO DOS BOTÕES
+        // ==================================================================
+
+        // Button Style Config
+        const buttonColor = '#164e51'; // Main Color
+        const buttonFillEnabled = [[BUTTON_FILL_ENABLED]]; // true/false injected by build
+
+        const activeButtons = menuConfig.filter(btn => {
+            // Robust check: Ensure link exists OR it's a special image button
+            const hasLink = btn.link !== undefined && btn.link !== null && String(btn.link).trim() !== "";
+            // Special check for Manual Text mode
+            const hasManualText = btn.id === 'manual' && btn.manualText && btn.manualText.length > 0;
+            return hasLink || btn.isGiftImage || btn.isManualImage || hasManualText;
+        });
+
+        // Calculate classes (simplified from before)
+        const btnCount = activeButtons.length;
+        let gridClasses = "";
+        if (btnCount <= 4) {
+            gridClasses = "flex flex-row justify-center items-start transition-all duration-300 gap-2";
+        } else {
+            gridClasses = "grid grid-flow-col auto-cols-fr w-full max-w-[480px] place-items-start transition-all duration-300";
+            if (btnCount === 5) gridClasses += " gap-2 scale-95 origin-bottom";
+            else gridClasses += " gap-1 scale-90 origin-bottom";
+        }
+        if (containerBotoes) containerBotoes.className += " " + gridClasses; // APPEND Grid classes
+
+        activeButtons.forEach((btn, index) => {
+            console.log(`[AutoBuilder] Rendering Button: ${btn.id}`);
+
+            const anchor = document.createElement('a');
+            // Base layout classes
+            anchor.className = "group flex flex-col items-center gap-1 focus:outline-none w-full min-w-0 cursor-pointer button-entrance";
+            anchor.style.animationDelay = `${index * 100}ms`;
+
+            // Link Logic
+            anchor.target = "_blank";
+            const isRSVP = btn.titulo && (btn.titulo.toLowerCase().includes("confirmar") || btn.titulo.toLowerCase().includes("presença"));
+
+            if (btn.id === 'manual') {
+                anchor.href = "#";
+                anchor.removeAttribute('target');
+                if (btn.isManualImage) anchor.addEventListener('click', abrirManualImage);
+                else anchor.addEventListener('click', abrirManual);
+                if (btn.manualText && manualContent) manualContent.innerHTML = btn.manualText;
+            } else if (btn.isGiftImage) {
+                anchor.href = "#";
+                anchor.removeAttribute('target');
+                anchor.addEventListener('click', abrirPresentes);
+            } else if (isRSVP) {
+                anchor.href = "#";
+                anchor.removeAttribute('target');
+                anchor.addEventListener('click', (e) => abrirRSVP(e, btn.link));
+            } else {
+                anchor.href = btn.link || "#";
+            }
+
+            // --- VISUAL STYLE (THE BUTTON ITSELF) ---
+            const circle = document.createElement('div');
+            // Core shapes
+            let circleClasses = "w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-transform active:scale-95 cursor-pointer backdrop-blur-sm";
+
+            // Apply Colors based on Mode
+            if (buttonFillEnabled) {
+                // Classic: Solid Color Background, White Icon
+                circle.style.backgroundColor = buttonColor;
+                circle.style.color = '#ffffff';
+                circleClasses += " text-white";
+            } else {
+                // Hollow/White: White Background, Colored Icon
+                circle.style.backgroundColor = '#ffffff';
+                circle.style.color = buttonColor;
+            }
+            circle.className = circleClasses;
+
+            // Icon
+            const i = document.createElement('i');
+            i.className = btn.icone + " text-xl";
+            circle.appendChild(i);
+
+            // Label
+            const label = document.createElement('span');
+            label.className = "text-[10px] uppercase font-bold text-white drop-shadow-md tracking-wider text-center leading-tight transition-opacity group-hover:opacity-100";
+            if (typeof buttonFillEnabled !== 'undefined' && !buttonFillEnabled && false) {
+                // Optional: Change label color if button is white? No, keep label white for contrast against bg
+            }
+            label.textContent = btn.titulo;
+
+            anchor.appendChild(circle);
+            anchor.appendChild(label);
+            containerBotoes.appendChild(anchor);
+        });
+
+
+        // ==================================================================
+        // 4. LÓGICA DE ÁUDIO E ANIMAÇÃO
+        // ==================================================================
+        const renderMode = 'standard'; // standard, direct, transparent-cover
+        console.log('[AutoBuilder] Render Mode:', renderMode);
+
+        if (renderMode === 'direct') {
+            document.body.classList.add('mode-direct');
+            const icon = document.querySelector('#dicaInteractionContainer i');
+            const text = document.querySelector('#dicaInteractionContainer h1');
+            if (icon) icon.className = "fa-solid fa-music text-5xl text-white drop-shadow-lg animar-clique";
+            if (text) text.innerText = "Clique para tocar a música!";
+        }
+
+        // Timer
+        if (eventDateString) {
+            const targetDate = new Date(eventDateString).getTime();
+            const dDay = document.getElementById('d-day');
+            const dHour = document.getElementById('d-hour');
+            const dMin = document.getElementById('d-min');
+
+            if (!isNaN(targetDate)) {
+                setInterval(() => {
+                    const now = new Date().getTime();
+                    const distance = targetDate - now;
+
+                    if (distance < 0) {
+                        // Evento já passou
+                        dDay.innerText = "00";
+                    } else {
+                        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+                        dDay.innerText = days < 10 ? "0" + days : days;
+                        dHour.innerText = hours < 10 ? "0" + hours : hours;
+                        dMin.innerText = minutes < 10 ? "0" + minutes : minutes;
+                    }
+                }, 1000);
+            }
+        }
+
+        // Start Interaction
+        let hasInteracted = false;
+
+        function iniciar() {
+            if (hasInteracted) return;
+            hasInteracted = true;
+
+            // UI Transition
+            btnIniciar.classList.add('opacity-0', 'scale-90');
+            setTimeout(() => btnIniciar.style.display = 'none', 500);
+
+            // Audio
+            /* 
+            * STRATEGY: 
+            * 1. Try to play Intro (Opening) visual
+            * 2. Try to play Music (Audio)
+            * 3. After Intro ends -> Loop
+            */
+
+            // Check if Opening Video Exists
+            // We attempt to load 'abertura/abertura.mp4' in mainVideo
+            // If failed, we fallback to loop.
+
+            playSequence();
+        }
+
+        btnIniciar.addEventListener('click', iniciar);
+        if (renderMode === 'direct') {
+            capaContainer.addEventListener('click', iniciar);
+        }
+
+        async function playSequence() {
+            // 1. Setup Audio
+            const music = new Audio('musica/musica.mp3');
+            music.loop = true;
+            music.volume = 0.5; // Start volume
+            music.play().catch(e => console.warn("Audio play blocked", e));
+
+            // 2. Setup Video
+            // Try Loading Opening
+            const hasOpening = await checkFileExists('abertura/abertura.mp4');
+            const hasLoop = await checkFileExists('loop/loop.mp4');
+
+            if (hasOpening) {
+                mainVideo.src = 'abertura/abertura.mp4';
+                mainVideo.loop = false;
+                mainVideo.muted = false; // Intro might have sound? Ideally mute mainVideo and use bg music, or vice versa?
+                // Standard: Mute video, play global music.
+                mainVideo.muted = true;
+
+                // Show Video Layer
+                capaContainer.classList.add('opacity-0');
+                setTimeout(() => capaContainer.classList.add('invisivel'), 1000);
+
+                mainVideo.classList.remove('opacity-0');
+                mainVideo.play();
+
+                // When ended -> Switch to loop
+                mainVideo.onended = () => {
+                    if (hasLoop) {
+                        mainVideo.src = 'loop/loop.mp4';
+                        mainVideo.loop = true;
+                        mainVideo.play();
+                    } else {
+                        // Stay on last frame or Switch to static bg
+                        document.getElementById('staticBackground').classList.remove('opacity-0');
+                    }
+
+                    // Show Interface
+                    showInterface();
+                };
+            } else if (hasLoop) {
+                // No opening, just loop
+                mainVideo.src = 'loop/loop.mp4';
+                mainVideo.loop = true;
+                mainVideo.muted = true;
+
+                capaContainer.classList.add('opacity-0');
+                setTimeout(() => capaContainer.classList.add('invisivel'), 1000);
+
+                mainVideo.classList.remove('opacity-0');
+                mainVideo.play();
+
+                // Show Interface Immediately
+                setTimeout(showInterface, 500);
+            } else {
+                // No video, just static background
+                capaContainer.classList.add('opacity-0');
+                setTimeout(() => capaContainer.classList.add('invisivel'), 1000);
+                document.getElementById('staticBackground').classList.remove('opacity-0');
+                showInterface();
+            }
+        }
+
+        function showInterface() {
+            containerShadow.classList.remove('invisivel');
+            containerBotoes.classList.remove('opacity-0', 'translate-y-20');
+        }
+
+        function checkFileExists(url) {
+            return fetch(url, { method: 'HEAD' })
+                .then(res => res.ok)
+                .catch(() => false);
+        }
+
+    </script>
+</body>
+
+</html>

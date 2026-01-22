@@ -1,0 +1,51 @@
+{
+  "version": "4.0",
+  "timestamp": "2026-01-22T03:05:46.544Z",
+  "formData": {
+    "nome": "Adriana e José",
+    "tipo_evento": "",
+    "tipo_evento_custom": "",
+    "data": "2026-04-04",
+    "hora": "",
+    "idade": "",
+    "tema_evento": "",
+    "local_evento": "",
+    "paleta_cores": "Cinza, Rosé, Azul Turquesa",
+    "frase_convite": "",
+    "cor_botoes": "#164e51",
+    "sombra_gradiente": "#000000",
+    "posicao_botoes": "24",
+    "tamanho_botoes": "medio",
+    "link_google_maps": "https://maps.app.goo.gl/2Exc5LzRcvrZxNqd7",
+    "link_presentes": "",
+    "manual_content": "<p><i class=\"fa-solid fa-clock\"></i> <strong>Chegue no horário:</strong> Sua presença pontual é muito importante para nós.</p><p><i class=\"fa-solid fa-check-circle\"></i> <strong>Confirme sua presença:</strong> Por favor, confirme sua presença pelo menos 15 dias antes do evento.</p><p><i class=\"fa-solid fa-smile\"></i> <strong>Divirta-se bastante!</strong> Estamos ansiosos para celebrar este momento especial com você.</p><p><i class=\"fa-solid fa-heart\"></i> <strong>Não vá embora sem me dar um abraço e comer um pedaço do bolo:</strong> Queremos compartilhar cada instante com você.</p>",
+    "confirmacao": "5582933002043",
+    "permitir_acompanhante": false,
+    "timer_contagem": true,
+    "cover_prompt": "",
+    "leaf_prompt": "",
+    "animate_background": false,
+    "intro_motion_prompt": "",
+    "loop_motion_prompt": "",
+    "fill_prompt": "",
+    "sugestoes_presentes": "",
+    "gifts_image_prompt": "",
+    "manual_raw_content": "Chegue no horário: Sua presença pontual é muito importante para nós.\n Confirme sua presença: Por favor, confirme presença pelo menos 15 dias antes do evento.\n Divirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.\n Não vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você",
+    "music_name": "Celine Dion - Immortality (Lyrics).mp3",
+    "slug": "Adriana&Joao",
+    "watermark_enabled": false
+  },
+  "linksExtras": [],
+  "assetsMap": {
+    "musica": "assets/musica_1769051146544.mp3",
+    "capa": "assets/capa_1769051146544.png",
+    "folha_vazia": "assets/folha_vazia_1769051146544.png",
+    "fundo_tela": "assets/fundo_tela_1769051146544.mp4",
+    "vid_abertura": "assets/vid_abertura_1769051146544.mp4",
+    "presentes": "assets/presentes_1769051146544.png"
+  },
+  "toggles": {
+    "manualMode": "text",
+    "giftsMode": "image"
+  }
+}
