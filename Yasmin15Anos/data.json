@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-22T01:46:03.865Z",
+  "timestamp": "2026-01-22T01:55:59.730Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
@@ -28,7 +28,7 @@
     "tamanho_botoes": "",
     "link_google_maps": "https://maps.app.goo.gl/4iCQKuY1MbY9yrwf6",
     "link_presentes": "",
-    "manual_content": "",
+    "manual_content": "<p><i class='fa-solid fa-clock'></i> <strong>Chegue no horário:</strong> Sua presença pontual é muito importante para nós.</p>\n\n<p><i class='fa-solid fa-clipboard-check'></i> <strong>Confirme sua presença:</strong> Por favor, confirme presença pelo menos 15 dias antes do evento.</p>\n\n<p><i class='fa-solid fa-champagne-glasses'></i> <strong>Divirta-se bastante!</strong> Estamos ansiosos para celebrar este momento especial com você.</p>\n\n<p><i class='fa-solid fa-cake-candles'></i> <strong>Não vá embora sem me dar um abraço e comer um pedaço do bolo:</strong> Queremos compartilhar cada instante com você.</p>\n\n<p><i class='fa-solid fa-user-tie'></i> <strong>Dress Code:</strong> Traje Esporte Fino</p>\n\n<p><i class='fa-solid fa-exclamation-circle'></i> <strong>Atenção:</strong> As cores azul, vermelho e dourado são exclusivas da debutante. Pedimos a gentileza de evitá-las em sua vestimenta.</p>",
     "numero_whatsapp": "",
     "link_confirmacao": "https://chat.whatsapp.com/LOWLD1HRjg3Fxu1qwwL63p",
     "permitir_acompanhante": false,
@@ -49,12 +49,12 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1769046363865.mp3",
-    "capa": "assets/capa_1769046363865.png",
-    "folha_vazia": "assets/folha_vazia_1769046363865.png",
-    "fundo_tela": "assets/fundo_tela_1769046363865.mp4",
-    "vid_abertura": "assets/vid_abertura_1769046363865.mp4",
-    "presentes": "assets/presentes_1769046363865.png"
+    "musica": "assets/musica_1769046959730.mp3",
+    "capa": "assets/capa_1769046959730.png",
+    "folha_vazia": "assets/folha_vazia_1769046959730.png",
+    "fundo_tela": "assets/fundo_tela_1769046959730.mp4",
+    "vid_abertura": "assets/vid_abertura_1769046959730.mp4",
+    "presentes": "assets/presentes_1769046959730.png"
   },
   "toggles": {
     "manualMode": "text",
