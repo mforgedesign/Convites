@@ -15,7 +15,7 @@
     <!-- Open Graph for WhatsApp/Social Preview -->
     <meta property="og:title" content="Yasmin | Aniversário 15 Anos">
     <meta property="og:description" content="Clique para ver o convite interativo!">
-    <meta property="og:image" content="capa/capa_1769042772873.png">
+    <meta property="og:image" content="capa/capa_1769045971506.png">
     <meta property="og:type" content="website">
 
     <!-- Envelope Favicon -->
@@ -144,19 +144,19 @@
 
         <!-- Background (Unified) - Layer 1 -->
         <!-- Can be image or video - determined by file extension -->
-        <img id="fundoTelaImg" src="assets/fundo_tela_1769042772873.dat" class="camada z-10 invisivel"
+        <img id="fundoTelaImg" src="assets/fundo_tela_1769045971506.dat" class="camada z-10 invisivel"
             onerror="this.style.display='none'">
         <video id="fundoTelaVideo" class="camada z-10 invisivel" playsinline loop muted
             onerror="this.style.display='none'">
-            <source src="assets/fundo_tela_1769042772873.dat" type="video/mp4">
+            <source src="assets/fundo_tela_1769045971506.dat" type="video/mp4">
         </video>
 
         <video id="videoAbertura" class="camada z-20" playsinline muted>
-            <source src="assets/vid_abertura_1769042772873.mp4" type="video/mp4">
+            <source src="assets/vid_abertura_1769045971506.mp4" type="video/mp4">
         </video>
 
         <audio id="musicaFundo" loop preload="auto">
-            <source src="assets/musica_1769042772873.mp3" type="audio/mp3">
+            <source src="assets/musica_1769045971506.mp3" type="audio/mp3">
         </audio>
 
         <button id="btnMute"
@@ -216,7 +216,7 @@
 
         <div id="capaInicial"
             class="absolute inset-0 z-50 bg-cover bg-center flex flex-col items-center justify-center cursor-pointer transition-opacity duration-700"
-            style="background-image: url('assets/capa_1769042772873.png');">
+            style="background-image: url('assets/capa_1769045971506.png');">
             <div class="absolute inset-0 bg-black/20"></div>
 
             <div id="dicaInteractionContainer" class="relative z-10 flex flex-col items-center gap-4 animate-pulse">
@@ -247,7 +247,7 @@
             class="relative w-full max-w-[400px] h-[80%] rounded-xl shadow-2xl overflow-hidden flex flex-col border border-white/20">
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="assets/folha_vazia_1769042772873.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="assets/folha_vazia_1769045971506.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/60"></div>
             </div>
 
@@ -276,7 +276,7 @@
                 class="absolute top-3 right-3 z-10 bg-black/50 text-white hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center transition-colors border border-white/20">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <img id="imagemPresentes" src="assets/presentes_1769042772873.png" class="max-w-full max-h-[85vh] object-contain rounded-lg">
+            <img id="imagemPresentes" src="assets/presentes_1769045971506.png" class="max-w-full max-h-[85vh] object-contain rounded-lg">
         </div>
     </div>
 
@@ -300,7 +300,7 @@
 
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="assets/folha_vazia_1769042772873.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="assets/folha_vazia_1769045971506.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/70"></div>
             </div>
 
@@ -361,6 +361,79 @@
     </div>
 
     <script>
+        // ==========================================
+        // ROBUST VIDEO LOADING (Network Resilience)
+        // ==========================================
+        function setupRobustVideo(videoElement) {
+            if (!videoElement) return;
+
+            // Ensure attributes for maximum compatibility
+            videoElement.setAttribute('playsinline', '');
+            videoElement.setAttribute('webkit-playsinline', '');
+            videoElement.setAttribute('preload', 'auto');
+
+            let stuckTimer = null;
+            let lastTime = -1;
+
+            const attemptResume = () => {
+                console.log('[Video] Attempting resume/reload...');
+                if (videoElement.paused) videoElement.play().catch(() => { });
+            };
+
+            // Monitor stalled/waiting states
+            videoElement.addEventListener('waiting', () => {
+                console.log('[Video] Waiting for data...');
+                // If waiting too long (e.g. 5s), try to nudge it
+                clearTimeout(stuckTimer);
+                stuckTimer = setTimeout(attemptResume, 5000);
+            });
+
+            videoElement.addEventListener('stalled', () => {
+                console.log('[Video] Stalled (Low bandwidth).');
+            });
+
+            videoElement.addEventListener('playing', () => {
+                clearTimeout(stuckTimer);
+                console.log('[Video] Playing.');
+            });
+
+            videoElement.addEventListener('error', (e) => {
+                console.error('[Video] Error:', videoElement.error);
+                // Fatal error prevention
+                setTimeout(() => {
+                    console.log('[Video] Retrying load...');
+                    videoElement.load();
+                    videoElement.play().catch(e => console.log('Retry play failed', e));
+                }, 3000);
+            });
+
+            // Watchdog for Frozen Video
+            setInterval(() => {
+                if (!videoElement.paused && !videoElement.ended && videoElement.readyState > 2) {
+                    if (videoElement.currentTime === lastTime) {
+                        console.log('[Video] Freeze detected. Nudging...');
+                    }
+                    lastTime = videoElement.currentTime;
+                }
+            }, 2000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const videos = document.querySelectorAll('video');
+            videos.forEach(setupRobustVideo);
+
+            // Also watch for dynamic videos
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach(m => {
+                    m.addedNodes.forEach(node => {
+                        if (node.nodeName === 'VIDEO') setupRobustVideo(node);
+                        if (node.querySelectorAll) node.querySelectorAll('video').forEach(setupRobustVideo);
+                    });
+                });
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        });
+
         // ==================================================================
         // 0. RENDER MODE & SCENARIO LOGIC
         // ==================================================================
@@ -381,7 +454,7 @@
         // ==================================================================
         // 1. CONFIGURAÇÃO DOS BOTÕES (Injetado pelo AutoBuilder)
         // ==================================================================
-        const menuConfig = [{"id":"location","titulo":"Localização","icone":"fa-solid fa-location-dot","link":"https://maps.app.goo.gl/4iCQKuY1MbY9yrwf6"},{"id":"gifts","titulo":"Presentes","icone":"fa-solid fa-gift","link":"#","isGiftImage":true},{"id":"rsvp","titulo":"Confirmar Presença","icone":"fa-solid fa-check","link":"https://chat.whatsapp.com/LOWLD1HRjg3Fxu1qwwL63p"},{"id":"manual","titulo":"Manual","icone":"fa-solid fa-book-open","link":"#","manualText":"<p><i class='fa-solid fa-clock'></i> <strong>Chegue no horário:</strong> Sua presença pontual é muito importante para nós.</p>\n\n<p><i class='fa-solid fa-clipboard-check'></i> <strong>Confirme sua presença:</strong> Favor confirmar presença até dia 10/02, para melhor organização e para que seu nome possa constar na lista de entrada dos convidados.</p>\n\n<p><i class='fa-solid fa-champagne-glasses'></i> <strong>Divirta-se bastante!</strong> Estamos ansiosos para celebrar este momento especial com você.</p>\n\n<p><i class='fa-solid fa-cake-candles'></i> <strong>Não vá embora sem me dar um abraço e comer um pedaço do bolo:</strong> Queremos compartilhar cada instante com você.</p>\n\n<p><i class='fa-solid fa-user-tie'></i> <strong>Dress Code:</strong> Traje Esporte Fino</p>\n\n<p><i class='fa-solid fa-exclamation-circle'></i> <strong>Atenção:</strong> As cores azul, vermelho e dourado são exclusivas da debutante. Pedimos a gentileza de evitá-las em sua vestimenta.</p>"}];
+        const menuConfig = [{"id":"location","titulo":"Localização","icone":"fa-solid fa-location-dot","link":"https://maps.app.goo.gl/4iCQKuY1MbY9yrwf6"},{"id":"gifts","titulo":"Presentes","icone":"fa-solid fa-gift","link":"#","isGiftImage":true},{"id":"rsvp","titulo":"Confirmar Presença","icone":"fa-solid fa-check","link":"https://chat.whatsapp.com/LOWLD1HRjg3Fxu1qwwL63p"}];
         // Injected by AutoBuilder
         const buttonSize = parseFloat('1.0') || 1.0;
 
