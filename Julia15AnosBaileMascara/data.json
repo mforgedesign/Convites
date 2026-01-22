@@ -1,17 +1,17 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-20T23:43:36.142Z",
+  "timestamp": "2026-01-22T15:41:02.177Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
     "folha_vazia": null,
     "vid_abertura": null,
     "fundo_tela": null,
-    "folha_only": null,
-    "background_only": null,
     "presentes": null,
     "manual": null,
     "musica": "blob:https://builder.mforge.com.br/37e93cc8-01b3-4fb7-bfc3-1343bf55ea09",
+    "folha_only": null,
+    "background_only": null,
     "nome": "Julia",
     "tipo_evento": "",
     "tipo_evento_custom": "",
@@ -27,7 +27,7 @@
     "posicao_botoes": "10",
     "tamanho_botoes": "medio",
     "link_google_maps": "https://maps.app.goo.gl/Mk2AvBy7xWugSizX7",
-    "link_presentes": "https://www.canva.com/design/DAG2_OLw-JE/GvVM_dj3ppSNsmN7oWgNxg/view?utm_content=DAG2_OLw-JE&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h4e1ff6e568",
+    "link_presentes": "",
     "manual_content": "",
     "numero_whatsapp": "",
     "link_confirmacao": "https://docs.google.com/forms/d/e/1FAIpQLSezR-cgu_Bh4FSAy4kle4onGcu3eQYRgtna8yCZfRT676eZcg/viewform",
@@ -58,14 +58,14 @@
       "id": 1,
       "label": "Galeria de Fotos",
       "url": "https://vocal-shortbread-f6b7bc.netlify.app/",
-      "icon": "fa-solid fa-link"
+      "icon": "fa-solid fa-camera"
     }
   ],
   "assetsMap": {
-    "musica": "assets/musica_1768952616142.mp3",
-    "capa": "assets/capa_1768952616142.png",
-    "fundo_tela": "assets/fundo_tela_1768952616142.mp4",
-    "vid_abertura": "assets/vid_abertura_1768952616142.mp4"
+    "musica": "assets/musica_1769096462177.mp3",
+    "capa": "assets/capa_1769096462177.png",
+    "fundo_tela": "assets/fundo_tela_1769096462177.dat",
+    "vid_abertura": "assets/vid_abertura_1769096462177.mp4"
   },
   "toggles": {
     "manualMode": "text",
