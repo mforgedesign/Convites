@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-23T14:52:27.941Z",
+  "timestamp": "2026-01-23T14:59:49.947Z",
   "formData": {
     "nome": "Isadora",
     "tipo_evento": "Aniversário",
@@ -19,9 +19,9 @@
     "link_google_maps": "https://maps.app.goo.gl/7wEgxSGciKU8ZYH29",
     "link_presentes": "",
     "manual_content": "",
-    "confirmacao": "5592992583783",
+    "confirmacao": "553185562579",
     "permitir_acompanhante": false,
-    "timer_contagem": false,
+    "timer_contagem": true,
     "cover_prompt": "Tipo de evento: Special Event\nSelo: W\nPaleta de Cores: Gold and White\nTema: Elegant\nTask: Create a vertical image of a hyper-realistic 3D render of a premium invitation envelope. The envelope is sealed with an intricately detailed wax seal. The wax seal may contain ONLY the number \"W\" embossed - NO OTHER TEXT OR WORDS ANYWHERE IN THE IMAGE. The paper boasts a high-quality, textured finish, exuding elegance and sophistication. Background: A setting with elements that enhance the luxurious feel of the invitation without specific thematic details. The composition is centered, with dramatic lighting casting volumetric light and creating a soft focus and depth of field. Lighting: Dramatic, cinematic lighting with volumetric effects. Highlights on the envelope and wax seal accentuate the texture and detail. Style: Photorealistic, hyper-detailed, cinematic, and elegant. CRITICAL: DO NOT generate any text, letters, or words except the number on the seal. Technical Details: Resolution: 8K, ultra high resolution Aspect Ratio: 9:16 Rendering Engine: Octane Render, Unreal Engine 5 Camera: Macro lens, f/2.8, shallow depth of field",
     "leaf_prompt": "",
     "intro_motion_prompt": "The animation begins with a focus on the closed envelope. As the wax seal gracefully detaches and falls, the envelope's flap uplifts slowly. From its interior, a spectacular eruption of glittering sparkles and smoke, shimmering dust, and glowing light trails emerges, cascading outward in a mesmerizing display. These vibrant particles swirl dynamically, increasing in density and brightness around the envelope. The radiant light and swirling glitter intensify, rapidly expanding to fill the entire scene. CRITICAL: The Color of glow, light and smoke need to be the same of the image color pallete. The overwhelming brilliance transitions the frame to a solid, blinding white screen in the very final frame, achieved through a dramatic zoom-in effect.",
@@ -36,12 +36,12 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1769179947941.mp3",
-    "capa": "assets/capa_1769179947941.png",
-    "folha_vazia": "assets/folha_vazia_1769179947941.png",
-    "fundo_tela": "assets/fundo_tela_1769179947941.mp4",
-    "vid_abertura": "assets/vid_abertura_1769179947941.mp4",
-    "presentes": "assets/presentes_1769179947941.png"
+    "musica": "assets/musica_1769180389947.mp3",
+    "capa": "assets/capa_1769180389947.png",
+    "folha_vazia": "assets/folha_vazia_1769180389947.png",
+    "fundo_tela": "assets/fundo_tela_1769180389947.mp4",
+    "vid_abertura": "assets/vid_abertura_1769180389947.mp4",
+    "presentes": "assets/presentes_1769180389947.png"
   },
   "toggles": {
     "manualMode": "text",
