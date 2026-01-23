@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-23T14:42:06.117Z",
+  "timestamp": "2026-01-23T15:05:00.043Z",
   "formData": {
     "nome": "",
     "tipo_evento": "Aniversário",
@@ -12,7 +12,7 @@
     "local_evento": "Chácara Bela vista - estrada bento ,16 Vista Alegre Aruja sp",
     "paleta_cores": "",
     "frase_convite": "",
-    "cor_botoes": "#f494db",
+    "cor_botoes": "#5b2a2a",
     "sombra_gradiente": "#000000",
     "posicao_botoes": "8",
     "tamanho_botoes": "medio",
@@ -36,11 +36,11 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1769179326117.mp3",
-    "capa": "assets/capa_1769179326117.png",
-    "fundo_tela": "assets/fundo_tela_1769179326117.mp4",
-    "vid_abertura": "assets/vid_abertura_1769179326117.mp4",
-    "presentes": "assets/presentes_1769179326117.png"
+    "musica": "assets/musica_1769180700043.mp3",
+    "capa": "assets/capa_1769180700043.png",
+    "fundo_tela": "assets/fundo_tela_1769180700043.mp4",
+    "vid_abertura": "assets/vid_abertura_1769180700043.mp4",
+    "presentes": "assets/presentes_1769180700043.png"
   },
   "toggles": {
     "manualMode": "text",
