@@ -1,12 +1,20 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-16T20:52:50.745Z",
+  "timestamp": "2026-01-23T12:55:21.472Z",
   "formData": {
+    "capa": null,
+    "capa_referencia": null,
+    "folha_vazia": null,
+    "vid_abertura": null,
+    "fundo_tela": null,
+    "presentes": null,
+    "manual": null,
+    "musica": null,
     "nome": "Helo",
     "tipo_evento": "Aniversário",
     "tipo_evento_custom": "",
     "data": "2026-03-06",
-    "hora": "20:40",
+    "hora": "21:00",
     "idade": "15",
     "tema_evento": "",
     "local_evento": "",
@@ -18,7 +26,7 @@
     "tamanho_botoes": "medio",
     "link_google_maps": "https://maps.google.com/maps/place//data=!4m2!3m1!1s0x94ce5ea551095555:0x1142323317c974c8?entry=s&sa=X&ved=2ahUKEwi77te14pCSAxWQILkGHcpaDBYQ4kB6BAgWEAA&hl=pt",
     "link_presentes": "",
-    "manual_content": "<div style='font-family: serif; line-height: 1.6;'><h3><i class='fa-solid fa-star'></i> Guia para Aproveitarmos Juntos</h3><p><i class='fa-solid fa-envelope-open-text'></i> <strong>Um Momento Exclusivo:</strong> Este convite foi preparado com muito carinho especificamente para você. Por ser um evento íntimo, pedimos a gentileza de não compartilhá-lo com outras pessoas.</p><p><i class='fa-solid fa-utensils'></i> <strong>Saboreie Cada Instante:</strong> Desfrute do buffet e não deixe de experimentar nossas delícias. A vida fica mais doce com uma passadinha na mesa de sobremesas!</p><p><i class='fa-solid fa-camera-retro'></i> <strong>Registre sua Alegria:</strong> Adoramos selfies! Registre cada sorriso, mas pedimos que abra caminho para nossos fotógrafos oficiais para que nenhum detalhe da cerimônia seja perdido.</p><p><i class='fa-solid fa-cake-candles'></i> <strong>A Doce Espera:</strong> O momento do bolo é um dos mais especiais da nossa celebração. Fique conosco para compartilhar essa tradição!</p><p><i class='fa-solid fa-leaf'></i> <strong>Beleza Compartilhada:</strong> Nossa decoração foi pensada para encantar a todos durante toda a festa. Por favor, deixe que ela permaneça no salão para embelezar nossas fotos e memórias.</p><p><i class='fa-solid fa-face-smile-wink'></i> <strong>Um Abraço Essencial:</strong> Sua presença é o nosso maior presente. Antes de partir, não esqueça de nos presentear com aquele abraço apertado e cheio de carinho!</p><br><p><i class='fa-solid fa-user-tie'></i> <strong>Dress Code:</strong> Traje Esporte Fino</p></div>",
+    "manual_content": "",
     "numero_whatsapp": "5511958438309",
     "link_confirmacao": "",
     "permitir_acompanhante": false,
@@ -31,10 +39,13 @@
     "fill_prompt": "Nome: \nIdade (se houver): (não informada)\nTipo de evento: \nTema: \nTask: Preencha essa folha com os dados para convite de forma criativa e elegante.\nColoque elementos de design de forma elegante no convite, divisórias modernas, hierarquia visual madura e profissional, linhas, e uma frase similar a \"Você está convidado para o... (crie a frase conforme o contexto)\" conforme sua criatividade.\nColoque textura, camadas, adornos no texto do nome, letra cursiva (Great Vibes) e efeitos especiais elegantes.",
     "sugestoes_presentes": "",
     "gifts_image_prompt": "",
-    "manual_raw_content": "\nConvidado não Convida!\n     (Não é permitido compartilhar\n     este convite!)\nNão deixe de comer e não esqueça do doce!\nNão vá embora  sem nos dar um abraço apertado!\nTire muitas selfies!\nEspere pelo bolo!\nNão leve a decoração pra casa!\nNão atrapalhe os fotógrafos!\n\nDress Code:\nTraje Esporte Fino",
+    "manual_raw_content": "",
     "music_name": "musica.mp3",
     "slug": "Helo15Anos",
-    "watermark_enabled": false
+    "watermark_enabled": false,
+    "_reset": true,
+    "confirmacao": "5511958438309",
+    "manual_html": "<div style='font-family: serif; line-height: 1.6;'><h3><i class='fa-solid fa-star'></i> Guia para Aproveitarmos Juntos</h3><p><i class='fa-solid fa-envelope-open-text'></i> <strong>Um Momento Exclusivo:</strong> Este convite foi preparado com muito carinho especificamente para você. Por ser um evento íntimo, pedimos a gentileza de não compartilhá-lo com outras pessoas.</p><p><i class='fa-solid fa-utensils'></i> <strong>Saboreie Cada Instante:</strong> Desfrute do buffet e não deixe de experimentar nossas delícias. A vida fica mais doce com uma passadinha na mesa de sobremesas!</p><p><i class='fa-solid fa-camera-retro'></i> <strong>Registre sua Alegria:</strong> Adoramos selfies! Registre cada sorriso, mas pedimos que abra caminho para nossos fotógrafos oficiais para que nenhum detalhe da cerimônia seja perdido.</p><p><i class='fa-solid fa-cake-candles'></i> <strong>A Doce Espera:</strong> O momento do bolo é um dos mais especiais da nossa celebração. Fique conosco para compartilhar essa tradição!</p><p><i class='fa-solid fa-leaf'></i> <strong>Beleza Compartilhada:</strong> Nossa decoração foi pensada para encantar a todos durante toda a festa. Por favor, deixe que ela permaneça no salão para embelezar nossas fotos e memórias.</p><p><i class='fa-solid fa-face-smile-wink'></i> <strong>Um Abraço Essencial:</strong> Sua presença é o nosso maior presente. Antes de partir, não esqueça de nos presentear com aquele abraço apertado e cheio de carinho!</p><br><p><i class='fa-solid fa-user-tie'></i> <strong>Dress Code:</strong> Traje Esporte Fino</p></div>"
   },
   "linksExtras": [
     {
@@ -45,11 +56,11 @@
     }
   ],
   "assetsMap": {
-    "musica": "assets/musica_1768596770745.mp3",
-    "capa": "assets/capa_1768596770745.png",
-    "folha_vazia": "assets/folha_vazia_1768596770745.png",
-    "fundo_tela": "assets/fundo_tela_1768596770745.png",
-    "vid_abertura": "assets/vid_abertura_1768596770745.mp4"
+    "musica": "assets/musica_1769172921472.mp3",
+    "capa": "assets/capa_1769172921472.png",
+    "folha_vazia": "assets/folha_vazia_1769172921472.png",
+    "fundo_tela": "assets/fundo_tela_1769172921472.mp4",
+    "vid_abertura": "assets/vid_abertura_1769172921472.mp4"
   },
   "toggles": {
     "manualMode": "text",
