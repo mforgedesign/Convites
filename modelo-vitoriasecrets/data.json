@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-23T16:51:24.270Z",
+  "timestamp": "2026-01-23T19:55:01.418Z",
   "formData": {
     "nome": "",
     "tipo_evento": "Aniversário",
@@ -12,7 +12,7 @@
     "local_evento": "Chácara Bela vista - estrada bento ,16 Vista Alegre Aruja sp",
     "paleta_cores": "",
     "frase_convite": "",
-    "cor_botoes": "#f98bdc",
+    "cor_botoes": "#ffbded",
     "sombra_gradiente": "#000000",
     "posicao_botoes": "8",
     "tamanho_botoes": "medio",
@@ -32,16 +32,25 @@
     "manual_html": "<p><i class=\"fa-solid fa-clock\"></i> <strong>A Pontualidade é um Carinho:</strong> Sua presença desde o primeiro instante é fundamental para que não perca nenhum detalhe da nossa história. Por favor, chegue no horário combinado.</p><p><i class=\"fa-solid fa-calendar-check\"></i> <strong>Confirmação de Presença:</strong> Para que possamos preparar tudo com perfeição e amor, pedimos a gentileza de confirmar sua vinda até 15 dias antes do evento.</p><p><i class=\"fa-solid fa-heart\"></i> <strong>Celebre Conosco:</strong> Deixe a alegria guiar a sua noite! Estamos ansiosos para criar memórias inesquecíveis e celebrar este capítulo tão especial ao seu lado.</p><p><i class=\"fa-solid fa-cake-candles\"></i> <strong>Um Doce Encontro:</strong> Não se despeça sem nos presentear com um abraço apertado e saborear uma fatia do nosso bolo. Queremos compartilhar cada segundo de felicidade com você.</p>",
     "music_name": "PERFECT - Ed Sheeran - Violin Cover by Andre Soueid",
     "slug": "modelo-vitoriasecrets",
-    "watermark_enabled": false
+    "watermark_enabled": false,
+    "capa": null,
+    "capa_referencia": null,
+    "folha_vazia": null,
+    "vid_abertura": null,
+    "fundo_tela": null,
+    "presentes": null,
+    "manual": null,
+    "musica": null,
+    "_reset": true
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1769187084270.mp3",
-    "capa": "assets/capa_1769187084270.png",
-    "folha_vazia": "assets/folha_vazia_1769187084270.png",
-    "fundo_tela": "assets/fundo_tela_1769187084270.png",
-    "vid_abertura": "assets/vid_abertura_1769187084270.mp4",
-    "presentes": "assets/presentes_1769187084270.png"
+    "musica": "assets/musica_1769198101418.mp3",
+    "capa": "assets/capa_1769198101418.png",
+    "folha_vazia": "assets/folha_vazia_1769198101418.png",
+    "fundo_tela": "assets/fundo_tela_1769198101418.png",
+    "vid_abertura": "assets/vid_abertura_1769198101418.mp4",
+    "presentes": "assets/presentes_1769198101418.png"
   },
   "toggles": {
     "manualMode": "text",
