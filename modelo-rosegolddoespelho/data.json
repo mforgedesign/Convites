@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-23T16:21:41.516Z",
+  "timestamp": "2026-01-23T16:29:08.937Z",
   "formData": {
     "nome": "",
     "tipo_evento": "Aniversário",
@@ -32,16 +32,18 @@
     "manual_html": "<p><i class=\"fa-solid fa-clock\"></i> <strong>A Pontualidade é um Carinho:</strong> Sua presença desde o primeiro instante é fundamental para que não perca nenhum detalhe da nossa história. Por favor, chegue no horário combinado.</p><p><i class=\"fa-solid fa-calendar-check\"></i> <strong>Confirmação de Presença:</strong> Para que possamos preparar tudo com perfeição e amor, pedimos a gentileza de confirmar sua vinda até 15 dias antes do evento.</p><p><i class=\"fa-solid fa-heart\"></i> <strong>Celebre Conosco:</strong> Deixe a alegria guiar a sua noite! Estamos ansiosos para criar memórias inesquecíveis e celebrar este capítulo tão especial ao seu lado.</p><p><i class=\"fa-solid fa-cake-candles\"></i> <strong>Um Doce Encontro:</strong> Não se despeça sem nos presentear com um abraço apertado e saborear uma fatia do nosso bolo. Queremos compartilhar cada segundo de felicidade com você.</p>",
     "music_name": "PERFECT - Ed Sheeran - Violin Cover by Andre Soueid",
     "slug": "modelo-rosegolddoespelho",
-    "watermark_enabled": false
+    "watermark_enabled": false,
+    "folha_vazia": null,
+    "fundo_tela": null
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1769185301516.mp3",
-    "capa": "assets/capa_1769185301516.png",
-    "folha_vazia": "assets/folha_vazia_1769185301516.png",
-    "fundo_tela": "assets/fundo_tela_1769185301516.mp4",
-    "vid_abertura": "assets/vid_abertura_1769185301516.mp4",
-    "presentes": "assets/presentes_1769185301516.png"
+    "musica": "assets/musica_1769185748937.mp3",
+    "capa": "assets/capa_1769185748937.png",
+    "folha_vazia": "assets/folha_vazia_1769185748937.png",
+    "fundo_tela": "assets/fundo_tela_1769185748937.png",
+    "vid_abertura": "assets/vid_abertura_1769185748937.mp4",
+    "presentes": "assets/presentes_1769185748937.png"
   },
   "toggles": {
     "manualMode": "text",
