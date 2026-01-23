@@ -1,0 +1,48 @@
+{
+  "version": "4.0",
+  "timestamp": "2026-01-23T21:44:00.105Z",
+  "formData": {
+    "nome": "Maria Eduarda",
+    "tipo_evento": "Aniversário",
+    "tipo_evento_custom": "",
+    "data": "2026-02-21",
+    "hora": "08:00",
+    "idade": "15",
+    "tema_evento": "Néon",
+    "local_evento": "Avenida Pavão 21, Recanto dos Paraíso",
+    "paleta_cores": "Laranja e Verde",
+    "frase_convite": "",
+    "cor_botoes": "#f55f19",
+    "sombra_gradiente": "#000000",
+    "posicao_botoes": "68",
+    "tamanho_botoes": "medio",
+    "link_google_maps": "https://maps.app.goo.gl/PT69i5rQEoFstapHA",
+    "link_presentes": "",
+    "manual_content": "",
+    "confirmacao": "11961355245",
+    "permitir_acompanhante": false,
+    "timer_contagem": true,
+    "cover_prompt": "Tipo de evento: Special Event\nSelo: W\nPaleta de Cores: Gold and White\nTema: Elegant\nTask: Create a vertical image of a hyper-realistic 3D render of a premium invitation envelope. The envelope is sealed with an intricately detailed wax seal. The wax seal may contain ONLY the number \"W\" embossed - NO OTHER TEXT OR WORDS ANYWHERE IN THE IMAGE. The paper boasts a high-quality, textured finish, exuding elegance and sophistication. Background: A setting with elements that enhance the luxurious feel of the invitation without specific thematic details. The composition is centered, with dramatic lighting casting volumetric light and creating a soft focus and depth of field. Lighting: Dramatic, cinematic lighting with volumetric effects. Highlights on the envelope and wax seal accentuate the texture and detail. Style: Photorealistic, hyper-detailed, cinematic, and elegant. CRITICAL: DO NOT generate any text, letters, or words except the number on the seal. Technical Details: Resolution: 8K, ultra high resolution Aspect Ratio: 9:16 Rendering Engine: Octane Render, Unreal Engine 5 Camera: Macro lens, f/2.8, shallow depth of field",
+    "leaf_prompt": "",
+    "intro_motion_prompt": "The animation begins with a focus on the closed envelope. As the wax seal gracefully detaches and falls, the envelope's flap uplifts slowly. From its interior, a spectacular eruption of glittering sparkles and smoke, shimmering dust, and glowing light trails emerges, cascading outward in a mesmerizing display. These vibrant particles swirl dynamically, increasing in density and brightness around the envelope. The radiant light and swirling glitter intensify, rapidly expanding to fill the entire scene. CRITICAL: The Color of glow, light and smoke need to be the same of the image color pallete. The overwhelming brilliance transitions the frame to a solid, blinding white screen in the very final frame, achieved through a dramatic zoom-in effect.",
+    "fill_prompt": "\n\nTipo de evento: Special Event\nTema: Elegant\nTask: Preencha essa folha com os dados para convite de forma criativa e elegante.\nColoque elementos de design de forma elegante no convite, divisórias modernas, hierarquia visual madura e profissional, linhas, e uma frase similar a \"Você está convidado para o... (crie a frase conforme o contexto)\" conforme sua criatividade.\nColoque textura, camadas, adornos no texto do nome, letra cursiva (Great Vibes) e efeitos especiais elegantes.",
+    "sugestoes_presentes": "",
+    "gifts_image_prompt": "",
+    "manual_raw_content": "(elabore) Use roupas de cores vibrantes e neon! ",
+    "manual_html": "<p><i class='fa-solid fa-paint-brush'></i <br> <strong>Use roupas de cores vibrantes e neon!</strong> Deixe sua presença brilhar e traga alegria ao nosso dia mágico.</p>",
+    "music_name": "Heads Will Roll (A-Trak Remix)_[cut_326sec].mp3",
+    "slug": "MariaEduarda15Anos",
+    "watermark_enabled": true
+  },
+  "linksExtras": [],
+  "assetsMap": {
+    "capa": "assets/capa.png",
+    "folha_vazia": "assets/folha.png",
+    "vid_abertura": "assets/intro.mp4",
+    "presentes": "assets/gifts.png"
+  },
+  "toggles": {
+    "manualMode": "text",
+    "giftsMode": "image"
+  }
+}
