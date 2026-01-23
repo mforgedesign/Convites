@@ -1,17 +1,7 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-22T15:41:02.177Z",
+  "timestamp": "2026-01-23T02:57:12.486Z",
   "formData": {
-    "capa": null,
-    "capa_referencia": null,
-    "folha_vazia": null,
-    "vid_abertura": null,
-    "fundo_tela": null,
-    "presentes": null,
-    "manual": null,
-    "musica": "blob:https://builder.mforge.com.br/37e93cc8-01b3-4fb7-bfc3-1343bf55ea09",
-    "folha_only": null,
-    "background_only": null,
     "nome": "Julia",
     "tipo_evento": "",
     "tipo_evento_custom": "",
@@ -27,25 +17,21 @@
     "posicao_botoes": "10",
     "tamanho_botoes": "medio",
     "link_google_maps": "https://maps.app.goo.gl/Mk2AvBy7xWugSizX7",
-    "link_presentes": "",
+    "link_presentes": "https://www.canva.com/design/DAG2_OLw-JE/GvVM_dj3ppSNsmN7oWgNxg/view?utm_content=DAG2_OLw-JE&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h4e1ff6e568",
     "manual_content": "",
-    "numero_whatsapp": "",
-    "link_confirmacao": "https://docs.google.com/forms/d/e/1FAIpQLSezR-cgu_Bh4FSAy4kle4onGcu3eQYRgtna8yCZfRT676eZcg/viewform",
+    "confirmacao": "https://docs.google.com/forms/d/e/1FAIpQLSezR-cgu_Bh4FSAy4kle4onGcu3eQYRgtna8yCZfRT676eZcg/viewform",
     "permitir_acompanhante": false,
     "timer_contagem": false,
     "cover_prompt": "Tipo de evento: \nSelo: \nPaleta de Cores: \nTema: \nTask: Create a vertical image of a hyper-realistic 3D render of a premium invitation envelope. The envelope is sealed with an intricately detailed wax seal. The paper boasts a high-quality, textured finish, exuding elegance and sophistication. Background: A setting with elements that enhance the luxurious feel of the invitation without specific thematic details. The composition is centered, with dramatic lighting casting volumetric light and creating a soft focus and depth of field. Lighting: Dramatic, cinematic lighting with volumetric effects. Highlights on the envelope and wax seal accentuate the texture and detail. Style: Photorealistic, hyper-detailed, cinematic, and elegant. Technical Details: Resolution: 8K, ultra high resolution Aspect Ratio: 9:16 Rendering Engine: Octane Render, Unreal Engine 5 Camera: Macro lens, f/2.8, shallow depth of field",
     "leaf_prompt": "",
-    "animate_background": false,
     "intro_motion_prompt": "The animation begins with a focus on the closed envelope. As the wax seal gracefully detaches and falls, the envelope's flap uplifts slowly. From its interior, a spectacular eruption of glittering sparkles and smoke, shimmering dust, and glowing light trails emerges, cascading outward in a mesmerizing display. These vibrant particles swirl dynamically, increasing in density and brightness around the envelope. The radiant light and swirling glitter intensify, rapidly expanding to fill the entire scene. CRITICAL: The Color of glow, light and smoke need to be the same of the image color pallete. The overwhelming brilliance transitions the frame to a solid, blinding white screen in the very final frame, achieved through a dramatic zoom-in effect.",
-    "loop_motion_prompt": "The animation displays smooth, looping movements of the shimmering effect based on the provided image. Dramatic sparkles and shining smokes flying in the background, cinematic lighting with volumetric effects (divine rays) filters through shimmering particles, creating a magical atmosphere with highlights. Rendered in a photorealistic and hyper-detailed style, the animation flows perfectly with a cinematic approach, captivating the viewer's attention with its fluid movement and mesmerizing 4K quality. IMPORTANT: Static Camera / No Camera Movement, only environmental motion.",
     "fill_prompt": "Nome: \nIdade (se houver): (não informada)\nTipo de evento: \nTema: \nTask: Preencha essa folha com os dados para convite de forma criativa e elegante.\nColoque elementos de design de forma elegante no convite, divisórias modernas, hierarquia visual madura e profissional, linhas, e uma frase similar a \"Você está convidado para o... (crie a frase conforme o contexto)\" conforme sua criatividade.\nColoque textura, camadas, adornos no texto do nome, letra cursiva (Great Vibes) e efeitos especiais elegantes.",
     "sugestoes_presentes": "",
     "gifts_image_prompt": "",
     "manual_raw_content": "",
     "music_name": "musica.mp3",
     "slug": "Julia15AnosBaileMascara",
-    "watermark_enabled": false,
-    "confirmacao": "https://docs.google.com/forms/d/e/1FAIpQLSezR-cgu_Bh4FSAy4kle4onGcu3eQYRgtna8yCZfRT676eZcg/viewform"
+    "watermark_enabled": false
   },
   "linksExtras": [
     {
@@ -62,10 +48,10 @@
     }
   ],
   "assetsMap": {
-    "musica": "assets/musica_1769096462177.mp3",
-    "capa": "assets/capa_1769096462177.png",
-    "fundo_tela": "assets/fundo_tela_1769096462177.dat",
-    "vid_abertura": "assets/vid_abertura_1769096462177.mp4"
+    "musica": "assets/musica_1769137032486.mp3",
+    "capa": "assets/capa_1769137032486.png",
+    "fundo_tela": "assets/fundo_tela_1769137032486.mp4",
+    "vid_abertura": "assets/vid_abertura_1769137032486.mp4"
   },
   "toggles": {
     "manualMode": "text",
