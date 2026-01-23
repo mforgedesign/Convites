@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-23T14:19:17.450Z",
+  "timestamp": "2026-01-23T14:34:47.839Z",
   "formData": {
     "capa": "blob:https://builder.mforge.com.br/873e272f-1e21-4179-9555-35279af3aff7",
     "capa_referencia": null,
@@ -20,7 +20,7 @@
     "local_evento": "Chácara Bela vista - estrada bento ,16 Vista Alegre Aruja sp",
     "paleta_cores": "",
     "frase_convite": "",
-    "cor_botoes": "#f494db",
+    "cor_botoes": "#46d250",
     "sombra_gradiente": "#000000",
     "posicao_botoes": "8",
     "tamanho_botoes": "medio",
@@ -47,12 +47,12 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "musica": "assets/musica_1769177957450.mp3",
-    "capa": "assets/capa_1769177957450.png",
-    "folha_vazia": "assets/folha_vazia_1769177957450.png",
-    "fundo_tela": "assets/fundo_tela_1769177957450.mp4",
-    "vid_abertura": "assets/vid_abertura_1769177957450.mp4",
-    "presentes": "assets/presentes_1769177957450.png"
+    "musica": "assets/musica_1769178887839.mp3",
+    "capa": "assets/capa_1769178887839.png",
+    "folha_vazia": "assets/folha_vazia_1769178887839.png",
+    "fundo_tela": "assets/fundo_tela_1769178887839.dat",
+    "vid_abertura": "assets/vid_abertura_1769178887839.mp4",
+    "presentes": "assets/presentes_1769178887839.png"
   },
   "toggles": {
     "manualMode": "text",
