@@ -10,12 +10,12 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 
-    <title>[[OG_TITLE]]</title>
+    <title>Maria Eduarda | Aniversário 15 Anos</title>
 
     <!-- Open Graph for WhatsApp/Social Preview -->
-    <meta property="og:title" content="[[OG_TITLE]]">
+    <meta property="og:title" content="Maria Eduarda | Aniversário 15 Anos">
     <meta property="og:description" content="Clique para ver o convite interativo!">
-    <meta property="og:image" content="[[CAPA_URL]]">
+    <meta property="og:image" content="assets/capa_1769208860503.png">
     <meta property="og:type" content="website">
 
     <!-- Envelope Favicon -->
@@ -137,14 +137,14 @@
     </style>
     <style>
         :root {
-            --button-color: [[BUTTON_COLOR]];
+            --button-color: #f55f19;
         }
 
         .custom-button-bg {
             background-color: var(--button-color) !important;
         }
     </style>
-</head>
+<style>:root { --button-color: #f55f19; } .custom-button-bg { background-color: var(--button-color) !important; }</style></head>
 
 <body class="w-full h-[100dvh] flex justify-center items-center">
 
@@ -153,19 +153,19 @@
 
         <!-- Background (Unified) - Layer 1 -->
         <!-- Can be image or video - determined by file extension -->
-        <img id="fundoTelaImg" src="[[FUNDO_TELA_URL]]" class="camada z-10 invisivel"
+        <img id="fundoTelaImg" src="assets/fundo_tela_1769208860503.mp4" class="camada z-10 invisivel"
             onerror="this.style.display='none'">
         <video id="fundoTelaVideo" class="camada z-10 invisivel" playsinline loop muted
             onerror="this.style.display='none'">
-            <source src="[[FUNDO_TELA_URL]]" type="video/mp4">
+            <source src="assets/fundo_tela_1769208860503.mp4" type="video/mp4">
         </video>
 
         <video id="videoAbertura" class="camada z-20" playsinline muted>
-            <source src="[[VIDEO_ABERTURA_URL]]" type="video/mp4">
+            <source src="assets/vid_abertura_1769208860503.mp4" type="video/mp4">
         </video>
 
         <audio id="musicaFundo" loop preload="auto">
-            <source src="[[MUSICA_URL]]" type="audio/mp3">
+            <source src="assets/musica_1769208860503.mp3" type="audio/mp3">
         </audio>
 
         <button id="btnMute"
@@ -182,7 +182,7 @@
 
         <!-- Timer Countdown -->
         <div id="countdownContainer"
-            class="absolute top-[34px] left-0 w-full z-40 flex flex-col items-center justify-center invisivel transition-opacity duration-1000 texto-sombra pointer-events-none [[TIMER_HIDE_CLASS]]">
+            class="absolute top-[34px] left-0 w-full z-40 flex flex-col items-center justify-center invisivel transition-opacity duration-1000 texto-sombra pointer-events-none ">
             <h2 class="text-white text-[10px] sm:text-xs uppercase tracking-[0.2em] mb-2 font-semibold opacity-90">
                 Contagem Regressiva</h2>
             <div class="flex gap-3 sm:gap-4 text-white">
@@ -212,20 +212,20 @@
         <!-- Gradiente de fundo fixo (não se move) -->
         <div id="containerShadow"
             class="absolute bottom-0 left-0 w-full z-30 pb-10 px-2 pt-20 invisivel transition-opacity duration-1000"
-            style="[[SHADOW_STYLE]]">
+            style="background: linear-gradient(to top, #000000 0%, #000000cc 30%, transparent 100%);">
         </div>
 
         <!-- Container dos botões (se move com offset) -->
         <div id="containerBotoes"
             class="absolute left-0 w-full z-40 pb-10 px-2 invisivel transition-opacity duration-1000 flex justify-center"
-            style="bottom: [[BUTTONS_OFFSET]];">
+            style="bottom: 34px;">
             <div id="gridBotoes" class="flex flex-row flex-nowrap justify-evenly gap-1 w-full max-w-[480px]">
             </div>
         </div>
 
         <div id="capaInicial"
             class="absolute inset-0 z-50 bg-cover bg-center flex flex-col items-center justify-center cursor-pointer transition-opacity duration-700"
-            style="background-image: url('[[CAPA_URL]]');">
+            style="background-image: url('assets/capa_1769208860503.png');">
             <div class="absolute inset-0 bg-black/20"></div>
 
             <div id="dicaInteractionContainer" class="relative z-10 flex flex-col items-center gap-4 animate-pulse">
@@ -238,7 +238,7 @@
 
         <!-- Marca d'água de Pagamento Pendente -->
         <div id="watermark"
-            class="absolute inset-0 z-[100] flex items-center justify-center pointer-events-none [[WATERMARK_HIDE_CLASS]]">
+            class="absolute inset-0 z-[100] flex items-center justify-center pointer-events-none ">
             <div class="transform -rotate-45 pointer-events-none select-none opacity-80">
                 <h1 class="text-4xl sm:text-6xl font-black uppercase tracking-widest text-center whitespace-nowrap"
                     style="-webkit-text-stroke: 1px rgba(0,0,0,0.3); color: rgba(255,255,255,0.25);">
@@ -256,7 +256,7 @@
             class="relative w-full max-w-[400px] h-[80%] rounded-xl shadow-2xl overflow-hidden flex flex-col border border-white/20">
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="[[FOLHA_URL]]" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="assets/folha_vazia_1769208860503.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/60"></div>
             </div>
 
@@ -285,7 +285,7 @@
                 class="absolute top-3 right-3 z-10 bg-black/50 text-white hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center transition-colors border border-white/20">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <img id="imagemPresentes" src="[[PRESENTS_URL]]" class="max-w-full max-h-[85vh] object-contain rounded-lg">
+            <img id="imagemPresentes" src="assets/presentes_1769208860503.png" class="max-w-full max-h-[85vh] object-contain rounded-lg">
         </div>
     </div>
 
@@ -309,7 +309,7 @@
 
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="[[FOLHA_URL]]" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="assets/folha_vazia_1769208860503.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/70"></div>
             </div>
 
@@ -339,7 +339,7 @@
                         placeholder="(DDD) 99999-9999">
                 </div>
 
-                <div id="container-acompanhantes" class="[[COMPANION_HIDE_CLASS]]">
+                <div id="container-acompanhantes" class="!hidden">
                     <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Total de Acompanhantes</label>
                     <div class="flex items-center gap-3">
                         <button id="btn-dec-acomp"
@@ -353,7 +353,7 @@
                         anfitrião.</p>
                 </div>
 
-                <div class="flex items-center gap-2 mt-2 [[COMPANION_HIDE_CLASS]]">
+                <div class="flex items-center gap-2 mt-2 !hidden">
                     <input type="checkbox" id="check-no-acomp"
                         class="w-4 h-4 rounded bg-black/40 border-stone-500 text-green-500 focus:ring-green-500 focus:ring-offset-0">
                     <label for="check-no-acomp"
@@ -446,7 +446,7 @@
         // ==================================================================
         // 0. RENDER MODE & SCENARIO LOGIC
         // ==================================================================
-        const renderMode = '[[RENDER_MODE]]'; // standard, direct, transparent-cover
+        const renderMode = 'standard'; // standard, direct, transparent-cover
         console.log('[AutoBuilder] Render Mode:', renderMode);
 
         if (renderMode === 'direct') {
@@ -463,9 +463,9 @@
         // ==================================================================
         // 1. CONFIGURAÇÃO DOS BOTÕES (Injetado pelo AutoBuilder)
         // ==================================================================
-        const menuConfig = [[MENU_CONFIG]];
+        const menuConfig = [{"id":"location","titulo":"Localização","icone":"fa-solid fa-location-dot","link":"https://maps.app.goo.gl/PT69i5rQEoFstapHA"},{"id":"gifts","titulo":"Presentes","icone":"fa-solid fa-gift","link":"#","isGiftImage":true},{"id":"rsvp","titulo":"Confirmar Presença","icone":"fa-brands fa-whatsapp","link":"https://wa.me/11961355245"},{"id":"manual","titulo":"Manual","icone":"fa-solid fa-book-open","link":"#","manualText":"<p><i class='fa-solid fa-paint-brush'></i <br> <strong>Use roupas de cores vibrantes e neon!</strong> Deixe sua presença brilhar e traga alegria ao nosso dia mágico.</p>"}];
         // Injected by AutoBuilder
-        const buttonSize = parseFloat('[[BUTTON_SIZE]]') || 1.0;
+        const buttonSize = parseFloat('1.0') || 1.0;
 
         // ==================================================================
         // 2. REFERÊNCIAS DO DOM
@@ -594,7 +594,7 @@
         });
 
         // Injected State for Logic
-        const companionHideClass = "[[COMPANION_HIDE_CLASS]]";
+        const companionHideClass = "!hidden";
 
         window.abrirRSVP = function (e, link) {
             e.preventDefault();
@@ -903,7 +903,7 @@
         // TIMER DE CONTAGEM REGRESSIVA
         // ==================================================================
         function atualizarCronometro() {
-            const dataAlvo = new Date('[[EVENT_DATETIME]]');
+            const dataAlvo = new Date('2026-02-21T08:00:00');
             const agora = new Date();
 
             let diferenca = dataAlvo - agora;

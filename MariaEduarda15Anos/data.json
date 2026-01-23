@@ -1,6 +1,6 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-23T21:44:00.105Z",
+  "timestamp": "2026-01-23T22:54:20.503Z",
   "formData": {
     "nome": "Maria Eduarda",
     "tipo_evento": "Aniversário",
@@ -36,10 +36,12 @@
   },
   "linksExtras": [],
   "assetsMap": {
-    "capa": "assets/capa.png",
-    "folha_vazia": "assets/folha.png",
-    "vid_abertura": "assets/intro.mp4",
-    "presentes": "assets/gifts.png"
+    "musica": "assets/musica_1769208860503.mp3",
+    "capa": "assets/capa_1769208860503.png",
+    "folha_vazia": "assets/folha_vazia_1769208860503.png",
+    "fundo_tela": "assets/fundo_tela_1769208860503.mp4",
+    "vid_abertura": "assets/vid_abertura_1769208860503.mp4",
+    "presentes": "assets/presentes_1769208860503.png"
   },
   "toggles": {
     "manualMode": "text",
