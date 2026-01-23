@@ -1,17 +1,17 @@
 {
   "version": "4.0",
-  "timestamp": "2026-01-17T13:27:13.289Z",
+  "timestamp": "2026-01-23T03:05:08.376Z",
   "formData": {
     "capa": null,
     "capa_referencia": null,
     "folha_vazia": null,
     "vid_abertura": null,
     "fundo_tela": null,
-    "folha_only": null,
-    "background_only": null,
     "presentes": null,
     "manual": null,
     "musica": "blob:https://builder.mforge.com.br/a398d2a2-2332-4c83-ab9f-e3ee08d64ba2",
+    "folha_only": null,
+    "background_only": null,
     "nome": "Brenda",
     "tipo_evento": "Aniversário",
     "tipo_evento_custom": "",
@@ -44,7 +44,9 @@
     "manual_raw_content": "",
     "music_name": "ssstik.io_1768600053560.mp3",
     "slug": "Brenda15Anos",
-    "watermark_enabled": true
+    "watermark_enabled": false,
+    "_reset": true,
+    "confirmacao": "5581987883593"
   },
   "linksExtras": [
     {
@@ -55,11 +57,11 @@
     }
   ],
   "assetsMap": {
-    "musica": "assets/musica_1768656433289.mp3",
-    "capa": "assets/capa_1768656433289.png",
-    "fundo_tela": "assets/fundo_tela_1768656433289.dat",
-    "vid_abertura": "assets/vid_abertura_1768656433289.mp4",
-    "presentes": "assets/presentes_1768656433289.png"
+    "musica": "assets/musica_1769137508376.mp3",
+    "capa": "assets/capa_1769137508376.png",
+    "fundo_tela": "assets/fundo_tela_1769137508376.dat",
+    "vid_abertura": "assets/vid_abertura_1769137508376.mp4",
+    "presentes": "assets/presentes_1769137508376.png"
   },
   "toggles": {
     "manualMode": "text",
