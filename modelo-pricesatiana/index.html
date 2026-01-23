@@ -15,7 +15,7 @@
     <!-- Open Graph for WhatsApp/Social Preview -->
     <meta property="og:title" content="Convite | Aniversário">
     <meta property="og:description" content="Clique para ver o convite interativo!">
-    <meta property="og:image" content="capa/capa_1769038299061.png">
+    <meta property="og:image" content="assets/capa_1769177957450.png">
     <meta property="og:type" content="website">
 
     <!-- Envelope Favicon -->
@@ -135,6 +135,15 @@
             display: none;
         }
     </style>
+    <style>
+        :root {
+            --button-color: #f494db;
+        }
+
+        .custom-button-bg {
+            background-color: var(--button-color) !important;
+        }
+    </style>
 <style>:root { --button-color: #f494db; } .custom-button-bg { background-color: var(--button-color) !important; }</style></head>
 
 <body class="w-full h-[100dvh] flex justify-center items-center">
@@ -144,19 +153,19 @@
 
         <!-- Background (Unified) - Layer 1 -->
         <!-- Can be image or video - determined by file extension -->
-        <img id="fundoTelaImg" src="assets/fundo_tela_1769038299061.mp4" class="camada z-10 invisivel"
+        <img id="fundoTelaImg" src="assets/fundo_tela_1769177957450.mp4" class="camada z-10 invisivel"
             onerror="this.style.display='none'">
         <video id="fundoTelaVideo" class="camada z-10 invisivel" playsinline loop muted
             onerror="this.style.display='none'">
-            <source src="assets/fundo_tela_1769038299061.mp4" type="video/mp4">
+            <source src="assets/fundo_tela_1769177957450.mp4" type="video/mp4">
         </video>
 
         <video id="videoAbertura" class="camada z-20" playsinline muted>
-            <source src="assets/vid_abertura_1769038299061.mp4" type="video/mp4">
+            <source src="assets/vid_abertura_1769177957450.mp4" type="video/mp4">
         </video>
 
         <audio id="musicaFundo" loop preload="auto">
-            <source src="assets/musica_1769038299061.mp3" type="audio/mp3">
+            <source src="assets/musica_1769177957450.mp3" type="audio/mp3">
         </audio>
 
         <button id="btnMute"
@@ -193,26 +202,30 @@
                     <span id="contadorMinutos" class="text-xl sm:text-2xl font-bold leading-none">00</span>
                     <span class="text-[8px] sm:text-[10px] uppercase opacity-80">Min</span>
                 </div>
+                <div class="flex flex-col items-center">
+                    <span id="contadorSegundos" class="text-xl sm:text-2xl font-bold leading-none">00</span>
+                    <span class="text-[8px] sm:text-[10px] uppercase opacity-80">Seg</span>
+                </div>
             </div>
         </div>
 
         <!-- Gradiente de fundo fixo (não se move) -->
         <div id="containerShadow"
             class="absolute bottom-0 left-0 w-full z-30 pb-10 px-2 pt-20 invisivel transition-opacity duration-1000"
-            style="background: linear-gradient(to top, [[SHADOW_COLOR]]E6, [[SHADOW_COLOR]]66, transparent);">
+            style="background: linear-gradient(to top, #000000 0%, #000000cc 30%, transparent 100%);">
         </div>
 
         <!-- Container dos botões (se move com offset) -->
         <div id="containerBotoes"
             class="absolute left-0 w-full z-40 pb-10 px-2 invisivel transition-opacity duration-1000 flex justify-center"
-            style="bottom: 8px;">
+            style="bottom: 4px;">
             <div id="gridBotoes" class="flex flex-row flex-nowrap justify-evenly gap-1 w-full max-w-[480px]">
             </div>
         </div>
 
         <div id="capaInicial"
             class="absolute inset-0 z-50 bg-cover bg-center flex flex-col items-center justify-center cursor-pointer transition-opacity duration-700"
-            style="background-image: url('assets/capa_1769038299061.png');">
+            style="background-image: url('assets/capa_1769177957450.png');">
             <div class="absolute inset-0 bg-black/20"></div>
 
             <div id="dicaInteractionContainer" class="relative z-10 flex flex-col items-center gap-4 animate-pulse">
@@ -243,7 +256,7 @@
             class="relative w-full max-w-[400px] h-[80%] rounded-xl shadow-2xl overflow-hidden flex flex-col border border-white/20">
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="assets/folha_vazia_1769038299061.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="assets/folha_vazia_1769177957450.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/60"></div>
             </div>
 
@@ -272,7 +285,7 @@
                 class="absolute top-3 right-3 z-10 bg-black/50 text-white hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center transition-colors border border-white/20">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <img id="imagemPresentes" src="assets/presentes_1769038299061.png" class="max-w-full max-h-[85vh] object-contain rounded-lg">
+            <img id="imagemPresentes" src="assets/presentes_1769177957450.png" class="max-w-full max-h-[85vh] object-contain rounded-lg">
         </div>
     </div>
 
@@ -296,7 +309,7 @@
 
             <!-- Background Image (Folha Vazia) -->
             <div class="absolute inset-0 z-0">
-                <img src="assets/folha_vazia_1769038299061.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
+                <img src="assets/folha_vazia_1769177957450.png" class="w-full h-full object-cover opacity-90 blur-[2px]">
                 <div class="absolute inset-0 bg-black/70"></div>
             </div>
 
@@ -357,10 +370,83 @@
     </div>
 
     <script>
+        // ==========================================
+        // ROBUST VIDEO LOADING (Network Resilience)
+        // ==========================================
+        function setupRobustVideo(videoElement) {
+            if (!videoElement) return;
+
+            // Ensure attributes for maximum compatibility
+            videoElement.setAttribute('playsinline', '');
+            videoElement.setAttribute('webkit-playsinline', '');
+            videoElement.setAttribute('preload', 'auto');
+
+            let stuckTimer = null;
+            let lastTime = -1;
+
+            const attemptResume = () => {
+                console.log('[Video] Attempting resume/reload...');
+                if (videoElement.paused) videoElement.play().catch(() => { });
+            };
+
+            // Monitor stalled/waiting states
+            videoElement.addEventListener('waiting', () => {
+                console.log('[Video] Waiting for data...');
+                // If waiting too long (e.g. 5s), try to nudge it
+                clearTimeout(stuckTimer);
+                stuckTimer = setTimeout(attemptResume, 5000);
+            });
+
+            videoElement.addEventListener('stalled', () => {
+                console.log('[Video] Stalled (Low bandwidth).');
+            });
+
+            videoElement.addEventListener('playing', () => {
+                clearTimeout(stuckTimer);
+                console.log('[Video] Playing.');
+            });
+
+            videoElement.addEventListener('error', (e) => {
+                console.error('[Video] Error:', videoElement.error);
+                // Fatal error prevention
+                setTimeout(() => {
+                    console.log('[Video] Retrying load...');
+                    videoElement.load();
+                    videoElement.play().catch(e => console.log('Retry play failed', e));
+                }, 3000);
+            });
+
+            // Watchdog for Frozen Video
+            setInterval(() => {
+                if (!videoElement.paused && !videoElement.ended && videoElement.readyState > 2) {
+                    if (videoElement.currentTime === lastTime) {
+                        console.log('[Video] Freeze detected. Nudging...');
+                    }
+                    lastTime = videoElement.currentTime;
+                }
+            }, 2000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const videos = document.querySelectorAll('video');
+            videos.forEach(setupRobustVideo);
+
+            // Also watch for dynamic videos
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach(m => {
+                    m.addedNodes.forEach(node => {
+                        if (node.nodeName === 'VIDEO') setupRobustVideo(node);
+                        if (node.querySelectorAll) node.querySelectorAll('video').forEach(setupRobustVideo);
+                    });
+                });
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        });
+
         // ==================================================================
         // 0. RENDER MODE & SCENARIO LOGIC
         // ==================================================================
-        const renderMode = '[[RENDER_MODE]]'; // standard, direct, transparent-cover
+        const renderMode = 'standard'; // standard, direct, transparent-cover
         console.log('[AutoBuilder] Render Mode:', renderMode);
 
         if (renderMode === 'direct') {
@@ -685,7 +771,7 @@
             anchor.innerHTML = `
                 <div class="rounded-full border border-stone-300 p-[2px] transition-transform duration-300 group-hover:scale-105 group-active:scale-95">
                     <div class="rounded-full custom-button-bg text-white flex items-center justify-center shadow-lg group-hover:bg-stone-700 transition-colors"
-                         style="width: ${sizePx}px; height: ${sizePx}px; background-color: #f494db;">
+                         style="width: ${sizePx}px; height: ${sizePx}px; background-color: #751a1a;">
                         <i class="${btn.icone}" style="font-size: ${iconRem}rem;"></i>
                     </div>
                 </div>
@@ -827,6 +913,7 @@
                 document.getElementById('contadorDias').innerText = "00";
                 document.getElementById('contadorHoras').innerText = "00";
                 document.getElementById('contadorMinutos').innerText = "00";
+                document.getElementById('contadorSegundos').innerText = "00";
                 return;
             }
 
@@ -845,6 +932,8 @@
             }
             if (meses < 0) { meses += 12; anos--; }
 
+            let segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
+
             const totalMeses = (anos * 12) + meses;
             const fmt = (num) => num < 10 ? `0${num}` : num;
 
@@ -852,6 +941,7 @@
             document.getElementById('contadorDias').innerText = fmt(dias);
             document.getElementById('contadorHoras').innerText = fmt(horas);
             document.getElementById('contadorMinutos').innerText = fmt(minutos);
+            document.getElementById('contadorSegundos').innerText = fmt(segundos);
         }
 
         // Inicia e atualiza a cada segundo
