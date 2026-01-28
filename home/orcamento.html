@@ -2496,51 +2496,54 @@ ${selectedText}
             saveFormData();
         };
 
-        // Check if model requires "abertura longa" and auto-select it
-        // Models that have "abertura longa" in their demo (by name)
-        const modelsWithAberturaLonga = [
-            'Debutante Rosa Gold',
-            'Rosa e Dourado',
-            'A Bela e a Fera',
-            'Baile de Máscaras',
-            'Viagem à Disney'
-        ];
-
-        // Check if selected model requires "abertura longa" and auto-select it
+        // Check if selected model requires "abertura longa" and auto-select accordingly
+        // Uses the hasAberturaLonga flag from the model object stored in localStorage
         function checkAutoSelectAberturaLonga() {
             const modelData = localStorage.getItem('selectedModelData');
             if (!modelData) return;
 
             try {
                 const model = JSON.parse(modelData);
-                const modelName = model.name || '';
                 const modelId = model.id || '';
 
+                // Check if we already processed this model
                 const lastAutoSelectedModel = localStorage.getItem('lastAutoSelectedModel');
                 if (lastAutoSelectedModel === modelId) return;
 
-                const requiresAberturaLonga = modelsWithAberturaLonga.some(name =>
-                    modelName.toLowerCase().includes(name.toLowerCase()) ||
-                    name.toLowerCase().includes(modelName.toLowerCase())
-                );
+                // Use the hasAberturaLonga flag directly from the model object
+                const requiresAberturaLonga = model.hasAberturaLonga === true;
 
                 if (requiresAberturaLonga) {
-                    // Update selector to match new HTML structure (.option-card with data-option="abertura-longa")
+                    // Auto-select "Abertura Longa"
                     const aberturaLongaCard = document.querySelector('.option-card[data-option="abertura-longa"]');
 
                     if (aberturaLongaCard && !aberturaLongaCard.classList.contains('selected')) {
-                        // Deselect others in group first (handled by click simulation or manual class manipulation)
-                        // Manual manipulation safer here since strict logic
                         document.querySelectorAll('.option-card[data-group="abertura"]').forEach(c => c.classList.remove('selected'));
                         aberturaLongaCard.classList.add('selected');
 
                         updateTotal();
                         saveFormData();
 
-                        // Force UI update
                         if (typeof toggleCampos === 'function') toggleCampos();
                     }
+                } else {
+                    // Auto-select "Abertura Padrão (Curta)" for models without abertura longa
+                    const aberturaCurtaCard = document.querySelector('.option-card[data-option="abertura-curta"]');
+
+                    if (aberturaCurtaCard && !aberturaCurtaCard.classList.contains('selected')) {
+                        // Only auto-select if no abertura is currently selected
+                        const anyAberturaSelected = document.querySelector('.option-card[data-group="abertura"].selected');
+                        if (!anyAberturaSelected) {
+                            aberturaCurtaCard.classList.add('selected');
+
+                            updateTotal();
+                            saveFormData();
+
+                            if (typeof toggleCampos === 'function') toggleCampos();
+                        }
+                    }
                 }
+
                 localStorage.setItem('lastAutoSelectedModel', modelId);
             } catch (e) {
                 console.error('Erro ao verificar modelo:', e);
