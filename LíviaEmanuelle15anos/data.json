@@ -28,7 +28,7 @@
     "tamanho_botoes": "",
     "link_google_maps": "https://maps.app.goo.gl/dWP6FKJmfTb65cWp6",
     "link_presentes": "",
-    "manual_content": "<p>🎭 <strong>Traje de gala obrigatório:</strong></p>\n\n<p>✨ <strong>Damas:</strong> vestido longo, máscara e, se possível, luvas.</p>\n\n<p>🤴 <strong>Cavalheiros:</strong> terno com gravata ou gravata borboleta.</p>\n\n<p>⚠️ <strong>Atenção:</strong> Proibido as mulheres trajes vermelhos e vinho.</p>",
+    "manual_content": "<p>🎭 <strong>Traje de gala obrigatório:</strong></p>\n\n<p>✨ <strong>Damas:</strong> vestido longo, máscara e, se possível, luvas.</p>\n\n<p>🤴 <strong>Cavalheiros:</strong> terno com gravata ou gravata borboleta.</p>\n\n<p>⚠️ <strong>Atenção:</strong> Proibido as mulheres trajes vermelhos e vinho.</p>\n\n<div class=\"mt-4 flex justify-center\"><img src=\"assets/foto.png\" class=\"rounded-lg shadow-lg border border-white/10 max-w-full h-auto\" alt=\"Foto Manual\"></div>",
     "numero_whatsapp": "5531993376260",
     "link_confirmacao": "",
     "permitir_acompanhante": false,
