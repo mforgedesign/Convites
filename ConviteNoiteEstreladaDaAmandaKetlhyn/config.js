@@ -4,7 +4,7 @@ window.config = {
     "nome": "Amanda Ketlhyn",
     "idade": 15,
     "data": "2026-08-22",
-    "hora": "18:30",
+    "hora": "19:00",
     "horaTermino": "",
     "endereco": "Rua Pedro Pessoa 4401 A",
     "frase1": "",
@@ -14,9 +14,9 @@ window.config = {
   "convite": {
     "paletaCores": "Lilás, Preto e Prata",
     "tema": "Noite estrelada",
-    "musica": "assets/music_1785595082636.mp3",
+    "musica": "assets/music_1785595505426.mp3",
     "tipoAbertura": "curta",
-    "particulasAbertura": false,
+    "particulasAbertura": true,
     "slug": "ConviteNoiteEstreladaDaAmandaKetlhyn",
     "seo": {
       "pageTitle": "Amanda Ketlhyn | Aniversário 15 Anos",
@@ -31,21 +31,21 @@ window.config = {
     }
   },
   "assets": {
-    "capa": "assets/cover_1785595082636.jpg",
+    "capa": "assets/cover_1785595505426.jpg",
     "cartao": "",
     "aberturaSlides": [
-      "assets/slide1_1785595082636.mp4"
+      "assets/slide1_1785595505426.mp4"
     ],
     "aberturaSlidesMeta": [
       {
-        "filePath": "assets/slide1_1785595082636.mp4",
+        "filePath": "assets/slide1_1785595505426.mp4",
         "label": "Slide 1",
         "type": "video"
       }
     ],
     "folhaVazia": "",
-    "folhaPreenchida": "assets/folha_1785595082636.mp4",
-    "musica": "assets/music_1785595082636.mp3",
+    "folhaPreenchida": "assets/folha_1785595505426.mp4",
+    "musica": "assets/music_1785595505426.mp3",
     "musicStartSec": 0,
     "musicEndSec": null,
     "fabric": {
@@ -107,7 +107,7 @@ window.config = {
       "tipoVisual": "css",
       "titulo": "Presentes",
       "icone": "fa-solid fa-gift",
-      "conteudo": "assets/convitenoiteestreladadaamandaketlhyn_presentes_sem_prata_1785595082636.png"
+      "conteudo": "assets/convitenoiteestreladadaamandaketlhyn_presentes_sem_prata_1785595505426.png"
     }
   ],
   "upsell": {
